@@ -1,0 +1,53 @@
+default namespace = ""
+
+start =
+  element lexware {
+    (element af {
+       word,
+       tag,
+       element rtyp { text },
+       element af2 { word, type, gl, com, example+ }+
+     }
+     | element rt {
+         word,
+         element pd { text }?,
+         tag,
+         element sets {
+           element set {
+             type,
+             element parts { text }
+           }+,
+           com?
+         },
+         element th {
+           word,
+           element tc { xsd:NCName },
+           gl,
+           example+
+         }+,
+         element gc2 {
+           word,
+           type,
+           element dial {
+             lang,
+             element dialx { word, lang }*
+           }?,
+           gl,
+           (element lit { text },
+            element sc { text },
+            example)?,
+           element gc3 { word, type, gl }*
+         }*
+       })+
+  }
+word = element word { text }
+tag = element tag { text }
+type = element type { xsd:NMTOKEN }
+com = element com { text }
+gl = element gl { text }
+example =
+  element example {
+    element ex { text },
+    element eng { text }
+  }
+lang = element lang { xsd:NCName }

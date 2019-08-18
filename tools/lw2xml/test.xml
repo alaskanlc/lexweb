@@ -1,0 +1,207 @@
+<lexware>
+  <rt>
+    <word>'aii</word>
+    <pd>'aii</pd>
+    <tag>classify compact object</tag>
+    <sets>
+      <set>
+        <type>neu</type>
+        <parts>'ąįį 'è' 'àa 'è'</parts>
+      </set>
+      <set>
+        <type>mom</type>
+        <parts>'àii 'ąįį 'aa 'aa</parts>
+      </set>
+      <set>
+        <type>prog</type>
+        <parts>'aa</parts>
+      </set>
+      <set>
+        <type>cont</type>
+        <parts>'èe 'ąįį 'àa 'è'</parts>
+      </set>
+      <set>
+        <type>rep</type>
+        <parts>'ak</parts>
+      </set>
+      <com>this is a comment</com>
+    </sets>
+    <th>
+      <word>0+'ąįį</word>
+      <tc>stat</tc>
+      <gl>object is in position; at rest; lies</gl>
+      <example>
+        <ex>kii dha'ąįį</ex>
+        <eng>a rock is there</eng>
+      </example>
+      <example>
+        <ex>van dha'ąįį</ex>
+        <eng>lake is in position</eng>
+      </example>
+    </th>
+    <th>
+      <word>0+'aii</word>
+      <tc>mot</tc>
+      <gl>handle compact object</gl>
+      <example>
+        <ex>ch'idiin'ąįį</ex>
+        <eng>he opened something (can)</eng>
+      </example>
+    </th>
+    <gc2>
+      <word>-'onh</word>
+      <type>..n</type>
+      <dial>
+        <lang>MN</lang>
+        <dialx>
+          <word>ch'edagwda</word>
+          <lang>TC</lang>
+        </dialx>
+        <dialx>
+          <word>chedagwda</word>
+          <lang>EC</lang>
+        </dialx>
+      </dial>
+      <gl>animal *den</gl>
+      <lit>In a hole</lit>
+      <sc>Thingy thingus</sc>
+      <example>
+        <ex>geh 'an</ex>
+        <eng>rabbit den</eng>
+      </example>
+    </gc2>
+    <gc2>
+      <word>-'onh</word>
+      <type>..voc</type>
+      <dial>
+        <lang>M</lang>
+      </dial>
+      <gl>animal *den</gl>
+      <lit>In a hole</lit>
+      <sc>Thingy thingus</sc>
+      <example>
+        <ex>geh 'an</ex>
+        <eng>rabbit den</eng>
+      </example>
+      <gc3>
+        <word>-ey'i:</word>
+        <type>...n</type>
+        <gl>*sonny</gl>
+      </gc3>
+      <gc3>
+        <word>-edh'ą́</word>
+        <type>...voc</type>
+        <gl>uncle!</gl>
+      </gc3>
+      <gc3>
+        <word>chelą́:</word>
+        <type>...voc</type>
+        <gl>young brother</gl>
+      </gc3>
+    </gc2>
+  </rt>
+  <af>
+    <word>Ø$1</word>
+    <tag>zero noun suffix</tag>
+    <rtyp>ɑ/sf</rtyp>
+    <af2>
+      <word>Ø</word>
+      <type>..nsf</type>
+      <gl>*possess]ed suffix in nouns</gl>
+      <com>very rare, the usual suffix is &amp;-a'</com>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+      <example>
+        <ex>yex, -yex</ex>
+        <eng>house</eng>
+      </example>
+    </af2>
+    <af2>
+      <word>Ø</word>
+      <type>..nds</type>
+      <gl>*possess]ed suffix in nouns</gl>
+      <com>very rare, the usual suffix is &amp;-a'</com>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+      <example>
+        <ex>yex, -yex</ex>
+        <eng>house</eng>
+      </example>
+    </af2>
+  </af>
+  <rt>
+    <word>'ąį'</word>
+    <tag>complete</tag>
+    <sets>
+      <set>
+        <type>neu</type>
+        <parts>'ąį' 'ąį' 'aa' 'ąį'</parts>
+      </set>
+    </sets>
+    <th>
+      <word>dee#d+l+ąį' (dh)</word>
+      <tc>neu</tc>
+      <gl>full</gl>
+      <example>
+        <ex>dèedàa'ąį'</ex>
+        <eng>it is full</eng>
+      </example>
+    </th>
+  </rt>
+  <rt>
+    <word>'àk</word>
+    <tag>lead</tag>
+    <sets>
+      <set>
+        <type>mom</type>
+        <parts>'aa 'àk 'aa 'aa</parts>
+      </set>
+    </sets>
+    <th>
+      <word>COMP n+0+'àk</word>
+      <tc>mot</tc>
+      <gl>lead</gl>
+      <example>
+        <ex>k'eehąą'àk</ex>
+        <eng>he started leading her around</eng>
+      </example>
+    </th>
+    <gc2>
+      <word>gwęę'aa kit</word>
+      <type>..n</type>
+      <gl>leader</gl>
+    </gc2>
+  </rt>
+  <rt>
+    <word>'ak</word>
+    <tag>sing love song</tag>
+    <sets>
+      <set>
+        <type>mom</type>
+        <parts>'ak &gt;&gt;</parts>
+      </set>
+    </sets>
+    <th>
+      <word>P+a#ł+'ak</word>
+      <tc>op</tc>
+      <gl>*sing a love song</gl>
+      <example>
+        <ex>ch'aah'ak</ex>
+        <eng>he is singing a love song</eng>
+      </example>
+      <example>
+        <ex>ch'aał'ak</ex>
+        <eng>I sang a love song</eng>
+      </example>
+    </th>
+    <gc2>
+      <word>ch'aah'a&gt;&gt;k</word>
+      <type>..n</type>
+      <gl>love song</gl>
+    </gc2>
+  </rt>
+</lexware>

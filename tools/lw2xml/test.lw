@@ -1,0 +1,99 @@
+.rt 'aii
+pd 'aii
+tag classify compact object
+..sets
+set neu 'ąįį 'è' 'àa 'è'
+set mom 'àii 'ąįį 'aa 'aa
+set prog 'aa
+set cont 'èe 'ąįį 'àa 'è'
+set rep 'ak
+com this is a comment
+..th 0+'ąįį
+tc stat
+gl object is in position; at rest; lies
+ex kii dha'ąįį
+eng a rock is there
+ex van dha'ąįį
+eng lake is in position
+..th 0+'aii
+tc mot
+gl handle compact object
+ex ch'idiin'ąįį
+eng he opened something (can)
+..n -'onh
+dial MN
+dial TC ch'edagwda
+dial EC chedagwda
+gl  animal *den
+lit In a hole
+sc Thingy thingus
+ex geh 'an
+eng rabbit den
+..voc -'onh
+dial M
+gl  animal *den
+lit In a hole
+sc Thingy thingus
+ex geh 'an
+eng rabbit den
+...n -ey'i:
+gl *sonny
+...voc -edh'ą́
+gl uncle!
+...voc chelą́:
+gl young brother
+
+.af Ø$1
+tag zero noun suffix
+rtyp ɑ/sf
+..nsf   Ø
+gl   *possess]ed suffix in nouns
+com very rare, the usual suffix is &-a'
+ex  kayex, -kayex
+eng  village
+ex  yex, -yex
+eng house
+..nds   Ø
+gl   *possess]ed suffix in nouns
+com very rare, the usual suffix is &-a'
+ex  kayex, -kayex
+eng  village
+ex  yex, -yex
+eng house
+
+.rt 'ąį'
+tag complete
+..sets
+set neu 'ąį' 'ąį' 'aa' 'ąį'
+..th dee#d+l+ąį' (dh)
+tc neu
+gl full
+ex dèedàa'ąį'
+eng it is full
+
+.rt 'àk
+tag lead
+..sets
+set mom 'aa 'àk 'aa 'aa
+..th COMP n+0+'àk
+tc mot
+gl lead
+ex k'eehąą'àk
+eng he started leading her around
+..n gwęę'aa kit
+gl leader
+
+.rt 'ak
+tag sing love song
+..sets
+set mom 'ak >>
+..th P+a#ł+'ak
+tc   op
+gl   *sing a love song
+ex ch'aah'ak
+eng he is singing a love song
+ex ch'aał'ak
+eng I sang a love song
+..n ch'aah'a>>k
+gl love song
+
