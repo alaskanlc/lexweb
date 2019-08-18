@@ -1,0 +1,16 @@
+#!/bin/sh
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR/../pages_md
+
+rm -f sitemap.md
+echo -e "% Site-map\n\n# Site map\n" > sitemap.md
+
+for i in [A-Za-z]*.md
+do
+    grep -EH "^%" $i | gawk 'BEGIN{FS=":"; PROCINFO["sorted_in"]= "@val_str_asc"} {file[gensub(/^[^:]+:/,"","G",$0)]=$1} END{for (i in file) print " * [" gensub(/%\ */,"","G",i) "](" gensub(/\.md$/,".html","G",file[i]) ")"}' >> sitemap.md
+done
+
+# echo -e "\n_(List auto-generated)_" >> sitemap.md
+
+

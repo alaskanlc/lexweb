@@ -1,0 +1,23 @@
+#!/bin/sh
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR/../pages_md
+RSS=../alaskaflora.org/pages/blogrss.xml
+
+rm -rf $RSS
+
+echo -e '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0">\n  <channel>\n    <title>Alaska Flora Development Blog</title>\n    <link>https://alaskaflora.org/pages/blog.html</link>\n    <description>Step-by-step updates on the development of the informatics foundation for the new Flora of Alaska</description>' > $RSS
+
+for i in `ls blog[0-9]* | sort -k 1.5,1.7n | sed -e 's/.md$//g'`
+do
+    echo -e '    <item>\n      <link>http://alaskaflora.org/pages/'$i'.html</link>' >> $RSS
+    # TIME=`ls -l --time-style +"%a, %e %b %Y %H:%M:%S %z" $i.md | gawk '{print $6, $7, $8, $9, $10, $11 }'`
+    DAY=`grep -E -e "^_Posted" $i.md | grep -o -E "20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]"`
+    TIME=`date --date="$DAY" +"%a, %e %b %Y %H:%M:%S %z"`
+    echo -e '      <pubDate>'$TIME'</pubDate>' >> $RSS
+    grep -E "^%" $i.md | sed -e 's/%\ *//g' -e 's/^\(.*\)$/      <title>\1<\/title>/g' >> $RSS
+    echo -e '      <guid>alaska-flora-'$i'</guid>\n      <description></description>\n    </item>' >> $RSS
+done
+    
+echo -e '  </channel>\n</rss>' >> $RSS
+

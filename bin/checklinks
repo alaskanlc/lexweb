@@ -1,0 +1,11 @@
+#!/bin/sh
+
+for i in `grep -Rh -E "https?:" ../alaskaflora.org/ | sed -e 's/.*"\(https\?:[^"]*\)".*/\1/g' | sort | uniq | grep -E "^http"`
+do
+    RESP=`curl -L -s -m 5 -w "\n%{http_code}\n" $i | tail -n 1`
+    echo "        " $RESP " " $i 
+    if [ $RESP -ne 200 ]
+    then
+        echo "FAIL: " $i
+    fi
+done
