@@ -6,26 +6,33 @@
 @include "../lib/db.awk" ;
 @include "../lib/html.awk" ;
 @include "../lib/utils.awk" ;
-@include "../lib/query.awk" ;
 
 BEGIN{
 
-  setDB();
- 
+  # setDB();  # not using this yet
+
+  # GET or POST?
+  # test with curl -d "a=b" [-G] <URL>
+  RS = "\x04";
+  if (ENVIRON["QUERY_STRING"]) {
+    IN = ENVIRON["QUERY_STRING"]
+  }
+  else getline IN
+  
   # READ QUERY STRING
-  split(ENVIRON["QUERY_STRING"], query, "&");
-  for (i1 in query) {
-    split(query[i1], tmpq, "=");
+  split(IN, query, "&");
+  for (i in query) {
+    split(query[i], tmpq, "=");
     f[tmpq[1]] = substr(urldecode(tmpq[2]),1,2000); 
   }
 
   # DETERMINE AND EXECUTE METHOD
-  if           (f["method"] == "gquery")  gquery();
-  else if      ((f["method"] == "inatproj") && f["users"])  iNatProject();
-  # else if      (f["method"] == "myquery") {} ;
+  if            (f["method"] == "validate")  validate();
+  else if       (f["method"] == "xml")       makexml();
+  else if       (f["method"] == "html")      makehtml();
 
   # other/no arguments
-  else defaultpage() ;
+  else system("echo -e 'Content-type: text/html\n'; cat index.html")
   
   exit ;
 

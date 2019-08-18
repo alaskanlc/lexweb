@@ -2,6 +2,6 @@
 
 # Lexweb
 
-_Lexware tools_
+_Lexware lexicography tools_
 
 
