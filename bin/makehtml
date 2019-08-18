@@ -7,16 +7,17 @@ if [ $# -eq 1 ]
 then
     echo "  "${1/md/html}
     pandoc -s --template=template.html \
-           -o ../alaskaflora.org/pages/${1/md/html} $1
+           -o ../lexweb/${1/md/html} $1
     # check
-    tidy -e ../alaskaflora.org/pages/${1/md/html} 2>&1 >/dev/null | grep errors
+    tidy -e ../lexweb/${1/md/html} 2>&1 >/dev/null | grep errors
 else
-    ../bin/makesitemap
-    ../bin/makerss
-    for i in [A-Za-z]*.md
+    #../bin/makesitemap
+    #../bin/makerss
+    for i in [A-Za-z0-9]*.md
     do
         echo "  "${i/md/html}
-        pandoc -s --template=template.html -o ../alaskaflora.org/pages/${i/md/html} $i
+        pandoc -s --template=template.html -o ../lexweb/${i/md/html} $i
     done
 fi
+
 

@@ -1,0 +1,11 @@
+Options +ExecCGI -Indexes
+
+<Files "do">
+  SetHandler cgi-script
+</Files>
+
+#RewriteEngine On
+#RewriteBase /
+#RewriteRule ^$ do
+
+ErrorDocument 404 /404.html

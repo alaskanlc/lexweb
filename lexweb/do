@@ -1,0 +1,32 @@
+#!../bin/gawk -f
+
+@load "../bin/json.so" 
+
+# Include function libraries
+@include "../lib/db.awk" ;
+@include "../lib/html.awk" ;
+@include "../lib/utils.awk" ;
+@include "../lib/query.awk" ;
+
+BEGIN{
+
+  setDB();
+ 
+  # READ QUERY STRING
+  split(ENVIRON["QUERY_STRING"], query, "&");
+  for (i1 in query) {
+    split(query[i1], tmpq, "=");
+    f[tmpq[1]] = substr(urldecode(tmpq[2]),1,2000); 
+  }
+
+  # DETERMINE AND EXECUTE METHOD
+  if           (f["method"] == "gquery")  gquery();
+  else if      ((f["method"] == "inatproj") && f["users"])  iNatProject();
+  # else if      (f["method"] == "myquery") {} ;
+
+  # other/no arguments
+  else defaultpage() ;
+  
+  exit ;
+
+}

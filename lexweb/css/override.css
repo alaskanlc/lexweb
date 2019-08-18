@@ -1,0 +1,14 @@
+body {
+    font-family: "Lato", Helvetica, Arial, sans-serif;
+}
+
+
+h1, h2 { font-weight: bold; }
+
+ol, ul {
+    list-style-position: outside;
+    padding-left: 3rem;
+}
+
+/* a { color: #2D2BB9; text-decoration: none; }
+a:hover { color: #0FA0CE; } */
