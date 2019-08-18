@@ -3,9 +3,10 @@
 @load "../bin/json.so" 
 
 # Include function libraries
-@include "../lib/db.awk" ;
+# @include "../lib/db.awk" ;
 @include "../lib/html.awk" ;
 @include "../lib/utils.awk" ;
+@include "../lib/lw.awk" ;
 
 BEGIN{
 

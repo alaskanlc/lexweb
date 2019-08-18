@@ -13,10 +13,10 @@ clean:
 	rm lw2xml lw2xml.tab.c lex.yy.c lw2xml.tab.h lw2xml.output
 
 test:
-	cat test.lw | xmlencode | lw2xml
+	cat test.lw | ./xmlencode | lw2xml
 
 tidytest:
-	cat test.lw | xmlencode | lw2xml | tidy -xml -indent -m -q | tee test.xml
+	cat test.lw | ./xmlencode | lw2xml | tidy -xml -indent -m -q | tee test.xml
 
 rnc: test.xml
 	java -jar ~/usr/jing-trang-20151127/build/trang.jar test.xml test.rnc
@@ -24,7 +24,7 @@ rnc: test.xml
 lt:
 	# awk '/^\.(af|rt|lw)/,EOF'
 	# cat ../../lw/lt.lex | cleanprolog | xmlencode | ./lw2xml > out 2>&1
-	cat lt.lw | cleanprolog | cleanindexmarks | xmlencode | lw2xml 2> lt.error 1> lt.xml
+	cat lt.lw | ./cleanprolog | ./cleanindexmarks | ./xmlencode | lw2xml 2> lt.error 1> lt.xml
 
 lterr:
 	cat lt.lex | ./lw2xml 2>&1 > /dev/null 

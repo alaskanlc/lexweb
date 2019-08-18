@@ -1,0 +1,5 @@
+Make symbolic links here:
+
+ gawk    -> path/to/gawk4
+ json.so -> path/to/json.so
+

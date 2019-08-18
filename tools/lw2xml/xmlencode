@@ -1,4 +1,4 @@
-#!/bin/gawk -f
+#!../../bin/gawk -f
 
 {
   gsub(/&/,"\\&amp;",$0)
