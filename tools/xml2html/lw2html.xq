@@ -10,7 +10,18 @@
       return
       <div class="root">
         <div class="attributes">
-          <span class="rootword"> { data($i/word) } </span> 
+          <span class="rootword">
+            {
+              (: ugly...! no regex in fn: :)
+              if (contains( data($i/word), '$'))
+                then (substring-before( data($i/word), '$') ,
+                  element sup { substring-before( substring-after(
+                    data($i/word), '$'), ',') } ,
+                  if (string-length( substring-after( data($i/word), ',')) > 0)
+                    then (concat(',', substring-after( data($i/word), ',')))
+                  else ()) else (data($i/word))
+            }
+          </span> 
           { if (exists($i/pd)) then 
           <span class="pd">(PD: { data($i/pd) }) </span> else () }
           { if (exists($i/tag)) then 
@@ -46,9 +57,14 @@
             {
             for $j in $i/gc2
             return
-            <span>
-            { data($j/type) }, <b>{ data($j/word) }</b><br/>
-            </span>
+              <div>
+                <span><b>{ data($j/word) }</b></span>
+                <span>
+                  { concat('(',replace(data($j/type),'\.',''),'.)') }
+                </span>
+                { if (exists($j/gl)) then 
+                <span class="gl"> { data($i/tag) } </span> else () }
+              </div>
             }
           </div>
           else ()
