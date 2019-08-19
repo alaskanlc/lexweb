@@ -1,6 +1,7 @@
 lib/db.awk
 bin/gawk
 bin/json.so
+bin/xqilla
 grammar/QUESTIONS
 tools/lw2xml/lt*
 tools/lw2xml/lex.yy.c

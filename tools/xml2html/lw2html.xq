@@ -1,9 +1,10 @@
 (: declare namespace html = "http://www.w3.org/1999/xhtml"; :)
 <html>
   <head>
-    <link rel="stylesheet" href="lexware.css"/>
+    <link rel="stylesheet" href="css/lexware.css"/>
   </head>
   <body>
+  <div class="container">
     {
       for $i in /lexware/(rt|af)
       return
@@ -54,5 +55,6 @@
         }  
       </div>
     }
+  </div>
   </body>
 </html>

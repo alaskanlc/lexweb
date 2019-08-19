@@ -24,7 +24,7 @@ BEGIN{
   split(IN, query, "&");
   for (i in query) {
     split(query[i], tmpq, "=");
-    f[tmpq[1]] = substr(urldecode(tmpq[2]),1,2000); 
+    f[tmpq[1]] = substr(urldecode(tmpq[2]),1,2000000); 
   }
 
   # DETERMINE AND EXECUTE METHOD
