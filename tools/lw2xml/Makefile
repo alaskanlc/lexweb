@@ -24,7 +24,8 @@ rnc: test.xml
 lt:
 	# awk '/^\.(af|rt|lw)/,EOF'
 	# cat ../../lw/lt.lex | cleanprolog | xmlencode | ./lw2xml > out 2>&1
-	cat lt.lw | ./cleanprolog | ./cleanindexmarks | ./xmlencode | lw2xml 2> lt.error 1> lt.xml
+	#	cat lt.lw | ./cleanprolog | ./cleanindexmarks | ./xmlencode | lw2xml 2> lt.error 1> lt.xml
+	cat ~/desk/collab/jimK/github/gwichin/lexware/lt.lex | ./cleanprolog | ./cleanindexmarks | ./xmlencode | lw2xml 2> lt.error 1> lt.xml
 
 lterr:
 	cat lt.lex | ./lw2xml 2>&1 > /dev/null 

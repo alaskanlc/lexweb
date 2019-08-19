@@ -4,12 +4,13 @@
 # Lexware file. On each line below is a band label, with indentation
 # indicating the level of the band in an implied hierarchy. The `|`
 # indicates alternatives. The label is followed by the number of
-# allowed occurrences, and a brief description of the BL.
+# allowed occurrences, and a brief description of the BL. Blank lines are
+# cosmetic only.
 
 .rt (1-or-more) "Root word" .
   pd (0-or-1) "Proto Dene" .
   tag (0-or-1) "Tag" .
-  rtyp (0-or-1) "Root word type, incl root class: rtu , rrt,  drt, ra" ." .
+  rtyp (0-or-1) "Root word type, incl root class: rtu , rrt,  drt, ra" .
   df (0-or-1) "Derived forms" .
   ..sets (0-or-1) "Sets" .
     set (1-or-more) "Aspectual category; word 2: conc[conclusive], \
@@ -21,8 +22,11 @@
   ..th (0-to-many) "Verb theme" .
     tc (exactly-1) "Theme category" .
     gl (exactly-1) "Gloss" .
+      quo (0-or-1) "Quote"
     ex (0-to-many) "Example" .
+      dial (0-or-1) "Dialect"
       eng (exactly-1) "Translation" .
+        quo (0-or-1) "Quote"
     ...prds (0-to-many) "Usage paradigm" .
       prd (1-or-more) "Paradigm example; word 2: 1s, 2s, 3s, 1p, 2p, 3p" .
         prdgl (exactly-1) "Paradigm gloss" .
@@ -31,6 +35,7 @@
   ..an  (0-to-many) "Areal noun" |
   ..c   (0-to-many) "Compound" |
   ..cnj (0-to-many) "Conjunction" |
+  ..coll (0-to-many) "Collocation" |
   ..dem (0-to-many) "Demonstrative" |
   ..dir (0-to-many) "Directional" |
   ..enc (0-to-many) "Enclitic" |
@@ -51,15 +56,19 @@
     dial (0-or-1) "Dialect" .
       dial (0-to-many) "Additional dialects" .
     gl (exactly-1) "Gloss" .
+      quo (0-or-1) "Quote"
     lit (0-or-1) "Literal translation" .
+    cf (0-or-1) "Compare with"
     sc (0-or-1) "Scientific name" .
     ex (0-to-many) "Example" .
+      dial (0-or-1)
       eng (exactly-1) "Translation" .
     ...adj (0-to-many) "Ajective (sub-subentry)" |
     ...adv (0-to-many) "Adverb" |
     ...an  (0-to-many) "Areal noun" |
     ...c   (0-to-many) "Compound" |
     ...cnj (0-to-many) "Conjunction" |
+    ...coll (0-to-many) "Collocation" |
     ...dem (0-to-many) "Demonstrative" |
     ...dir (0-to-many) "Directional" |
     ...enc (0-to-many) "Enclitic" |
@@ -80,45 +89,104 @@
       dial (0-or-1) "Dialect" .
         dial (0-to-many) "Additional dialects" .
       gl (exactly-1) "Gloss" .
-      lit (0-or-1) "Literal translation" .
+        quo (0-or-1) "Quote"
+      lit (0-or-1) "Literal translation" .      
       sc (0-or-1) "Scientific name" .
       ex (0-to-many) "Example" .
         eng (exactly-1) "Translation" .
+
 .af (0-to-many) "Affix" .
   pd (0-or-1) "Proto Dene" .
   tag (0-or-1) "Tag (optimally always present)" .
   rtyp (0-or-1) "Type" .
-  ..nsf (0-to-many) "Noun suffix (suffixes)"  |
-  ..sf (0-to-many) "Suffix"   |
+  # Noun .af
+  ..nsf (0-to-many) "Noun suffix (suffixes)"
+    gl (exactly-1) "Gloss" .
+      quo (0-or-1) "Quote"
+    ex (0-to-many) "Example" .
+      eng (exactly-1) "Translation" .
+        quo (0-or-1) "Quote"
+    ...an  (0-to-many) "Areal noun" |
+    ...exc (0-to-many) "Exclamation" |
+    ...n   (0-to-many) "Noun" |
+    ...pp  (0-to-many) "Postposition" |
+    ...voc (0-to-many) "Vocative"
+      gl (exactly-1) "Gloss" .
+        quo (0-or-1) "Quote"
+      ex (0-to-many) "Example" .
+        eng (exactly-1) "Translation" .
+          quo (0-or-1) "Quote"
+  # Suffix .af        
+  ..sf (0-to-many) "Suffix" 
+    gl (exactly-1) "Gloss" .
+      quo (0-or-1) "Quote"
+    ex (0-to-many) "Example" .
+      eng (exactly-1) "Translation" .
+        quo (0-or-1) "Quote"
+    ...exc (0-to-many) "Exclamation"
+      gl (exactly-1) "Gloss" 
+        quo (0-or-1) "Quote"
+      ex (0-to-many) "Example" 
+        eng (exactly-1) "Translation" 
+          quo (0-or-1) "Quote"
+  # Verb .af
   ..vpf (0-to-many) "Verb prefix" |
   ..vsf (0-to-many) "Verb suffix"  |
   ..vsf1 (0-to-many) "Verb suffix one" .
     gl (exactly-1) "Gloss" .
+      quo (0-or-1) "Quote"
     ex (0-to-many) "Example" .
       eng (exactly-1) "Translation" .
-    ...prds (0-to-many) "Usage paradigm" .
-      prd (1-or-more) "Paradigm example" .
-        prdgl (exactly-1) "Paradigm gloss" .
-    ...ifs (0-to-many) "Inflectional string" .
+        quo (0-or-1) "Quote"
+    ...adv (0-to-many) "Adverb" |
+    ...ifs (0-to-many) "Inflectional string"
       gl (exactly-1) "Gloss" .
+        quo (0-or-1) "Quote"
+      ex (0-to-many) "Example" 
+        eng (exactly-1) "Translation" 
+          quo (0-or-1) "Quote"
+  # Aspectual der. .af
   ..ads (0-to-many) "Aspectual derivation string (strings)" |
-  ..sds (0-to-many) "Super-aspectual derivational string" |
+  ..sds (0-to-many) "Super-aspectual derivational string"
+    asp (exactly-1) "Aspect"
+    gl (exactly-1) "Gloss" 
+      quo (0-or-1) "Quote"
+    ex (0-to-many) "Example" 
+      eng (exactly-1) "Translation"
+        quo (0-or-1) "Quote"
+  # Theme .af
   ..tfs (0-to-many) "Theme formation string" .
-    asp (0-or-1) "Aspect" .
-    gl (exactly-1) "Gloss" .
-    ex (0-to-many) "Example" .
-      eng (exactly-1) "Translation" .
-    ...th (0-to-many) "Verb theme" [NOTE - may only be for ..tfs ] .
-      tc (exactly-1) "Theme category" .
-      gl (exactly-1) "Gloss" .
-      ex (0-to-many) "Example" .
-        eng (exactly-1) "Translation" .
+    tc (exactly-1) "Theme category"
+    gl (exactly-1) "Gloss" 
+      quo (0-or-1) "Quote"
+    ex (0-to-many) "Example" 
+      eng (exactly-1) "Translation"
+        quo (0-or-1) "Quote"
+    ...th (0-to-many) "Verb theme" .
+      tc (0-or-1) "Theme category" .
+      gl (exactly-1) "Gloss" 
+        quo (0-or-1) "Quote"
+      ex (0-to-many) "Example" 
+        eng (exactly-1) "Translation"
+          quo (0-or-1) "Quote"
+  # Non-asp der. .af
   ..nds (0-to-many) "Non-aspectual derivational string" . 
     gl (exactly-1) "Gloss" .
     ex (0-to-many) "Example" .
       eng (exactly-1) "Translation" .
+      
+  ..nfsf (vfsf, nfpf, vfpf)
+    gl
+    ...drt
+      gl
+      ex
+        eng
+
+
+
 .lw (0-to-many) "Loan word" .
-  lc (0-or-1) "Loan word class, e.g. obscure"
+  tag (0-or-1) "Tag"
+  rtyp ...
   src (exactly-1) "Source language and word"
   ..adj (exactly-1) "Adjective (class of loan word)" |
   ..adv (exactly-1) "Adverb" |
@@ -136,6 +204,13 @@
       dial (0-or-1) "Dialect"
         dial (0-to-many) "Additional dialects"
       gl (exactly-1) "Gloss"
+
+.xr 
+  in (0-or-1)
+  xgl (exactly-1)
+  see (exactly-1)
+
+
 
 # Some band labels may occur anywhere in the file and indicate markup
 # not data content.
