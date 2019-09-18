@@ -7,6 +7,9 @@
 # allowed occurrences, and a brief description of the BL. Blank lines are
 # cosmetic only.
 
+# This grammar attempts to be a common resource for Lower Tanana and
+# Gwich'in
+
 .rt (1-or-more) "Root word" .
   pd (0-or-1) "Proto Dene" .
   tag (0-or-1) "Tag" .
@@ -14,21 +17,29 @@
   df (0-or-1) "Derived forms" .
   ..sets (0-or-1) "Sets" .
     set (1-or-more) "Aspectual category; word 2: conc[conclusive], \
-                     cns[consequetive], cona[conative], cont[continuative], \
+                     cns[consecutive], cona[conative], cont[continuative], \
                      cust[customary], dist[distrubutive], dur[durative], \
                      mom[momentaneous], mult[multiple], neu[neuter], \
                      per[perambulative], prog[progressive], rep[repetitive], \
                      rev[reversative], sem[semelfactive], tran[transitional]" .
   ..th (0-to-many) "Verb theme" .
-    tc (exactly-1) "Theme category" .
+    tc (exactly-1) "Theme category; word 2; succ[successive], mot[motion], \
+                    desc[descriptive], dim[dimentional], \
+                    clas-mot[classificatory motion], clas-stat[classificatory \
+                    stative], ext[extension], op[operative], \
+                    ono[onomatopoetic], op-ono, conv[conversive] CHECK" .
+    cnj (0-to-1) "Conjugation prefix"                
     gl (exactly-1) "Gloss" .
-      quo (0-or-1) "Quote"
+      quo (0-or-1) "Quotations from consultant (or comment)"
     ex (0-to-many) "Example" .
       dial (0-or-1) "Dialect"
+      cit (0-or-1) "Citation"
       eng (exactly-1) "Translation" .
+        cit (0-or-1) "Citation"
         quo (0-or-1) "Quote"
     ...prds (0-to-many) "Usage paradigm" .
-      prd (1-or-more) "Paradigm example; word 2: 1s, 2s, 3s, 1p, 2p, 3p" .
+      prd (1-or-more) "Paradigm example; word 2: 1s, 2s, 3s, 1p, 2p, 3p, \
+                       1d, 2d, 3d" .
         prdgl (exactly-1) "Paradigm gloss" .
   ..adj (0-to-many) "Ajective (subentry)" |
   ..adv (0-to-many) "Adverb" |
@@ -42,6 +53,8 @@
   ..exc (0-to-many) "Exclamation" |
   ..i   (O-to-many) "Incorporate" |
   ..ic  (0-to-many) "Incorporate plus compound" |
+  ..int (0-to-many) "Interogative" |
+  ..inj (0-to-many) "Interjection" |
   ..n   (0-to-many) "Noun" |
   ..nc  (0-to-many) "Noun plus compound" |
   ..ni  (0-to-many) "Noun plus incorporate" |
@@ -75,6 +88,8 @@
     ...exc (0-to-many) "Exclamation" |
     ...i   (O-to-many) "Incorporate" |
     ...ic  (0-to-many) "Incorporate plus compound" |
+    ...int (0-to-many) "Interogative" |
+    ...inj (0-to-many) "Interjection" |
     ...n   (0-to-many) "Noun" |
     ...nc  (0-to-many) "Noun plus compound" |
     ...ni  (0-to-many) "Noun plus incorporate" |
@@ -139,7 +154,8 @@
       eng (exactly-1) "Translation" .
         quo (0-or-1) "Quote"
     ...adv (0-to-many) "Adverb" |
-    ...ifs (0-to-many) "Inflectional string"
+    ...ifs (0-to-many) "Inflectional string" |
+    ...drt (0-to-many) "Derived root"
       gl (exactly-1) "Gloss" .
         quo (0-or-1) "Quote"
       ex (0-to-many) "Example" 
@@ -156,14 +172,14 @@
         quo (0-or-1) "Quote"
   # Theme .af
   ..tfs (0-to-many) "Theme formation string" .
-    tc (exactly-1) "Theme category"
+    tc (exactly-1) "Theme category CHECK REDUNDANT"
     gl (exactly-1) "Gloss" 
       quo (0-or-1) "Quote"
     ex (0-to-many) "Example" 
       eng (exactly-1) "Translation"
         quo (0-or-1) "Quote"
     ...th (0-to-many) "Verb theme" .
-      tc (0-or-1) "Theme category" .
+      tc (0-or-1) "Theme category CHECK REDUNDANT" .
       gl (exactly-1) "Gloss" 
         quo (0-or-1) "Quote"
       ex (0-to-many) "Example" 
@@ -174,10 +190,9 @@
     gl (exactly-1) "Gloss" .
     ex (0-to-many) "Example" .
       eng (exactly-1) "Translation" .
-      
-  ..nfsf (vfsf, nfpf, vfpf)
+  ..nfsf (vfsf, nfpf, vfpf) "Noun formation suffix
     gl
-    ...drt
+    ...drt "Derived root"
       gl
       ex
         eng
@@ -210,7 +225,9 @@
   xgl (exactly-1)
   see (exactly-1)
 
+TO ADD
 
+cit "Citation" 
 
 # Some band labels may occur anywhere in the file and indicate markup
 # not data content.
@@ -220,4 +237,11 @@ com (0-to-many) "Comment"
 ..par (0-to-many) "Paragraph-level divisions"
 
 # The `#` symbol beginning a line indicates a comment not to parsed.
+
+----
+
+# Consider an `src` band that follows `eng` or `gl`
+#   to indicate the source (from Tim Montler)
+# `frq` band to capture common or rare (Sam A question) - filter then to make
+#   a beginner's dictionary.
 
