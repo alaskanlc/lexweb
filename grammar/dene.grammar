@@ -4,11 +4,14 @@
 # Lexware file. On each line below is a band label, with indentation
 # indicating the level of the band in an implied hierarchy. The `|`
 # indicates alternatives. The label is followed by the number of
-# allowed occurrences, and a brief description of the BL. Blank lines are
-# cosmetic only.
+# allowed occurrences, and a brief description of the BL. Blank lines
+# are cosmetic only. "<foo>" is the symbol for a recurring block of
+# elements - it contains the same keyword as in the yacc parser file.
 
 # This grammar attempts to be a common resource for Lower Tanana and
 # Gwich'in
+
+<level1> = .rt | .af | .lw
 
 .rt (1-or-more) "Root word" .
   pd (0-or-1) "Proto Dene" .
@@ -28,7 +31,7 @@
                     clas-mot[classificatory motion], clas-stat[classificatory \
                     stative], ext[extension], op[operative], \
                     ono[onomatopoetic], op-ono, conv[conversive] CHECK" .
-    cnj (0-to-1) "Conjugation prefix"                
+    cnj (0-or-1) "Conjugation prefix"                
     gl (exactly-1) "Gloss" .
       quo (0-or-1) "Quotations from consultant (or comment)"
     ex (0-to-many) "Example" .
@@ -51,7 +54,7 @@
   ..dir (0-to-many) "Directional" |
   ..enc (0-to-many) "Enclitic" |
   ..exc (0-to-many) "Exclamation" |
-  ..i   (O-to-many) "Incorporate" |
+  ..i   (0-to-many) "Incorporate" |
   ..ic  (0-to-many) "Incorporate plus compound" |
   ..int (0-to-many) "Interogative" |
   ..inj (0-to-many) "Interjection" |
@@ -86,7 +89,7 @@
     ...dir (0-to-many) "Directional" |
     ...enc (0-to-many) "Enclitic" |
     ...exc (0-to-many) "Exclamation" |
-    ...i   (O-to-many) "Incorporate" |
+    ...i   (0-to-many) "Incorporate" |
     ...ic  (0-to-many) "Incorporate plus compound" |
     ...int (0-to-many) "Interogative" |
     ...inj (0-to-many) "Interjection" |
@@ -190,7 +193,7 @@
     gl (exactly-1) "Gloss" .
     ex (0-to-many) "Example" .
       eng (exactly-1) "Translation" .
-  ..nfsf (vfsf, nfpf, vfpf) "Noun formation suffix
+  ..nfsf (vfsf, nfpf, vfpf) "Noun formation suffix"
     gl
     ...drt "Derived root"
       gl
