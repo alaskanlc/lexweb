@@ -38,7 +38,9 @@ void main()
 %token   <str> WORDS
 %token   PD TAG RTYP DF SETS SET
 %token   <str> SETTYPE
-%token   TH TC SRC GL EX ENG PRDS PRD PRDGL 
+%token   TH TC
+%token   <str> TCTYPE
+%token   SRC GL EX ENG PRDS PRD PRDGL 
 %token   <str> GC2
 %token   DIAL DIALX
 %token   <str> DIALXLANG
@@ -110,7 +112,7 @@ th.0m: %empty | th.0m th ;
 th: th.o th.b tc.b gl.b exeng.0m prds.0m th.c ;
 th.o: %empty { printf("<th>\n"); } ;
 th.b: TH WORDS { printf("<word>%s</word>\n", $2); };
-tc.b: TC WORDS { printf("<tc>%s</tc>\n", $2); };
+tc.b: TC TCTYPE { printf("<tc>%s</tc>\n", $2); };
 gl.b: GL WORDS { printf("<gl>%s</gl>\n", $2); };
 th.c: %empty { printf("</th>\n"); } ;
 

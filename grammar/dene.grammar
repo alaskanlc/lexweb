@@ -26,11 +26,12 @@
                      per[perambulative], prog[progressive], rep[repetitive], \
                      rev[reversative], sem[semelfactive], tran[transitional]" .
   ..th (0-to-many) "Verb theme" .
-    tc (exactly-1) "Theme category; word 2; succ[successive], mot[motion], \
-                    desc[descriptive], dim[dimentional], \
-                    clas-mot[classificatory motion], clas-stat[classificatory \
-                    stative], ext[extension], op[operative], \
-                    ono[onomatopoetic], op-ono, conv[conversive] CHECK" .
+    tc (exactly-1) "Theme category; word 2; clas-mot[classificatory motion], \
+                     clas-stat[classificatory stative], conv[conversive], \
+                     desc[descriptive], dim[dimentional], ext[extension], \
+                     mot[motion], neu[], ono[onomatopoetic], op[operative], \
+                     op-ono[onomatopoetic operative], stat[stative], \
+                     succ[successive] CHECK" .
     cnj (0-or-1) "Conjugation prefix"                
     gl (exactly-1) "Gloss" .
       quo (0-or-1) "Quotations from consultant (or comment)"

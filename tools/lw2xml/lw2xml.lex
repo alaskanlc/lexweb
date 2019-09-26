@@ -12,6 +12,7 @@
  /* Start-condition tokens */
 %x WHITE TEXT SETWHITE SETTEXT SETWHITE2 COMWHITE
 %x COMTEXT DIALWHITE DIALWHITE2 DIALTEXT
+%x TCWHITE TCTEXT
 
 %%
  /* Regular expressions to match band labels */
@@ -21,13 +22,17 @@
  /* .rt */ 
 ^\.rt       { BEGIN(WHITE);    return RT;   }
 <WHITE>[ \t]+ { BEGIN(TEXT);                }
-<TEXT>.+ {
- /* get rest of line */
+ /* missing */
+<WHITE>\ *\n {
+  fprintf(stderr, "  L.%d: missing text\n",yylineno);
+  BEGIN(INITIAL);
+}
+<TEXT>.+/\n {
+ /* get rest of line  - note, regex does not include \n */
   yylval.str = strdup(yytext);
+  BEGIN(INITIAL);  /* this moves over the \n */
   return WORDS;
 }
- /* reset */ 
-<TEXT>\n    { BEGIN(INITIAL);               }
 
  /* .rt attributes */
 ^pd         { BEGIN(WHITE);    return PD;   }
@@ -57,7 +62,31 @@
 
  /* verb themes */
 ^\.\.\.?th  { BEGIN(WHITE);    return TH;   }
-^tc         { BEGIN(WHITE);    return TC;   }
+^tc         { BEGIN(TCWHITE);  return TC;   }
+<TCWHITE>[ \t]+ { BEGIN(TCTEXT);            }
+ /* missing */ 
+<TCWHITE>\ *\n {
+  fprintf(stderr, "  L.%d: missing set type\n",yylineno);
+  BEGIN(INITIAL);
+}
+<TCTEXT>(clas\-mot|clas\-stat|conv|desc|dim|ext|mot|neu|ono|op|op\-ono|stat|succ)/\n {
+  /* grab the set type */
+  yylval.str = strdup(yytext);
+  BEGIN(INITIAL);
+  return TCTYPE;
+}
+ /* type not listed */
+<TCTEXT>[^ ]+/\n {
+    fprintf(stderr, "  L.%d: unknown tc type '%s'\n",yylineno,yytext);
+    yylval.str = strdup(yytext);
+    BEGIN(INITIAL);
+    return TCTYPE;
+}
+ /* missing */ 
+<TCTEXT>\n {
+  fprintf(stderr, "  L.%d: missing set type\n",yylineno);
+  BEGIN(INITIAL);
+}
 
  /* gloss */
 ^gl         { BEGIN(WHITE);    return GL;   }
