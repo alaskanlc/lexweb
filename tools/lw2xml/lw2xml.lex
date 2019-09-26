@@ -10,15 +10,24 @@
 %option noyywrap yylineno
 
  /* Start-condition tokens */
-%x WHITE TEXT SETWHITE SETTEXT SETWHITE2 COMWHITE COMTEXT DIALWHITE DIALWHITE2 DIALTEXT
+%x WHITE TEXT SETWHITE SETTEXT SETWHITE2 COMWHITE
+%x COMTEXT DIALWHITE DIALWHITE2 DIALTEXT
 
 %%
  /* Regular expressions to match band labels */
  /* Order follows the symbolic grammar      */
- /* Band labels first, then spaces, then words */
+ /* Conditional regexes placed at first reference */
 
  /* .rt */ 
-^\.rt       { BEGIN(WHITE); return RT;   }
+^\.rt       { BEGIN(WHITE);    return RT;   }
+<WHITE>[ \t]+ { BEGIN(TEXT);                }
+<TEXT>.+ {
+ /* get rest of line */
+  yylval.str = strdup(yytext);
+  return WORDS;
+}
+ /* reset */ 
+<TEXT>\n    { BEGIN(INITIAL);               }
 
  /* .rt attributes */
 ^pd         { BEGIN(WHITE);    return PD;   }
@@ -29,9 +38,25 @@
  /* sets */
 ^\.\.sets   {                  return SETS; }
 ^set        { BEGIN(SETWHITE); return SET;  }
+<SETWHITE>[ \t]+ { BEGIN(SETTEXT);          }
+<SETTEXT>(conc|cns|cona|cont|cust|dist|dur|mom|mult|neu|per|prog|rep|rev|sem|tran)/\ + {
+  /* grab the set type */
+  yylval.str = strdup(yytext);
+  BEGIN(SETWHITE2);
+  return SETTYPE;
+}
+ /* type not listed */
+<SETTEXT>[^ ]+ {
+   fprintf(stderr, "  L.%d: unknown set type '%s'\n",yylineno,yytext);
+   yylval.str = strdup(yytext);
+   BEGIN(SETWHITE2);
+   return SETTYPE;
+}
+<SETTEXT>\n { BEGIN(INITIAL); }
+<SETWHITE2>[ \t]+  { BEGIN(TEXT);           }
 
  /* verb themes */
-^\.\.\.?th     { BEGIN(WHITE);    return TH;   }
+^\.\.\.?th  { BEGIN(WHITE);    return TH;   }
 ^tc         { BEGIN(WHITE);    return TC;   }
 
  /* gloss */
@@ -116,41 +141,17 @@
 
 
  /* Now... get the post-band label delimiters */
-<WHITE>[ \t]+      { BEGIN(TEXT);    }
 <COMWHITE>[ \t]+   { BEGIN(COMTEXT); }
-<SETWHITE>[ \t]+   { BEGIN(SETTEXT); }
-<SETWHITE2>[ \t]+  { BEGIN(TEXT); }
 <DIALWHITE>[ \t]+  { BEGIN(DIALTEXT); }
 <DIALWHITE2>[ \t]+ { BEGIN(TEXT); }
 
  /* Finally, get the rest of each line */
 
-<TEXT>.+ {
-  /* get all the rest */
-  yylval.str = strdup(yytext);
-  return WORDS;
-}
-<TEXT>\n      { /* reset to INITIAL */ BEGIN(INITIAL); }
 
 <COMTEXT>.+ { /* print out the comment - it can be anywhere in the xml */
   printf("<com>%s</com>\n",yytext); } 
 <COMTEXT>\n { BEGIN(INITIAL); }
 
-<SETTEXT>(conc|cns|cona|cont|cust|dist|dur|mom|mult|neu|per|prog|rep|rev|sem|tran)/\ + {
-  /* grab the set type */
-  yylval.str = strdup(yytext);
-  BEGIN(SETWHITE2);
-  return SETTYPE;
-}
-
-<SETTEXT>[^ ]+ {
-   fprintf(stderr, "  L.%d: unknown set type '%s'\n",yylineno,yytext);
-   yylval.str = strdup(yytext);
-   BEGIN(SETWHITE2);
-   return SETTYPE;
-}
- /*<SETTEXT>. { } */
-<SETTEXT>\n { BEGIN(INITIAL); }
 
 <DIALTEXT>[^ ]+ {
    yylval.str = strdup(yytext);

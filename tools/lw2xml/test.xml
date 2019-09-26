@@ -3,6 +3,8 @@
     <word>'aii</word>
     <pd>'aii</pd>
     <tag>classify compact object</tag>
+    <rtyp>FOO</rtyp>
+    <df>FOO</df>
     <sets>
       <set>
         <type>neu</type>

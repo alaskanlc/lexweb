@@ -1,6 +1,8 @@
 .rt 'aii
 pd 'aii
 tag classify compact object
+rtyp FOO
+df FOO
 ..sets
 set neu 'ąįį 'è' 'àa 'è'
 set mom 'àii 'ąįį 'aa 'aa
