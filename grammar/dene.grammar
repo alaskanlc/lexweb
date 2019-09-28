@@ -5,46 +5,44 @@
 # indicating the level of the band in an implied hierarchy. The `|`
 # indicates alternatives. The label is followed by the number of
 # allowed occurrences, and a brief description of the BL. Blank lines
-# are cosmetic only. "<foo>" is the symbol for a recurring block of
+# are cosmetic only. <foo> is the symbol for a recurring block of
 # elements - it contains the same keyword as in the yacc parser file.
 
 # This grammar attempts to be a common resource for Lower Tanana and
 # Gwich'in
 
-<level1> = .rt | .af | .lw
-
-.rt (1-or-more) "Root word" .
-  pd (0-or-1) "Proto Dene" .
-  tag (0-or-1) "Tag" .
-  rtyp (0-or-1) "Root word type, incl root class: rtu , rrt,  drt, ra" .
-  df (0-or-1) "Derived forms" .
-  ..sets (0-or-1) "Sets" .
+.rt (1-or-more) "Root word" <level1>
+  pd (0-or-1) "Proto Dene"
+  tag (0-or-1) "Tag"
+  rtyp (0-or-1) "Root word type, incl root class: rtu , rrt,  drt, ra"
+  df (0-or-1) "Derived forms"
+  ..sets (0-or-1) "Sets" <sets>
     set (1-or-more) "Aspectual category; word 2: conc[conclusive], \
                      cns[consecutive], cona[conative], cont[continuative], \
                      cust[customary], dist[distrubutive], dur[durative], \
                      mom[momentaneous], mult[multiple], neu[neuter], \
                      per[perambulative], prog[progressive], rep[repetitive], \
-                     rev[reversative], sem[semelfactive], tran[transitional]" .
-  ..th (0-to-many) "Verb theme" .
+                     rev[reversative], sem[semelfactive], tran[transitional]"
+  ..th (0-to-many) "Verb theme" <th>
     tc (exactly-1) "Theme category; word 2; clas-mot[classificatory motion], \
                      clas-stat[classificatory stative], conv[conversive], \
                      desc[descriptive], dim[dimentional], ext[extension], \
                      mot[motion], neu[], ono[onomatopoetic], op[operative], \
                      op-ono[onomatopoetic operative], stat[stative], \
-                     succ[successive] CHECK" .
-    cnj (0-or-1) "Conjugation prefix"                
-    gl (exactly-1) "Gloss" .
+                     succ[successive] CHECK"
+    cnj (0-or-1) "Conjugation prefix"
+    gl (exactly-1) "Gloss" <gl>
       quo (0-or-1) "Quotations from consultant (or comment)"
-    ex (0-to-many) "Example" .
+      cit (0-or-1) "Citation (e.g., Notebook source)"
+    ex (0-to-many) "Example" <exeng>
       dial (0-or-1) "Dialect"
-      cit (0-or-1) "Citation"
-      eng (exactly-1) "Translation" .
-        cit (0-or-1) "Citation"
-        quo (0-or-1) "Quote"
-    ...prds (0-to-many) "Usage paradigm" .
+      eng (exactly-1) "Translation"
+      quo (0-or-1) "Quotations from consultant (or comment)"
+      cit (0-or-1) "Citation (e.g., Notebook source)"
+    ...prds (0-to-many) "Usage paradigm"
       prd (1-or-more) "Paradigm example; word 2: 1s, 2s, 3s, 1p, 2p, 3p, \
-                       1d, 2d, 3d" .
-        prdgl (exactly-1) "Paradigm gloss" .
+                       1d, 2d, 3d"
+        prdgl (exactly-1) "Paradigm gloss"
   ..adj (0-to-many) "Ajective (subentry)" |
   ..adv (0-to-many) "Adverb" |
   ..an  (0-to-many) "Areal noun" |
@@ -69,17 +67,14 @@
   ..pp  (0-to-many) "Postposition" |
   ..prt (0-to-many) "Particle" |
   ..venc (0-to-many) "Verb enclitic" |
-  ..voc (0-to-many) "Vocative" .
-    dial (0-or-1) "Dialect" .
-      dial (0-to-many) "Additional dialects" .
-    gl (exactly-1) "Gloss" .
-      quo (0-or-1) "Quote"
-    lit (0-or-1) "Literal translation" .
+  ..voc (0-to-many) "Vocative" <gc2>
+    dial (0-or-1) "Dialect" <dial>
+      dial (0-to-many) "Additional dialects"
+    <gl>
+    lit (0-or-1) "Literal translation"
     cf (0-or-1) "Compare with"
-    sc (0-or-1) "Scientific name" .
-    ex (0-to-many) "Example" .
-      dial (0-or-1)
-      eng (exactly-1) "Translation" .
+    sc (0-or-1) "Scientific name"
+    <exeng>
     ...adj (0-to-many) "Ajective (sub-subentry)" |
     ...adv (0-to-many) "Adverb" |
     ...an  (0-to-many) "Areal noun" |
@@ -104,106 +99,83 @@
     ...pp  (0-to-many) "Postposition" |
     ...prt (0-to-many) "Particle" |
     ...venc (0-to-many) "Verb enclitic" |
-    ...voc (0-to-many) "Vocative" .
-      dial (0-or-1) "Dialect" .
-        dial (0-to-many) "Additional dialects" .
-      gl (exactly-1) "Gloss" .
-        quo (0-or-1) "Quote"
-      lit (0-or-1) "Literal translation" .      
-      sc (0-or-1) "Scientific name" .
-      ex (0-to-many) "Example" .
-        eng (exactly-1) "Translation" .
+    ...voc (0-to-many) "Vocative" <gc3>
+      <dial>
+      <gl>
+      lit (0-or-1) "Literal translation"
+      cf (0-or-1) "Compare with"
+      sc (0-or-1) "Scientific name"
+      <exeng>
 
-.af (0-to-many) "Affix" .
-  pd (0-or-1) "Proto Dene" .
-  tag (0-or-1) "Tag (optimally always present)" .
-  rtyp (0-or-1) "Type" .
+.af (0-to-many) "Affix"
+  pd (0-or-1) "Proto Dene"
+  tag (0-or-1) "Tag (optimally always present)"
+  rtyp (0-or-1) "Type"
   # Noun .af
-  ..nsf (0-to-many) "Noun suffix (suffixes)"
-    gl (exactly-1) "Gloss" .
-      quo (0-or-1) "Quote"
-    ex (0-to-many) "Example" .
-      eng (exactly-1) "Translation" .
-        quo (0-or-1) "Quote"
+  ..nsf (0-to-many) "Noun suffix (suffixes)" <af2n>
+    <gl>
+    <exeng>
     ...an  (0-to-many) "Areal noun" |
     ...exc (0-to-many) "Exclamation" |
     ...n   (0-to-many) "Noun" |
     ...pp  (0-to-many) "Postposition" |
-    ...voc (0-to-many) "Vocative"
-      gl (exactly-1) "Gloss" .
-        quo (0-or-1) "Quote"
-      ex (0-to-many) "Example" .
-        eng (exactly-1) "Translation" .
-          quo (0-or-1) "Quote"
+    ...voc (0-to-many) "Vocative" <af2n3>
+      <gl>
+      <exeng>
+  # (..nsf) OR:
   # Suffix .af        
-  ..sf (0-to-many) "Suffix" 
-    gl (exactly-1) "Gloss" .
-      quo (0-or-1) "Quote"
-    ex (0-to-many) "Example" .
-      eng (exactly-1) "Translation" .
-        quo (0-or-1) "Quote"
+  ..sf (0-to-many) "Suffix" <af2s>
+    <gl>
+    <exeng>
     ...exc (0-to-many) "Exclamation"
-      gl (exactly-1) "Gloss" 
-        quo (0-or-1) "Quote"
-      ex (0-to-many) "Example" 
-        eng (exactly-1) "Translation" 
-          quo (0-or-1) "Quote"
+      <gl>
+      <exeng>
+  # (..sf) OR:
   # Verb .af
   ..vpf (0-to-many) "Verb prefix" |
   ..vsf (0-to-many) "Verb suffix"  |
-  ..vsf1 (0-to-many) "Verb suffix one" .
-    gl (exactly-1) "Gloss" .
-      quo (0-or-1) "Quote"
-    ex (0-to-many) "Example" .
-      eng (exactly-1) "Translation" .
-        quo (0-or-1) "Quote"
+  ..vsf1 (0-to-many) "Verb suffix one" <af2v>
+    <gl>
+    <exeng>
     ...adv (0-to-many) "Adverb" |
     ...ifs (0-to-many) "Inflectional string" |
     ...drt (0-to-many) "Derived root"
-      gl (exactly-1) "Gloss" .
-        quo (0-or-1) "Quote"
-      ex (0-to-many) "Example" 
-        eng (exactly-1) "Translation" 
-          quo (0-or-1) "Quote"
-  # Aspectual der. .af
-  ..ads (0-to-many) "Aspectual derivation string (strings)" |
-  ..sds (0-to-many) "Super-aspectual derivational string"
-    asp (exactly-1) "Aspect"
-    gl (exactly-1) "Gloss" 
-      quo (0-or-1) "Quote"
-    ex (0-to-many) "Example" 
-      eng (exactly-1) "Translation"
-        quo (0-or-1) "Quote"
+      <gl>
+      <exeng>
+  # (..vpf) OR:
   # Theme .af
-  ..tfs (0-to-many) "Theme formation string" .
-    tc (exactly-1) "Theme category CHECK REDUNDANT"
-    gl (exactly-1) "Gloss" 
-      quo (0-or-1) "Quote"
-    ex (0-to-many) "Example" 
-      eng (exactly-1) "Translation"
-        quo (0-or-1) "Quote"
-    ...th (0-to-many) "Verb theme" .
-      tc (0-or-1) "Theme category CHECK REDUNDANT" .
-      gl (exactly-1) "Gloss" 
-        quo (0-or-1) "Quote"
-      ex (0-to-many) "Example" 
-        eng (exactly-1) "Translation"
-          quo (0-or-1) "Quote"
+  ..tfs (0-to-many) "Theme formation string" <af2t>
+    tc (exactly-1) "Theme category CHECK"
+    <gl>
+    <exeng>
+    ...th (0-to-many) "Verb theme"
+      tc (0-or-1) "Theme category CHECK"
+      <gl>
+      <exeng>
+  # (..tfs) OR:
   # Non-asp der. .af
-  ..nds (0-to-many) "Non-aspectual derivational string" . 
-    gl (exactly-1) "Gloss" .
-    ex (0-to-many) "Example" .
-      eng (exactly-1) "Translation" .
-  ..nfsf (vfsf, nfpf, vfpf) "Noun formation suffix"
-    gl
+  ..nds (0-to-many) "Non-aspectual derivational string" <af2d>
+    <gl>
+    <exeng>
+  # (..nds) OR:
+  # Aspectual der. .af
+  ..ads (0-to-many) "Aspectual derivation string" |
+  ..sds (0-to-many) "Super-aspectual derivational string" <af2a>
+    asp (exactly-1) "Aspect" 
+    <gl>
+    <exeng>
+  # Formations
+  ..nfsf "Noun formation suffix" |
+  ..vfsf "Verb formation suffix" |
+  ..nfpf "Noun formation prefix" |
+  ..vfpf "Verb formation prefix" <af2p>
+    <gl>
+    <exeng>
     ...drt "Derived root"
-      gl
-      ex
-        eng
+      <gl>
+      <exeng>
 
-
-
-.lw (0-to-many) "Loan word" .
+.lw (0-to-many) "Loan word"
   tag (0-or-1) "Tag"
   rtyp ...
   src (exactly-1) "Source language and word"

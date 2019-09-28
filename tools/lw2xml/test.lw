@@ -12,11 +12,16 @@ set rep 'ak
 com this is a comment
 ..th 0+'ąįį
 tc stat
+cnj FOO
 gl object is in position; at rest; lies
+quo So said Peter
 ex kii dha'ąįį
+dial LT
 eng a rock is there
 ex van dha'ąįį
 eng lake is in position
+quo Could be difficult
+cit Jones (1922) A book on Dene
 ..th 0+'aii
 tc mot
 gl handle compact object
@@ -28,6 +33,7 @@ dial TC ch'edagwda
 dial EC chedagwda
 gl  animal *den
 lit In a hole
+cf FOO
 sc Thingy thingus
 ex geh 'an
 eng rabbit den
@@ -40,6 +46,7 @@ ex geh 'an
 eng rabbit den
 ...n -ey'i:
 gl *sonny
+cf FOO
 ...voc -edh'ą́
 gl uncle!
 ...voc chelą́:

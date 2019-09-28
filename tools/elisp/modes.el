@@ -23,7 +23,7 @@
 (define-generic-mode 'grammar-mode
   '("#") ; comment char
   '("(1-to-many)" "0-or-1" "0-to-many" "exactly-1" "1-or-more")
-  '(("^<[^>]*>" . 'font-lock-builtin-face)
+  '(("<[^>]*>" . 'font-lock-builtin-face)
     ("^\\ *[^ ]+" . 'font-lock-function-name-face)
     ("[|=]" . 'font-lock-constant-face))
   '("\\.grammar$")

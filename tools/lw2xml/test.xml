@@ -1,0 +1,246 @@
+<lexware>
+  <rt>
+    <word>'aii</word>
+    <pd>'aii</pd>
+    <tag>classify compact object</tag>
+    <rtyp>FOO</rtyp>
+    <df>FOO</df>
+    <sets>
+      <set>
+        <type>neu</type>
+        <parts>'ąįį 'è' 'àa 'è'</parts>
+      </set>
+      <set>
+        <type>mom</type>
+        <parts>'àii 'ąįį 'aa 'aa</parts>
+      </set>
+      <set>
+        <type>prog</type>
+        <parts>'aa</parts>
+      </set>
+      <set>
+        <type>cont</type>
+        <parts>'èe 'ąįį 'àa 'è'</parts>
+      </set>
+      <set>
+        <type>rep</type>
+        <parts>'ak</parts>
+      </set>
+      <com>this is a comment</com>
+    </sets>
+    <th>
+      <word>0+'ąįį</word>
+      <tc>stat</tc>
+      <cnj>FOO</cnj>
+      <gloss>
+        <eng>object is in position; at rest; lies</eng>
+        <quo>So said Peter</quo>
+      </gloss>
+      <example>
+        <ex>kii dha'ąįį</ex>
+        <dial>
+          <lang>LT</lang>
+        </dial>
+        <eng>a rock is there</eng>
+      </example>
+      <example>
+        <ex>van dha'ąįį</ex>
+        <eng>lake is in position</eng>
+        <quo>Could be difficult</quo>
+        <cit>Jones (1922) A book on Dene</cit>
+      </example>
+    </th>
+    <th>
+      <word>0+'aii</word>
+      <tc>mot</tc>
+      <gloss>
+        <eng>handle compact object</eng>
+      </gloss>
+      <example>
+        <ex>ch'idiin'ąįį</ex>
+        <eng>he opened something (can)</eng>
+      </example>
+    </th>
+    <gc2>
+      <word>-'onh</word>
+      <type>..n</type>
+      <dial>
+        <lang>MN</lang>
+        <dialx>
+          <word>ch'edagwda</word>
+          <lang>TC</lang>
+        </dialx>
+        <dialx>
+          <word>chedagwda</word>
+          <lang>EC</lang>
+        </dialx>
+      </dial>
+      <gloss>
+        <eng>animal *den</eng>
+      </gloss>
+      <lit>In a hole</lit>
+      <cf>FOO</cf>
+      <sc>Thingy thingus</sc>
+      <example>
+        <ex>geh 'an</ex>
+        <eng>rabbit den</eng>
+      </example>
+    </gc2>
+    <gc2>
+      <word>-'onh</word>
+      <type>..voc</type>
+      <dial>
+        <lang>M</lang>
+      </dial>
+      <gloss>
+        <eng>animal *den</eng>
+      </gloss>
+      <lit>In a hole</lit>
+      <sc>Thingy thingus</sc>
+      <example>
+        <ex>geh 'an</ex>
+        <eng>rabbit den</eng>
+      </example>
+      <gc3>
+        <word>-ey'i:</word>
+        <type>...n</type>
+        <gloss>
+          <eng>*sonny</eng>
+        </gloss>
+        <cf>FOO</cf>
+      </gc3>
+      <gc3>
+        <word>-edh'ą́</word>
+        <type>...voc</type>
+        <gloss>
+          <eng>uncle!</eng>
+        </gloss>
+      </gc3>
+      <gc3>
+        <word>chelą́:</word>
+        <type>...voc</type>
+        <gloss>
+          <eng>young brother</eng>
+        </gloss>
+      </gc3>
+    </gc2>
+  </rt>
+  <af>
+    <word>Ø$1</word>
+    <tag>zero noun suffix</tag>
+    <rtyp>ɑ/sf</rtyp>
+    <af2>
+      <word>Ø</word>
+      <type>..nsf</type>
+      <gloss>
+        <eng>*possess]ed suffix in nouns</eng>
+        <com>very rare, the usual suffix is &amp;-a'</com>
+      </gloss>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+      <example>
+        <ex>yex, -yex</ex>
+        <eng>house</eng>
+      </example>
+    </af2>
+    <af2>
+      <word>Ø</word>
+      <type>..nds</type>
+      <gloss>
+        <eng>*possess]ed suffix in nouns</eng>
+        <com>very rare, the usual suffix is &amp;-a'</com>
+      </gloss>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+      <example>
+        <ex>yex, -yex</ex>
+        <eng>house</eng>
+      </example>
+    </af2>
+  </af>
+  <rt>
+    <word>'ąį'</word>
+    <tag>complete</tag>
+    <sets>
+      <set>
+        <type>neu</type>
+        <parts>'ąį' 'ąį' 'aa' 'ąį'</parts>
+      </set>
+    </sets>
+    <th>
+      <word>dee#d+l+ąį' (dh)</word>
+      <tc>neu</tc>
+      <gloss>
+        <eng>this</eng>
+      </gloss>
+      <example>
+        <ex>dèedàa'ąį'</ex>
+        <eng>it is full</eng>
+      </example>
+    </th>
+  </rt>
+  <rt>
+    <word>'àk</word>
+    <tag>lead</tag>
+    <sets>
+      <set>
+        <type>mom</type>
+        <parts>'aa 'àk 'aa 'aa</parts>
+      </set>
+    </sets>
+    <th>
+      <word>COMP n+0+'àk</word>
+      <tc>mot</tc>
+      <gloss>
+        <eng>lead</eng>
+      </gloss>
+      <example>
+        <ex>k'eehąą'àk</ex>
+        <eng>he started leading her around</eng>
+      </example>
+    </th>
+    <gc2>
+      <word>gwęę'aa kit</word>
+      <type>..n</type>
+      <gloss>
+        <eng>leader</eng>
+      </gloss>
+    </gc2>
+  </rt>
+  <rt>
+    <word>'ak</word>
+    <tag>sing love song</tag>
+    <sets>
+      <set>
+        <type>mom</type>
+        <parts>'ak &gt;&gt;</parts>
+      </set>
+    </sets>
+    <th>
+      <word>P+a#ł+'ak</word>
+      <tc>op</tc>
+      <gloss>
+        <eng>*sing a love song</eng>
+      </gloss>
+      <example>
+        <ex>ch'aah'ak</ex>
+        <eng>he is singing a love song</eng>
+      </example>
+      <example>
+        <ex>ch'aał'ak</ex>
+        <eng>I sang a love song</eng>
+      </example>
+    </th>
+    <gc2>
+      <word>ch'aah'a&gt;&gt;k</word>
+      <type>..n</type>
+      <gloss>
+        <eng>love song</eng>
+      </gloss>
+    </gc2>
+  </rt>
+</lexware>

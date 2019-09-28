@@ -40,11 +40,11 @@ void main()
 %token   <str> SETTYPE
 %token   TH TC
 %token   <str> TCTYPE
-%token   SRC GL EX ENG PRDS PRD PRDGL 
+%token   CNJ GL QUO EX ENG CIT PRDS PRD PRDGL 
 %token   <str> GC2
 %token   DIAL DIALX
 %token   <str> DIALXLANG
-%token   LIT SC
+%token   LIT CF SC
 %token   <str> GC3
 %token AF
 %token   <str> AF2
@@ -52,7 +52,7 @@ void main()
 %token   <str> AF2B
 %token   ASP
 %token   <str> AF2C
-%token LW 
+%token LW SRC  
 
 
 // Grammar
@@ -109,16 +109,28 @@ set.c: %empty { printf("</set>\n"); } ;
 
 th.0m: %empty | th.0m th ;
 
-th: th.o th.b tc.b gl.b exeng.0m prds.0m th.c ;
+th: th.o th.b tc.b cnj.01 gl exeng.0m prds.0m th.c ;
 th.o: %empty { printf("<th>\n"); } ;
 th.b: TH WORDS { printf("<word>%s</word>\n", $2); };
 tc.b: TC TCTYPE { printf("<tc>%s</tc>\n", $2); };
-gl.b: GL WORDS { printf("<gl>%s</gl>\n", $2); };
 th.c: %empty { printf("</th>\n"); } ;
 
-exeng.0m: %empty | exeng.0m exeng ;
+cnj.01: %empty | cnj.b ;
+cnj.b: CNJ WORDS { printf("<cnj>%s</cnj>\n", $2); };
 
-exeng: exeng.o ex.b dial.01 eng.b exeng.c ;
+gl: gl.o gl.b quo.01 cit.01 gl.c ;
+gl.o: %empty { printf("<gloss>\n"); } ;
+gl.b: GL WORDS { printf("<eng>%s</eng>\n", $2); };
+gl.c: %empty { printf("</gloss>\n"); } ;
+
+quo.01: %empty | quo.b ;
+quo.b: QUO WORDS { printf("<quo>%s</quo>\n", $2); };
+
+cit.01: %empty | cit.b ;
+cit.b: CIT WORDS { printf("<cit>%s</cit>\n", $2); };
+
+exeng.0m: %empty | exeng.0m exeng ;
+exeng: exeng.o ex.b dial.01 eng.b quo.01 cit.01 exeng.c ;
 exeng.o: %empty { printf("<example>\n"); } ;
 ex.b: EX WORDS { printf("<ex>%s</ex>\n", $2); };
 eng.b: ENG WORDS { printf("<eng>%s</eng>\n", $2); };
@@ -143,7 +155,7 @@ prd.c: %empty { printf("</paradigm>\n"); } ;
 
 gc2.0m: %empty | gc2.0m gc2 ;
 
-gc2: gc2.o gc2.b dial.01 gl.b lit.01 sc.01 exeng.0m gc3.0m gc2.c ;
+gc2: gc2.o gc2.b dial.01 gl lit.01 cf.01 sc.01 exeng.0m gc3.0m gc2.c ;
 gc2.o: %empty { printf("<gc2>\n"); } ;
 gc2.b: GC2 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
 gc2.c: %empty { printf("</gc2>\n"); } ;
@@ -168,6 +180,9 @@ dialx.c: %empty { printf("</dialx>\n"); } ;
 lit.01: %empty | lit.b ;
 lit.b: LIT WORDS { printf("<lit>%s</lit>\n", $2); };
 
+cf.01: %empty | cf.b ;
+cf.b: CF WORDS { printf("<cf>%s</cf>\n", $2); };
+
 sc.01: %empty | sc.b ;
 sc.b: SC WORDS { printf("<sc>%s</sc>\n", $2); };
 
@@ -175,35 +190,71 @@ sc.b: SC WORDS { printf("<sc>%s</sc>\n", $2); };
 
 gc3.0m: %empty | gc3.0m gc3 ;
 
-gc3: gc3.o gc3.b dial.01 gl.b lit.01 sc.01 exeng.0m gc3.c ;
+gc3: gc3.o gc3.b dial.01 gl lit.01 cf.01 sc.01 exeng.0m gc3.c ;
 gc3.o: %empty { printf("<gc3>\n"); } ;
 gc3.b: GC3 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
 gc3.c: %empty { printf("</gc3>\n"); } ;
 
 // ---------- .af ----------
 
-af:  af.o af.b pd.01 tag.01 rtyp.01 df.01 af2.0m af2b.0m af2c.0m af.c ;
+af:  af.o af.b pd.01 tag.01 rtyp.01 af2.alt af.c ;
 af.o: %empty { printf("<af>\n"); } ;
 af.b: AF WORDS { printf("<word>%s</word>\n", $2); };
 af.c: %empty { printf("</af>\n"); } ;
 
-af2.0m: %empty | af2.0m af2 ;
+// ---------- .af level 2 ----------
 
-af2: af2.o af2.b dial.01 gl.b exeng.0m prds.0m ifs.0m af2.c ;
+af2.alt: af2n.0m | af2s.0m | af2v.0m ;
+
+af2n.0m: %empty | af2n.0m af2n ;
+af2s.0m: %empty | af2s.0m af2s ;
+af2v.0m: %empty | af2v.0m af2v ;
+
+// ---------- .af level 2 n ----------
+
+af2n: af2.o af2n.b gl.01 exeng.0m af2n3.0m af2.c ;
 af2.o: %empty { printf("<af2>\n"); } ;
-af2.b: AF2 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
+af2n.b: AF2N WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
 af2.c: %empty { printf("</af2>\n"); } ;
 
-ifs.0m: %empty | ifs.0m ifs ;
+af2n3.0m: %empty | af2n3.0m af2n3 ;
 
-ifs: ifs.o ifs.b dial.01 gl.b exeng.0m ifs.c ;
+af2n3: af3.o af2n3.b gl.01 exeng.0m af3.c ;
+af3.o: %empty { printf("<af3>\n"); } ;
+af2n3.b: AF2N3 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
+af3.c: %empty { printf("</af3>\n"); } ;
+
+// ---------- .af level 2 s ----------
+
+af2s: af2.o af2s.b gl.01 exeng.0m af2s3.0m af2.c ;
+af2s.b: AF2S WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
+
+af2s3.0m: %empty | af2s3.0m af2s3 ;
+
+af2s3: af3.o af2s3.b gl.01 exeng.0m af3.c ;
+af2s3.b: AF2S3 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
+
+// ---------- .af level 2 n ----------
+
+af2v: af2.o af2v.b gl.01 exeng.0m af2v3.0m af2.c ;
+af2v.b: AF2V WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
+
+af2v3.0m: %empty | af2v3.0m af2v3 ;
+
+af2v3: af3.o af2v3.b gl.01 exeng.0m af3.c ;
+af2v3.b: AF2V3 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
+
+
+/* ifs.0m: %empty | ifs.0m ifs ;
+
+ifs: ifs.o ifs.b dial.01 gl exeng.0m ifs.c ;
 ifs.o: %empty { printf("<ifs>\n"); } ;
 ifs.b: IFS WORDS { printf("<word>%s</word>\n", $2); };
 ifs.c: %empty { printf("</ifs>\n"); } ;
 
 af2b.0m: %empty | af2b.0m af2b ;
 
-af2b: af2b.o af2b.b dial.01 asp.01 gl.b exeng.0m th.0m af2b.c ;
+af2b: af2b.o af2b.b dial.01 asp.01 gl exeng.0m th.0m af2b.c ;
 af2b.o: %empty { printf("<af2>\n"); } ;
 af2b.b: AF2B WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
 af2b.c: %empty { printf("</af2>\n"); } ;
@@ -214,11 +265,11 @@ asp.b: ASP WORDS { printf("<asp>%s</asp>\n", $2); };
 
 af2c.0m: %empty | af2c.0m af2c ;
 
-af2c: af2c.o af2c.b dial.01 gl.b exeng.0m af2c.c ;
+af2c: af2c.o af2c.b dial.01 gl exeng.0m af2c.c ;
 af2c.o: %empty { printf("<af2>\n"); } ;
 af2c.b: AF2C WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
 af2c.c: %empty { printf("</af2>\n"); } ;
-
+*/
 
 
 /*

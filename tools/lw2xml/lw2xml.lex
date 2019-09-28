@@ -9,10 +9,10 @@
  /* Options */
 %option noyywrap yylineno
 
- /* Start-condition tokens */
+ /* Start-condition tokens ; note %x is the eXclusive form */
 %x WHITE TEXT SETWHITE SETTEXT SETWHITE2 COMWHITE
 %x COMTEXT DIALWHITE DIALWHITE2 DIALTEXT
-%x TCWHITE TCTEXT
+%x TCWHITE TCTEXT RT
 
 %%
  /* Regular expressions to match band labels */
@@ -20,7 +20,7 @@
  /* Conditional regexes placed at first reference */
 
  /* .rt */ 
-^\.rt       { BEGIN(WHITE);    return RT;   }
+^\.rt       { BEGIN(WHITE);   return RT;    }
 <WHITE>[ \t]+ { BEGIN(TEXT);                }
  /* missing */
 <WHITE>\ *\n {
@@ -88,8 +88,14 @@
   BEGIN(INITIAL);
 }
 
+ /* conj */
+^cnj         { BEGIN(WHITE);    return CNJ;   }
+
+
  /* gloss */
 ^gl         { BEGIN(WHITE);    return GL;   }
+^quo        { BEGIN(WHITE);    return QUO;  }
+^cit        { BEGIN(WHITE);    return CIT;  }
 
  /* examples */
 ^ex         { BEGIN(WHITE);    return EX;   }
@@ -107,6 +113,7 @@
 ^dial/\ +[^ \t\n]+\n          { BEGIN(WHITE);    return DIAL; }
 ^dial/\ +[^ \t\n]+\ +[^ \t\n][^\n]*\n  { BEGIN(DIALWHITE);return DIALX; } 
 ^lit        { BEGIN(WHITE);    return LIT;  }
+^cf         { BEGIN(WHITE);    return CF;   }
 ^sc         { BEGIN(WHITE);    return SC;   }
 
  /* Level 3 Sub-entries for .rt */
