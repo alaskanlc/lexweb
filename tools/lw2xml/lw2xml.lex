@@ -12,7 +12,7 @@
  /* Start-condition tokens ; note %x is the eXclusive form */
 %x WHITE TEXT SETWHITE SETTEXT SETWHITE2 COMWHITE
 %x COMTEXT DIALWHITE DIALWHITE2 DIALTEXT
-%x TCWHITE TCTEXT RT
+%x TCWHITE TCTEXT
 
 %%
  /* Regular expressions to match band labels */
@@ -20,7 +20,7 @@
  /* Conditional regexes placed at first reference */
 
  /* .rt */ 
-^\.rt       { BEGIN(WHITE);   return RT;    }
+^\.rt         { BEGIN(WHITE);   return RT;    }
 <WHITE>[ \t]+ { BEGIN(TEXT);                }
  /* missing */
 <WHITE>\ *\n {

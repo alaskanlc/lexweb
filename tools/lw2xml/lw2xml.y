@@ -67,45 +67,70 @@ void main()
 //   x.alt : alternative elements
 //   x.c   : closing tag
 
-// ----------  Level 1 structure: rt | af | lw ---------- 
-root.1m: level1.alt | root.1m level1.alt | root.1m error ;
+// ----------  Level 1 structure: rt | af | lw ----------
 
-level1.alt: rt | af ; // | lw ;
+ //:<root> (1-to-many) =
+root.1m: level1.alt
+  | root.1m level1.alt
+  | root.1m error ;
 
-rt:  rt.o rt.b pd.01 tag.01 rtyp.01 df.01 sets.01 th.0m gc2.0m rt.c ;
-rt.o: %empty { printf("<rt>\n"); } ;
-rt.b: RT WORDS { printf("<word>%s</word>\n", $2); };
-rt.c: %empty { printf("</rt>\n"); } ;
+//:  <rt> | <af> | <lw>
+level1.alt: rt ; // | af ; // | lw ;
 
+//:<rt> = \n  ".rt" "..." : Root
+rt: RT               { printf("<rt>\n"); }
+    WORDS            { printf("<word>%s</word>\n", $3); }
+    //:  <pd> (0-or-1)
+    pd.01
+    //:  <tag> (0-or-1)
+    tag.01
+    //:  <rtyp> (0-or-1)
+    rtyp.01
+    //:  <df> (0-or-1)
+    df.01
+    //:  <sets> (0-or-1)
+    sets.01
+    //:  <th> (0-to-many)
+    th.0m
+    //:  <gc2> (0-to-many)
+    gc2.0m
+    { printf("</rt>\n"); } ;
 
 // ---------- rt level 1 attributes ----------
 
-pd.01:   %empty | pd.b ;
-pd.b: PD WORDS { printf("<pd>%s</pd>\n", $2); };
+//:<pd> =\n  ".pd" "..." : Proto Dene
+pd.01: %empty
+  | PD WORDS { printf("<pd>%s</pd>\n", $2); };
 
-tag.01:  %empty | tag.b ;
-tag.b: TAG WORDS { printf("<tag>%s</tag>\n", $2); };
+//:<tag> =\n  "tag" "..." : Tag
+tag.01:  %empty
+  | TAG WORDS { printf("<tag>%s</tag>\n", $2); };
 
-rtyp.01: %empty | rtyp.b ;
-rtyp.b: RTYP WORDS { printf("<rtyp>%s</rtyp>\n", $2); };
+//:<rtyp> =\n  "rtyp" "..." : Root type
+rtyp.01: %empty
+  | RTYP WORDS { printf("<rtyp>%s</rtyp>\n", $2); };
 
-df.01:   %empty | df.b ;
-df.b: DF WORDS { printf("<df>%s</df>\n", $2); };
+//:<df> =\n  "df" "..." : Derived form
+df.01:   %empty
+  | DF WORDS { printf("<df>%s</df>\n", $2); };
 
-sets.01: %empty | sets ; 
+//:<sets> =\n  "sets" "..." : Sets
+sets.01: %empty
+  | { printf("<sets>\n"); }
+    SETS
+    //:  <set> (1-to-many)
+    set.1m
+    { printf("</sets>\n"); } ;
 
-sets:  sets.o sets.b set.1m sets.c ;
-sets.o: %empty { printf("<sets>\n"); } ;
-sets.b: SETS {                       } ;
-sets.c: %empty { printf("</sets>\n"); } ;
+//:<set> =\n  "set" <settype> "..." : Set
+set.1m: set
+  | set.1m set ;
+set: { printf("<set>\n"); }
+  SET SETTYPE WORDS { printf("<type>%s</type>\n<parts>%s</parts>", \
+                                  $3, $4); }
+  { printf("</set>\n"); } ;
 
-set.1m: set | set.1m set ;
-
-set: set.o set.b set.c ;
-set.o: %empty { printf("<set>\n"); } ;
-set.b: SET SETTYPE WORDS { printf("<type>%s</type>\n<parts>%s</parts>", \
-                                  $2, $3); };
-set.c: %empty { printf("</set>\n"); } ;
+//:<settype> =\n  "new" | "conc" | "stat"
 
 th.0m: %empty | th.0m th ;
 
@@ -195,6 +220,7 @@ gc3.o: %empty { printf("<gc3>\n"); } ;
 gc3.b: GC3 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
 gc3.c: %empty { printf("</gc3>\n"); } ;
 
+/*
 // ---------- .af ----------
 
 af:  af.o af.b pd.01 tag.01 rtyp.01 af2.alt af.c ;
@@ -244,6 +270,7 @@ af2v3.0m: %empty | af2v3.0m af2v3 ;
 af2v3: af3.o af2v3.b gl.01 exeng.0m af3.c ;
 af2v3.b: AF2V3 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
 
+*/
 
 /* ifs.0m: %empty | ifs.0m ifs ;
 
