@@ -78,8 +78,8 @@ root.1m: level1.alt
 level1.alt: rt ; // | af ; // | lw ;
 
 //:<rt> = \n  ".rt" "..." : Root
-rt: RT               { printf("<rt>\n"); }
-    WORDS            { printf("<word>%s</word>\n", $3); }
+rt: RT                  { printf("<rt>\n"); }
+    WORDS               { printf("<word>%s</word>\n", $3); }
     //:  <pd> (0-or-1)
     pd.01
     //:  <tag> (0-or-1)
@@ -94,41 +94,40 @@ rt: RT               { printf("<rt>\n"); }
     th.0m
     //:  <gc2> (0-to-many)
     gc2.0m
-    { printf("</rt>\n"); } ;
+                        { printf("</rt>\n"); } ;
 
 // ---------- rt level 1 attributes ----------
 
-//:<pd> =\n  ".pd" "..." : Proto Dene
+//:<pd> =\n  "pd" "..." : Proto Dene
 pd.01: %empty
-  | PD WORDS { printf("<pd>%s</pd>\n", $2); };
+  | PD WORDS            { printf("<pd>%s</pd>\n", $2); };
 
 //:<tag> =\n  "tag" "..." : Tag
 tag.01:  %empty
-  | TAG WORDS { printf("<tag>%s</tag>\n", $2); };
+  | TAG WORDS           { printf("<tag>%s</tag>\n", $2); };
 
 //:<rtyp> =\n  "rtyp" "..." : Root type
 rtyp.01: %empty
-  | RTYP WORDS { printf("<rtyp>%s</rtyp>\n", $2); };
+  | RTYP WORDS          { printf("<rtyp>%s</rtyp>\n", $2); };
 
 //:<df> =\n  "df" "..." : Derived form
 df.01:   %empty
-  | DF WORDS { printf("<df>%s</df>\n", $2); };
+  | DF WORDS            { printf("<df>%s</df>\n", $2); };
 
 //:<sets> =\n  "..sets" : Sets
 sets.01: %empty
-  | { printf("<sets>\n"); }
+  |                     { printf("<sets>\n"); }
     SETS
     //:  <set> (1-to-many)
     set.1m
-    { printf("</sets>\n"); } ;
+                        { printf("</sets>\n"); } ;
 
 //:<set> =\n  "set" <settype> "..." : Set
 set.1m: set
   | set.1m set ;
-set: { printf("<set>\n"); }
-  SET settype.alt WORDS { printf("<parts>%s</parts>", \
-                                  $4); }
-  { printf("</set>\n"); } ;
+set:                    { printf("<set>\n"); }
+  SET settype.alt WORDS { printf("<parts>%s</parts>", $4); }
+                        { printf("</set>\n"); } ;
 
 //:<settype> =
 settype.alt:
@@ -137,25 +136,25 @@ settype.alt:
   | ST_CNS  { printf("<type>cns</type>\n")  ; }
     //:  | "cns"   : Conjunctive
   | ST_CONA { printf("<type>cona</type>\n") ; }
-    //:  | "cona"   : 
+    //:  | "cona"  : 
   | ST_CONT { printf("<type>cont</type>\n") ; }
-    //:  | "cont"   : 
+    //:  | "cont"  : 
   | ST_CUST { printf("<type>cust</type>\n") ; }
-    //:  | "cust"   : 
+    //:  | "cust"  : 
   | ST_DIST { printf("<type>dist</type>\n") ; }
-    //:  | "dist"   : 
+    //:  | "dist"  : 
   | ST_DUR  { printf("<type>dur</type>\n")  ; }
     //:  | "dur"   : 
   | ST_MOM  { printf("<type>mom</type>\n")  ; }
     //:  | "mom"   : 
   | ST_MULT { printf("<type>mult</type>\n") ; }
-    //:  | "mult"   : 
+    //:  | "mult"  : 
   | ST_NEU  { printf("<type>neu</type>\n")  ; }
     //:  | "neu"   : 
   | ST_PER  { printf("<type>per</type>\n")  ; }
     //:  | "per"   : 
   | ST_PROG { printf("<type>prog</type>\n") ; }
-    //:  | "prog"   : 
+    //:  | "prog"  : 
   | ST_REP  { printf("<type>rep</type>\n")  ; }
     //:  | "rep"   : 
   | ST_REV  { printf("<type>rev</type>\n")  ; }
@@ -164,8 +163,6 @@ settype.alt:
     //:  | "sem"   : 
   | ST_TRAN { printf("<type>tran</type>\n") ; }
   ;
-
-
 
 th.0m: %empty | th.0m th ;
 
