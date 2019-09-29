@@ -37,7 +37,7 @@ void main()
 %token RT 
 %token   <str> WORDS
 %token   PD TAG RTYP DF SETS SET
-%token   <str> SETTYPE
+ //%token   <str> SETTYPE
 %token   TH TC
 %token   <str> TCTYPE
 %token   CNJ GL QUO EX ENG CIT PRDS PRD PRDGL 
@@ -53,7 +53,7 @@ void main()
 %token   ASP
 %token   <str> AF2C
 %token LW SRC  
-
+%token ST_CONC ST_CNS  ST_CONA ST_CONT ST_CUST ST_DIST ST_DUR  ST_MOM  ST_MULT ST_NEU  ST_PER  ST_PROG ST_REP  ST_REV  ST_SEM  ST_TRAN
 
 // Grammar
 %%
@@ -114,7 +114,7 @@ rtyp.01: %empty
 df.01:   %empty
   | DF WORDS { printf("<df>%s</df>\n", $2); };
 
-//:<sets> =\n  "sets" "..." : Sets
+//:<sets> =\n  "..sets" : Sets
 sets.01: %empty
   | { printf("<sets>\n"); }
     SETS
@@ -126,11 +126,46 @@ sets.01: %empty
 set.1m: set
   | set.1m set ;
 set: { printf("<set>\n"); }
-  SET SETTYPE WORDS { printf("<type>%s</type>\n<parts>%s</parts>", \
-                                  $3, $4); }
+  SET settype.alt WORDS { printf("<parts>%s</parts>", \
+                                  $4); }
   { printf("</set>\n"); } ;
 
-//:<settype> =\n  "new" | "conc" | "stat"
+//:<settype> =
+settype.alt:
+    ST_CONC { printf("<type>conc</type>\n") ; }
+    //:    "conc"  : Conclusive
+  | ST_CNS  { printf("<type>cns</type>\n")  ; }
+    //:  | "cns"   : Conjunctive
+  | ST_CONA { printf("<type>cona</type>\n") ; }
+    //:  | "cona"   : 
+  | ST_CONT { printf("<type>cont</type>\n") ; }
+    //:  | "cont"   : 
+  | ST_CUST { printf("<type>cust</type>\n") ; }
+    //:  | "cust"   : 
+  | ST_DIST { printf("<type>dist</type>\n") ; }
+    //:  | "dist"   : 
+  | ST_DUR  { printf("<type>dur</type>\n")  ; }
+    //:  | "dur"   : 
+  | ST_MOM  { printf("<type>mom</type>\n")  ; }
+    //:  | "mom"   : 
+  | ST_MULT { printf("<type>mult</type>\n") ; }
+    //:  | "mult"   : 
+  | ST_NEU  { printf("<type>neu</type>\n")  ; }
+    //:  | "neu"   : 
+  | ST_PER  { printf("<type>per</type>\n")  ; }
+    //:  | "per"   : 
+  | ST_PROG { printf("<type>prog</type>\n") ; }
+    //:  | "prog"   : 
+  | ST_REP  { printf("<type>rep</type>\n")  ; }
+    //:  | "rep"   : 
+  | ST_REV  { printf("<type>rev</type>\n")  ; }
+    //:  | "rev"   : 
+  | ST_SEM  { printf("<type>sem</type>\n")  ; }
+    //:  | "sem"   : 
+  | ST_TRAN { printf("<type>tran</type>\n") ; }
+  ;
+
+
 
 th.0m: %empty | th.0m th ;
 

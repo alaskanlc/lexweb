@@ -10,7 +10,7 @@
 %option noyywrap yylineno
 
  /* Start-condition tokens ; note %x is the eXclusive form */
-%x WHITE TEXT SETWHITE SETTEXT SETWHITE2 COMWHITE
+%x WHITE TEXT SETWHITE SETTYPE SETWHITE2 COMWHITE
 %x COMTEXT DIALWHITE DIALWHITE2 DIALTEXT
 %x TCWHITE TCTEXT
 
@@ -21,7 +21,7 @@
 
  /* .rt */ 
 ^\.rt         { BEGIN(WHITE);   return RT;    }
-<WHITE>[ \t]+ { BEGIN(TEXT);                }
+<WHITE>[ ]+ { BEGIN(TEXT);                  }
  /* missing */
 <WHITE>\ *\n {
   fprintf(stderr, "  L.%d: missing text\n",yylineno);
@@ -35,30 +35,44 @@
 }
 
  /* .rt attributes */
-^pd         { BEGIN(WHITE);    return PD;   }
-^tag        { BEGIN(WHITE);    return TAG;  }
-^rtyp       { BEGIN(WHITE);    return RTYP; }
-^df         { BEGIN(WHITE);    return DF;   }
+^pd/\ +         { BEGIN(WHITE);    return PD;   }
+^tag/\ +        { BEGIN(WHITE);    return TAG;  }
+^rtyp/\ +       { BEGIN(WHITE);    return RTYP; }
+^df/\ +         { BEGIN(WHITE);    return DF;   }
 
  /* sets */
-^\.\.sets   {                  return SETS; }
-^set        { BEGIN(SETWHITE); return SET;  }
-<SETWHITE>[ \t]+ { BEGIN(SETTEXT);          }
-<SETTEXT>(conc|cns|cona|cont|cust|dist|dur|mom|mult|neu|per|prog|rep|rev|sem|tran)/\ + {
-  /* grab the set type */
-  yylval.str = strdup(yytext);
-  BEGIN(SETWHITE2);
-  return SETTYPE;
+^\.\.sets[ ]*   {                  return SETS; }
+^set\ +         { BEGIN(SETTYPE);  return SET;  }
+<SETTYPE>{
+  conc\ +  { BEGIN(TEXT); return ST_CONC ; }
+  cns\ +   { BEGIN(TEXT); return ST_CNS  ; }
+  cona\ +  { BEGIN(TEXT); return ST_CONA ; }
+  cont\ +  { BEGIN(TEXT); return ST_CONT ; } 
+  cust\ +  { BEGIN(TEXT); return ST_CUST ; }
+  dist\ +  { BEGIN(TEXT); return ST_DIST ; }
+  dur\ +   { BEGIN(TEXT); return ST_DUR  ; }
+  mom\ +   { BEGIN(TEXT); return ST_MOM  ; }
+  mult\ +  { BEGIN(TEXT); return ST_MULT ; }
+  neu\ +   { BEGIN(TEXT); return ST_NEU  ; }
+  per\ +   { BEGIN(TEXT); return ST_PER  ; }
+  prog\ +  { BEGIN(TEXT); return ST_PROG ; }
+  rep\ +   { BEGIN(TEXT); return ST_REP  ; }
+  rev\ +   { BEGIN(TEXT); return ST_REV  ; }
+  sem\ +   { BEGIN(TEXT); return ST_SEM  ; }
+  tran\ +  { BEGIN(TEXT); return ST_TRAN ; }
 }
- /* type not listed */
-<SETTEXT>[^ ]+ {
-   fprintf(stderr, "  L.%d: unknown set type '%s'\n",yylineno,yytext);
-   yylval.str = strdup(yytext);
-   BEGIN(SETWHITE2);
-   return SETTYPE;
-}
-<SETTEXT>\n { BEGIN(INITIAL); }
-<SETWHITE2>[ \t]+  { BEGIN(TEXT);           }
+
+
+
+ /*  /\* type not listed *\/ */
+ /* <SETTEXT>[^ ]+ { */
+ /*    fprintf(stderr, "  L.%d: unknown set type '%s'\n",yylineno,yytext); */
+ /*    yylval.str = strdup(yytext); */
+ /*    BEGIN(SETWHITE2); */
+ /*    return SETTYPE; */
+ /* } */
+ /* <SETTEXT>\n { BEGIN(INITIAL); } */
+ /* <SETWHITE2>[ \t]+  { BEGIN(TEXT);           } */
 
  /* verb themes */
 ^\.\.\.?th  { BEGIN(WHITE);    return TH;   }
@@ -200,3 +214,4 @@
 %%
 
 // other options: debug nodefault reentrant
+
