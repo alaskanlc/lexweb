@@ -12,7 +12,7 @@
  /* Start-condition tokens ; note %x is the eXclusive form */
 %x WHITE TEXT SETWHITE SETTYPE SETWHITE2 COMWHITE
 %x COMTEXT DIALWHITE DIALWHITE2 DIALTEXT
-%x TCWHITE TCTEXT
+%x TCWHITE TCTEXT TCTYPE
 
 %%
  /* Regular expressions to match band labels */
@@ -41,7 +41,7 @@
 ^df/\ +         { BEGIN(WHITE);    return DF;   }
 
  /* sets */
-^\.\.sets[ ]*   {                  return SETS; }
+^\.\.sets\ *    {                  return SETS; }
 ^set\ +         { BEGIN(SETTYPE);  return SET;  }
 <SETTYPE>{
   conc\ +  { BEGIN(TEXT); return ST_CONC ; }
@@ -62,8 +62,6 @@
   tran\ +  { BEGIN(TEXT); return ST_TRAN ; }
 }
 
-
-
  /*  /\* type not listed *\/ */
  /* <SETTEXT>[^ ]+ { */
  /*    fprintf(stderr, "  L.%d: unknown set type '%s'\n",yylineno,yytext); */
@@ -75,32 +73,51 @@
  /* <SETWHITE2>[ \t]+  { BEGIN(TEXT);           } */
 
  /* verb themes */
-^\.\.\.?th  { BEGIN(WHITE);    return TH;   }
-^tc         { BEGIN(TCWHITE);  return TC;   }
-<TCWHITE>[ \t]+ { BEGIN(TCTEXT);            }
- /* missing */ 
-<TCWHITE>\ *\n {
-  fprintf(stderr, "  L.%d: missing set type\n",yylineno);
-  BEGIN(INITIAL);
+^\.\.\.?th\ +  { BEGIN(TEXT);    return TH;   }
+^tc\ +         { BEGIN(TCTYPE);  return TC;   }
+<TCTYPE>{
+  clas\-mot/\n   { BEGIN(INITIAL);  return TC_CLASMOT  ; }
+  clas\-stat/\n  { BEGIN(INITIAL); return TC_CLASSTAT ; }
+  conv/\n        { BEGIN(INITIAL); return TC_CONV     ; }
+  desc/\n        { BEGIN(INITIAL); return TC_DESC     ; }
+  dim/\n         { BEGIN(INITIAL); return TC_DIM      ; }
+  ext/\n         { BEGIN(INITIAL); return TC_EXT      ; }
+  mot/\n         { BEGIN(INITIAL); return TC_MOT      ; }
+  neu/\n         { BEGIN(INITIAL); return TC_NEU      ; }
+  ono/\n         { BEGIN(INITIAL); return TC_ONO      ; }
+  op/\n          { BEGIN(INITIAL); return TC_OP       ; }
+  op\-ono/\n     { BEGIN(INITIAL); return TC_OPONO    ; }
+  stat/\n        { BEGIN(INITIAL); return TC_STAT     ; }
+  succ/\n        { BEGIN(INITIAL); return TC_SUCC     ; }
 }
-<TCTEXT>(clas\-mot|clas\-stat|conv|desc|dim|ext|mot|neu|ono|op|op\-ono|stat|succ)/\n {
-  /* grab the set type */
-  yylval.str = strdup(yytext);
-  BEGIN(INITIAL);
-  return TCTYPE;
-}
- /* type not listed */
-<TCTEXT>[^ ]+/\n {
-    fprintf(stderr, "  L.%d: unknown tc type '%s'\n",yylineno,yytext);
-    yylval.str = strdup(yytext);
-    BEGIN(INITIAL);
-    return TCTYPE;
-}
- /* missing */ 
-<TCTEXT>\n {
-  fprintf(stderr, "  L.%d: missing set type\n",yylineno);
-  BEGIN(INITIAL);
-}
+
+ /*  / * verb themes * / */
+ /*  ^\.\.\.?th  { BEGIN(WHITE);    return TH;   } */
+ /*  ^tc         { BEGIN(TCWHITE);  return TC;   } */
+ /*  <TCWHITE>[ \t]+ { BEGIN(TCTEXT);            } */
+ /*  /\* missing *\/  */
+ /*  <TCWHITE>\ *\n { */
+ /*   fprintf(stderr, "  L.%d: missing set type\n",yylineno); */
+ /*   BEGIN(INITIAL); */
+ /*  } */
+ /*  <TCTEXT>(clas\-mot|clas\-stat|conv|desc|dim|ext|mot|neu|ono|op|op\-ono|stat|succ)/\n { */
+ /*   /\* grab the set type *\/ */
+ /*   yylval.str = strdup(yytext); */
+ /*   BEGIN(INITIAL); */
+ /*   return TCTYPE; */
+ /* } */
+ /*  /\* type not listed *\/ */
+ /* <TCTEXT>[^ ]+/\n { */
+ /*     fprintf(stderr, "  L.%d: unknown tc type '%s'\n",yylineno,yytext); */
+ /*     yylval.str = strdup(yytext); */
+ /*     BEGIN(INITIAL); */
+ /*     return TCTYPE; */
+ /* } */
+ /*  /\* missing *\/  */
+ /* <TCTEXT>\n { */
+ /*   fprintf(stderr, "  L.%d: missing set type\n",yylineno); */
+ /*   BEGIN(INITIAL); */
+ /* } */
 
  /* conj */
 ^cnj         { BEGIN(WHITE);    return CNJ;   }

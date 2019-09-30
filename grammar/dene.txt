@@ -1,0 +1,223 @@
+# Symbolic grammar of Dene Lexware files
+
+# The following structure encodes the allowable grammar of a Dene
+# Lexware file. On each line below is a band label, with indentation
+# indicating the level of the band in an implied hierarchy. The `|`
+# indicates alternatives. The label is followed by the number of
+# allowed occurrences, and a brief description of the BL. Blank lines
+# are cosmetic only. <foo> is the symbol for a recurring block of
+# elements - it contains the same keyword as in the yacc parser file.
+
+# This grammar attempts to be a common resource for Lower Tanana and
+# Gwich'in
+
+.rt (1-or-more) "Root word" <level1>
+  pd (0-or-1) "Proto Dene"
+  tag (0-or-1) "Tag"
+  rtyp (0-or-1) "Root word type, incl root class: rtu , rrt,  drt, ra"
+  df (0-or-1) "Derived forms"
+  ..sets (0-or-1) "Sets" <sets>
+    set (1-or-more) "Aspectual category; word 2: conc[conclusive], \
+                     cns[consecutive], cona[conative], cont[continuative], \
+                     cust[customary], dist[distrubutive], dur[durative], \
+                     mom[momentaneous], mult[multiple], neu[neuter], \
+                     per[perambulative], prog[progressive], rep[repetitive], \
+                     rev[reversative], sem[semelfactive], tran[transitional]"
+  ..th (0-to-many) "Verb theme" <th>
+    tc (exactly-1) "Theme category; word 2; clas-mot[classificatory motion], \
+                     clas-stat[classificatory stative], conv[conversive], \
+                     desc[descriptive], dim[dimentional], ext[extension], \
+                     mot[motion], neu[], ono[onomatopoetic], op[operative], \
+                     op-ono[onomatopoetic operative], stat[stative], \
+                     succ[successive] CHECK"
+    cnj (0-or-1) "Conjugation prefix"
+    gl (exactly-1) "Gloss" <gl>
+      quo (0-or-1) "Quotations from consultant (or comment)"
+      cit (0-or-1) "Citation (e.g., Notebook source)"
+    ex (0-to-many) "Example" <exeng>
+      dial (0-or-1) "Dialect"
+      eng (exactly-1) "Translation"
+      quo (0-or-1) "Quotations from consultant (or comment)"
+      cit (0-or-1) "Citation (e.g., Notebook source)"
+    ...prds (0-to-many) "Usage paradigm"
+      prd (1-or-more) "Paradigm example; word 2: 1s, 2s, 3s, 1p, 2p, 3p, \
+                       1d, 2d, 3d"
+        prdgl (exactly-1) "Paradigm gloss"
+  ..adj (0-to-many) "Ajective (subentry)" |
+  ..adv (0-to-many) "Adverb" |
+  ..an  (0-to-many) "Areal noun" |
+  ..c   (0-to-many) "Compound" |
+  ..cnj (0-to-many) "Conjunction" |
+  ..coll (0-to-many) "Collocation" |
+  ..dem (0-to-many) "Demonstrative" |
+  ..dir (0-to-many) "Directional" |
+  ..enc (0-to-many) "Enclitic" |
+  ..exc (0-to-many) "Exclamation" |
+  ..i   (0-to-many) "Incorporate" |
+  ..ic  (0-to-many) "Incorporate plus compound" |
+  ..int (0-to-many) "Interogative" |
+  ..inj (0-to-many) "Interjection" |
+  ..n   (0-to-many) "Noun" |
+  ..nc  (0-to-many) "Noun plus compound" |
+  ..ni  (0-to-many) "Noun plus incorporate" |
+  ..padj (0-to-many) "Predicate adjective" |
+  ..pf  (0-to-many) "Prefix" |
+  ..pn  (0-to-many) "Place name" |
+  ..psn (0-to-many) "Personal name" |
+  ..pp  (0-to-many) "Postposition" |
+  ..prt (0-to-many) "Particle" |
+  ..venc (0-to-many) "Verb enclitic" |
+  ..voc (0-to-many) "Vocative" <gc2>
+    dial (0-or-1) "Dialect" <dial>
+      dial (0-to-many) "Additional dialects"
+    <gl>
+    lit (0-or-1) "Literal translation"
+    cf (0-or-1) "Compare with"
+    sc (0-or-1) "Scientific name"
+    <exeng>
+    ...adj (0-to-many) "Ajective (sub-subentry)" |
+    ...adv (0-to-many) "Adverb" |
+    ...an  (0-to-many) "Areal noun" |
+    ...c   (0-to-many) "Compound" |
+    ...cnj (0-to-many) "Conjunction" |
+    ...coll (0-to-many) "Collocation" |
+    ...dem (0-to-many) "Demonstrative" |
+    ...dir (0-to-many) "Directional" |
+    ...enc (0-to-many) "Enclitic" |
+    ...exc (0-to-many) "Exclamation" |
+    ...i   (0-to-many) "Incorporate" |
+    ...ic  (0-to-many) "Incorporate plus compound" |
+    ...int (0-to-many) "Interogative" |
+    ...inj (0-to-many) "Interjection" |
+    ...n   (0-to-many) "Noun" |
+    ...nc  (0-to-many) "Noun plus compound" |
+    ...ni  (0-to-many) "Noun plus incorporate" |
+    ...padj (0-to-many) "Predicate adjective" |
+    ...pf  (0-to-many) "Prefix" |
+    ...pn  (0-to-many) "Place name" |
+    ...psn (0-to-many) "Personal name" |
+    ...pp  (0-to-many) "Postposition" |
+    ...prt (0-to-many) "Particle" |
+    ...venc (0-to-many) "Verb enclitic" |
+    ...voc (0-to-many) "Vocative" <gc3>
+      <dial>
+      <gl>
+      lit (0-or-1) "Literal translation"
+      cf (0-or-1) "Compare with"
+      sc (0-or-1) "Scientific name"
+      <exeng>
+
+.af (0-to-many) "Affix"
+  pd (0-or-1) "Proto Dene"
+  tag (0-or-1) "Tag (optimally always present)"
+  rtyp (0-or-1) "Type"
+  # Noun .af
+  ..nsf (0-to-many) "Noun suffix (suffixes)" <af2n>
+    <gl>
+    <exeng>
+    ...an  (0-to-many) "Areal noun" |
+    ...exc (0-to-many) "Exclamation" |
+    ...n   (0-to-many) "Noun" |
+    ...pp  (0-to-many) "Postposition" |
+    ...voc (0-to-many) "Vocative" <af2n3>
+      <gl>
+      <exeng>
+  # (..nsf) OR:
+  # Suffix .af        
+  ..sf (0-to-many) "Suffix" <af2s>
+    <gl>
+    <exeng>
+    ...exc (0-to-many) "Exclamation"
+      <gl>
+      <exeng>
+  # (..sf) OR:
+  # Verb .af
+  ..vpf (0-to-many) "Verb prefix" |
+  ..vsf (0-to-many) "Verb suffix"  |
+  ..vsf1 (0-to-many) "Verb suffix one" <af2v>
+    <gl>
+    <exeng>
+    ...adv (0-to-many) "Adverb" |
+    ...ifs (0-to-many) "Inflectional string" |
+    ...drt (0-to-many) "Derived root"
+      <gl>
+      <exeng>
+  # (..vpf) OR:
+  # Theme .af
+  ..tfs (0-to-many) "Theme formation string" <af2t>
+    tc (exactly-1) "Theme category CHECK"
+    <gl>
+    <exeng>
+    ...th (0-to-many) "Verb theme"
+      tc (0-or-1) "Theme category CHECK"
+      <gl>
+      <exeng>
+  # (..tfs) OR:
+  # Non-asp der. .af
+  ..nds (0-to-many) "Non-aspectual derivational string" <af2d>
+    <gl>
+    <exeng>
+  # (..nds) OR:
+  # Aspectual der. .af
+  ..ads (0-to-many) "Aspectual derivation string" |
+  ..sds (0-to-many) "Super-aspectual derivational string" <af2a>
+    asp (exactly-1) "Aspect" 
+    <gl>
+    <exeng>
+  # Formations
+  ..nfsf "Noun formation suffix" |
+  ..vfsf "Verb formation suffix" |
+  ..nfpf "Noun formation prefix" |
+  ..vfpf "Verb formation prefix" <af2p>
+    <gl>
+    <exeng>
+    ...drt "Derived root"
+      <gl>
+      <exeng>
+
+.lw (0-to-many) "Loan word"
+  tag (0-or-1) "Tag"
+  rtyp ...
+  src (exactly-1) "Source language and word"
+  ..adj (exactly-1) "Adjective (class of loan word)" |
+  ..adv (exactly-1) "Adverb" |
+  ..n (exactly-1) "Noun" |
+  ..padj (exactly-1) "Predicate adjective" |
+  ..vb (exactly-1) "Verb" |
+    dial (0-or-1) "Dialect"
+      dial (0-to-many) "Additional dialects"
+    gl (exactly-1) "Gloss"
+    ...adj (exactly-1) "Adjective (class of loan word)" |
+    ...adv (exactly-1) "Adverb" |
+    ...n (exactly-1) "Noun" |
+    ...padj (exactly-1) "Predicate adjective" |
+    ...vb (exactly-1) "Verb" |
+      dial (0-or-1) "Dialect"
+        dial (0-to-many) "Additional dialects"
+      gl (exactly-1) "Gloss"
+
+.xr 
+  in (0-or-1)
+  xgl (exactly-1)
+  see (exactly-1)
+
+TO ADD
+
+cit "Citation" 
+
+# Some band labels may occur anywhere in the file and indicate markup
+# not data content.
+
+com (0-to-many) "Comment"
+.file (0-to-many) "File-level divisions"
+..par (0-to-many) "Paragraph-level divisions"
+
+# The `#` symbol beginning a line indicates a comment not to parsed.
+
+----
+
+# Consider an `src` band that follows `eng` or `gl`
+#   to indicate the source (from Tim Montler)
+# `frq` band to capture common or rare (Sam A question) - filter then to make
+#   a beginner's dictionary.
+

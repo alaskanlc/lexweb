@@ -6,7 +6,7 @@
 ;; 4. C-x b  to grammar
 ;; 5. M-x grammar-mode (refreshes too)
 
-(define-generic-mode 'lexware-mode
+(define-generic-mode 'lexware1-mode
   'nil
   'nil
   '(
@@ -19,17 +19,25 @@
   nil
   "Major mode for editing Lexware text")
 
-
 (define-generic-mode 'grammar-mode
   '("#") ; comment char
-  '("(1-to-many)" "0-or-1" "0-to-many" "exactly-1" "1-or-more")
-  '(("<[^>]*>" . 'font-lock-builtin-face)
-    ("^\\ *[^ ]+" . 'font-lock-function-name-face)
+  '("1-to-many" "0-or-1" "0-to-many" "exactly-1" "1-or-more")
+  '(("<[^>]*>" . 'font-lock-function-name-face)
+    ;("^\\ *[^ ]+" . 'font-lock-function-name-face)
     ("[|=]" . 'font-lock-constant-face))
   '("\\.grammar$")
   nil
   "Major mode for editing grammars")
 
+;; (define-generic-mode 'grammar-mode
+;;   '("#") ; comment char
+;;   '("(1-to-many)" "0-or-1" "0-to-many" "exactly-1" "1-or-more")
+;;   '(("<[^>]*>" . 'font-lock-builtin-face)
+;;     ("^\\ *[^ ]+" . 'font-lock-function-name-face)
+;;     ("[|=]" . 'font-lock-constant-face))
+;;   '("\\.grammar$")
+;;   nil
+;;   "Major mode for editing grammars")
 
 ;; M-x list-faces-display  to see faces
 

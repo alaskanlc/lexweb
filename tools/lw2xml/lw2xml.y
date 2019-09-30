@@ -37,9 +37,14 @@ void main()
 %token RT 
 %token   <str> WORDS
 %token   PD TAG RTYP DF SETS SET
- //%token   <str> SETTYPE
+%token     ST_CONC ST_CNS  ST_CONA ST_CONT ST_CUST ST_DIST ST_DUR
+%token     ST_MOM  ST_MULT ST_NEU  ST_PER  ST_PROG ST_REP  ST_REV
+%token     ST_SEM  ST_TRAN
+//%token   <str> SETTYPE
 %token   TH TC
-%token   <str> TCTYPE
+%token     TC_CLASMOT TC_CLASSTAT TC_CONV TC_DESC TC_DIM TC_EXT
+%token     TC_MOT TC_NEU TC_ONO TC_OP  TC_OPONO TC_STAT TC_SUCC
+//%token   <str> TCTYPE
 %token   CNJ GL QUO EX ENG CIT PRDS PRD PRDGL 
 %token   <str> GC2
 %token   DIAL DIALX
@@ -53,7 +58,7 @@ void main()
 %token   ASP
 %token   <str> AF2C
 %token LW SRC  
-%token ST_CONC ST_CNS  ST_CONA ST_CONT ST_CUST ST_DIST ST_DUR  ST_MOM  ST_MULT ST_NEU  ST_PER  ST_PROG ST_REP  ST_REV  ST_SEM  ST_TRAN
+
 
 // Grammar
 %%
@@ -77,7 +82,7 @@ root.1m: level1.alt
 //:  <rt> | <af> | <lw>
 level1.alt: rt ; // | af ; // | lw ;
 
-//:<rt> = \n  ".rt" "..." : Root
+//:<rt> = \n  ".rt" TEXT : Root word
 rt: RT                  { printf("<rt>\n"); }
     WORDS               { printf("<word>%s</word>\n", $3); }
     //:  <pd> (0-or-1)
@@ -98,19 +103,19 @@ rt: RT                  { printf("<rt>\n"); }
 
 // ---------- rt level 1 attributes ----------
 
-//:<pd> =\n  "pd" "..." : Proto Dene
+//:<pd> =\n  "pd" TEXT : Proto Dene
 pd.01: %empty
   | PD WORDS            { printf("<pd>%s</pd>\n", $2); };
 
-//:<tag> =\n  "tag" "..." : Tag
+//:<tag> =\n  "tag" TEXT : Tag
 tag.01:  %empty
   | TAG WORDS           { printf("<tag>%s</tag>\n", $2); };
 
-//:<rtyp> =\n  "rtyp" "..." : Root type
+//:<rtyp> =\n  "rtyp" TEXT : Root word type, incl root class: rtu , rrt,  drt, ra
 rtyp.01: %empty
   | RTYP WORDS          { printf("<rtyp>%s</rtyp>\n", $2); };
 
-//:<df> =\n  "df" "..." : Derived form
+//:<df> =\n  "df" TEXT : Derived forms
 df.01:   %empty
   | DF WORDS            { printf("<df>%s</df>\n", $2); };
 
@@ -122,7 +127,7 @@ sets.01: %empty
     set.1m
                         { printf("</sets>\n"); } ;
 
-//:<set> =\n  "set" <settype> "..." : Set
+//:<set> =\n  "set" <settype> TEXT : Aspectual category
 set.1m: set
   | set.1m set ;
 set:                    { printf("<set>\n"); }
@@ -134,43 +139,85 @@ settype.alt:
     ST_CONC { printf("<type>conc</type>\n") ; }
     //:    "conc"  : Conclusive
   | ST_CNS  { printf("<type>cns</type>\n")  ; }
-    //:  | "cns"   : Conjunctive
+    //:  | "cns"   : Consecutive
   | ST_CONA { printf("<type>cona</type>\n") ; }
-    //:  | "cona"  : 
+    //:  | "cona"  : Conative
   | ST_CONT { printf("<type>cont</type>\n") ; }
-    //:  | "cont"  : 
+    //:  | "cont"  : Continuative
   | ST_CUST { printf("<type>cust</type>\n") ; }
-    //:  | "cust"  : 
+    //:  | "cust"  : Customary
   | ST_DIST { printf("<type>dist</type>\n") ; }
-    //:  | "dist"  : 
+    //:  | "dist"  : Distrubutive
   | ST_DUR  { printf("<type>dur</type>\n")  ; }
-    //:  | "dur"   : 
+    //:  | "dur"   : Durative
   | ST_MOM  { printf("<type>mom</type>\n")  ; }
-    //:  | "mom"   : 
+    //:  | "mom"   : Momentaneous
   | ST_MULT { printf("<type>mult</type>\n") ; }
-    //:  | "mult"  : 
+    //:  | "mult"  : Multiple
   | ST_NEU  { printf("<type>neu</type>\n")  ; }
-    //:  | "neu"   : 
+    //:  | "neu"   : Neuter
   | ST_PER  { printf("<type>per</type>\n")  ; }
-    //:  | "per"   : 
+    //:  | "per"   : Perambulative
   | ST_PROG { printf("<type>prog</type>\n") ; }
-    //:  | "prog"  : 
+    //:  | "prog"  : Progressive
   | ST_REP  { printf("<type>rep</type>\n")  ; }
-    //:  | "rep"   : 
+    //:  | "rep"   : Repetitive
   | ST_REV  { printf("<type>rev</type>\n")  ; }
-    //:  | "rev"   : 
+    //:  | "rev"   : Reversative
   | ST_SEM  { printf("<type>sem</type>\n")  ; }
-    //:  | "sem"   : 
+    //:  | "sem"   : Semelfactive
   | ST_TRAN { printf("<type>tran</type>\n") ; }
+    //:  | "tran"   : Transitional
   ;
 
-th.0m: %empty | th.0m th ;
+//:<th> =
+th.0m: %empty
+  | th.0m th ;
+th:                     { printf("<th>\n");    }
+  //:  "..th" TEXT : Verb theme
+  TH WORDS              { printf("<word>%s</word>\n", $3); }
+  //:  <tc> (exactly-1)
+  TC tc.alt
+  //:  <cnj> (0-or-1>
+  cnj.01
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+  //:  <prds> (0-to-many)
+  prds.0m                { printf("</th>\n"); } ;
 
-th: th.o th.b tc.b cnj.01 gl exeng.0m prds.0m th.c ;
-th.o: %empty { printf("<th>\n"); } ;
-th.b: TH WORDS { printf("<word>%s</word>\n", $2); };
-tc.b: TC TCTYPE { printf("<tc>%s</tc>\n", $2); };
-th.c: %empty { printf("</th>\n"); } ;
+//:<tc> =
+//:  "tc" <tctype> : Theme category
+//:<tctype> =
+tc.alt:
+    //:    "clas-mot"  : Classificatory motion
+    TC_CLASMOT          { printf("<tc>clas-mot</tc>\n");  }
+    //:  | "clas-stat" : Classificatory stative
+  | TC_CLASSTAT         { printf("<tc>clas-stat</tc>\n"); }
+    //:  | "conv"      : Conversive
+  | TC_CONV             { printf("<tc>conv</tc>\n");      }
+    //:  | "desc"      : Descriptive
+  | TC_DESC             { printf("<tc>desc</tc>\n");      }
+    //:  | "dim"       : Dimentional
+  | TC_DIM              { printf("<tc>dim</tc>\n");       }
+    //:  | "ext"       : Extension
+  | TC_EXT              { printf("<tc>ext</tc>\n");       }
+    //:  | "mot"       : Motion
+  | TC_MOT              { printf("<tc>mot</tc>\n");       }
+    //:  | "neu"       : Neuter
+  | TC_NEU              { printf("<tc>neu</tc>\n");       }
+    //:  | "ono"       : Onomatopoetic
+  | TC_ONO              { printf("<tc>ono</tc>\n");       }
+    //:  | "op"        : Operative
+  | TC_OP               { printf("<tc>op</tc>\n");        }
+    //:  | "op-ono"    : Onomatopoetic operative
+  | TC_OPONO            { printf("<tc>op-ono</tc>\n");    }
+    //:  | "stat"      : Stative
+  | TC_STAT             { printf("<tc>stat</tc>\n");      }
+    //:  | "succ"      : Successive
+  | TC_SUCC             { printf("<tc>succ</tc>\n");      }
+  ;
 
 cnj.01: %empty | cnj.b ;
 cnj.b: CNJ WORDS { printf("<cnj>%s</cnj>\n", $2); };
