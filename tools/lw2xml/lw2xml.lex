@@ -10,7 +10,7 @@
 %option noyywrap yylineno
 
  /* Start-condition tokens ; note %x is the eXclusive form */
-%x WHITE TEXT SETWHITE SETTYPE SETWHITE2 COMWHITE
+%x WHITE TEXT SETTYPE COMWHITE
 %x COMTEXT DIALWHITE DIALWHITE2 DIALTEXT
 %x TCWHITE TCTEXT TCTYPE
 
@@ -35,10 +35,10 @@
 }
 
  /* .rt attributes */
-^pd/\ +         { BEGIN(WHITE);    return PD;   }
-^tag/\ +        { BEGIN(WHITE);    return TAG;  }
-^rtyp/\ +       { BEGIN(WHITE);    return RTYP; }
-^df/\ +         { BEGIN(WHITE);    return DF;   }
+^pd\ +         { BEGIN(TEXT);    return PD;   }
+^tag\ +        { BEGIN(TEXT);    return TAG;  }
+^rtyp\ +       { BEGIN(TEXT);    return RTYP; }
+^df\ +         { BEGIN(TEXT);    return DF;   }
 
  /* sets */
 ^\.\.sets\ *    {                  return SETS; }
@@ -62,16 +62,6 @@
   tran\ +  { BEGIN(TEXT); return ST_TRAN ; }
 }
 
- /*  /\* type not listed *\/ */
- /* <SETTEXT>[^ ]+ { */
- /*    fprintf(stderr, "  L.%d: unknown set type '%s'\n",yylineno,yytext); */
- /*    yylval.str = strdup(yytext); */
- /*    BEGIN(SETWHITE2); */
- /*    return SETTYPE; */
- /* } */
- /* <SETTEXT>\n { BEGIN(INITIAL); } */
- /* <SETWHITE2>[ \t]+  { BEGIN(TEXT);           } */
-
  /* verb themes */
 ^\.\.\.?th\ +  { BEGIN(TEXT);    return TH;   }
 ^tc\ +         { BEGIN(TCTYPE);  return TC;   }
@@ -91,54 +81,45 @@
   succ/\n        { BEGIN(INITIAL); return TC_SUCC     ; }
 }
 
- /*  / * verb themes * / */
- /*  ^\.\.\.?th  { BEGIN(WHITE);    return TH;   } */
- /*  ^tc         { BEGIN(TCWHITE);  return TC;   } */
- /*  <TCWHITE>[ \t]+ { BEGIN(TCTEXT);            } */
- /*  /\* missing *\/  */
- /*  <TCWHITE>\ *\n { */
- /*   fprintf(stderr, "  L.%d: missing set type\n",yylineno); */
- /*   BEGIN(INITIAL); */
- /*  } */
- /*  <TCTEXT>(clas\-mot|clas\-stat|conv|desc|dim|ext|mot|neu|ono|op|op\-ono|stat|succ)/\n { */
- /*   /\* grab the set type *\/ */
- /*   yylval.str = strdup(yytext); */
- /*   BEGIN(INITIAL); */
- /*   return TCTYPE; */
- /* } */
- /*  /\* type not listed *\/ */
- /* <TCTEXT>[^ ]+/\n { */
- /*     fprintf(stderr, "  L.%d: unknown tc type '%s'\n",yylineno,yytext); */
- /*     yylval.str = strdup(yytext); */
- /*     BEGIN(INITIAL); */
- /*     return TCTYPE; */
- /* } */
- /*  /\* missing *\/  */
- /* <TCTEXT>\n { */
- /*   fprintf(stderr, "  L.%d: missing set type\n",yylineno); */
- /*   BEGIN(INITIAL); */
- /* } */
-
- /* conj */
-^cnj         { BEGIN(WHITE);    return CNJ;   }
-
+^cnj\ +         { BEGIN(TEXT);    return CNJ;   }
 
  /* gloss */
-^gl         { BEGIN(WHITE);    return GL;   }
-^quo        { BEGIN(WHITE);    return QUO;  }
-^cit        { BEGIN(WHITE);    return CIT;  }
+^gl\ +         { BEGIN(TEXT);    return GL;   }
+^quo\ +        { BEGIN(TEXT);    return QUO;  }
+^cit\ +        { BEGIN(TEXT);    return CIT;  }
 
  /* examples */
-^ex         { BEGIN(WHITE);    return EX;   }
-^eng        { BEGIN(WHITE);    return ENG;  }
+^ex\ +         { BEGIN(TEXT);    return EX;   }
+^eng\ +        { BEGIN(TEXT);    return ENG;  }
 
   /* Paradigms sub-entry of theme */
-^\.\.\.prds {                  return PRDS; }
-^prd        { BEGIN(WHITE);    return PRD;  }
-^prdgl      { BEGIN(WHITE);    return PRDGL;}
+^\.\.\.prds/\n {                  return PRDS; }
+^prd\ +        { BEGIN(TEXT);    return PRD;  }
+^prdgl\ +      { BEGIN(TEXT);    return PRDGL;}
 
  /* Level 2 Sub-entries for .rt */
-^\.\.(adj|adv|an|c|cnj|dem|dir|enc|exc|i|ic|n|nc|ni|pad|pf|pn|psn|pp|prt|ven|voc)  { BEGIN(WHITE); yylval.str = strdup(yytext); return GC2; }
+^\.\.adj\ +    { BEGIN(TEXT) ; return GC2_ADJ ;}
+^\.\.adv\ +    { BEGIN(TEXT) ; return GC2_ADV ;}
+^\.\.an\ +     { BEGIN(TEXT) ; return GC2_AN  ;}
+^\.\.c\ +      { BEGIN(TEXT) ; return GC2_C   ;}
+^\.\.cnj\ +    { BEGIN(TEXT) ; return GC2_CNJ ;}
+^\.\.dem\ +    { BEGIN(TEXT) ; return GC2_DEM ;}
+^\.\.dir\ +    { BEGIN(TEXT) ; return GC2_DIR ;}
+^\.\.enc\ +    { BEGIN(TEXT) ; return GC2_ENC ;}
+^\.\.exc\ +    { BEGIN(TEXT) ; return GC2_EXC ;}
+^\.\.i\ +      { BEGIN(TEXT) ; return GC2_I   ;}
+^\.\.ic\ +     { BEGIN(TEXT) ; return GC2_IC  ;}
+^\.\.n\ +      { BEGIN(TEXT) ; return GC2_N   ;}
+^\.\.nc\ +     { BEGIN(TEXT) ; return GC2_NC  ;}
+^\.\.ni\ +     { BEGIN(TEXT) ; return GC2_NI  ;}
+^\.\.pad\ +    { BEGIN(TEXT) ; return GC2_PAD ;}
+^\.\.pf\ +     { BEGIN(TEXT) ; return GC2_PF  ;}
+^\.\.pn\ +     { BEGIN(TEXT) ; return GC2_PN  ;}
+^\.\.psn\ +    { BEGIN(TEXT) ; return GC2_PSN ;}
+^\.\.pp\ +     { BEGIN(TEXT) ; return GC2_PP  ;}
+^\.\.prt\ +    { BEGIN(TEXT) ; return GC2_PRT ;}
+^\.\.ven\ +    { BEGIN(TEXT) ; return GC2_VEN ;}
+^\.\.voc\ +    { BEGIN(TEXT) ; return GC2_VOC ;}
 
  /* attributes for Level 2 Sub-entries for .rt */
 ^dial/\ +[^ \t\n]+\n          { BEGIN(WHITE);    return DIAL; }

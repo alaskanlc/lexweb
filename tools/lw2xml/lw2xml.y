@@ -45,8 +45,11 @@ void main()
 %token     TC_CLASMOT TC_CLASSTAT TC_CONV TC_DESC TC_DIM TC_EXT
 %token     TC_MOT TC_NEU TC_ONO TC_OP  TC_OPONO TC_STAT TC_SUCC
 //%token   <str> TCTYPE
-%token   CNJ GL QUO EX ENG CIT PRDS PRD PRDGL 
-%token   <str> GC2
+%token   CNJ GL QUO EX ENG CIT PRDS PRD PRDGL
+//%token   <str> GC2
+%token   GC2_ADJ GC2_ADV GC2_AN  GC2_C   GC2_CNJ GC2_DEM GC2_DIR GC2_ENC
+%token   GC2_EXC GC2_I   GC2_IC  GC2_N   GC2_NC  GC2_NI  GC2_PAD GC2_PF
+%token   GC2_PN  GC2_PSN GC2_PP  GC2_PRT GC2_VEN GC2_VOC
 %token   DIAL DIALX
 %token   <str> DIALXLANG
 %token   LIT CF SC
@@ -261,8 +264,57 @@ gc2.0m: %empty | gc2.0m gc2 ;
 
 gc2: gc2.o gc2.b dial.01 gl lit.01 cf.01 sc.01 exeng.0m gc3.0m gc2.c ;
 gc2.o: %empty { printf("<gc2>\n"); } ;
-gc2.b: GC2 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
+gc2.b: gc2.alt WORDS { printf("<word>%s</word>\n", $2); };
+//:<gc2> =
+gc2.alt:
+    //:    "..adj" TEXT : Adjective
+    GC2_ADJ { printf("<type>adj</type>\n"); }
+    //:  | "..adv" TEXT : Adverb
+  | GC2_ADV { printf("<type>adv</type>\n"); }
+    //:  | "..an" TEXT  : 
+  | GC2_AN  { printf("<type>an</type>\n"); }
+    //:  | "..c" TEXT   : 
+  | GC2_C   { printf("<type>c</type>\n"); }
+    //:  | "..cnj" TEXT : 
+  | GC2_CNJ { printf("<type>cnj</type>\n"); }
+    //:  | "..dem" TEXT : 
+  | GC2_DEM { printf("<type>dem</type>\n"); }
+    //:  | "..dir" TEXT : 
+  | GC2_DIR { printf("<type>dir</type>\n"); }
+    //:  | "..enc" TEXT : 
+  | GC2_ENC { printf("<type>enc</type>\n"); }
+    //:  | "..exc" TEXT : 
+  | GC2_EXC { printf("<type>exc</type>\n"); }
+    //:  | "..i" TEXT   : 
+  | GC2_I   { printf("<type>i</type>\n"); }
+    //:  | "..ic" TEXT  : 
+  | GC2_IC  { printf("<type>ic</type>\n"); }
+    //:  | "..n" TEXT   : Noun
+  | GC2_N   { printf("<type>n</type>\n"); }
+    //:  | "..nc" TEXT  : 
+  | GC2_NC  { printf("<type>nc</type>\n"); }
+    //:  | "..ni" TEXT  : 
+  | GC2_NI  { printf("<type>ni</type>\n"); }
+    //:  | "..pad" TEXT : 
+  | GC2_PAD { printf("<type>pad</type>\n"); }
+    //:  | "..pf" TEXT  : 
+  | GC2_PF  { printf("<type>pf</type>\n"); }
+    //:  | "..pn" TEXT  : 
+  | GC2_PN  { printf("<type>pn</type>\n"); }
+    //:  | "..psn" TEXT : 
+  | GC2_PSN { printf("<type>psn</type>\n"); }
+    //:  | "..pp" TEXT  : 
+  | GC2_PP  { printf("<type>pp</type>\n"); }
+    //:  | "..prt" TEXT : 
+  | GC2_PRT { printf("<type>prt</type>\n"); }
+    //:  | "..ven" TEXT : 
+  | GC2_VEN { printf("<type><ven/type>\n"); }
+    //:  | "..voc" TEXT : 
+  | GC2_VOC { printf("<type>voc</type>\n"); } ;
+
 gc2.c: %empty { printf("</gc2>\n"); } ;
+
+//:  <dial>
 
 dial.01: %empty | dial ;
 
