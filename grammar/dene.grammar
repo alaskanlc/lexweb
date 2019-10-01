@@ -2,11 +2,11 @@
   <rt> | <af> | <lw>
 <rt> = 
   ".rt" TEXT : Root word
-  <pd> (0-or-1)
-  <tag> (0-or-1)
-  <rtyp> (0-or-1)
-  <df> (0-or-1)
-  <sets> (0-or-1)
+  <pd> (0-to-1)
+  <tag> (0-to-1)
+  <rtyp> (0-to-1)
+  <df> (0-to-1)
+  <sets> (0-to-1)
   <th> (0-to-many)
   <gc2> (0-to-many)
 <pd> =
@@ -66,20 +66,38 @@
   "cnj" TEXT : Conjugation prefix
 <gl> =
   "gl" TEXT : Gloss
-  <quo> (0-or-1)
-  <cit> (0-or-1)
+  <quo> (0-to-1)
+  <cit> (0-to-1)
 <quo> =
   "quo" TEXT : Quotations from consultant (or comment)
 <cit> =
   "cit" TEXT : Citation (e.g., Notebook source)
 <ex> =
   "ex" TEXT : Example
-  <dial> (0-or-1)
+  <dial> (0-to-1)
   <eng> (exactly-1)
-  <quo> (0-or-1)
-  <cit> (0-or-1)
+  <quo> (0-to-1)
+  <cit> (0-to-1)
 <eng> =
   "eng" TEXT : English translation
+<prds>=
+  "...prds" : Usage paradigm
+  <prd> (1-to-many)
+<prd> =
+  "prd" <prdtype> TEXT : Paradigm example
+  <prdgl> (exactly-1)
+<prdtype> =
+    "1s" : First person singular
+  | "2s" : Second person singular
+  | "3s" : Third person singular
+  | "1p" : First person plural
+  | "2p" : Second person plural
+  | "3p" : Third person plural
+  | "1d" : First person dual
+  | "2d" : Second person dual
+  | "3d" : Third person dual
+<prdgl> =
+  "prdgl" TEXT : Paradigm gloss
 <gc2> =
     "..adj" TEXT : Adjective
   | "..adv" TEXT : Adverb
@@ -103,4 +121,52 @@
   | "..prt" TEXT : 
   | "..ven" TEXT : 
   | "..voc" TEXT : 
-  <dial>
+  <dial> (0-to-1)
+  <gl> (exactly-1)
+  <lit> (0-to-1)
+  <cf> (0-to-1)
+  <sc> (0-to-1)
+  <ex> (0-to-many)
+  <gc3> (0-to-many)
+<dial> =
+  "dial" <lang> : Dialect
+  <dial2> (0-to-many)
+<lang> =
+  TEXT : Language
+<dial2> =
+  "dial" <lang> TEXT : Additional dialects
+<lit> =
+  "lit" TEXT : Literal translation
+<cf> =
+  "cf" TEXT : Compare with
+<sc> =
+  "sc" TEXT : Scientific name
+<gc3> =
+    "...adj" TEXT : Adjective
+  | "...adv" TEXT : Adverb
+  | "...an" TEXT  : 
+  | "...c" TEXT   : 
+  | "...cnj" TEXT : 
+  | "...dem" TEXT : 
+  | "...dir" TEXT : 
+  | "...enc" TEXT : 
+  | "...exc" TEXT : 
+  | "...i" TEXT   : 
+  | "...ic" TEXT  : 
+  | "...n" TEXT   : Noun
+  | "...nc" TEXT  : 
+  | "...ni" TEXT  : 
+  | "...pad" TEXT : 
+  | "...pf" TEXT  : 
+  | "...pn" TEXT  : 
+  | "...psn" TEXT : 
+  | "...pp" TEXT  : 
+  | "...prt" TEXT : 
+  | "...ven" TEXT : 
+  | "...voc" TEXT : 
+  <dial> (0-to-1)
+  <gl> (exactly-1)
+  <lit> (0-to-1)
+  <cf> (0-to-1)
+  <sc> (0-to-1)
+  <ex> (0-to-many)

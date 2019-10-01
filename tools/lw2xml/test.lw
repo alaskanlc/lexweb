@@ -67,14 +67,16 @@ ex  kayex, -kayex
 eng  village
 ex  yex, -yex
 eng house
-..nds   Ø
-gl   *possess]ed suffix in nouns
-com very rare, the usual suffix is &-a'
-ex  kayex, -kayex
-eng  village
-ex  yex, -yex
-eng house
-
+...n FOO
+gl BAR
+# ..nds   Ø
+# gl   *possess]ed suffix in nouns
+# com very rare, the usual suffix is &-a'
+# ex  kayex, -kayex
+# eng  village
+# ex  yex, -yex
+# eng house
+# 
 .rt 'ąį'
 tag complete
 ..sets
@@ -110,4 +112,3 @@ ex ch'aał'ak
 eng I sang a love song
 ..n ch'aah'a>>k
 gl love song
-

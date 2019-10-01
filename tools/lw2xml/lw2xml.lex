@@ -11,8 +11,8 @@
 
  /* Start-condition tokens ; note %x is the eXclusive form */
 %x WHITE TEXT SETTYPE COMWHITE
-%x COMTEXT DIALWHITE DIALWHITE2 DIALTEXT
-%x TCWHITE TCTEXT TCTYPE
+%x COMTEXT DIALTEXT
+%x TCTEXT TCTYPE PRDTYPE
 
 %%
  /* Regular expressions to match band labels */
@@ -20,7 +20,7 @@
  /* Conditional regexes placed at first reference */
 
  /* .rt */ 
-^\.rt         { BEGIN(WHITE);   return RT;    }
+^\.rt\ +         { BEGIN(TEXT);   return RT;    }
 <WHITE>[ ]+ { BEGIN(TEXT);                  }
  /* missing */
 <WHITE>\ *\n {
@@ -94,8 +94,19 @@
 
   /* Paradigms sub-entry of theme */
 ^\.\.\.prds/\n {                  return PRDS; }
-^prd\ +        { BEGIN(TEXT);    return PRD;  }
-^prdgl\ +      { BEGIN(TEXT);    return PRDGL;}
+^prd\ +        { BEGIN(PRDTYPE);  return PRD;  }
+^prdgl\ +      { BEGIN(TEXT);     return PRDGL;}
+<PRDTYPE>{
+  1s\ +        { BEGIN(TEXT); return PD_1S ; }
+  2s\ +        { BEGIN(TEXT); return PD_2S ; }
+  3s\ +        { BEGIN(TEXT); return PD_3S ; }
+  1p\ +        { BEGIN(TEXT); return PD_1P ; }
+  2p\ +        { BEGIN(TEXT); return PD_2P ; }
+  3p\ +        { BEGIN(TEXT); return PD_3P ; }
+  1d\ +        { BEGIN(TEXT); return PD_1D ; }
+  2d\ +        { BEGIN(TEXT); return PD_2D ; }
+  3d\ +        { BEGIN(TEXT); return PD_3D ; }
+}
 
  /* Level 2 Sub-entries for .rt */
 ^\.\.adj\ +    { BEGIN(TEXT) ; return GC2_ADJ ;}
@@ -121,53 +132,88 @@
 ^\.\.ven\ +    { BEGIN(TEXT) ; return GC2_VEN ;}
 ^\.\.voc\ +    { BEGIN(TEXT) ; return GC2_VOC ;}
 
- /* attributes for Level 2 Sub-entries for .rt */
-^dial/\ +[^ \t\n]+\n          { BEGIN(WHITE);    return DIAL; }
-^dial/\ +[^ \t\n]+\ +[^ \t\n][^\n]*\n  { BEGIN(DIALWHITE);return DIALX; } 
-^lit        { BEGIN(WHITE);    return LIT;  }
-^cf         { BEGIN(WHITE);    return CF;   }
-^sc         { BEGIN(WHITE);    return SC;   }
+^dial\ +/[^ \t\n]+\n                   { BEGIN(TEXT);     return DIAL;  }
+^dial\ +/[^ \t\n]+\ +[^ \t\n][^\n]*\n  { BEGIN(DIALTEXT); return DIALX; } 
+<DIALTEXT>[^ ]+ {
+   yylval.str = strdup(yytext);
+   BEGIN(TEXT);
+   return DIALXLANG;
+}
+
+^lit\ +        { BEGIN(TEXT);    return LIT;  }
+^cf\ +         { BEGIN(TEXT);    return CF;   }
+^sc\ +         { BEGIN(TEXT);    return SC;   }
 
  /* Level 3 Sub-entries for .rt */
-^\.\.\.(adj|adv|an|c|cnj|dem|dir|enc|exc|i|ic|n|nc|ni|pad|pf|pn|psn|pp|prt|ven|voc) { BEGIN(WHITE); yylval.str = strdup(yytext); return GC3; }
+^\.\.\.adj\ +    { BEGIN(TEXT) ; return GC3_ADJ ;}
+^\.\.\.adv\ +    { BEGIN(TEXT) ; return GC3_ADV ;}
+^\.\.\.an\ +     { BEGIN(TEXT) ; return GC3_AN  ;}
+^\.\.\.c\ +      { BEGIN(TEXT) ; return GC3_C   ;}
+^\.\.\.cnj\ +    { BEGIN(TEXT) ; return GC3_CNJ ;}
+^\.\.\.dem\ +    { BEGIN(TEXT) ; return GC3_DEM ;}
+^\.\.\.dir\ +    { BEGIN(TEXT) ; return GC3_DIR ;}
+^\.\.\.enc\ +    { BEGIN(TEXT) ; return GC3_ENC ;}
+^\.\.\.exc\ +    { BEGIN(TEXT) ; return GC3_EXC ;}
+^\.\.\.i\ +      { BEGIN(TEXT) ; return GC3_I   ;}
+^\.\.\.ic\ +     { BEGIN(TEXT) ; return GC3_IC  ;}
+^\.\.\.n\ +      { BEGIN(TEXT) ; return GC3_N   ;}
+^\.\.\.nc\ +     { BEGIN(TEXT) ; return GC3_NC  ;}
+^\.\.\.ni\ +     { BEGIN(TEXT) ; return GC3_NI  ;}
+^\.\.\.pad\ +    { BEGIN(TEXT) ; return GC3_PAD ;}
+^\.\.\.pf\ +     { BEGIN(TEXT) ; return GC3_PF  ;}
+^\.\.\.pn\ +     { BEGIN(TEXT) ; return GC3_PN  ;}
+^\.\.\.psn\ +    { BEGIN(TEXT) ; return GC3_PSN ;}
+^\.\.\.pp\ +     { BEGIN(TEXT) ; return GC3_PP  ;}
+^\.\.\.prt\ +    { BEGIN(TEXT) ; return GC3_PRT ;}
+^\.\.\.ven\ +    { BEGIN(TEXT) ; return GC3_VEN ;}
+^\.\.\.voc\ +    { BEGIN(TEXT) ; return GC3_VOC ;}
 
  /* .af */
-^\.af       { BEGIN(WHITE);    return AF;   }
+^\.af\ +       { BEGIN(TEXT);    return AF;   }
 
-  /* Sub-entries for .af, type A */
-^\.\.(nsf|sf|vpf|vsf|vsf1) {
-  BEGIN(WHITE);
-  yylval.str = strdup(yytext);
-  return AF2; }
+^\.\.nsf\ +    { BEGIN(TEXT);    return AF2_NSF;   }
 
- /* attributes for AF2A */ 
-^\.\.\.ifs { BEGIN(WHITE);       return IFS; }
+ /*   /\* Sub-entries for .af, type A *\/ */
+ /* ^\.\.(nsf|sf|vpf|vsf|vsf1) { */
+ /*   BEGIN(WHITE); */
+ /*   yylval.str = strdup(yytext); */
+ /*   return AF2; } */
 
-  /* Sub-entries for .af, type B */
-^\.\.(ads|tfs|sds) {
-  BEGIN(WHITE);
-  yylval.str = strdup(yytext);
-  return AF2B; }
+ /*  /\* attributes for AF2A *\/  */
+ /* ^\.\.\.ifs { BEGIN(WHITE);       return IFS; } */
 
-^asp  { BEGIN(WHITE); return ASP; }
+ /*   /\* Sub-entries for .af, type B *\/ */
+ /* ^\.\.(ads|tfs|sds) { */
+ /*   BEGIN(WHITE); */
+ /*   yylval.str = strdup(yytext); */
+ /*   return AF2B; } */
 
-  /* Sub-entries for .af, type C */
-^\.\.nds {
-  BEGIN(WHITE);
-  yylval.str = strdup(yytext);
-  return AF2C; }
+ /* ^asp  { BEGIN(WHITE); return ASP; } */
 
-  /* Loan words */
-^\.lw { BEGIN(WHITE); return LW; }
-^src  { BEGIN(WHITE); return SRC; }
- /* Note overloading of GC2 terms */
+ /*   /\* Sub-entries for .af, type C *\/ */
+ /* ^\.\.nds { */
+ /*   BEGIN(WHITE); */
+ /*   yylval.str = strdup(yytext); */
+ /*   return AF2C; } */
+
+ /*   /\* Loan words *\/ */
+ /* ^\.lw { BEGIN(WHITE); return LW; } */
+ /* ^src  { BEGIN(WHITE); return SRC; } */
+ /*  /\* Note overloading of GC2 terms *\/ */
 
   /* Comments - can be anywhere */
-^(com|rcom) { BEGIN(COMWHITE); }
+^(com|rcom)\ + { BEGIN(COMTEXT); }
+<COMTEXT>.+/\n {
+  /* print out the comment - it can be anywhere in the xml */
+  printf("<com>%s</com>\n",yytext);
+  BEGIN(INITIAL);} 
+
+
+
 
  /* ---------- Traps for other line types ---------- */
 
-^(\.file|\.\.+par|\.dir|cf) { /* ignore for now */ BEGIN(INITIAL); }
+^(\.file|\.\.+par|\.dir) { /* ignore for now */ BEGIN(INITIAL); }
 
 ^#.* { /* ignore comments */ BEGIN(INITIAL); }
 
@@ -190,8 +236,6 @@
 
  /* Now... get the post-band label delimiters */
 <COMWHITE>[ \t]+   { BEGIN(COMTEXT); }
-<DIALWHITE>[ \t]+  { BEGIN(DIALTEXT); }
-<DIALWHITE2>[ \t]+ { BEGIN(TEXT); }
 
  /* Finally, get the rest of each line */
 
@@ -201,11 +245,6 @@
 <COMTEXT>\n { BEGIN(INITIAL); }
 
 
-<DIALTEXT>[^ ]+ {
-   yylval.str = strdup(yytext);
-   BEGIN(DIALWHITE2);
-   return DIALXLANG;
-}
 
 
 

@@ -46,6 +46,7 @@ void main()
 %token     TC_MOT TC_NEU TC_ONO TC_OP  TC_OPONO TC_STAT TC_SUCC
 //%token   <str> TCTYPE
 %token   CNJ GL QUO EX ENG CIT PRDS PRD PRDGL
+%token     PD_1S PD_2S PD_3S PD_1P PD_2P PD_3P PD_1D PD_2D PD_3D 
 //%token   <str> GC2
 %token   GC2_ADJ GC2_ADV GC2_AN  GC2_C   GC2_CNJ GC2_DEM GC2_DIR GC2_ENC
 %token   GC2_EXC GC2_I   GC2_IC  GC2_N   GC2_NC  GC2_NI  GC2_PAD GC2_PF
@@ -53,9 +54,14 @@ void main()
 %token   DIAL DIALX
 %token   <str> DIALXLANG
 %token   LIT CF SC
-%token   <str> GC3
+//%token   <str> GC3
+%token   GC3_ADJ GC3_ADV GC3_AN  GC3_C   GC3_CNJ GC3_DEM GC3_DIR GC3_ENC
+%token   GC3_EXC GC3_I   GC3_IC  GC3_N   GC3_NC  GC3_NI  GC3_PAD GC3_PF
+%token   GC3_PN  GC3_PSN GC3_PP  GC3_PRT GC3_VEN GC3_VOC
+
 %token AF
-%token   <str> AF2
+%token   AF2_NSF
+ //%token   <str> AF2
 %token   IFS
 %token   <str> AF2B
 %token   ASP
@@ -83,20 +89,20 @@ root.1m: level1.alt
   | root.1m error ;
 
 //:  <rt> | <af> | <lw>
-level1.alt: rt ; // | af ; // | lw ;
+level1.alt: rt | af ; // | lw ;
 
 //:<rt> = \n  ".rt" TEXT : Root word
 rt: RT                  { printf("<rt>\n"); }
     WORDS               { printf("<word>%s</word>\n", $3); }
-    //:  <pd> (0-or-1)
+    //:  <pd> (0-to-1)
     pd.01
-    //:  <tag> (0-or-1)
+    //:  <tag> (0-to-1)
     tag.01
-    //:  <rtyp> (0-or-1)
+    //:  <rtyp> (0-to-1)
     rtyp.01
-    //:  <df> (0-or-1)
+    //:  <df> (0-to-1)
     df.01
-    //:  <sets> (0-or-1)
+    //:  <sets> (0-to-1)
     sets.01
     //:  <th> (0-to-many)
     th.0m
@@ -181,7 +187,7 @@ th:                     { printf("<th>\n");    }
   TH WORDS              { printf("<word>%s</word>\n", $3); }
   //:  <tc> (exactly-1)
   TC tc.alt
-  //:  <cnj> (0-or-1>
+  //:  <cnj> (0-to-1>
   cnj.01
   //:  <gl> (exactly-1)
   gl
@@ -231,9 +237,9 @@ gl:
   //:  "gl" TEXT : Gloss
   GL                    { printf("<gloss>\n"); } 
   WORDS                 { printf("<eng>%s</eng>\n", $3); }
-  //:  <quo> (0-or-1)
+  //:  <quo> (0-to-1)
   quo.01
-  //:  <cit> (0-or-1)
+  //:  <cit> (0-to-1)
   cit.01
                         { printf("</gloss>\n"); }
   ;
@@ -252,13 +258,13 @@ exeng:
   //:  "ex" TEXT : Example
   EX                          { printf("<example>\n"); } 
   WORDS                       { printf("<ex>%s</ex>\n", $3); }
-  //:  <dial> (0-or-1)
+  //:  <dial> (0-to-1)
   dial.01
   //:  <eng> (exactly-1)
   eng.b
-  //:  <quo> (0-or-1)
+  //:  <quo> (0-to-1)
   quo.01
-  //:  <cit> (0-or-1)
+  //:  <cit> (0-to-1)
   cit.01
                               { printf("</example>\n"); }
   ;
@@ -279,27 +285,47 @@ prds:
 
 //:<prd> =
 prd.1m: prd | prd.1m prd ;
-  //:  "prd" <prdtype> TEXT : Paradigm example; word 2: 1s, 2s, 3s, 1p, 2p, 3p, 1d, 2d, 3d
+  //:  "prd" <prdtype> TEXT : Paradigm example
 prd:
-  PRD                          { printf("<paradigm>\n"); } 
-  WORDS                        { printf("<dene>%s</dene>\n", $3); }
+  PRD                          { printf("<paradigm>\n"); }
+  prdtype.alt
+  WORDS                        { printf("<dene>%s</dene>\n", $4); }
   //:  <prdgl> (exactly-1)
   prdgl.b
   { printf("</paradigm>\n"); }
 ;
 
+//:<prdtype> =
+prdtype.alt:
+     //:    "1s" : First person singular
+     PD_1S       { printf("<type>1s</type>\n");       }
+     //:  | "2s" : Second person singular
+  |  PD_2S       { printf("<type>2s</type>\n");       }
+     //:  | "3s" : Third person singular
+  |  PD_3S       { printf("<type>3s</type>\n");       }
+     //:  | "1p" : First person plural
+  |  PD_1P       { printf("<type>1p</type>\n");       }
+     //:  | "2p" : Second person plural
+  |  PD_2P       { printf("<type>2p</type>\n");       }
+     //:  | "3p" : Third person plural
+  |  PD_3P       { printf("<type>3p</type>\n");       }
+     //:  | "1d" : First person dual
+  |  PD_1D       { printf("<type>1d</type>\n");       }
+     //:  | "2d" : Second person dual
+  |  PD_2D       { printf("<type>2d</type>\n");       }
+     //:  | "3d" : Third person dual
+  |  PD_3D       { printf("<type>3d</type>\n");       }
+  ;
+
 //:<prdgl> =\n  "prdgl" TEXT : Paradigm gloss
 prdgl.b:
   PRDGL WORDS { printf("<gloss>%s</gloss>\n", $2); };
 
+
 // ---------- .rt second level ----------
 
-gc2.0m: %empty | gc2.0m gc2 ;
-
-gc2: gc2.o gc2.b dial.01 gl lit.01 cf.01 sc.01 exeng.0m gc3.0m gc2.c ;
-gc2.o: %empty { printf("<gc2>\n"); } ;
-gc2.b: gc2.alt WORDS { printf("<word>%s</word>\n", $2); };
 //:<gc2> =
+gc2.0m: %empty | gc2.0m gc2 ;
 gc2.alt:
     //:    "..adj" TEXT : Adjective
     GC2_ADJ { printf("<type>adj</type>\n"); }
@@ -342,72 +368,200 @@ gc2.alt:
     //:  | "..prt" TEXT : 
   | GC2_PRT { printf("<type>prt</type>\n"); }
     //:  | "..ven" TEXT : 
-  | GC2_VEN { printf("<type><ven/type>\n"); }
+  | GC2_VEN { printf("<type>ven</type>\n"); }
     //:  | "..voc" TEXT : 
   | GC2_VOC { printf("<type>voc</type>\n"); } ;
 
-gc2.c: %empty { printf("</gc2>\n"); } ;
+gc2:
+                                  { printf("<gc2>\n"); }
+  gc2.alt
+  WORDS                           { printf("<word>%s</word>\n", $3); }
+  //:  <dial> (0-to-1)
+  dial.01
+  //:  <gl> (exactly-1)
+  gl
+  //:  <lit> (0-to-1)
+  lit.01
+  //:  <cf> (0-to-1)
+  cf.01
+  //:  <sc> (0-to-1)
+  sc.01
+  //:  <ex> (0-to-many)
+  exeng.0m
+  //:  <gc3> (0-to-many)
+  gc3.0m
+                                  { printf("</gc2>\n"); }
+  ;
 
-//:  <dial>
-
+//:<dial> =
 dial.01: %empty | dial ;
-
 // dial is tricky, because it takes two forms:
 //  `dial LANG`
-dial: dial.o dial.b dialx.0m dial.c ;
-dial.o: %empty { printf("<dial>\n"); } ;
-dial.b: DIAL WORDS { printf("<lang>%s</lang>\n", $2); };
-dial.c: %empty { printf("</dial>\n"); } ;
+dial:
+  //:  "dial" <lang> : Dialect
+  DIAL                     { printf("<dial>\n"); }
+  WORDS                    { printf("<lang>%s</lang>\n", $3); }
+  //:  <dial2> (0-to-many)
+  dialx.0m
+                           { printf("</dial>\n"); }
+  ;
+//:<lang> =\n  TEXT : Language
 
+//:<dial2> =
 dialx.0m: %empty | dialx.0m dialx ;
-
 //  and `dial LANG words`
-dialx: dialx.o dialx.b dialx.c
-dialx.o: %empty { printf("<dialx>\n"); } ;
-dialx.b: DIALX DIALXLANG WORDS { printf("<word>%s</word>\n<lang>%s</lang>\n", $3, $2); };
-dialx.c: %empty { printf("</dialx>\n"); } ;
+dialx:
+//:  "dial" <lang> TEXT : Additional dialects
+  DIALX               { printf("<dialx>\n"); }
+  DIALXLANG WORDS     { printf("<word>%s</word>\n<lang>%s</lang>\n", $4, $3); }
+                      { printf("</dialx>\n"); }
+  ;
 
+//:<lit> =\n  "lit" TEXT : Literal translation
 lit.01: %empty | lit.b ;
 lit.b: LIT WORDS { printf("<lit>%s</lit>\n", $2); };
 
+//:<cf> =\n  "cf" TEXT : Compare with
 cf.01: %empty | cf.b ;
 cf.b: CF WORDS { printf("<cf>%s</cf>\n", $2); };
 
+//:<sc> =\n  "sc" TEXT : Scientific name
 sc.01: %empty | sc.b ;
 sc.b: SC WORDS { printf("<sc>%s</sc>\n", $2); };
 
+
 // ---------- .rt third level ----------
 
+//:<gc3> =
 gc3.0m: %empty | gc3.0m gc3 ;
+gc3.alt:
+    //:    "...adj" TEXT : Adjective
+    GC3_ADJ { printf("<type>adj</type>\n"); }
+    //:  | "...adv" TEXT : Adverb
+  | GC3_ADV { printf("<type>adv</type>\n"); }
+    //:  | "...an" TEXT  : 
+  | GC3_AN  { printf("<type>an</type>\n"); }
+    //:  | "...c" TEXT   : 
+  | GC3_C   { printf("<type>c</type>\n"); }
+    //:  | "...cnj" TEXT : 
+  | GC3_CNJ { printf("<type>cnj</type>\n"); }
+    //:  | "...dem" TEXT : 
+  | GC3_DEM { printf("<type>dem</type>\n"); }
+    //:  | "...dir" TEXT : 
+  | GC3_DIR { printf("<type>dir</type>\n"); }
+    //:  | "...enc" TEXT : 
+  | GC3_ENC { printf("<type>enc</type>\n"); }
+    //:  | "...exc" TEXT : 
+  | GC3_EXC { printf("<type>exc</type>\n"); }
+    //:  | "...i" TEXT   : 
+  | GC3_I   { printf("<type>i</type>\n"); }
+    //:  | "...ic" TEXT  : 
+  | GC3_IC  { printf("<type>ic</type>\n"); }
+    //:  | "...n" TEXT   : Noun
+  | GC3_N   { printf("<type>n</type>\n"); }
+    //:  | "...nc" TEXT  : 
+  | GC3_NC  { printf("<type>nc</type>\n"); }
+    //:  | "...ni" TEXT  : 
+  | GC3_NI  { printf("<type>ni</type>\n"); }
+    //:  | "...pad" TEXT : 
+  | GC3_PAD { printf("<type>pad</type>\n"); }
+    //:  | "...pf" TEXT  : 
+  | GC3_PF  { printf("<type>pf</type>\n"); }
+    //:  | "...pn" TEXT  : 
+  | GC3_PN  { printf("<type>pn</type>\n"); }
+    //:  | "...psn" TEXT : 
+  | GC3_PSN { printf("<type>psn</type>\n"); }
+    //:  | "...pp" TEXT  : 
+  | GC3_PP  { printf("<type>pp</type>\n"); }
+    //:  | "...prt" TEXT : 
+  | GC3_PRT { printf("<type>prt</type>\n"); }
+    //:  | "...ven" TEXT : 
+  | GC3_VEN { printf("<type>ven</type>\n"); }
+    //:  | "...voc" TEXT : 
+  | GC3_VOC { printf("<type>voc</type>\n"); } ;
 
-gc3: gc3.o gc3.b dial.01 gl lit.01 cf.01 sc.01 exeng.0m gc3.c ;
-gc3.o: %empty { printf("<gc3>\n"); } ;
-gc3.b: GC3 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
-gc3.c: %empty { printf("</gc3>\n"); } ;
+gc3:
+                                  { printf("<gc3>\n"); }
+  gc3.alt
+  WORDS                           { printf("<word>%s</word>\n", $3); }
+  //:  <dial> (0-to-1)
+  dial.01
+  //:  <gl> (exactly-1)
+  gl
+  //:  <lit> (0-to-1)
+  lit.01
+  //:  <cf> (0-to-1)
+  cf.01
+  //:  <sc> (0-to-1)
+  sc.01
+  //:  <ex> (0-to-many)
+  exeng.0m
+                                  { printf("</gc3>\n"); }
+  ;
 
-/*
 // ---------- .af ----------
 
-af:  af.o af.b pd.01 tag.01 rtyp.01 af2.alt af.c ;
-af.o: %empty { printf("<af>\n"); } ;
-af.b: AF WORDS { printf("<word>%s</word>\n", $2); };
-af.c: %empty { printf("</af>\n"); } ;
+//:<af> =
+af:
+//:  ".af" TEXT : Affix
+  AF                              { printf("<af>\n"); }
+  WORDS                           { printf("<word>%s</word>\n", $3); }
+  //:  <pd> (0-to-1)
+  pd.01
+  //:  <tag> (0-to-1)
+  tag.01
+  //:  <rtyp> (0-to-1)
+  rtyp.01
+  //:  <af2> (0-to-1)
+  af2.0alt
+                                  { printf("</af>\n"); }
+  ;
 
-// ---------- .af level 2 ----------
+//:<af2> =\  <af2n> (1-to-many)
+af2.0alt: %empty | af2n.1m ; //| af2s.0m | af2v.0m ;
+af2n.1m: af2n | af2n af2n.1m ;
+//af2s.0m: %empty | af2s.0m af2s ;
+//af2v.0m: %empty | af2v.0m af2v ;
 
-af2.alt: af2n.0m | af2s.0m | af2v.0m ;
+//:<af2n> =
+af2n:
+  //:  "..nsf" TEXT : Noun suffix
+  AF2_NSF                { printf("<af2>\n"); } 
+  WORDS                  { printf("<word>%s</word>\n<type>nsf</type>\n", $3); }
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+  //:  <af2n3> (0-to-many)
+  af2n3.0m 
+                         { printf("</af2>\n"); }
+  ;
 
-af2n.0m: %empty | af2n.0m af2n ;
-af2s.0m: %empty | af2s.0m af2s ;
-af2v.0m: %empty | af2v.0m af2v ;
+//:<af2n3> =
+af2n3.0m: %empty | af2n3.0m af2n3 ;
 
-// ---------- .af level 2 n ----------
+af2n3: 
+                                  { printf("<af3>\n"); }
+  af2n3.alt WORDS                 { printf("<word>%s</word>\n", $3); }
+  gl
+  exeng.0m
+                                  { printf("</af3>\n"); }
+  ;
 
-af2n: af2.o af2n.b gl.01 exeng.0m af2n3.0m af2.c ;
-af2.o: %empty { printf("<af2>\n"); } ;
-af2n.b: AF2N WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
-af2.c: %empty { printf("</af2>\n"); } ;
+af2n3.alt:
+    //:  | "...an" TEXT  : 
+    GC3_AN  { printf("<type>an</type>\n"); }
+    //:  | "...exc" TEXT   : 
+  | GC3_EXC { printf("<type>exc</type>\n"); }
+    //:  | "...n" TEXT   : 
+  | GC3_N   { printf("<type>n</type>\n"); }
+    //:  | "...pp" TEXT  : 
+  | GC3_PP  { printf("<type>pp</type>\n"); }
+    //:  | "...voc" TEXT : 
+  | GC3_VOC { printf("<type>voc</type>\n"); } ;
 
+
+/*
 af2n3.0m: %empty | af2n3.0m af2n3 ;
 
 af2n3: af3.o af2n3.b gl.01 exeng.0m af3.c ;

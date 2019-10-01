@@ -58,12 +58,23 @@
       </gloss>
       <example>
         <ex>ch'idiin'ąįį</ex>
+        <dial>
+          <lang>FOO</lang>
+        </dial>
         <eng>he opened something (can)</eng>
+        <cit>FOO</cit>
       </example>
+      <paradigms>
+        <paradigm>
+          <type>1s</type>
+          <dene>FOO</dene>
+          <gloss>BAR</gloss>
+        </paradigm>
+      </paradigms>
     </th>
     <gc2>
+      <type>n</type>
       <word>-'onh</word>
-      <type>..n</type>
       <dial>
         <lang>MN</lang>
         <dialx>
@@ -87,8 +98,8 @@
       </example>
     </gc2>
     <gc2>
+      <type>voc</type>
       <word>-'onh</word>
-      <type>..voc</type>
       <dial>
         <lang>M</lang>
       </dial>
@@ -102,23 +113,23 @@
         <eng>rabbit den</eng>
       </example>
       <gc3>
+        <type>n</type>
         <word>-ey'i:</word>
-        <type>...n</type>
         <gloss>
           <eng>*sonny</eng>
         </gloss>
         <cf>FOO</cf>
       </gc3>
       <gc3>
+        <type>voc</type>
         <word>-edh'ą́</word>
-        <type>...voc</type>
         <gloss>
           <eng>uncle!</eng>
         </gloss>
       </gc3>
       <gc3>
+        <type>voc</type>
         <word>chelą́:</word>
-        <type>...voc</type>
         <gloss>
           <eng>young brother</eng>
         </gloss>
@@ -131,7 +142,7 @@
     <rtyp>ɑ/sf</rtyp>
     <af2>
       <word>Ø</word>
-      <type>..nsf</type>
+      <type>nsf</type>
       <gloss>
         <eng>*possess]ed suffix in nouns</eng>
         <com>very rare, the usual suffix is &amp;-a'</com>
@@ -144,22 +155,13 @@
         <ex>yex, -yex</ex>
         <eng>house</eng>
       </example>
-    </af2>
-    <af2>
-      <word>Ø</word>
-      <type>..nds</type>
-      <gloss>
-        <eng>*possess]ed suffix in nouns</eng>
-        <com>very rare, the usual suffix is &amp;-a'</com>
-      </gloss>
-      <example>
-        <ex>kayex, -kayex</ex>
-        <eng>village</eng>
-      </example>
-      <example>
-        <ex>yex, -yex</ex>
-        <eng>house</eng>
-      </example>
+      <af3>
+        <type>n</type>
+        <word>FOO</word>
+        <gloss>
+          <eng>BAR</eng>
+        </gloss>
+      </af3>
     </af2>
   </af>
   <rt>
@@ -204,8 +206,8 @@
       </example>
     </th>
     <gc2>
+      <type>n</type>
       <word>gwęę'aa kit</word>
-      <type>..n</type>
       <gloss>
         <eng>leader</eng>
       </gloss>
@@ -236,8 +238,8 @@
       </example>
     </th>
     <gc2>
+      <type>n</type>
       <word>ch'aah'a&gt;&gt;k</word>
-      <type>..n</type>
       <gloss>
         <eng>love song</eng>
       </gloss>
