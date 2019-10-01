@@ -31,7 +31,6 @@ lterr:
 	cat lt.lex | ./lw2xml 2>&1 > /dev/null 
 
 grammar:
-	grep "//:" lw2xml.y | sed 's|^.*//:||g' | gawk '{gsub(/\\n/,"\n",$$0); print $$0}'
-
+	grep "//:" lw2xml.y | sed 's|^.*//:||g' | gawk '{gsub(/\\n/,"\n",$$0); print $$0}' > ../../grammar/dene.grammar
 
 # gcc  -o lw2xml -DYYDEBUG lw2xml.tab.c lex.yy.c

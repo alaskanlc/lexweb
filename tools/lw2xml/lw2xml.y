@@ -222,41 +222,75 @@ tc.alt:
   | TC_SUCC             { printf("<tc>succ</tc>\n");      }
   ;
 
-cnj.01: %empty | cnj.b ;
-cnj.b: CNJ WORDS { printf("<cnj>%s</cnj>\n", $2); };
+//:<cnj> =\n  "cnj" TEXT : Conjugation prefix
+cnj.01: %empty
+  | CNJ WORDS { printf("<cnj>%s</cnj>\n", $2); } ;
 
-gl: gl.o gl.b quo.01 cit.01 gl.c ;
-gl.o: %empty { printf("<gloss>\n"); } ;
-gl.b: GL WORDS { printf("<eng>%s</eng>\n", $2); };
-gl.c: %empty { printf("</gloss>\n"); } ;
+//:<gl> =
+gl:
+  //:  "gl" TEXT : Gloss
+  GL                    { printf("<gloss>\n"); } 
+  WORDS                 { printf("<eng>%s</eng>\n", $3); }
+  //:  <quo> (0-or-1)
+  quo.01
+  //:  <cit> (0-or-1)
+  cit.01
+                        { printf("</gloss>\n"); }
+  ;
 
-quo.01: %empty | quo.b ;
-quo.b: QUO WORDS { printf("<quo>%s</quo>\n", $2); };
+//:<quo> =\n  "quo" TEXT : Quotations from consultant (or comment)
+quo.01: %empty |
+  QUO WORDS { printf("<quo>%s</quo>\n", $2); } ;
 
-cit.01: %empty | cit.b ;
-cit.b: CIT WORDS { printf("<cit>%s</cit>\n", $2); };
+//:<cit> =\n  "cit" TEXT : Citation (e.g., Notebook source)
+cit.01: %empty |
+  CIT WORDS { printf("<cit>%s</cit>\n", $2); } ;
 
+//:<ex> =
 exeng.0m: %empty | exeng.0m exeng ;
-exeng: exeng.o ex.b dial.01 eng.b quo.01 cit.01 exeng.c ;
-exeng.o: %empty { printf("<example>\n"); } ;
-ex.b: EX WORDS { printf("<ex>%s</ex>\n", $2); };
-eng.b: ENG WORDS { printf("<eng>%s</eng>\n", $2); };
-exeng.c: %empty { printf("</example>\n"); } ;
+exeng:
+  //:  "ex" TEXT : Example
+  EX                          { printf("<example>\n"); } 
+  WORDS                       { printf("<ex>%s</ex>\n", $3); }
+  //:  <dial> (0-or-1)
+  dial.01
+  //:  <eng> (exactly-1)
+  eng.b
+  //:  <quo> (0-or-1)
+  quo.01
+  //:  <cit> (0-or-1)
+  cit.01
+                              { printf("</example>\n"); }
+  ;
 
+//:<eng> =\n  "eng" TEXT : English translation
+eng.b:
+  ENG WORDS                   { printf("<eng>%s</eng>\n", $2); }
+
+//:<prds>=
 prds.0m: %empty | prds.0m prds ;
+prds:
+  //:  "...prds" : Usage paradigm
+  PRDS                    { printf("<paradigms>\n"); }
+  //:  <prd> (1-to-many)
+  prd.1m
+                              { printf("</paradigms>\n"); }
+  ;
 
-prds: prds.o prds.b prd.1m prds.c ;
-prds.o: %empty { printf("<paradigms>\n"); } ;
-prds.b: PRDS { };
-prds.c: %empty { printf("</paradigms>\n"); } ;
-
+//:<prd> =
 prd.1m: prd | prd.1m prd ;
+  //:  "prd" <prdtype> TEXT : Paradigm example; word 2: 1s, 2s, 3s, 1p, 2p, 3p, 1d, 2d, 3d
+prd:
+  PRD                          { printf("<paradigm>\n"); } 
+  WORDS                        { printf("<dene>%s</dene>\n", $3); }
+  //:  <prdgl> (exactly-1)
+  prdgl.b
+  { printf("</paradigm>\n"); }
+;
 
-prd: prd.o prd.b prdgl.b prd.c ;
-prd.o: %empty { printf("<paradigm>\n"); } ;
-prd.b: PRD WORDS { printf("<dene>%s</dene>\n", $2); };
-prdgl.b: PRDGL WORDS { printf("<gloss>%s</gloss>\n", $2); };
-prd.c: %empty { printf("</paradigm>\n"); } ;
+//:<prdgl> =\n  "prdgl" TEXT : Paradigm gloss
+prdgl.b:
+  PRDGL WORDS { printf("<gloss>%s</gloss>\n", $2); };
 
 // ---------- .rt second level ----------
 
