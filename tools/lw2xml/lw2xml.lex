@@ -10,23 +10,19 @@
 %option noyywrap yylineno
 
  /* Start-condition tokens ; note %x is the eXclusive form */
-%x WHITE TEXT SETTYPE COMWHITE
-%x COMTEXT DIALTEXT
-%x TCTEXT TCTYPE PRDTYPE
+%x TEXT COMTEXT DIALTEXT
+%x TCTEXT TCTYPE PRDTYPE SETTYPE
 
 %%
- /* Regular expressions to match band labels */
- /* Order follows the symbolic grammar      */
- /* Conditional regexes placed at first reference */
+ /* When the generated scanner is run, it analyzes its input looking for
+    strings which match any of its patterns.  If it finds more than one
+    match, it takes the one matching the most text */
+ /* Listed order follows the symbolic grammar. Conditional regexes 
+    placed at first reference */
 
  /* .rt */ 
 ^\.rt\ +         { BEGIN(TEXT);   return RT;    }
-<WHITE>[ ]+ { BEGIN(TEXT);                  }
- /* missing */
-<WHITE>\ *\n {
-  fprintf(stderr, "  L.%d: missing text\n",yylineno);
-  BEGIN(INITIAL);
-}
+
 <TEXT>.+/\n {
  /* get rest of line  - note, regex does not include \n */
   yylval.str = strdup(yytext);
@@ -41,7 +37,7 @@
 ^df\ +         { BEGIN(TEXT);    return DF;   }
 
  /* sets */
-^\.\.sets\ *    {                  return SETS; }
+^\.\.sets$   {                  return SETS; }
 ^set\ +         { BEGIN(SETTYPE);  return SET;  }
 <SETTYPE>{
   conc\ +  { BEGIN(TEXT); return ST_CONC ; }
@@ -184,65 +180,46 @@
 ^asp\ +        { BEGIN(TEXT); return ASP;     }
 ^\.\.\.th\ +   { BEGIN(TEXT);    return TH3;   }
 
-^\.\.nds\ +    { BEGIN(TEXT);    return AF2_NDS;   }
-^\.\.ads\ +    { BEGIN(TEXT);    return AF2_ADS;   }
-^\.\.sds\ +    { BEGIN(TEXT);    return AF2_SDS;   }
+^\.\.nds\ +    { BEGIN(TEXT);     return AF2_NDS;   }
+^\.\.ads\ +    { BEGIN(TEXT);     return AF2_ADS;   }
+^\.\.sds\ +    { BEGIN(TEXT);     return AF2_SDS;   }
 
 ^\.\.nfsf\ +    { BEGIN(TEXT);    return AF2_NFSF;   }
 ^\.\.vfsf\ +    { BEGIN(TEXT);    return AF2_VFSF;   }
 ^\.\.nfpf\ +    { BEGIN(TEXT);    return AF2_NFPF;   }
 ^\.\.vfpf\ +    { BEGIN(TEXT);    return AF2_VFPF;   }
 
-
- /*   /\* Sub-entries for .af, type A *\/ */
- /* ^\.\.(nsf|sf|vpf|vsf|vsf1) { */
- /*   BEGIN(WHITE); */
- /*   yylval.str = strdup(yytext); */
- /*   return AF2; } */
-
- /*  /\* attributes for AF2A *\/  */
- /* ^\.\.\.ifs { BEGIN(WHITE);       return IFS; } */
-
- /*   /\* Sub-entries for .af, type B *\/ */
- /* ^\.\.(ads|tfs|sds) { */
- /*   BEGIN(WHITE); */
- /*   yylval.str = strdup(yytext); */
- /*   return AF2B; } */
-
-
- /*   /\* Sub-entries for .af, type C *\/ */
- /* ^\.\.nds { */
- /*   BEGIN(WHITE); */
- /*   yylval.str = strdup(yytext); */
- /*   return AF2C; } */
-
- /*   /\* Loan words *\/ */
- /* ^\.lw { BEGIN(WHITE); return LW; } */
- /* ^src  { BEGIN(WHITE); return SRC; } */
- /*  /\* Note overloading of GC2 terms *\/ */
-
   /* Comments - can be anywhere */
 ^(com|rcom)\ + { BEGIN(COMTEXT); }
 <COMTEXT>.+/\n {
   /* print out the comment - it can be anywhere in the xml */
   printf("<com>%s</com>\n",yytext);
-  BEGIN(INITIAL);} 
+  BEGIN(INITIAL);
+} 
+ /* <COMTEXT>.+ { /\* print out the comment - it can be anywhere in the xml *\/ */
+ /*   printf("<com>%s</com>\n",yytext); }  */
+ /* <COMTEXT>\n { BEGIN(INITIAL); } */
 
+ /* ---------- Ignored ---------- */
 
-
-
- /* ---------- Traps for other line types ---------- */
-
-^(\.file|\.\.+par|\.dir) { /* ignore for now */ BEGIN(INITIAL); }
+^(\.file|\.\.+par|\.dir)\ + { /* ignore for now */ BEGIN(INITIAL); }
+  /* xr */ 
+^(\.xr|xgl|see)\ + { /* ignore for now */ BEGIN(INITIAL); }
 
 ^#.* { /* ignore comments */ BEGIN(INITIAL); }
 
+^[ \t]+$ { /* ignore bad spaces */
+  fprintf(stderr, "  L.%d: blank line with spaces\n", yylineno);
+  BEGIN(INITIAL); }
+
+  /* this matches all the standard bands, but is shorter, and later in this 
+     list  */
 ^[^ \t\n]+ {
    fprintf(stderr, "  L.%d: unknown band label '%s'\n",yylineno,yytext);
    BEGIN(INITIAL); 
 }
 
-^[ \t]+[^ \t]+ {
+^[ \t]+[^ \t\n]+ {
    fprintf(stderr, "  L.%d: Leading spaces '%s'\n",yylineno,yytext);
    BEGIN(INITIAL); 
 }
@@ -251,18 +228,6 @@
 
 \n                 { BEGIN(INITIAL);  }
 
-
-
-
- /* Now... get the post-band label delimiters */
-<COMWHITE>[ \t]+   { BEGIN(COMTEXT); }
-
- /* Finally, get the rest of each line */
-
-
-<COMTEXT>.+ { /* print out the comment - it can be anywhere in the xml */
-  printf("<com>%s</com>\n",yytext); } 
-<COMTEXT>\n { BEGIN(INITIAL); }
 
 
 

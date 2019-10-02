@@ -81,55 +81,55 @@ root.1m: level1.alt
   | root.1m level1.alt
   | root.1m error ;
 
-//:  <rt> | <af> | <lw>
+//:    <rt> | <af> | <lw>
 level1.alt: rt | af ; // | lw ;
 
-//:<rt> = \n  ".rt" TEXT : Root word
+//:<rt> = \n    ".rt"   TEXT : Root word
 rt: RT                  { printf("<rt>\n"); }
     WORDS               { printf("<word>%s</word>\n", $3); }
-    //:  <pd> (0-to-1)
+    //:    <pd>    (0-to-1)
     pd.01
-    //:  <tag> (0-to-1)
+    //:    <tag>   (0-to-1)
     tag.01
-    //:  <rtyp> (0-to-1)
+    //:    <rtyp>  (0-to-1)
     rtyp.01
-    //:  <df> (0-to-1)
+    //:    <df>    (0-to-1)
     df.01
-    //:  <sets> (0-to-1)
+    //:    <sets>  (0-to-1)
     sets.01
-    //:  <th> (0-to-many)
+    //:    <th>    (0-to-many)
     th.0m
-    //:  <gc2> (0-to-many)
+    //:    <gc2>   (0-to-many)
     gc2.0m
                         { printf("</rt>\n"); } ;
 
 // ---------- rt level 1 attributes ----------
 
-//:<pd> =\n  "pd" TEXT : Proto Dene
+//:<pd> =\n    "pd"    TEXT : Proto Dene
 pd.01: %empty
   | PD WORDS            { printf("<pd>%s</pd>\n", $2); };
 
-//:<tag> =\n  "tag" TEXT : Tag
+//:<tag> =\n    "tag"   TEXT : Tag
 tag.01:  %empty
   | TAG WORDS           { printf("<tag>%s</tag>\n", $2); };
 
-//:<rtyp> =\n  "rtyp" TEXT : Root word type, incl root class: rtu , rrt,  drt, ra
+//:<rtyp> =\n    "rtyp"  TEXT : Root word type, incl root class: rtu , rrt,  drt, ra
 rtyp.01: %empty
   | RTYP WORDS          { printf("<rtyp>%s</rtyp>\n", $2); };
 
-//:<df> =\n  "df" TEXT : Derived forms
+//:<df> =\n    "df"    TEXT : Derived forms
 df.01:   %empty
   | DF WORDS            { printf("<df>%s</df>\n", $2); };
 
-//:<sets> =\n  "..sets" : Sets
+//:<sets> =\n    "..sets"     : Sets
 sets.01: %empty
   |                     { printf("<sets>\n"); }
     SETS
-    //:  <set> (1-to-many)
+    //:    <set>   (1-to-many)
     set.1m
                         { printf("</sets>\n"); } ;
 
-//:<set> =\n  "set" <settype> TEXT : Aspectual category
+//:<set> =\n    "set" <settype> TEXT : Aspectual category
 set.1m: set
   | set.1m set ;
 set:                    { printf("<set>\n"); }
@@ -139,178 +139,178 @@ set:                    { printf("<set>\n"); }
 //:<settype> =
 settype.alt:
     ST_CONC { printf("<type>conc</type>\n") ; }
-    //:    "conc"  : Conclusive
+    //:    "conc"       : Conclusive
   | ST_CNS  { printf("<type>cns</type>\n")  ; }
-    //:  | "cns"   : Consecutive
+    //:  | "cns"        : Consecutive
   | ST_CONA { printf("<type>cona</type>\n") ; }
-    //:  | "cona"  : Conative
+    //:  | "cona"       : Conative
   | ST_CONT { printf("<type>cont</type>\n") ; }
-    //:  | "cont"  : Continuative
+    //:  | "cont"       : Continuative
   | ST_CUST { printf("<type>cust</type>\n") ; }
-    //:  | "cust"  : Customary
+    //:  | "cust"       : Customary
   | ST_DIST { printf("<type>dist</type>\n") ; }
-    //:  | "dist"  : Distrubutive
+    //:  | "dist"       : Distrubutive
   | ST_DUR  { printf("<type>dur</type>\n")  ; }
-    //:  | "dur"   : Durative
+    //:  | "dur"        : Durative
   | ST_MOM  { printf("<type>mom</type>\n")  ; }
-    //:  | "mom"   : Momentaneous
+    //:  | "mom"        : Momentaneous
   | ST_MULT { printf("<type>mult</type>\n") ; }
-    //:  | "mult"  : Multiple
+    //:  | "mult"       : Multiple
   | ST_NEU  { printf("<type>neu</type>\n")  ; }
-    //:  | "neu"   : Neuter
+    //:  | "neu"        : Neuter
   | ST_PER  { printf("<type>per</type>\n")  ; }
-    //:  | "per"   : Perambulative
+    //:  | "per"        : Perambulative
   | ST_PROG { printf("<type>prog</type>\n") ; }
-    //:  | "prog"  : Progressive
+    //:  | "prog"       : Progressive
   | ST_REP  { printf("<type>rep</type>\n")  ; }
-    //:  | "rep"   : Repetitive
+    //:  | "rep"        : Repetitive
   | ST_REV  { printf("<type>rev</type>\n")  ; }
-    //:  | "rev"   : Reversative
+    //:  | "rev"        : Reversative
   | ST_SEM  { printf("<type>sem</type>\n")  ; }
-    //:  | "sem"   : Semelfactive
+    //:  | "sem"        : Semelfactive
   | ST_TRAN { printf("<type>tran</type>\n") ; }
-    //:  | "tran"   : Transitional
+    //:  | "tran"       : Transitional
   ;
 
 //:<th> =
 th.0m: %empty
   | th.0m th ;
 th:                     { printf("<th>\n");    }
-  //:  "..th" TEXT : Verb theme
+  //:    "..th"  TEXT : Verb theme
   TH WORDS              { printf("<word>%s</word>\n", $3); }
-  //:  <tc> (exactly-1)
+  //:    <tc>    (exactly-1)
   TC tc.alt
-  //:  <cnj> (0-to-1>
+  //:    <cnj>   (0-to-1>
   cnj.01
-  //:  <gl> (exactly-1)
+  //:    <gl>    (exactly-1)
   gl
-  //:  <ex> (0-to-many)
+  //:    <ex>    (0-to-many)
   exeng.0m
-  //:  <prds> (0-to-many)
+  //:    <prds>  (0-to-many)
   prds.0m                { printf("</th>\n"); } ;
 
 //:<tc> =
-//:  "tc" <tctype> : Theme category
+//:    "tc" <tctype> : Theme category
 //:<tctype> =
 tc.alt:
-    //:    "clas-mot"  : Classificatory motion
+    //:    "clas-mot"   : Classificatory motion
     TC_CLASMOT          { printf("<tc>clas-mot</tc>\n");  }
-    //:  | "clas-stat" : Classificatory stative
+    //:  | "clas-stat"  : Classificatory stative
   | TC_CLASSTAT         { printf("<tc>clas-stat</tc>\n"); }
-    //:  | "conv"      : Conversive
+    //:  | "conv"       : Conversive
   | TC_CONV             { printf("<tc>conv</tc>\n");      }
-    //:  | "desc"      : Descriptive
+    //:  | "desc"       : Descriptive
   | TC_DESC             { printf("<tc>desc</tc>\n");      }
-    //:  | "dim"       : Dimentional
+    //:  | "dim"        : Dimentional
   | TC_DIM              { printf("<tc>dim</tc>\n");       }
-    //:  | "ext"       : Extension
+    //:  | "ext"        : Extension
   | TC_EXT              { printf("<tc>ext</tc>\n");       }
-    //:  | "mot"       : Motion
+    //:  | "mot"        : Motion
   | TC_MOT              { printf("<tc>mot</tc>\n");       }
-    //:  | "neu"       : Neuter
+    //:  | "neu"        : Neuter
   | TC_NEU              { printf("<tc>neu</tc>\n");       }
-    //:  | "ono"       : Onomatopoetic
+    //:  | "ono"        : Onomatopoetic
   | TC_ONO              { printf("<tc>ono</tc>\n");       }
-    //:  | "op"        : Operative
+    //:  | "op"         : Operative
   | TC_OP               { printf("<tc>op</tc>\n");        }
-    //:  | "op-ono"    : Onomatopoetic operative
+    //:  | "op-ono"     : Onomatopoetic operative
   | TC_OPONO            { printf("<tc>op-ono</tc>\n");    }
-    //:  | "stat"      : Stative
+    //:  | "stat"       : Stative
   | TC_STAT             { printf("<tc>stat</tc>\n");      }
-    //:  | "succ"      : Successive
+    //:  | "succ"       : Successive
   | TC_SUCC             { printf("<tc>succ</tc>\n");      }
   ;
 
-//:<cnj> =\n  "cnj" TEXT : Conjugation prefix
+//:<cnj> =\n    "cnj"   TEXT : Conjugation prefix
 cnj.01: %empty
   | CNJ WORDS { printf("<cnj>%s</cnj>\n", $2); } ;
 
 //:<gl> =
 gl:
-  //:  "gl" TEXT : Gloss
+  //:    "gl"    TEXT : Gloss
   GL                    { printf("<gloss>\n"); } 
   WORDS                 { printf("<eng>%s</eng>\n", $3); }
-  //:  <quo> (0-to-1)
+  //:    <quo>   (0-to-1)
   quo.01
-  //:  <cit> (0-to-1)
+  //:    <cit>   (0-to-1)
   cit.01
                         { printf("</gloss>\n"); }
   ;
 
-//:<quo> =\n  "quo" TEXT : Quotations from consultant (or comment)
+//:<quo> =\n    "quo"   TEXT : Quotations from consultant (or comment)
 quo.01: %empty |
   QUO WORDS { printf("<quo>%s</quo>\n", $2); } ;
 
-//:<cit> =\n  "cit" TEXT : Citation (e.g., Notebook source)
+//:<cit> =\n    "cit"   TEXT : Citation (e.g., Notebook source)
 cit.01: %empty |
   CIT WORDS { printf("<cit>%s</cit>\n", $2); } ;
 
 //:<ex> =
 exeng.0m: %empty | exeng.0m exeng ;
 exeng:
-  //:  "ex" TEXT : Example
+  //:    "ex"    TEXT : Example
   EX                          { printf("<example>\n"); } 
   WORDS                       { printf("<ex>%s</ex>\n", $3); }
-  //:  <dial> (0-to-1)
+  //:    <dial>  (0-to-1)
   dial.01
-  //:  <eng> (exactly-1)
+  //:    <eng>   (exactly-1)
   eng.b
-  //:  <quo> (0-to-1)
+  //:    <quo>   (0-to-1)
   quo.01
-  //:  <cit> (0-to-1)
+  //:    <cit>   (0-to-1)
   cit.01
                               { printf("</example>\n"); }
   ;
 
-//:<eng> =\n  "eng" TEXT : English translation
+//:<eng> =\n    "eng"   TEXT : English translation
 eng.b:
   ENG WORDS                   { printf("<eng>%s</eng>\n", $2); }
 
 //:<prds>=
 prds.0m: %empty | prds.0m prds ;
 prds:
-  //:  "...prds" : Usage paradigm
+  //:    "...prds"    : Usage paradigm
   PRDS                    { printf("<paradigms>\n"); }
-  //:  <prd> (1-to-many)
+  //:    <prd>   (1-to-many)
   prd.1m
                               { printf("</paradigms>\n"); }
   ;
 
 //:<prd> =
 prd.1m: prd | prd.1m prd ;
-  //:  "prd" <prdtype> TEXT : Paradigm example
+  //:    "prd" <prdtype> TEXT : Paradigm example
 prd:
   PRD                          { printf("<paradigm>\n"); }
   prdtype.alt
   WORDS                        { printf("<dene>%s</dene>\n", $4); }
-  //:  <prdgl> (exactly-1)
+  //:    <prdgl> (exactly-1)
   prdgl.b
   { printf("</paradigm>\n"); }
 ;
 
 //:<prdtype> =
 prdtype.alt:
-     //:    "1s" : First person singular
+     //:    "1s"         : First person singular
      PD_1S       { printf("<type>1s</type>\n");       }
-     //:  | "2s" : Second person singular
+     //:  | "2s"         : Second person singular
   |  PD_2S       { printf("<type>2s</type>\n");       }
-     //:  | "3s" : Third person singular
+     //:  | "3s"         : Third person singular
   |  PD_3S       { printf("<type>3s</type>\n");       }
-     //:  | "1p" : First person plural
+     //:  | "1p"         : First person plural
   |  PD_1P       { printf("<type>1p</type>\n");       }
-     //:  | "2p" : Second person plural
+     //:  | "2p"         : Second person plural
   |  PD_2P       { printf("<type>2p</type>\n");       }
-     //:  | "3p" : Third person plural
+     //:  | "3p"         : Third person plural
   |  PD_3P       { printf("<type>3p</type>\n");       }
-     //:  | "1d" : First person dual
+     //:  | "1d"         : First person dual
   |  PD_1D       { printf("<type>1d</type>\n");       }
-     //:  | "2d" : Second person dual
+     //:  | "2d"         : Second person dual
   |  PD_2D       { printf("<type>2d</type>\n");       }
-     //:  | "3d" : Third person dual
+     //:  | "3d"         : Third person dual
   |  PD_3D       { printf("<type>3d</type>\n");       }
   ;
 
-//:<prdgl> =\n  "prdgl" TEXT : Paradigm gloss
+//:<prdgl> =\n    "prdgl" TEXT : Paradigm gloss
 prdgl.b:
   PRDGL WORDS { printf("<gloss>%s</gloss>\n", $2); };
 
@@ -324,9 +324,9 @@ gc2.alt:
     GC2_ADJ { printf("<type>adj</type>\n"); }
     //:  | "..adv" TEXT : Adverb
   | GC2_ADV { printf("<type>adv</type>\n"); }
-    //:  | "..an" TEXT  : 
+    //:  | "..an"  TEXT : 
   | GC2_AN  { printf("<type>an</type>\n"); }
-    //:  | "..c" TEXT   : 
+    //:  | "..c"   TEXT : 
   | GC2_C   { printf("<type>c</type>\n"); }
     //:  | "..cnj" TEXT : 
   | GC2_CNJ { printf("<type>cnj</type>\n"); }
@@ -338,25 +338,25 @@ gc2.alt:
   | GC2_ENC { printf("<type>enc</type>\n"); }
     //:  | "..exc" TEXT : 
   | GC2_EXC { printf("<type>exc</type>\n"); }
-    //:  | "..i" TEXT   : 
+    //:  | "..i"   TEXT : 
   | GC2_I   { printf("<type>i</type>\n"); }
-    //:  | "..ic" TEXT  : 
+    //:  | "..ic"  TEXT : 
   | GC2_IC  { printf("<type>ic</type>\n"); }
-    //:  | "..n" TEXT   : Noun
+    //:  | "..n"   TEXT : Noun
   | GC2_N   { printf("<type>n</type>\n"); }
-    //:  | "..nc" TEXT  : 
+    //:  | "..nc"  TEXT : 
   | GC2_NC  { printf("<type>nc</type>\n"); }
-    //:  | "..ni" TEXT  : 
+    //:  | "..ni"  TEXT : 
   | GC2_NI  { printf("<type>ni</type>\n"); }
     //:  | "..pad" TEXT : 
   | GC2_PAD { printf("<type>pad</type>\n"); }
-    //:  | "..pf" TEXT  : 
+    //:  | "..pf"  TEXT : 
   | GC2_PF  { printf("<type>pf</type>\n"); }
-    //:  | "..pn" TEXT  : 
+    //:  | "..pn"  TEXT : 
   | GC2_PN  { printf("<type>pn</type>\n"); }
     //:  | "..psn" TEXT : 
   | GC2_PSN { printf("<type>psn</type>\n"); }
-    //:  | "..pp" TEXT  : 
+    //:  | "..pp"  TEXT : 
   | GC2_PP  { printf("<type>pp</type>\n"); }
     //:  | "..prt" TEXT : 
   | GC2_PRT { printf("<type>prt</type>\n"); }
@@ -369,19 +369,19 @@ gc2:
                                   { printf("<gc2>\n"); }
   gc2.alt
   WORDS                           { printf("<word>%s</word>\n", $3); }
-  //:  <dial> (0-to-1)
+  //:    <dial>  (0-to-1)
   dial.01
-  //:  <gl> (exactly-1)
+  //:    <gl>    (exactly-1)
   gl
-  //:  <lit> (0-to-1)
+  //:    <lit>   (0-to-1)
   lit.01
-  //:  <cf> (0-to-1)
+  //:    <cf>    (0-to-1)
   cf.01
-  //:  <sc> (0-to-1)
+  //:    <sc>    (0-to-1)
   sc.01
-  //:  <ex> (0-to-many)
+  //:    <ex>    (0-to-many)
   exeng.0m
-  //:  <gc3> (0-to-many)
+  //:    <gc3>   (0-to-many)
   gc3.0m
                                   { printf("</gc2>\n"); }
   ;
@@ -391,34 +391,34 @@ dial.01: %empty | dial ;
 // dial is tricky, because it takes two forms:
 //  `dial LANG`
 dial:
-  //:  "dial" <lang> : Dialect
+  //:    "dial" <lang> : Dialect
   DIAL                     { printf("<dial>\n"); }
   WORDS                    { printf("<lang>%s</lang>\n", $3); }
-  //:  <dial2> (0-to-many)
+  //:    <dial2> (0-to-many)
   dialx.0m
                            { printf("</dial>\n"); }
   ;
-//:<lang> =\n  TEXT : Language
+//:<lang> =\n            TEXT : Language
 
 //:<dial2> =
 dialx.0m: %empty | dialx.0m dialx ;
 //  and `dial LANG words`
 dialx:
-//:  "dial" <lang> TEXT : Additional dialects
+//:    "dial" <lang> TEXT : Additional dialects
   DIALX               { printf("<dialx>\n"); }
   DIALXLANG WORDS     { printf("<word>%s</word>\n<lang>%s</lang>\n", $4, $3); }
                       { printf("</dialx>\n"); }
   ;
 
-//:<lit> =\n  "lit" TEXT : Literal translation
+//:<lit> =\n    "lit"   TEXT : Literal translation
 lit.01: %empty | lit.b ;
 lit.b: LIT WORDS { printf("<lit>%s</lit>\n", $2); };
 
-//:<cf> =\n  "cf" TEXT : Compare with
+//:<cf> =\n    "cf"    TEXT : Compare with
 cf.01: %empty | cf.b ;
 cf.b: CF WORDS { printf("<cf>%s</cf>\n", $2); };
 
-//:<sc> =\n  "sc" TEXT : Scientific name
+//:<sc> =\n    "sc"    TEXT : Scientific name
 sc.01: %empty | sc.b ;
 sc.b: SC WORDS { printf("<sc>%s</sc>\n", $2); };
 
@@ -740,63 +740,6 @@ af2p3:
 
 
 /*
-af2n3.0m: %empty | af2n3.0m af2n3 ;
-
-af2n3: af3.o af2n3.b gl.01 exeng.0m af3.c ;
-af3.o: %empty { printf("<af3>\n"); } ;
-af2n3.b: AF2N3 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
-af3.c: %empty { printf("</af3>\n"); } ;
-
-// ---------- .af level 2 s ----------
-
-af2s: af2.o af2s.b gl.01 exeng.0m af2s3.0m af2.c ;
-af2s.b: AF2S WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
-
-af2s3.0m: %empty | af2s3.0m af2s3 ;
-
-af2s3: af3.o af2s3.b gl.01 exeng.0m af3.c ;
-af2s3.b: AF2S3 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
-
-// ---------- .af level 2 n ----------
-
-af2v: af2.o af2v.b gl.01 exeng.0m af2v3.0m af2.c ;
-af2v.b: AF2V WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
-
-af2v3.0m: %empty | af2v3.0m af2v3 ;
-
-af2v3: af3.o af2v3.b gl.01 exeng.0m af3.c ;
-af2v3.b: AF2V3 WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
-
-*/
-
-/* ifs.0m: %empty | ifs.0m ifs ;
-
-ifs: ifs.o ifs.b dial.01 gl exeng.0m ifs.c ;
-ifs.o: %empty { printf("<ifs>\n"); } ;
-ifs.b: IFS WORDS { printf("<word>%s</word>\n", $2); };
-ifs.c: %empty { printf("</ifs>\n"); } ;
-
-af2b.0m: %empty | af2b.0m af2b ;
-
-af2b: af2b.o af2b.b dial.01 asp.01 gl exeng.0m th.0m af2b.c ;
-af2b.o: %empty { printf("<af2>\n"); } ;
-af2b.b: AF2B WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
-af2b.c: %empty { printf("</af2>\n"); } ;
-
-asp.01: %empty | asp.b ;
-
-asp.b: ASP WORDS { printf("<asp>%s</asp>\n", $2); };
-
-af2c.0m: %empty | af2c.0m af2c ;
-
-af2c: af2c.o af2c.b dial.01 gl exeng.0m af2c.c ;
-af2c.o: %empty { printf("<af2>\n"); } ;
-af2c.b: AF2C WORDS { printf("<word>%s</word>\n<type>%s</type>\n", $2, $1); };
-af2c.c: %empty { printf("</af2>\n"); } ;
-*/
-
-
-/*
 lw:  lw.o lw.b lc.01 src.b lwl2.0m lw.c ;
 lw.o: %empty { printf("<lw>\n"); } ;
 lw.b: LW WORDS { printf("<word>%s</word>\n", $2); };
@@ -805,4 +748,3 @@ lw.c: %empty { printf("</lw>\n"); } ;
 
 %%
 
-     // rt:  rt.o rt.b tag.b rt.c | rt.o rt.b tag.b n rt.c | rt.o error rt.c ;

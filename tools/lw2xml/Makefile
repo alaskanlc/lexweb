@@ -21,14 +21,22 @@ tidytest:
 rnc: test.xml
 	java -jar ~/usr/jing-trang-20151127/build/trang.jar test.xml test.rnc
 
+# ltprep:
+#	cat ~/desk/collab/jimK/github/gwichin/lexware/lt.lex | ./cleanprolog | ./cleanindexmarks | ./xmlencode > lt.ori.lw
+#	cp lt.ori.lw lt.fix.lw
+
 lt:
 	# awk '/^\.(af|rt|lw)/,EOF'
 	# cat ../../lw/lt.lex | cleanprolog | xmlencode | ./lw2xml > out 2>&1
 	#	cat lt.lw | ./cleanprolog | ./cleanindexmarks | ./xmlencode | lw2xml 2> lt.error 1> lt.xml
-	cat ~/desk/collab/jimK/github/gwichin/lexware/lt.lex | ./cleanprolog | ./cleanindexmarks | ./xmlencode | lw2xml 2> lt.error 1> lt.xml
+	# cat ~/desk/collab/jimK/github/gwichin/lexware/lt.lex | ./cleanprolog | ./cleanindexmarks | ./xmlencode | lw2xml 2> lt.error 1> lt.xml
+	cat lt.fix.lw | lw2xml 2> lt.error 1> lt.xml
 
-lterr:
-	cat lt.lex | ./lw2xml 2>&1 > /dev/null 
+ltdiff:
+	diff lt.ori.lw lt.fix.lw
+
+# lterr:
+#	cat lt.lex | ./lw2xml 2>&1 > /dev/null 
 
 grammar:
 	grep "//:" lw2xml.y | sed 's|^.*//:||g' | gawk '{gsub(/\\n/,"\n",$$0); print $$0}' > ../../grammar/dene.grammar
