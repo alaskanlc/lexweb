@@ -56,12 +56,9 @@ void main()
 %token   GC3_PN  GC3_PSN GC3_PP  GC3_PRT GC3_VEN GC3_VOC
 
 %token AF
-%token   AF2_NSF AF2_SF AF2_VPF AF2_VSF AF2_VSF1
-%token   AF3_IFS AF3_DRT
-%token   IFS
-%token   <str> AF2B
-%token   ASP
-%token   <str> AF2C
+%token   AF2_NSF AF2_SF AF2_VPF AF2_VSF AF2_VSF1 AF2_TFS AF2_NDS AF2_ADS
+%token   AF2_SDS AF2_NFSF AF2_VFSF AF2_NFPF AF2_VFPF
+%token   AF3_IFS AF3_DRT TH3 ASP
 %token LW SRC  
 
 
@@ -519,10 +516,22 @@ af2.0alt: %empty
    //:  | <af2s> (1-to-many)
  | af2s.1m
    //:  | <af2v> (1-to-many)
- | af2v.1m ;
+ | af2v.1m 
+   //:  | <af2t> (1-to-many)
+ | af2t.1m 
+   //:  | <af2d> (1-to-many)
+ | af2d.1m 
+   //:  | <af2a> (1-to-many)
+ | af2a.1m ;
+   //:  | <af2p> (1-to-many)
+ | af2p.1m ;
 af2n.1m: af2n | af2n af2n.1m ;
 af2s.1m: af2s | af2s af2s.1m ;
 af2v.1m: af2v | af2v af2v.1m ;
+af2t.1m: af2t | af2t af2t.1m ;
+af2d.1m: af2d | af2d af2d.1m ;
+af2a.1m: af2a | af2a af2a.1m ;
+af2p.1m: af2p | af2p af2p.1m ;
 
 //:<af2n> =
 af2n:
@@ -623,6 +632,105 @@ af2v3.alt:
 af2v3:
                                   { printf("<af3>\n"); }
   af2v3.alt WORDS                 { printf("<word>%s</word>\n", $3); }
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+                                  { printf("</af3>\n"); }
+  ;
+
+//:<af2t> =
+af2t:
+  //:  "..tfs" TEXT : Theme formation string
+  AF2_TFS                { printf("<af2>\n"); } 
+  WORDS                  { printf("<word>%s</word>\n<type>tfs</type>\n", $3); }
+  //:  <asp> (0-to-1)
+  asp.01
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+  //:  <th3> (0-to-many)
+  th3.0m
+                         { printf("</af2>\n"); }
+  ;
+
+//:<asp> =\n  "asp" TEXT : Aspect
+asp.01: %empty | asp ;
+asp: ASP WORDS { printf("<asp>%s</asp>\n", $2); } ;
+
+//:<th2> =
+th3.0m: %empty
+  | th3.0m th3 ;
+th3:                     { printf("<th3>\n");    }
+  //:  "...th" TEXT : Verb theme
+  TH3 WORDS              { printf("<word>%s</word>\n", $3); }
+  //:  <tc> (exactly-1)
+  TC tc.alt
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+                          { printf("</th3>\n"); } ;
+
+//:<af2d> =
+af2d:
+  //:  "..nds" TEXT : Non-aspectual derivational string
+  AF2_NDS                { printf("<af2>\n"); } 
+  WORDS                  { printf("<word>%s</word>\n<type>nds</type>\n", $3); }
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+                         { printf("</af2>\n"); }
+  ;
+
+//:<af2a> =
+af2a.alt:
+    //:    "..ads" TEXT  : 
+    AF2_ADS                   { printf("<type>ads</type>\n"); }
+    //:  | "..sds" TEXT   : 
+  | AF2_SDS                   { printf("<type>sds</type>\n"); } ;
+af2a:
+                                  { printf("<af2>\n"); }
+  af2a.alt WORDS                  { printf("<word>%s</word>\n", $3); }
+  //:  <asp> (exactly-1)
+  asp
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+                                  { printf("</af2>\n"); }
+  ;
+
+//:<af2p> =
+af2p.alt:
+    //:    "..nfsf" TEXT  : 
+    AF2_NFSF                   { printf("<type>nfsf</type>\n"); }
+    //:  | "..vfsf" TEXT   : 
+  | AF2_VFSF                    { printf("<type>vfsf</type>\n"); } 
+    //:  | "..nfsf" TEXT  : 
+  | AF2_NFPF                   { printf("<type>nfpf</type>\n"); }
+    //:  | "..vfsf" TEXT   : 
+  | AF2_VFPF                    { printf("<type>vfpf</type>\n"); } ;
+af2p:
+                                  { printf("<af2>\n"); }
+  af2p.alt WORDS                  { printf("<word>%s</word>\n", $3); }
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+  //:  <af2p3> (0-to-many)
+  af2p3.0m
+                                  { printf("</af2>\n"); }
+  ;
+
+//:<af2p3> =
+af2p3.0m: %empty | af2p3.0m af2p3 ;
+af2p3:
+                                  { printf("<af3>\n"); }
+  //:  "...drt" TEXT   : 
+  AF3_DRT WORDS       { printf("<word>%s</word>\n<type>drt</type>\n", $3); }
   //:  <gl> (exactly-1)
   gl
   //:  <ex> (0-to-many)

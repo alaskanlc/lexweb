@@ -180,13 +180,17 @@
     <af2n> (1-to-many)
   | <af2s> (1-to-many)
   | <af2v> (1-to-many)
+  | <af2t> (1-to-many)
+  | <af2d> (1-to-many)
+  | <af2a> (1-to-many)
+  | <af2p> (1-to-many)
 <af2n> =
   "..nsf" TEXT : Noun suffix
   <gl> (exactly-1)
   <ex> (0-to-many)
   <af2n3> (0-to-many)
 <af2n3> =
-  | "...an" TEXT  : 
+    "...an" TEXT  : 
   | "...exc" TEXT   : 
   | "...n" TEXT   : 
   | "...pp" TEXT  : 
@@ -199,7 +203,7 @@
   <ex> (0-to-many)
   <af2s3> (0-to-many)
 <af2s3> =
-  | "...exc" TEXT   : 
+    "...exc" TEXT   : 
   <gl> (exactly-1)
   <ex> (0-to-many)
 <af2v> =
@@ -213,5 +217,40 @@
     "...adv" TEXT  : Adverb 
   | "...ifs" TEXT  : Inflectional string 
   | "...drt" TEXT   : 
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+<af2t> =
+  "..tfs" TEXT : Theme formation string
+  <asp> (0-to-1)
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+  <th3> (0-to-many)
+<asp> =
+  "asp" TEXT : Aspect
+<th2> =
+  "...th" TEXT : Verb theme
+  <tc> (exactly-1)
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+<af2d> =
+  "..nds" TEXT : Non-aspectual derivational string
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+<af2a> =
+    "..ads" TEXT  : 
+  | "..sds" TEXT   : 
+  <asp> (exactly-1)
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+<af2p> =
+    "..nfsf" TEXT  : 
+  | "..vfsf" TEXT   : 
+    "..nfsf" TEXT  : 
+  | "..vfsf" TEXT   : 
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+  <af2p3> (0-to-many)
+<af2p3> =
+  "...drt" TEXT   : 
   <gl> (exactly-1)
   <ex> (0-to-many)

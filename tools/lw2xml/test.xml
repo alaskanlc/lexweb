@@ -290,4 +290,86 @@
       </gloss>
     </gc2>
   </rt>
+  <af>
+    <word>'ak</word>
+    <tag>sing love song</tag>
+    <af2>
+      <word>'ak'ak</word>
+      <type>tfs</type>
+      <gloss>
+        <eng>FOO</eng>
+      </gloss>
+      <th3>
+        <word>FOO</word>
+        <tc>stat</tc>
+        <gloss>
+          <eng>object is in position; at rest; lies</eng>
+        </gloss>
+        <example>
+          <ex>kii dha'ąįį</ex>
+          <dial>
+            <lang>LT</lang>
+          </dial>
+          <eng>a rock is there</eng>
+        </example>
+      </th3>
+    </af2>
+  </af>
+  <af>
+    <word>'aki</word>
+    <tag>sing</tag>
+    <af2>
+      <word>'ak'ak</word>
+      <type>nds</type>
+      <gloss>
+        <eng>FOO</eng>
+      </gloss>
+      <example>
+        <ex>kii dha'ąįį</ex>
+        <eng>a rock is there</eng>
+      </example>
+    </af2>
+  </af>
+  <af>
+    <word>'akif</word>
+    <tag>singer</tag>
+    <af2>
+      <type>ads</type>
+      <word>'ak'aki</word>
+      <asp>neuter</asp>
+      <gloss>
+        <eng>FOO</eng>
+      </gloss>
+    </af2>
+  </af>
+  <af>
+    <word>'akif</word>
+    <tag>singer</tag>
+    <af2>
+      <type>sds</type>
+      <word>'ak'aki</word>
+      <asp>neuter</asp>
+      <gloss>
+        <eng>FOO</eng>
+      </gloss>
+    </af2>
+  </af>
+  <af>
+    <word>'a</word>
+    <tag>singer</tag>
+    <af2>
+      <type>nfsf</type>
+      <word>'ak'aki</word>
+      <gloss>
+        <eng>FOO</eng>
+      </gloss>
+      <af3>
+        <word>FOO</word>
+        <type>drt</type>
+        <gloss>
+          <eng>FOO</eng>
+        </gloss>
+      </af3>
+    </af2>
+  </af>
 </lexware>

@@ -63,7 +63,7 @@
 }
 
  /* verb themes */
-^\.\.\.?th\ +  { BEGIN(TEXT);    return TH;   }
+^\.\.th\ +  { BEGIN(TEXT);    return TH;   }
 ^tc\ +         { BEGIN(TCTYPE);  return TC;   }
 <TCTYPE>{
   clas\-mot/\n   { BEGIN(INITIAL);  return TC_CLASMOT  ; }
@@ -180,6 +180,20 @@
 ^\.\.\.ifs\ +    { BEGIN(TEXT) ; return AF3_IFS ;}
 ^\.\.\.drt\ +    { BEGIN(TEXT) ; return AF3_DRT ;}
 
+^\.\.tfs\ +    { BEGIN(TEXT);    return AF2_TFS;   }
+^asp\ +        { BEGIN(TEXT); return ASP;     }
+^\.\.\.th\ +   { BEGIN(TEXT);    return TH3;   }
+
+^\.\.nds\ +    { BEGIN(TEXT);    return AF2_NDS;   }
+^\.\.ads\ +    { BEGIN(TEXT);    return AF2_ADS;   }
+^\.\.sds\ +    { BEGIN(TEXT);    return AF2_SDS;   }
+
+^\.\.nfsf\ +    { BEGIN(TEXT);    return AF2_NFSF;   }
+^\.\.vfsf\ +    { BEGIN(TEXT);    return AF2_VFSF;   }
+^\.\.nfpf\ +    { BEGIN(TEXT);    return AF2_NFPF;   }
+^\.\.vfpf\ +    { BEGIN(TEXT);    return AF2_VFPF;   }
+
+
  /*   /\* Sub-entries for .af, type A *\/ */
  /* ^\.\.(nsf|sf|vpf|vsf|vsf1) { */
  /*   BEGIN(WHITE); */
@@ -195,7 +209,6 @@
  /*   yylval.str = strdup(yytext); */
  /*   return AF2B; } */
 
- /* ^asp  { BEGIN(WHITE); return ASP; } */
 
  /*   /\* Sub-entries for .af, type C *\/ */
  /* ^\.\.nds { */
