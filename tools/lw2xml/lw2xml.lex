@@ -172,6 +172,13 @@
 ^\.af\ +       { BEGIN(TEXT);    return AF;   }
 
 ^\.\.nsf\ +    { BEGIN(TEXT);    return AF2_NSF;   }
+^\.\.sf\ +     { BEGIN(TEXT);    return AF2_SF;    }
+^\.\.vpf\ +    { BEGIN(TEXT);    return AF2_VPF;   }
+^\.\.vsf\ +    { BEGIN(TEXT);    return AF2_VSF;   }
+^\.\.vsf1\ +    { BEGIN(TEXT);    return AF2_VSF1;   }
+
+^\.\.\.ifs\ +    { BEGIN(TEXT) ; return AF3_IFS ;}
+^\.\.\.drt\ +    { BEGIN(TEXT) ; return AF3_DRT ;}
 
  /*   /\* Sub-entries for .af, type A *\/ */
  /* ^\.\.(nsf|sf|vpf|vsf|vsf1) { */

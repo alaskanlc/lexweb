@@ -60,7 +60,8 @@ void main()
 %token   GC3_PN  GC3_PSN GC3_PP  GC3_PRT GC3_VEN GC3_VOC
 
 %token AF
-%token   AF2_NSF
+%token   AF2_NSF AF2_SF AF2_VPF AF2_VSF AF2_VSF1
+%token   AF3_IFS AF3_DRT
  //%token   <str> AF2
 %token   IFS
 %token   <str> AF2B
@@ -439,9 +440,9 @@ gc3.alt:
     GC3_ADJ { printf("<type>adj</type>\n"); }
     //:  | "...adv" TEXT : Adverb
   | GC3_ADV { printf("<type>adv</type>\n"); }
-    //:  | "...an" TEXT  : 
+    //:  | "...an"  TEXT : 
   | GC3_AN  { printf("<type>an</type>\n"); }
-    //:  | "...c" TEXT   : 
+    //:  | "...c"   TEXT : 
   | GC3_C   { printf("<type>c</type>\n"); }
     //:  | "...cnj" TEXT : 
   | GC3_CNJ { printf("<type>cnj</type>\n"); }
@@ -453,25 +454,25 @@ gc3.alt:
   | GC3_ENC { printf("<type>enc</type>\n"); }
     //:  | "...exc" TEXT : 
   | GC3_EXC { printf("<type>exc</type>\n"); }
-    //:  | "...i" TEXT   : 
+    //:  | "...i"   TEXT : 
   | GC3_I   { printf("<type>i</type>\n"); }
-    //:  | "...ic" TEXT  : 
+    //:  | "...ic"  TEXT : 
   | GC3_IC  { printf("<type>ic</type>\n"); }
-    //:  | "...n" TEXT   : Noun
+    //:  | "...n"   TEXT : Noun
   | GC3_N   { printf("<type>n</type>\n"); }
-    //:  | "...nc" TEXT  : 
+    //:  | "...nc"  TEXT : 
   | GC3_NC  { printf("<type>nc</type>\n"); }
-    //:  | "...ni" TEXT  : 
+    //:  | "...ni"  TEXT : 
   | GC3_NI  { printf("<type>ni</type>\n"); }
     //:  | "...pad" TEXT : 
   | GC3_PAD { printf("<type>pad</type>\n"); }
-    //:  | "...pf" TEXT  : 
+    //:  | "...pf"  TEXT : 
   | GC3_PF  { printf("<type>pf</type>\n"); }
-    //:  | "...pn" TEXT  : 
+    //:  | "...pn"  TEXT : 
   | GC3_PN  { printf("<type>pn</type>\n"); }
     //:  | "...psn" TEXT : 
   | GC3_PSN { printf("<type>psn</type>\n"); }
-    //:  | "...pp" TEXT  : 
+    //:  | "...pp"  TEXT : 
   | GC3_PP  { printf("<type>pp</type>\n"); }
     //:  | "...prt" TEXT : 
   | GC3_PRT { printf("<type>prt</type>\n"); }
@@ -479,7 +480,6 @@ gc3.alt:
   | GC3_VEN { printf("<type>ven</type>\n"); }
     //:  | "...voc" TEXT : 
   | GC3_VOC { printf("<type>voc</type>\n"); } ;
-
 gc3:
                                   { printf("<gc3>\n"); }
   gc3.alt
@@ -517,11 +517,14 @@ af:
                                   { printf("</af>\n"); }
   ;
 
-//:<af2> =\  <af2n> (1-to-many)
-af2.0alt: %empty | af2n.1m ; //| af2s.0m | af2v.0m ;
+//:<af2> =\n    <af2n> (1-to-many)\n  | <af2s> (1-to-many)
+af2.0alt: %empty
+ | af2n.1m 
+ | af2s.1m
+ | af2v.1m ;
 af2n.1m: af2n | af2n af2n.1m ;
-//af2s.0m: %empty | af2s.0m af2s ;
-//af2v.0m: %empty | af2v.0m af2v ;
+af2s.1m: af2s | af2s af2s.1m ;
+af2v.1m: af2v | af2v af2v.1m ;
 
 //:<af2n> =
 af2n:
@@ -539,15 +542,6 @@ af2n:
 
 //:<af2n3> =
 af2n3.0m: %empty | af2n3.0m af2n3 ;
-
-af2n3: 
-                                  { printf("<af3>\n"); }
-  af2n3.alt WORDS                 { printf("<word>%s</word>\n", $3); }
-  gl
-  exeng.0m
-                                  { printf("</af3>\n"); }
-  ;
-
 af2n3.alt:
     //:  | "...an" TEXT  : 
     GC3_AN  { printf("<type>an</type>\n"); }
@@ -559,6 +553,82 @@ af2n3.alt:
   | GC3_PP  { printf("<type>pp</type>\n"); }
     //:  | "...voc" TEXT : 
   | GC3_VOC { printf("<type>voc</type>\n"); } ;
+af2n3:
+                                  { printf("<af3>\n"); }
+  af2n3.alt WORDS                 { printf("<word>%s</word>\n", $3); }
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+                                  { printf("</af3>\n"); }
+  ;
+
+//:<af2s> =
+af2s:
+  //:  "..sf" TEXT : Suffix
+  AF2_SF                { printf("<af2>\n"); } 
+  WORDS                  { printf("<word>%s</word>\n<type>sf</type>\n", $3); }
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+  //:  <af2s3> (0-to-many)
+  af2s3.0m 
+                         { printf("</af2>\n"); }
+  ;
+
+//:<af2s3> =
+af2s3.0m: %empty | af2s3.0m af2s3 ;
+af2s3.alt:
+    //:  | "...exc" TEXT   : 
+    GC3_EXC { printf("<type>exc</type>\n"); } ;
+af2s3:
+                                  { printf("<af3>\n"); }
+  af2s3.alt WORDS                 { printf("<word>%s</word>\n", $3); }
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+                                  { printf("</af3>\n"); }
+  ;
+
+//:<af2v> =
+af2v.alt:
+    AF2_VPF   { printf("<type>vpf</type>\n"); }
+  | AF2_VSF   { printf("<type>vsf</type>\n"); }
+  | AF2_VSF1  { printf("<type>vsf1</type>\n"); }
+  ;
+af2v:
+  //:  "..nsf" TEXT : Noun suffix
+  af2v.alt                { printf("<af2>\n"); } 
+  WORDS                   { printf("<word>%s</word>\n", $3); }
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+  //:  <af2v3> (0-to-many)
+  af2v3.0m 
+                         { printf("</af2>\n"); }
+  ;
+
+//:<af2v3> =
+af2v3.0m: %empty | af2v3.0m af2v3 ;
+af2v3.alt:
+    //:  | "...adv" TEXT  : Adverb 
+    GC3_ADV  { printf("<type>adv</type>\n"); }
+    //:  | "...ifs" TEXT  : Inflectional string 
+  | AF3_IFS { printf("<type>ifs</type>\n"); }
+    //:  | "...drt" TEXT   : 
+  | AF3_DRT   { printf("<type>drt</type>\n"); } ;
+af2v3:
+                                  { printf("<af3>\n"); }
+  af2v3.alt WORDS                 { printf("<word>%s</word>\n", $3); }
+  //:  <gl> (exactly-1)
+  gl
+  //:  <ex> (0-to-many)
+  exeng.0m
+                                  { printf("</af3>\n"); }
+  ;
 
 
 /*

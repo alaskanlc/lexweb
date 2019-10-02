@@ -69,6 +69,20 @@ ex  yex, -yex
 eng house
 ...n FOO
 gl BAR
+
+.af Ø$1
+tag zero noun suffix
+rtyp ɑ/sf
+..sf   Ø
+gl   *possess]ed suffix in nouns
+com very rare, the usual suffix is &-a'
+ex  kayex, -kayex
+eng  village
+ex  yex, -yex
+eng house
+...exc FOO
+gl BAR
+
 # ..nds   Ø
 # gl   *possess]ed suffix in nouns
 # com very rare, the usual suffix is &-a'

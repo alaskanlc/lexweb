@@ -42,7 +42,7 @@
 <th> =
   "..th" TEXT : Verb theme
   <tc> (exactly-1)
-  <cnj> (0-or-1>
+  <cnj> (0-to-1>
   <gl> (exactly-1)
   <ex> (0-to-many)
   <prds> (0-to-many)
@@ -169,4 +169,24 @@
   <lit> (0-to-1)
   <cf> (0-to-1)
   <sc> (0-to-1)
+  <ex> (0-to-many)
+<af> =
+  ".af" TEXT : Affix
+  <pd> (0-to-1)
+  <tag> (0-to-1)
+  <rtyp> (0-to-1)
+  <af2> (0-to-1)
+<af2> =\  <af2n> (1-to-many)
+<af2n> =
+  "..nsf" TEXT : Noun suffix
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+  <af2n3> (0-to-many)
+<af2n3> =
+  | "...an" TEXT  : 
+  | "...exc" TEXT   : 
+  | "...n" TEXT   : 
+  | "...pp" TEXT  : 
+  | "...voc" TEXT : 
+  <gl> (exactly-1)
   <ex> (0-to-many)

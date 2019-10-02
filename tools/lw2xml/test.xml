@@ -164,6 +164,34 @@
       </af3>
     </af2>
   </af>
+  <af>
+    <word>Ø$1</word>
+    <tag>zero noun suffix</tag>
+    <rtyp>ɑ/sf</rtyp>
+    <af2>
+      <word>Ø</word>
+      <type>sf</type>
+      <gloss>
+        <eng>*possess]ed suffix in nouns</eng>
+        <com>very rare, the usual suffix is &amp;-a'</com>
+      </gloss>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+      <example>
+        <ex>yex, -yex</ex>
+        <eng>house</eng>
+      </example>
+      <af3>
+        <type>exc</type>
+        <word>FOO</word>
+        <gloss>
+          <eng>BAR</eng>
+        </gloss>
+      </af3>
+    </af2>
+  </af>
   <rt>
     <word>'ąį'</word>
     <tag>complete</tag>
