@@ -40,21 +40,17 @@ void main()
 %token     ST_CONC ST_CNS  ST_CONA ST_CONT ST_CUST ST_DIST ST_DUR
 %token     ST_MOM  ST_MULT ST_NEU  ST_PER  ST_PROG ST_REP  ST_REV
 %token     ST_SEM  ST_TRAN
-//%token   <str> SETTYPE
 %token   TH TC
 %token     TC_CLASMOT TC_CLASSTAT TC_CONV TC_DESC TC_DIM TC_EXT
 %token     TC_MOT TC_NEU TC_ONO TC_OP  TC_OPONO TC_STAT TC_SUCC
-//%token   <str> TCTYPE
 %token   CNJ GL QUO EX ENG CIT PRDS PRD PRDGL
 %token     PD_1S PD_2S PD_3S PD_1P PD_2P PD_3P PD_1D PD_2D PD_3D 
-//%token   <str> GC2
 %token   GC2_ADJ GC2_ADV GC2_AN  GC2_C   GC2_CNJ GC2_DEM GC2_DIR GC2_ENC
 %token   GC2_EXC GC2_I   GC2_IC  GC2_N   GC2_NC  GC2_NI  GC2_PAD GC2_PF
 %token   GC2_PN  GC2_PSN GC2_PP  GC2_PRT GC2_VEN GC2_VOC
 %token   DIAL DIALX
 %token   <str> DIALXLANG
 %token   LIT CF SC
-//%token   <str> GC3
 %token   GC3_ADJ GC3_ADV GC3_AN  GC3_C   GC3_CNJ GC3_DEM GC3_DIR GC3_ENC
 %token   GC3_EXC GC3_I   GC3_IC  GC3_N   GC3_NC  GC3_NI  GC3_PAD GC3_PF
 %token   GC3_PN  GC3_PSN GC3_PP  GC3_PRT GC3_VEN GC3_VOC
@@ -62,7 +58,6 @@ void main()
 %token AF
 %token   AF2_NSF AF2_SF AF2_VPF AF2_VSF AF2_VSF1
 %token   AF3_IFS AF3_DRT
- //%token   <str> AF2
 %token   IFS
 %token   <str> AF2B
 %token   ASP
@@ -517,10 +512,13 @@ af:
                                   { printf("</af>\n"); }
   ;
 
-//:<af2> =\n    <af2n> (1-to-many)\n  | <af2s> (1-to-many)
+//:<af2> =
 af2.0alt: %empty
+   //:    <af2n> (1-to-many)
  | af2n.1m 
+   //:  | <af2s> (1-to-many)
  | af2s.1m
+   //:  | <af2v> (1-to-many)
  | af2v.1m ;
 af2n.1m: af2n | af2n af2n.1m ;
 af2s.1m: af2s | af2s af2s.1m ;
@@ -543,7 +541,7 @@ af2n:
 //:<af2n3> =
 af2n3.0m: %empty | af2n3.0m af2n3 ;
 af2n3.alt:
-    //:  | "...an" TEXT  : 
+    //:    "...an" TEXT  : 
     GC3_AN  { printf("<type>an</type>\n"); }
     //:  | "...exc" TEXT   : 
   | GC3_EXC { printf("<type>exc</type>\n"); }
@@ -580,7 +578,7 @@ af2s:
 //:<af2s3> =
 af2s3.0m: %empty | af2s3.0m af2s3 ;
 af2s3.alt:
-    //:  | "...exc" TEXT   : 
+    //:    "...exc" TEXT   : 
     GC3_EXC { printf("<type>exc</type>\n"); } ;
 af2s3:
                                   { printf("<af3>\n"); }
@@ -594,12 +592,14 @@ af2s3:
 
 //:<af2v> =
 af2v.alt:
+    //:    "..vpf" TEXT : Verb prefix
     AF2_VPF   { printf("<type>vpf</type>\n"); }
+    //:  | "..vsf" TEXT : Verb suffix
   | AF2_VSF   { printf("<type>vsf</type>\n"); }
+    //:  | "..vsf1" TEXT : Verb suffix one
   | AF2_VSF1  { printf("<type>vsf1</type>\n"); }
   ;
 af2v:
-  //:  "..nsf" TEXT : Noun suffix
   af2v.alt                { printf("<af2>\n"); } 
   WORDS                   { printf("<word>%s</word>\n", $3); }
   //:  <gl> (exactly-1)
@@ -614,7 +614,7 @@ af2v:
 //:<af2v3> =
 af2v3.0m: %empty | af2v3.0m af2v3 ;
 af2v3.alt:
-    //:  | "...adv" TEXT  : Adverb 
+    //:    "...adv" TEXT  : Adverb 
     GC3_ADV  { printf("<type>adv</type>\n"); }
     //:  | "...ifs" TEXT  : Inflectional string 
   | AF3_IFS { printf("<type>ifs</type>\n"); }

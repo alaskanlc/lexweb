@@ -144,23 +144,23 @@
 <gc3> =
     "...adj" TEXT : Adjective
   | "...adv" TEXT : Adverb
-  | "...an" TEXT  : 
-  | "...c" TEXT   : 
+  | "...an"  TEXT : 
+  | "...c"   TEXT : 
   | "...cnj" TEXT : 
   | "...dem" TEXT : 
   | "...dir" TEXT : 
   | "...enc" TEXT : 
   | "...exc" TEXT : 
-  | "...i" TEXT   : 
-  | "...ic" TEXT  : 
-  | "...n" TEXT   : Noun
-  | "...nc" TEXT  : 
-  | "...ni" TEXT  : 
+  | "...i"   TEXT : 
+  | "...ic"  TEXT : 
+  | "...n"   TEXT : Noun
+  | "...nc"  TEXT : 
+  | "...ni"  TEXT : 
   | "...pad" TEXT : 
-  | "...pf" TEXT  : 
-  | "...pn" TEXT  : 
+  | "...pf"  TEXT : 
+  | "...pn"  TEXT : 
   | "...psn" TEXT : 
-  | "...pp" TEXT  : 
+  | "...pp"  TEXT : 
   | "...prt" TEXT : 
   | "...ven" TEXT : 
   | "...voc" TEXT : 
@@ -176,7 +176,10 @@
   <tag> (0-to-1)
   <rtyp> (0-to-1)
   <af2> (0-to-1)
-<af2> =\  <af2n> (1-to-many)
+<af2> =
+    <af2n> (1-to-many)
+  | <af2s> (1-to-many)
+  | <af2v> (1-to-many)
 <af2n> =
   "..nsf" TEXT : Noun suffix
   <gl> (exactly-1)
@@ -188,5 +191,27 @@
   | "...n" TEXT   : 
   | "...pp" TEXT  : 
   | "...voc" TEXT : 
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+<af2s> =
+  "..sf" TEXT : Suffix
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+  <af2s3> (0-to-many)
+<af2s3> =
+  | "...exc" TEXT   : 
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+<af2v> =
+    "..vpf" TEXT : Verb prefix
+  | "..vsf" TEXT : Verb suffix
+  | "..vsf1" TEXT : Verb suffix one
+  <gl> (exactly-1)
+  <ex> (0-to-many)
+  <af2v3> (0-to-many)
+<af2v3> =
+    "...adv" TEXT  : Adverb 
+  | "...ifs" TEXT  : Inflectional string 
+  | "...drt" TEXT   : 
   <gl> (exactly-1)
   <ex> (0-to-many)
