@@ -192,6 +192,23 @@
       </af3>
     </af2>
   </af>
+  <af>
+    <word>Ø$1</word>
+    <type>vsf</type>
+    <af2>
+      <word>Ø</word>
+      <gloss>
+        <eng>*possess]ed suffix in nouns</eng>
+      </gloss>
+      <af3>
+        <type>drt</type>
+        <word>FOO</word>
+        <gloss>
+          <eng>BAR</eng>
+        </gloss>
+      </af3>
+    </af2>
+  </af>
   <rt>
     <word>'ąį'</word>
     <tag>complete</tag>

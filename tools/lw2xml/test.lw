@@ -83,6 +83,12 @@ eng house
 ...exc FOO
 gl BAR
 
+.af Ø$1
+..vsf   Ø
+gl   *possess]ed suffix in nouns
+...drt FOO
+gl BAR
+
 # ..nds   Ø
 # gl   *possess]ed suffix in nouns
 # com very rare, the usual suffix is &-a'
