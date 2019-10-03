@@ -1,4 +1,3 @@
-#!../../bin/gawk -f
 
 {
   if (($0 ~ /^(\.\.sets|set)/) && (!firstrt)) print "# " $0
