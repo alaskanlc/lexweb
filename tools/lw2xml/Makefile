@@ -13,17 +13,19 @@ clean:
 	rm lw2xml lw2xml.tab.c lex.yy.c lw2xml.tab.h lw2xml.output
 
 test:
-	cat test.lw | ./xmlencode | lw2xml
+	cat test.lw | gawk -f awk/xmlencode.awk | lw2xml
 
 tidytest:
-	cat test.lw | ./xmlencode | lw2xml | tidy -xml -indent -m -q | tee test.xml
+	cat test.lw | gawk -f awk/xmlencode.awk | lw2xml | tidy -xml -indent -m -q | tee test.xml
 
 rnc: test.xml
 	java -jar ~/usr/jing-trang-20151127/build/trang.jar test.xml test.rnc
 
-# ltprep:
-#	cat ~/desk/collab/jimK/github/gwichin/lexware/lt.lex | ./cleanprolog | ./cleanindexmarks | ./xmlencode > lt.ori.lw
-#	cp lt.ori.lw lt.fix.lw
+ltprep:
+	cat ~/desk/collab/jimK/github/gwichin/lexware/lt.lex | \
+      gawk -f awk/cleanprolog.awk | gawk -f awk/cleanindexmarks.awk | \
+      gawk -f awk/xmlencode.awk | gawk -f awk/no_af.awk > lt.ori.lw
+	cp lt.ori.lw lt.fix.lw
 
 lt:
 	# awk '/^\.(af|rt|lw)/,EOF'

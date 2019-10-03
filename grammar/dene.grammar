@@ -1,5 +1,6 @@
 <root> (1-to-many) =
     <rt> | <af> | <lw>
+    # add <ra>
 <rt> = 
     ".rt"   TEXT : Root word
     <pd>    (0-to-1)
@@ -62,6 +63,8 @@
   | "op-ono"     : Onomatopoetic operative
   | "stat"       : Stative
   | "succ"       : Successive
+  # check suc or succ
+  # add u:...
 <cnj> =
     "cnj"   TEXT : Conjugation prefix
 <gl> =
@@ -190,12 +193,14 @@
   <ex> (0-to-many)
   <af2n3> (0-to-many)
 <af2n3> =
+    # adv, dem, ... almost any word categories - substitute 
     "...an" TEXT  : 
   | "...exc" TEXT   : 
   | "...n" TEXT   : 
   | "...pp" TEXT  : 
   | "...voc" TEXT : 
   <gl> (exactly-1)
+  # add lit (not sc)
   <ex> (0-to-many)
 <af2s> =
   "..sf" TEXT : Suffix
@@ -203,7 +208,9 @@
   <ex> (0-to-many)
   <af2s3> (0-to-many)
 <af2s3> =
-    "...exc" TEXT   : 
+    "...exc" TEXT   :
+    # ...int
+    # ...n  an  adv dem
   <gl> (exactly-1)
   <ex> (0-to-many)
 <af2v> =
@@ -245,8 +252,8 @@
 <af2p> =
     "..nfsf" TEXT  : 
   | "..vfsf" TEXT   : 
-  | "..nfsf" TEXT  : 
-  | "..vfsf" TEXT   : 
+  | "..nfpf" TEXT  : 
+  | "..vfpf" TEXT   : 
   <gl> (exactly-1)
   <ex> (0-to-many)
   <af2p3> (0-to-many)
@@ -254,3 +261,33 @@
   "...drt" TEXT   : 
   <gl> (exactly-1)
   <ex> (0-to-many)
+
+
+# <ra>
+    # <pd>    (0-to-1)
+    # <tag>   (0-to-1)
+    # <rtyp>  (0-to-1)
+    # <df>    (0-to-1)
+    # <sets>  (0-to-1)
+    # <th>    (0-to-many)
+    # <gc2>   (0-to-many)
+    # <af2> (0-to-1)
+
+
+
+
+<af>
+  <verb> | <noun>
+<verb>
+  <thfs>
+  <aspdstr>
+  <naspdstr>
+  <vf.f>
+<noun>
+  <nf.f>
+
+
+anaylse .af
+
+
+

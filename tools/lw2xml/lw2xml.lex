@@ -22,6 +22,7 @@
 
  /* .rt */ 
 ^\.rt\ +         { BEGIN(TEXT);   return RT;    }
+^\.ra\ +         { BEGIN(TEXT);   return RA;    }
 
 <TEXT>.+/\n {
  /* get rest of line  - note, regex does not include \n */
@@ -146,6 +147,7 @@
 ^\.\.\.an\ +     { BEGIN(TEXT) ; return GC3_AN  ;}
 ^\.\.\.c\ +      { BEGIN(TEXT) ; return GC3_C   ;}
 ^\.\.\.cnj\ +    { BEGIN(TEXT) ; return GC3_CNJ ;}
+^\.\.\.coll\ +   { BEGIN(TEXT) ; return GC3_COLL ;}
 ^\.\.\.dem\ +    { BEGIN(TEXT) ; return GC3_DEM ;}
 ^\.\.\.dir\ +    { BEGIN(TEXT) ; return GC3_DIR ;}
 ^\.\.\.enc\ +    { BEGIN(TEXT) ; return GC3_ENC ;}
@@ -202,20 +204,23 @@
 
  /* ---------- Ignored ---------- */
 
-^(\.file|\.\.+par|\.dir)\ + { /* ignore for now */ BEGIN(INITIAL); }
+^(\.file|\.\.+par|\.dir) { /* ignore for now */
+  /* Note, not terminated with '\ +' or else, e.g., a '..par\n' is not found */
+  /* fprintf(stderr, "  L.%d: Ignored '%s'\n",yylineno,yytext); */
+  BEGIN(INITIAL); }
   /* xr */ 
 ^(\.xr|xgl|see)\ + { /* ignore for now */ BEGIN(INITIAL); }
 
 ^#.* { /* ignore comments */ BEGIN(INITIAL); }
 
 ^[ \t]+$ { /* ignore bad spaces */
-  fprintf(stderr, "  L.%d: blank line with spaces\n", yylineno);
+  fprintf(stderr, "  L.%d: Blank line with spaces\n", yylineno);
   BEGIN(INITIAL); }
 
   /* this matches all the standard bands, but is shorter, and later in this 
      list  */
 ^[^ \t\n]+ {
-   fprintf(stderr, "  L.%d: unknown band label '%s'\n",yylineno,yytext);
+   fprintf(stderr, "  L.%d: Unknown band label '%s'\n",yylineno,yytext);
    BEGIN(INITIAL); 
 }
 

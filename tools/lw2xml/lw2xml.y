@@ -53,12 +53,13 @@ void main()
 %token   LIT CF SC
 %token   GC3_ADJ GC3_ADV GC3_AN  GC3_C   GC3_CNJ GC3_DEM GC3_DIR GC3_ENC
 %token   GC3_EXC GC3_I   GC3_IC  GC3_N   GC3_NC  GC3_NI  GC3_PAD GC3_PF
-%token   GC3_PN  GC3_PSN GC3_PP  GC3_PRT GC3_VEN GC3_VOC
+%token   GC3_PN  GC3_PSN GC3_PP  GC3_PRT GC3_VEN GC3_VOC GC3_COLL
 
 %token AF
 %token   AF2_NSF AF2_SF AF2_VPF AF2_VSF AF2_VSF1 AF2_TFS AF2_NDS AF2_ADS
 %token   AF2_SDS AF2_NFSF AF2_VFSF AF2_NFPF AF2_VFPF
 %token   AF3_IFS AF3_DRT TH3 ASP
+%token RA
 %token LW SRC  
 
 
@@ -81,8 +82,8 @@ root.1m: level1.alt
   | root.1m level1.alt
   | root.1m error ;
 
-//:    <rt> | <af> | <lw>
-level1.alt: rt | af ; // | lw ;
+//:    <rt> | <af> | <ra> | <lw>
+level1.alt: rt | af ; // ra | lw ;
 
 //:<rt> = \n    ".rt"   TEXT : Root word
 rt: RT                  { printf("<rt>\n"); }
@@ -99,8 +100,10 @@ rt: RT                  { printf("<rt>\n"); }
     sets.01
     //:    <th>    (0-to-many)
     th.0m
+    // TODO: add ..grp here
     //:    <gc2>   (0-to-many)
     gc2.0m
+
                         { printf("</rt>\n"); } ;
 
 // ---------- rt level 1 attributes ----------
@@ -219,6 +222,8 @@ tc.alt:
   | TC_STAT             { printf("<tc>stat</tc>\n");      }
     //:  | "succ"       : Successive
   | TC_SUCC             { printf("<tc>succ</tc>\n");      }
+  // TODO check succ or suc
+  // TODO add u:...
   ;
 
 //:<cnj> =\n    "cnj"   TEXT : Conjugation prefix
@@ -438,6 +443,8 @@ gc3.alt:
   | GC3_C   { printf("<type>c</type>\n"); }
     //:  | "...cnj" TEXT : 
   | GC3_CNJ { printf("<type>cnj</type>\n"); }
+    //:  | "...coll" TEXT : 
+  | GC3_COLL { printf("<type>coll</type>\n"); }
     //:  | "...dem" TEXT : 
   | GC3_DEM { printf("<type>dem</type>\n"); }
     //:  | "...dir" TEXT : 
@@ -493,6 +500,17 @@ gc3:
 
 // ---------- .af ----------
 
+/* TODO - re do af into two options */
+/* <af> */
+/*   <verb> | <noun> */
+/* <verb> */
+/*   <thfs> */
+/*   <aspdstr> */
+/*   <naspdstr> */
+/*   <vf.f> */
+/* <noun> */
+/*   <nf.f> */
+
 //:<af> =
 af:
 //:  ".af" TEXT : Affix
@@ -505,12 +523,12 @@ af:
   //:  <rtyp> (0-to-1)
   rtyp.01
   //:  <af2> (0-to-1)
-  af2.0alt
+  af2.alt
                                   { printf("</af>\n"); }
   ;
 
 //:<af2> =
-af2.0alt: %empty
+af2.alt: %empty
    //:    <af2n> (1-to-many)
  | af2n.1m 
    //:  | <af2s> (1-to-many)
@@ -541,6 +559,7 @@ af2n:
   //:  <gl> (exactly-1)
   gl
   //:  <ex> (0-to-many)
+  // TODO add lit
   exeng.0m
   //:  <af2n3> (0-to-many)
   af2n3.0m 
@@ -560,6 +579,7 @@ af2n3.alt:
   | GC3_PP  { printf("<type>pp</type>\n"); }
     //:  | "...voc" TEXT : 
   | GC3_VOC { printf("<type>voc</type>\n"); } ;
+// add adv, dem, ... almost any word categories 
 af2n3:
                                   { printf("<af3>\n"); }
   af2n3.alt WORDS                 { printf("<word>%s</word>\n", $3); }
@@ -589,6 +609,7 @@ af2s3.0m: %empty | af2s3.0m af2s3 ;
 af2s3.alt:
     //:    "...exc" TEXT   : 
     GC3_EXC { printf("<type>exc</type>\n"); } ;
+    // TODO: add n an adv dem
 af2s3:
                                   { printf("<af3>\n"); }
   af2s3.alt WORDS                 { printf("<word>%s</word>\n", $3); }
@@ -737,6 +758,28 @@ af2p3:
   exeng.0m
                                   { printf("</af3>\n"); }
   ;
+
+
+//:<ra> = \n    ".ra"   TEXT : Root word and affix
+rt: RA                  { printf("<ra>\n"); }
+    WORDS               { printf("<word>%s</word>\n", $3); }
+    //:    <pd>    (0-to-1)
+    pd.01
+    //:    <tag>   (0-to-1)
+    tag.01
+    //:    <rtyp>  (0-to-1)
+    rtyp.01
+    //:    <df>    (0-to-1)
+    df.01
+    //:    <sets>  (0-to-1)
+    sets.01
+    //:    <th>    (0-to-many)
+    th.0m
+    //:    <gc2>   (0-to-many)
+    gc2.0m
+    //:    <af2>   (0-to-many)
+    af2.alt
+                        { printf("</ra>\n"); } ;
 
 
 /*
