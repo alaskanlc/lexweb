@@ -44,3 +44,6 @@ grammar:
 	grep "//:" lw2xml.y | sed 's|^.*//:||g' | gawk '{gsub(/\\n/,"\n",$$0); print $$0}' > ../../grammar/dene.grammar
 
 # gcc  -o lw2xml -DYYDEBUG lw2xml.tab.c lex.yy.c
+
+gw:
+	gawk -v max=1 -f awk/nentries.awk gw.lw | gawk -f awk/xmlencode.awk | gawk -f awk/cleanindexmarks.awk| lw2xml | tidy -xml -indent -m -q

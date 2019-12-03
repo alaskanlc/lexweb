@@ -138,7 +138,7 @@
 }
 
 ^lit\ +        { BEGIN(TEXT);    return LIT;  }
-^cf\ +         { BEGIN(TEXT);    return CF;   }
+^smf\ +        { BEGIN(TEXT);    return SMF;   }
 ^sc\ +         { BEGIN(TEXT);    return SC;   }
 
  /* Level 3 Sub-entries for .rt */
@@ -176,7 +176,8 @@
 ^\.\.vsf1\ +    { BEGIN(TEXT);    return AF2_VSF1;   }
 
 ^\.\.\.ifs\ +    { BEGIN(TEXT) ; return AF3_IFS ;}
-^\.\.\.drt\ +    { BEGIN(TEXT) ; return AF3_DRT ;}
+^\.\.\.drt\ +    { BEGIN(INITIAL) ; }
+  /*               BEGIN(TEXT) ; return AF3_DRT ;} */
 
 ^\.\.tfs\ +    { BEGIN(TEXT);    return AF2_TFS;   }
 ^asp\ +        { BEGIN(TEXT); return ASP;     }
@@ -188,8 +189,8 @@
 
 ^\.\.nfsf\ +    { BEGIN(TEXT);    return AF2_NFSF;   }
 ^\.\.vfsf\ +    { BEGIN(TEXT);    return AF2_VFSF;   }
-^\.\.nfpf\ +    { BEGIN(TEXT);    return AF2_NFPF;   }
-^\.\.vfpf\ +    { BEGIN(TEXT);    return AF2_VFPF;   }
+^\.\.nfaf\ +    { BEGIN(TEXT);    return AF2_NFAF;   }
+^\.\.vfaf\ +    { BEGIN(TEXT);    return AF2_VFAF;   }
 
   /* Comments - can be anywhere */
 ^(com|rcom)\ + { BEGIN(COMTEXT); }

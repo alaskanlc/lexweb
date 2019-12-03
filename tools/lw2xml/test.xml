@@ -89,9 +89,8 @@
       <gloss>
         <eng>animal *den</eng>
       </gloss>
-      <lit>In a hole</lit>
-      <cf>FOO</cf>
       <sc>Thingy thingus</sc>
+      <lit>In a hole</lit>
       <example>
         <ex>geh 'an</ex>
         <eng>rabbit den</eng>
@@ -106,8 +105,8 @@
       <gloss>
         <eng>animal *den</eng>
       </gloss>
-      <lit>In a hole</lit>
       <sc>Thingy thingus</sc>
+      <lit>In a hole</lit>
       <example>
         <ex>geh 'an</ex>
         <eng>rabbit den</eng>
@@ -118,7 +117,6 @@
         <gloss>
           <eng>*sonny</eng>
         </gloss>
-        <cf>FOO</cf>
       </gc3>
       <gc3>
         <type>voc</type>
@@ -138,11 +136,17 @@
   </rt>
   <af>
     <word>Ø$1</word>
-    <tag>zero noun suffix</tag>
-    <rtyp>ɑ/sf</rtyp>
+    <aftype>verb</aftype>
     <af2>
+      <type>vsf</type>
       <word>Ø</word>
-      <type>nsf</type>
+      <gloss>
+        <eng>*possess]ed suffix in nouns</eng>
+      </gloss>
+    </af2>
+    <af2>
+      <type>nds</type>
+      <word>Ø</word>
       <gloss>
         <eng>*possess]ed suffix in nouns</eng>
         <com>very rare, the usual suffix is &amp;-a'</com>
@@ -155,58 +159,6 @@
         <ex>yex, -yex</ex>
         <eng>house</eng>
       </example>
-      <af3>
-        <type>n</type>
-        <word>FOO</word>
-        <gloss>
-          <eng>BAR</eng>
-        </gloss>
-      </af3>
-    </af2>
-  </af>
-  <af>
-    <word>Ø$1</word>
-    <tag>zero noun suffix</tag>
-    <rtyp>ɑ/sf</rtyp>
-    <af2>
-      <word>Ø</word>
-      <type>sf</type>
-      <gloss>
-        <eng>*possess]ed suffix in nouns</eng>
-        <com>very rare, the usual suffix is &amp;-a'</com>
-      </gloss>
-      <example>
-        <ex>kayex, -kayex</ex>
-        <eng>village</eng>
-      </example>
-      <example>
-        <ex>yex, -yex</ex>
-        <eng>house</eng>
-      </example>
-      <af3>
-        <type>exc</type>
-        <word>FOO</word>
-        <gloss>
-          <eng>BAR</eng>
-        </gloss>
-      </af3>
-    </af2>
-  </af>
-  <af>
-    <word>Ø$1</word>
-    <type>vsf</type>
-    <af2>
-      <word>Ø</word>
-      <gloss>
-        <eng>*possess]ed suffix in nouns</eng>
-      </gloss>
-      <af3>
-        <type>drt</type>
-        <word>FOO</word>
-        <gloss>
-          <eng>BAR</eng>
-        </gloss>
-      </af3>
     </af2>
   </af>
   <rt>
@@ -293,9 +245,10 @@
   <af>
     <word>'ak</word>
     <tag>sing love song</tag>
+    <aftype>verb</aftype>
     <af2>
-      <word>'ak'ak</word>
       <type>tfs</type>
+      <word>'ak'ak</word>
       <gloss>
         <eng>FOO</eng>
       </gloss>
@@ -318,9 +271,10 @@
   <af>
     <word>'aki</word>
     <tag>sing</tag>
+    <aftype>verb</aftype>
     <af2>
-      <word>'ak'ak</word>
       <type>nds</type>
+      <word>'ak'ak</word>
       <gloss>
         <eng>FOO</eng>
       </gloss>
@@ -328,11 +282,19 @@
         <ex>kii dha'ąįį</ex>
         <eng>a rock is there</eng>
       </example>
+      <gc3>
+        <type>pp</type>
+        <word>'a'a</word>
+        <gloss>
+          <eng>FOO BAR</eng>
+        </gloss>
+      </gc3>
     </af2>
   </af>
   <af>
     <word>'akif</word>
     <tag>singer</tag>
+    <aftype>verb</aftype>
     <af2>
       <type>ads</type>
       <word>'ak'aki</word>
@@ -345,6 +307,7 @@
   <af>
     <word>'akif</word>
     <tag>singer</tag>
+    <aftype>verb</aftype>
     <af2>
       <type>sds</type>
       <word>'ak'aki</word>
@@ -357,19 +320,126 @@
   <af>
     <word>'a</word>
     <tag>singer</tag>
+    <aftype>noun</aftype>
     <af2>
       <type>nfsf</type>
       <word>'ak'aki</word>
       <gloss>
         <eng>FOO</eng>
       </gloss>
-      <af3>
+    </af2>
+  </af>
+  <af>
+    <word>Ø$1</word>
+    <tag>zero noun suffix</tag>
+    <rtyp>ɑ/sf</rtyp>
+    <aftype>noun</aftype>
+    <af2>
+      <type>nsf</type>
+      <word>Ø</word>
+      <gloss>
+        <eng>*possess]ed suffix in nouns</eng>
+        <com>very rare, the usual suffix is &amp;-a'</com>
+      </gloss>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+      <example>
+        <ex>yex, -yex</ex>
+        <eng>house</eng>
+      </example>
+      <gc3>
+        <type>n</type>
         <word>FOO</word>
-        <type>drt</type>
         <gloss>
-          <eng>FOO</eng>
+          <eng>BAR</eng>
         </gloss>
-      </af3>
+      </gc3>
+    </af2>
+  </af>
+  <af>
+    <word>Ø$1</word>
+    <tag>zero noun suffix</tag>
+    <rtyp>ɑ/sf</rtyp>
+    <aftype>noun</aftype>
+    <af2>
+      <type>sf</type>
+      <word>Ø</word>
+      <gloss>
+        <eng>*possess]ed suffix in nouns</eng>
+        <com>very rare, the usual suffix is &amp;-a'</com>
+      </gloss>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+      <example>
+        <ex>yex, -yex</ex>
+        <eng>house</eng>
+      </example>
+      <gc3>
+        <type>exc</type>
+        <word>FOO</word>
+        <gloss>
+          <eng>BAR</eng>
+        </gloss>
+        <smf>SEMANTIC field data</smf>
+      </gc3>
+    </af2>
+    <af2>
+      <type>nfaf</type>
+      <word>Ø1</word>
+      <gloss>
+        <eng>*possess]ed suffix in nouns</eng>
+      </gloss>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+      <gc3>
+        <type>n</type>
+        <word>FOO</word>
+        <gloss>
+          <eng>BAR</eng>
+        </gloss>
+      </gc3>
+    </af2>
+  </af>
+  <af>
+    <word>Ø$12</word>
+    <tag>zero one noun suffix</tag>
+    <rtyp>ɑ/sf</rtyp>
+    <aftype>verb</aftype>
+    <af2>
+      <type>vpf</type>
+      <word>ØA</word>
+      <gloss>
+        <eng>*possess]ed suffix in nouns</eng>
+      </gloss>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+      <gc3>
+        <type>ifs</type>
+        <word>FOO</word>
+        <gloss>
+          <eng>BAR</eng>
+        </gloss>
+        <smf>SEMANTIC field data</smf>
+      </gc3>
+      <gc3>
+        <type>pp</type>
+        <word>Ø1</word>
+        <gloss>
+          <eng>*possess]ed suffix in nouns</eng>
+        </gloss>
+        <example>
+          <ex>kayex, -kayex</ex>
+          <eng>village</eng>
+        </example>
+      </gc3>
     </af2>
   </af>
 </lexware>

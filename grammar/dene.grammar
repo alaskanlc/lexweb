@@ -1,15 +1,16 @@
 <root> (1-to-many) =
-    <rt> | <af> | <lw>
-    # add <ra>
+    <rt> | <af> | <ra> | <lw>
 <rt> = 
     ".rt"   TEXT : Root word
+    <attr1>
+    <sets>  (0-to-1)
+    <th>    (0-to-many)
+    <gc2>   (0-to-many)
+<attr1> =
     <pd>    (0-to-1)
     <tag>   (0-to-1)
     <rtyp>  (0-to-1)
     <df>    (0-to-1)
-    <sets>  (0-to-1)
-    <th>    (0-to-many)
-    <gc2>   (0-to-many)
 <pd> =
     "pd"    TEXT : Proto Dene
 <tag> =
@@ -43,7 +44,7 @@
 <th> =
     "..th"  TEXT : Verb theme
     <tc>    (exactly-1)
-    <cnj>   (0-to-1>
+    <cnj>   (0-to-1)
     <gl>    (exactly-1)
     <ex>    (0-to-many)
     <prds>  (0-to-many)
@@ -63,8 +64,6 @@
   | "op-ono"     : Onomatopoetic operative
   | "stat"       : Stative
   | "succ"       : Successive
-  # check suc or succ
-  # add u:...
 <cnj> =
     "cnj"   TEXT : Conjugation prefix
 <gl> =
@@ -124,13 +123,15 @@
   | "..prt" TEXT : 
   | "..ven" TEXT : 
   | "..voc" TEXT : 
+    <attr2>
+    <gc3>   (0-to-many)
+<attr2> =
     <dial>  (0-to-1)
     <gl>    (exactly-1)
-    <lit>   (0-to-1)
-    <cf>    (0-to-1)
+    <smf>   (0-to-1)
     <sc>    (0-to-1)
+    <lit>   (0-to-1)
     <ex>    (0-to-many)
-    <gc3>   (0-to-many)
 <dial> =
     "dial" <lang> : Dialect
     <dial2> (0-to-many)
@@ -138,18 +139,19 @@
             TEXT : Language
 <dial2> =
     "dial" <lang> TEXT : Additional dialects
-<lit> =
-    "lit"   TEXT : Literal translation
-<cf> =
-    "cf"    TEXT : Compare with
+<smf> =
+    "smf"    TEXT : Semantic field
 <sc> =
     "sc"    TEXT : Scientific name
+<lit> =
+    "lit"   TEXT : Literal translation
 <gc3> =
     "...adj" TEXT : Adjective
   | "...adv" TEXT : Adverb
   | "...an"  TEXT : 
   | "...c"   TEXT : 
   | "...cnj" TEXT : 
+  | "...coll" TEXT : 
   | "...dem" TEXT : 
   | "...dir" TEXT : 
   | "...enc" TEXT : 
@@ -167,18 +169,40 @@
   | "...prt" TEXT : 
   | "...ven" TEXT : 
   | "...voc" TEXT : 
-  <dial> (0-to-1)
-  <gl> (exactly-1)
-  <lit> (0-to-1)
-  <cf> (0-to-1)
-  <sc> (0-to-1)
-  <ex> (0-to-many)
-<af> =
+    <attr2>
+
+<af> = 
+  ".af" TEXT : Affix
+  <attr1>
+  <afnv> (0-to-1)
+<afnv> =   <afn2> (1-to-many)
+         | <afv2> (1-to-many)
+<afn2> =
+    "..nsf"  TEXT : Noun suffix
+    "..sf"   TEXT : Suffix
+    "..nfaf" TEXT : Noun formation affix 
+  | "..nfsf" TEXT : Noun formation suffix
+    <attr2>
+    <gc3> (0-to-many)
+<afv2> =
+    <afv2a>
+  | <afv2b>
+  | <afv2c>
+  | <afv2d>
+<afv2a> =
+    "..vsf1" TEXT : Verb suffix 1
+    "..vsf"  TEXT : Verb suffix
+    "..nds"  TEXT : Non-derivational suffix
+  | "..vfaf" TEXT : Verb formation affix
+  | "..vfsf" TEXT : Verb formation suffix
+    <attr2>
+    <gc3> (0-to-many)
+<afverb> = 
   ".af" TEXT : Affix
   <pd> (0-to-1)
   <tag> (0-to-1)
   <rtyp> (0-to-1)
-  <af2> (0-to-1)
+  <af2v> (0-to-1)
 <af2> =
     <af2n> (1-to-many)
   | <af2s> (1-to-many)
@@ -187,32 +211,6 @@
   | <af2d> (1-to-many)
   | <af2a> (1-to-many)
   | <af2p> (1-to-many)
-<af2n> =
-  "..nsf" TEXT : Noun suffix
-  <gl> (exactly-1)
-  <ex> (0-to-many)
-  <af2n3> (0-to-many)
-<af2n3> =
-    # adv, dem, ... almost any word categories - substitute 
-    "...an" TEXT  : 
-  | "...exc" TEXT   : 
-  | "...n" TEXT   : 
-  | "...pp" TEXT  : 
-  | "...voc" TEXT : 
-  <gl> (exactly-1)
-  # add lit (not sc)
-  <ex> (0-to-many)
-<af2s> =
-  "..sf" TEXT : Suffix
-  <gl> (exactly-1)
-  <ex> (0-to-many)
-  <af2s3> (0-to-many)
-<af2s3> =
-    "...exc" TEXT   :
-    # ...int
-    # ...n  an  adv dem
-  <gl> (exactly-1)
-  <ex> (0-to-many)
 <af2v> =
     "..vpf" TEXT : Verb prefix
   | "..vsf" TEXT : Verb suffix
@@ -252,8 +250,8 @@
 <af2p> =
     "..nfsf" TEXT  : 
   | "..vfsf" TEXT   : 
-  | "..nfpf" TEXT  : 
-  | "..vfpf" TEXT   : 
+  | "..nfsf" TEXT  : 
+  | "..vfsf" TEXT   : 
   <gl> (exactly-1)
   <ex> (0-to-many)
   <af2p3> (0-to-many)
@@ -261,33 +259,13 @@
   "...drt" TEXT   : 
   <gl> (exactly-1)
   <ex> (0-to-many)
-
-
-# <ra>
-    # <pd>    (0-to-1)
-    # <tag>   (0-to-1)
-    # <rtyp>  (0-to-1)
-    # <df>    (0-to-1)
-    # <sets>  (0-to-1)
-    # <th>    (0-to-many)
-    # <gc2>   (0-to-many)
-    # <af2> (0-to-1)
-
-
-
-
-<af>
-  <verb> | <noun>
-<verb>
-  <thfs>
-  <aspdstr>
-  <naspdstr>
-  <vf.f>
-<noun>
-  <nf.f>
-
-
-anaylse .af
-
-
-
+<ra> = 
+    ".ra"   TEXT : Root word and affix
+    <pd>    (0-to-1)
+    <tag>   (0-to-1)
+    <rtyp>  (0-to-1)
+    <df>    (0-to-1)
+    <sets>  (0-to-1)
+    <th>    (0-to-many)
+    <gc2>   (0-to-many)
+    <af2>   (0-to-many)

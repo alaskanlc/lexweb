@@ -37,66 +37,39 @@ dial MN
 dial TC ch'edagwda
 dial EC chedagwda
 gl  animal *den
-lit In a hole
-cf FOO
 sc Thingy thingus
+lit In a hole
 ex geh 'an
 eng rabbit den
 ..voc -'onh
 dial M
 gl  animal *den
-lit In a hole
 sc Thingy thingus
+lit In a hole
 ex geh 'an
 eng rabbit den
 ...n -ey'i:
 gl *sonny
-cf FOO
 ...voc -edh'ą́
 gl uncle!
 ...voc chelą́:
 gl young brother
 
-.af Ø$1
-tag zero noun suffix
-rtyp ɑ/sf
-..nsf   Ø
-gl   *possess]ed suffix in nouns
-com very rare, the usual suffix is &-a'
-ex  kayex, -kayex
-eng  village
-ex  yex, -yex
-eng house
-...n FOO
-gl BAR
-
-.af Ø$1
-tag zero noun suffix
-rtyp ɑ/sf
-..sf   Ø
-gl   *possess]ed suffix in nouns
-com very rare, the usual suffix is &-a'
-ex  kayex, -kayex
-eng  village
-ex  yex, -yex
-eng house
-...exc FOO
-gl BAR
 
 .af Ø$1
 ..vsf   Ø
 gl   *possess]ed suffix in nouns
-...drt FOO
-gl BAR
+#...drt FOO
+#gl BAR
 
-# ..nds   Ø
-# gl   *possess]ed suffix in nouns
-# com very rare, the usual suffix is &-a'
-# ex  kayex, -kayex
-# eng  village
-# ex  yex, -yex
-# eng house
-# 
+..nds   Ø
+gl   *possess]ed suffix in nouns
+com very rare, the usual suffix is &-a'
+ex  kayex, -kayex
+eng  village
+ex  yex, -yex
+eng house
+
 .rt 'ąį'
 tag complete
 ..sets
@@ -150,6 +123,8 @@ tag sing
 gl FOO
 ex kii dha'ąįį
 eng a rock is there
+...pp 'a'a
+gl FOO BAR
 
 .af 'akif
 tag singer
@@ -167,7 +142,54 @@ gl FOO
 tag singer
 ..nfsf 'ak'aki
 gl FOO
-...drt FOO
-gl FOO
+#...drt FOO
+#gl FOO
 
 
+.af Ø$1
+tag zero noun suffix
+rtyp ɑ/sf
+..nsf   Ø
+gl   *possess]ed suffix in nouns
+com very rare, the usual suffix is &-a'
+ex  kayex, -kayex
+eng  village
+ex  yex, -yex
+eng house
+...n FOO
+gl BAR
+
+.af Ø$1
+tag zero noun suffix
+rtyp ɑ/sf
+..sf   Ø
+gl   *possess]ed suffix in nouns
+com very rare, the usual suffix is &-a'
+ex  kayex, -kayex
+eng  village
+ex  yex, -yex
+eng house
+...exc FOO
+gl BAR
+smf SEMANTIC field data
+..nfaf   Ø1
+gl   *possess]ed suffix in nouns
+ex  kayex, -kayex
+eng  village
+...n FOO
+gl BAR
+
+.af Ø$12
+tag zero one noun suffix
+rtyp ɑ/sf
+..vpf   ØA
+gl   *possess]ed suffix in nouns
+ex  kayex, -kayex
+eng  village
+...ifs FOO
+gl BAR
+smf SEMANTIC field data
+...pp   Ø1
+gl   *possess]ed suffix in nouns
+ex  kayex, -kayex
+eng  village
