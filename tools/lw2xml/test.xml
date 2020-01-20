@@ -87,7 +87,7 @@
         </dialx>
       </dial>
       <gloss>
-        <eng>animal *den</eng>
+        <eng>animal den</eng>
       </gloss>
       <sc>Thingy thingus</sc>
       <lit>In a hole</lit>
@@ -103,7 +103,7 @@
         <lang>M</lang>
       </dial>
       <gloss>
-        <eng>animal *den</eng>
+        <eng>animal den</eng>
       </gloss>
       <sc>Thingy thingus</sc>
       <lit>In a hole</lit>
@@ -115,7 +115,7 @@
         <type>n</type>
         <word>-ey'i:</word>
         <gloss>
-          <eng>*sonny</eng>
+          <eng>sonny</eng>
         </gloss>
       </gc3>
       <gc3>
@@ -141,14 +141,14 @@
       <type>vsf</type>
       <word>Ø</word>
       <gloss>
-        <eng>*possess]ed suffix in nouns</eng>
+        <eng>possessed suffix in nouns</eng>
       </gloss>
     </af2>
     <af2>
       <type>nds</type>
       <word>Ø</word>
       <gloss>
-        <eng>*possess]ed suffix in nouns</eng>
+        <eng>possessed suffix in nouns</eng>
         <com>very rare, the usual suffix is &amp;-a'</com>
       </gloss>
       <example>
@@ -223,7 +223,7 @@
       <word>P+a#ł+'ak</word>
       <tc>op</tc>
       <gloss>
-        <eng>*sing a love song</eng>
+        <eng>sing a love song</eng>
       </gloss>
       <example>
         <ex>ch'aah'ak</ex>
@@ -338,7 +338,7 @@
       <type>nsf</type>
       <word>Ø</word>
       <gloss>
-        <eng>*possess]ed suffix in nouns</eng>
+        <eng>possessed suffix in nouns</eng>
         <com>very rare, the usual suffix is &amp;-a'</com>
       </gloss>
       <example>
@@ -367,7 +367,7 @@
       <type>sf</type>
       <word>Ø</word>
       <gloss>
-        <eng>*possess]ed suffix in nouns</eng>
+        <eng>possessed suffix in nouns</eng>
         <com>very rare, the usual suffix is &amp;-a'</com>
       </gloss>
       <example>
@@ -391,7 +391,7 @@
       <type>nfaf</type>
       <word>Ø1</word>
       <gloss>
-        <eng>*possess]ed suffix in nouns</eng>
+        <eng>possessed suffix in nouns</eng>
       </gloss>
       <example>
         <ex>kayex, -kayex</ex>
@@ -415,7 +415,7 @@
       <type>vpf</type>
       <word>ØA</word>
       <gloss>
-        <eng>*possess]ed suffix in nouns</eng>
+        <eng>possessed suffix in nouns</eng>
       </gloss>
       <example>
         <ex>kayex, -kayex</ex>
@@ -433,7 +433,7 @@
         <type>pp</type>
         <word>Ø1</word>
         <gloss>
-          <eng>*possess]ed suffix in nouns</eng>
+          <eng>possessed suffix in nouns</eng>
         </gloss>
         <example>
           <ex>kayex, -kayex</ex>
@@ -442,4 +442,38 @@
       </gc3>
     </af2>
   </af>
+  <ra>
+    <word>Ø$123</word>
+    <tag>zero one noun suffix</tag>
+    <af2>
+      <type>vpf</type>
+      <word>ØA</word>
+      <gloss>
+        <eng>possessed suffix in nouns</eng>
+      </gloss>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+      <gc3>
+        <type>ifs</type>
+        <word>FOO</word>
+        <gloss>
+          <eng>BAR</eng>
+        </gloss>
+        <smf>SEMANTIC field data</smf>
+      </gc3>
+    </af2>
+    <gc2>
+      <type>pp</type>
+      <word>Ø1</word>
+      <gloss>
+        <eng>possessed suffix in nouns</eng>
+      </gloss>
+      <example>
+        <ex>kayex, -kayex</ex>
+        <eng>village</eng>
+      </example>
+    </gc2>
+  </ra>
 </lexware>

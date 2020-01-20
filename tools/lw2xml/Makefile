@@ -16,7 +16,7 @@ test:
 	cat test.lw | gawk -f awk/xmlencode.awk | lw2xml
 
 tidytest:
-	cat test.lw | gawk -f awk/xmlencode.awk | lw2xml | tidy -xml -indent -m -q | tee test.xml
+	cat test.lw | gawk -f awk/cleanindexmarks.awk | gawk -f awk/xmlencode.awk | lw2xml | tidy -xml -indent -m -q | tee test.xml
 
 rnc: test.xml
 	java -jar ~/usr/jing-trang-20151127/build/trang.jar test.xml test.rnc

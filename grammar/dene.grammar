@@ -175,8 +175,9 @@
   ".af" TEXT : Affix
   <attr1>
   <afnv> (0-to-1)
-<afnv> =   <afn2> (1-to-many)
-         | <afv2> (1-to-many)
+<afnv> =
+   <afn2> (1-to-many)
+  | <afv2> (1-to-many)
 <afn2> =
     "..nsf"  TEXT : Noun suffix
     "..sf"   TEXT : Suffix
@@ -191,81 +192,44 @@
   | <afv2d>
 <afv2a> =
     "..vsf1" TEXT : Verb suffix 1
-    "..vsf"  TEXT : Verb suffix
-    "..nds"  TEXT : Non-derivational suffix
+ |  "..vsf"  TEXT : Verb suffix
+ |  "..nds"  TEXT : Non-derivational suffix
   | "..vfaf" TEXT : Verb formation affix
   | "..vfsf" TEXT : Verb formation suffix
     <attr2>
     <gc3> (0-to-many)
-<afverb> = 
-  ".af" TEXT : Affix
-  <pd> (0-to-1)
-  <tag> (0-to-1)
-  <rtyp> (0-to-1)
-  <af2v> (0-to-1)
-<af2> =
-    <af2n> (1-to-many)
-  | <af2s> (1-to-many)
-  | <af2v> (1-to-many)
-  | <af2t> (1-to-many)
-  | <af2d> (1-to-many)
-  | <af2a> (1-to-many)
-  | <af2p> (1-to-many)
-<af2v> =
-    "..vpf" TEXT : Verb prefix
-  | "..vsf" TEXT : Verb suffix
-  | "..vsf1" TEXT : Verb suffix one
-  <gl> (exactly-1)
-  <ex> (0-to-many)
-  <af2v3> (0-to-many)
-<af2v3> =
-    "...adv" TEXT  : Adverb 
-  | "...ifs" TEXT  : Inflectional string 
-  | "...drt" TEXT   : 
-  <gl> (exactly-1)
-  <ex> (0-to-many)
-<af2t> =
-  "..tfs" TEXT : Theme formation string
-  <asp> (0-to-1)
-  <gl> (exactly-1)
-  <ex> (0-to-many)
-  <th3> (0-to-many)
+<afv2b> =
+    "..vpf"  TEXT : Verb prefix
+    <attr2>
+    <afv2b3> (0-to-many)
+<afv2b3> =
+    <gc3> (0-to-many)
+  | <ifs> (0-to-many)
+<ifs> =
+  "...ifs" TEXT : Inflectional string 
+    <attr2>
+<afv2c> =
+    "..ads"  TEXT : Affix derivational string
+ |  "..sds"  TEXT : Suffix derivational string
+    <asp> (0-to-1)
+    <attr2>
+    <gc3> (0-to-many)
 <asp> =
   "asp" TEXT : Aspect
+<afv2d> =
+    "..tfs"  TEXT : Theme formation string
+    <attr2>
+    <th2> (0-to-many)
+    <gc3> (0-to-many)
 <th2> =
   "...th" TEXT : Verb theme
   <tc> (exactly-1)
   <gl> (exactly-1)
   <ex> (0-to-many)
-<af2d> =
-  "..nds" TEXT : Non-aspectual derivational string
-  <gl> (exactly-1)
-  <ex> (0-to-many)
-<af2a> =
-    "..ads" TEXT  : 
-  | "..sds" TEXT   : 
-  <asp> (exactly-1)
-  <gl> (exactly-1)
-  <ex> (0-to-many)
-<af2p> =
-    "..nfsf" TEXT  : 
-  | "..vfsf" TEXT   : 
-  | "..nfsf" TEXT  : 
-  | "..vfsf" TEXT   : 
-  <gl> (exactly-1)
-  <ex> (0-to-many)
-  <af2p3> (0-to-many)
-<af2p3> =
-  "...drt" TEXT   : 
-  <gl> (exactly-1)
-  <ex> (0-to-many)
 <ra> = 
     ".ra"   TEXT : Root word and affix
-    <pd>    (0-to-1)
-    <tag>   (0-to-1)
-    <rtyp>  (0-to-1)
-    <df>    (0-to-1)
+    <attr1> (exactly-1)
     <sets>  (0-to-1)
     <th>    (0-to-many)
-    <gc2>   (0-to-many)
-    <af2>   (0-to-many)
+    <ra2>   (0-to-1)
+<ra2> =

@@ -97,7 +97,6 @@ rt: RT                  { printf("<rt>\n"); }
     // TODO: add ..grp here
     //:    <gc2>   (0-to-many)
     gc2.0m
-
                         { printf("</rt>\n"); } ;
 
 // ---------- rt level 1 attributes ----------
@@ -513,14 +512,16 @@ af:
   //:  <attr1>
   attr1
   //:  <afnv> (0-to-1)
-  afnv.alt
+  afnv.0m
                                   { printf("</af>\n"); }
   ;
 
-//:<afnv> =   <afn2> (1-to-many)
-//:         | <afv2> (1-to-many)
-afnv.alt:  %empty
+//:<afnv> =
+afnv.0m:
+    %empty
+    //:    <afn2> (1-to-many)
   | { printf("<aftype>noun</aftype>\n"); }   afn2.1m                       
+    //:  | <afv2> (1-to-many)
   | { printf("<aftype>verb</aftype>\n"); }   afv2.1m                       
   ;
 
@@ -563,9 +564,9 @@ afv2x:
 afv2a.alt:
     //:    "..vsf1" TEXT : Verb suffix 1
     AF2_VSF1                  { printf("<type>vsf1</type>\n"); } 
-    //: |  "..vsf"  TEXT : Verb suffix
+    //:  | "..vsf"  TEXT : Verb suffix
   | AF2_VSF                   { printf("<type>vsf</type>\n"); }
-    //: |  "..nds"  TEXT : Non-derivational suffix
+    //:  | "..nds"  TEXT : Non-derivational suffix
   | AF2_NDS                   { printf("<type>nds</type>\n"); }
     //:  | "..vfaf" TEXT : Verb formation affix
   | AF2_VFAF                   { printf("<type>vfaf</type>\n"); }
@@ -577,6 +578,8 @@ afv2a:
   afv2a.alt  WORDS        { printf("<word>%s</word>\n", $3); }
   //:    <attr2>
   attr2
+  //:    <prds> (0-to-many)
+  prds.0m
   //:    <gc3> (0-to-many)
   gc3.0m
                          { printf("</af2>\n"); }
@@ -590,6 +593,8 @@ afv2b:
   AF2_VPF  WORDS         { printf("<word>%s</word>\n", $4); }
   //:    <attr2>
   attr2
+  //:    <prds> (0-to-many)
+  prds.0m
   //:    <afv2b3> (0-to-many)
   afv2b3.0m
                          { printf("</af2>\n"); }
@@ -671,212 +676,33 @@ th3:                     { printf("<th3>\n");    }
                           { printf("</th3>\n"); }
   ;
 
-
-
-
 /*
-//:<afverb> = 
-afverb:
-//:  ".af" TEXT : Affix
-  AF                              { printf("<af>\n"); }
-  WORDS                           { printf("<word>%s</word>\n", $3); }
-  //:  <pd> (0-to-1)
-  pd.01
-  //:  <tag> (0-to-1)
-  tag.01
-  //:  <rtyp> (0-to-1)
-  rtyp.01
-  //:  <af2v> (0-to-1)
-  af2v.alt
-                                  { printf("</af>\n"); }
-  ;
-
-//:<af2> =
-af2v.alt: %empty
-   //:    <af2n> (1-to-many)
- | af2n.1m 
-   //:  | <af2s> (1-to-many)
- | af2s.1m
-   //:  | <af2v> (1-to-many)
- | af2v.1m 
-   //:  | <af2t> (1-to-many)
- | af2t.1m 
-   //:  | <af2d> (1-to-many)
- | af2d.1m 
-   //:  | <af2a> (1-to-many)
- | af2a.1m ;
-   //:  | <af2p> (1-to-many)
- | af2p.1m ;
-af2n.1m: af2n | af2n af2n.1m ;
-af2s.1m: af2s | af2s af2s.1m ;
-af2v.1m: af2v | af2v af2v.1m ;
-af2t.1m: af2t | af2t af2t.1m ;
-af2d.1m: af2d | af2d af2d.1m ;
-af2a.1m: af2a | af2a af2a.1m ;
-af2p.1m: af2p | af2p af2p.1m ;
-
-
-//:<af2v> =
-af2v.alt:
-    //:    "..vpf" TEXT : Verb prefix
-    AF2_VPF   { printf("<type>vpf</type>\n"); }
-    //:  | "..vsf" TEXT : Verb suffix
-  | AF2_VSF   { printf("<type>vsf</type>\n"); }
-    //:  | "..vsf1" TEXT : Verb suffix one
-  | AF2_VSF1  { printf("<type>vsf1</type>\n"); }
-  ;
-af2v:
-  af2v.alt                { printf("<af2>\n"); } 
-  WORDS                   { printf("<word>%s</word>\n", $3); }
-  //:  <gl> (exactly-1)
-  gl
-  //:  <ex> (0-to-many)
-  exeng.0m
-  //:  <af2v3> (0-to-many)
-  af2v3.0m 
-                         { printf("</af2>\n"); }
-  ;
-
-//:<af2v3> =
-af2v3.0m: %empty | af2v3.0m af2v3 ;
-af2v3.alt:
-    //:    "...adv" TEXT  : Adverb 
-    GC3_ADV  { printf("<type>adv</type>\n"); }
-    //:  | "...ifs" TEXT  : Inflectional string 
-  | AF3_IFS { printf("<type>ifs</type>\n"); }
-    //:  | "...drt" TEXT   : 
-  | AF3_DRT   { printf("<type>drt</type>\n"); } ;
-af2v3:
-                                  { printf("<af3>\n"); }
-  af2v3.alt WORDS                 { printf("<word>%s</word>\n", $3); }
-  //:  <gl> (exactly-1)
-  gl
-  //:  <ex> (0-to-many)
-  exeng.0m
-                                  { printf("</af3>\n"); }
-  ;
-
-//:<af2t> =
-af2t:
-  //:  "..tfs" TEXT : Theme formation string
-  AF2_TFS                { printf("<af2>\n"); } 
-  WORDS                  { printf("<word>%s</word>\n<type>tfs</type>\n", $3); }
-  //:  <asp> (0-to-1)
-  asp.01
-  //:  <gl> (exactly-1)
-  gl
-  //:  <ex> (0-to-many)
-  exeng.0m
-  //:  <th3> (0-to-many)
-  th3.0m
-                         { printf("</af2>\n"); }
-  ;
-
-//:<asp> =\n  "asp" TEXT : Aspect
-asp.01: %empty | asp ;
-asp: ASP WORDS { printf("<asp>%s</asp>\n", $2); } ;
-
-//:<th2> =
-th3.0m: %empty
-  | th3.0m th3 ;
-th3:                     { printf("<th3>\n");    }
-  //:  "...th" TEXT : Verb theme
-  TH3 WORDS              { printf("<word>%s</word>\n", $3); }
-  //:  <tc> (exactly-1)
-  TC tc.alt
-  //:  <gl> (exactly-1)
-  gl
-  //:  <ex> (0-to-many)
-  exeng.0m
-                          { printf("</th3>\n"); } ;
-
-//:<af2d> =
-af2d:
-  //:  "..nds" TEXT : Non-aspectual derivational string
-  AF2_NDS                { printf("<af2>\n"); } 
-  WORDS                  { printf("<word>%s</word>\n<type>nds</type>\n", $3); }
-  //:  <gl> (exactly-1)
-  gl
-  //:  <ex> (0-to-many)
-  exeng.0m
-                         { printf("</af2>\n"); }
-  ;
-
-//:<af2a> =
-af2a.alt:
-    //:    "..ads" TEXT  : 
-    AF2_ADS                   { printf("<type>ads</type>\n"); }
-    //:  | "..sds" TEXT   : 
-  | AF2_SDS                   { printf("<type>sds</type>\n"); } ;
-af2a:
-                                  { printf("<af2>\n"); }
-  af2a.alt WORDS                  { printf("<word>%s</word>\n", $3); }
-  //:  <asp> (exactly-1)
-  asp
-  //:  <gl> (exactly-1)
-  gl
-  //:  <ex> (0-to-many)
-  exeng.0m
-                                  { printf("</af2>\n"); }
-  ;
-
-//:<af2p> =
-af2p.alt:
-    //:    "..nfsf" TEXT  : 
-    AF2_NFSF                   { printf("<type>nfsf</type>\n"); }
-    //:  | "..vfsf" TEXT   : 
-  | AF2_VFSF                    { printf("<type>vfsf</type>\n"); } 
-    //:  | "..nfsf" TEXT  : 
-  | AF2_NFPF                   { printf("<type>nfpf</type>\n"); }
-    //:  | "..vfsf" TEXT   : 
-  | AF2_VFPF                    { printf("<type>vfpf</type>\n"); } ;
-af2p:
-                                  { printf("<af2>\n"); }
-  af2p.alt WORDS                  { printf("<word>%s</word>\n", $3); }
-  //:  <gl> (exactly-1)
-  gl
-  //:  <ex> (0-to-many)
-  exeng.0m
-  //:  <af2p3> (0-to-many)
-  af2p3.0m
-                                  { printf("</af2>\n"); }
-  ;
-
-//:<af2p3> =
-af2p3.0m: %empty | af2p3.0m af2p3 ;
-af2p3:
-                                  { printf("<af3>\n"); }
-  //:  "...drt" TEXT   : 
-  AF3_DRT WORDS       { printf("<word>%s</word>\n<type>drt</type>\n", $3); }
-  //:  <gl> (exactly-1)
-  gl
-  //:  <ex> (0-to-many)
-  exeng.0m
-                                  { printf("</af3>\n"); }
-  ;
+// --------------------- .ra --------------------------
 
 
 //:<ra> = \n    ".ra"   TEXT : Root word and affix
 rt: RA                  { printf("<ra>\n"); }
     WORDS               { printf("<word>%s</word>\n", $3); }
-    //:    <pd>    (0-to-1)
-    pd.01
-    //:    <tag>   (0-to-1)
-    tag.01
-    //:    <rtyp>  (0-to-1)
-    rtyp.01
-    //:    <df>    (0-to-1)
-    df.01
+    //:    <attr1> (exactly-1)
+    attr1
     //:    <sets>  (0-to-1)
     sets.01
     //:    <th>    (0-to-many)
     th.0m
-    //:    <gc2>   (0-to-many)
-    gc2.0m
-    //:    <af2>   (0-to-many)
-    af2.alt
-                        { printf("</ra>\n"); } ;
+    //:    <ra2>   (0-to-1)
+    ra2.01
+                        { printf("</ra>\n"); }
+    ;
 
+// Tricky: if it contains an af, all the af types must be the same
+//:<ra2> =
+ra2.01: %empty | ra2.alt ;
+ra2.alt: ra2an.1m | ra2av.1m ;
+
+ra2an.1m: ra2an | ra2an.1m ra2an ;
+ra2an: gc2 | afn2 ;
+ra2av.1m: ra2av | ra2av.1m ra2av ;
+ra2av: gc2 | afv2x ;
 */
 
 /*

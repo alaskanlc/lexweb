@@ -193,3 +193,17 @@ smf SEMANTIC field data
 gl   *possess]ed suffix in nouns
 ex  kayex, -kayex
 eng  village
+
+.ra Ø$123
+tag zero one noun suffix
+..vpf   ØA
+gl   *possess]ed suffix in nouns
+ex  kayex, -kayex
+eng  village
+...ifs FOO
+gl BAR
+smf SEMANTIC field data
+..pp   Ø1
+gl   *possess]ed suffix in nouns
+ex  kayex, -kayex
+eng  village
