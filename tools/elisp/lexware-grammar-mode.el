@@ -6,20 +6,7 @@
 ;; 4. C-x b  to grammar
 ;; 5. M-x grammar-mode (refreshes too)
 
-(define-generic-mode 'lexware1-mode
-  'nil
-  'nil
-  '(
-    ("^#.*$" . 'font-lock-comment-face)
-    ("^\\.[^ .]+" . 'custom-face-tag)
-    ("^\\.\\.?\\.?[^ ]+" . 'font-lock-function-name-face)
-    ("^[^ ]+" . 'font-lock-keyword-face)
-    )
-  '(".*\\.lexware$" ".*\\.lw$")
-  nil
-  "Major mode for editing Lexware text")
-
-(define-generic-mode 'grammar-mode
+(define-generic-mode 'lexware-grammar-mode
   '("#") ; comment char
   '("1-to-many" "0-to-1" "0-to-many" "exactly-1")
   '(("<[^>]*>" . 'font-lock-function-name-face)

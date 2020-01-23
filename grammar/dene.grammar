@@ -56,12 +56,14 @@
   | "conv"       : Conversive
   | "desc"       : Descriptive
   | "dim"        : Dimentional
+  | "dur"        : ??
   | "ext"        : Extension
   | "mot"        : Motion
   | "neu"        : Neuter
   | "ono"        : Onomatopoetic
   | "op"         : Operative
   | "op-ono"     : Onomatopoetic operative
+  | "pos"        : ??
   | "stat"       : Stative
   | "succ"       : Successive
 <cnj> =
@@ -78,6 +80,7 @@
     "ex"    TEXT : Example
     <dial>  (0-to-1)
     <eng>   (exactly-1)
+    <lit>   (0-to-1)
     <quo>   (0-to-1)
     <cit>   (0-to-1)
 <eng> =
@@ -176,7 +179,7 @@
   <attr1>
   <afnv> (0-to-1)
 <afnv> =
-   <afn2> (1-to-many)
+    <afn2> (1-to-many)
   | <afv2> (1-to-many)
 <afn2> =
     "..nsf"  TEXT : Noun suffix
@@ -192,15 +195,17 @@
   | <afv2d>
 <afv2a> =
     "..vsf1" TEXT : Verb suffix 1
- |  "..vsf"  TEXT : Verb suffix
- |  "..nds"  TEXT : Non-derivational suffix
+  | "..vsf"  TEXT : Verb suffix
+  | "..nds"  TEXT : Non-derivational suffix
   | "..vfaf" TEXT : Verb formation affix
   | "..vfsf" TEXT : Verb formation suffix
     <attr2>
+    <prds> (0-to-many)
     <gc3> (0-to-many)
 <afv2b> =
     "..vpf"  TEXT : Verb prefix
     <attr2>
+    <prds> (0-to-many)
     <afv2b3> (0-to-many)
 <afv2b3> =
     <gc3> (0-to-many)
@@ -226,6 +231,12 @@
   <tc> (exactly-1)
   <gl> (exactly-1)
   <ex> (0-to-many)
+<lw> = 
+    ".lw"   TEXT : Loan word
+    <src>   (exactly-1)
+    <gc2>   (0-to-many)
+<src> =
+    "src"   TEXT : Source language
 <ra> = 
     ".ra"   TEXT : Root word and affix
     <attr1> (exactly-1)

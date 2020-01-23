@@ -2,5 +2,9 @@
 .container { padding: 50px; }
 
 .rootword { font-weight: bold; }
-span{ padding-right: 15px; }
-.coms1 , .ths, .gc2 { padding-left: 20px; }
+
+span      { padding-right: 15px; }
+
+.com1s , .ths, .gc2 { padding-left: 20px; }
+
+.exengs   {padding-left: 20px; }

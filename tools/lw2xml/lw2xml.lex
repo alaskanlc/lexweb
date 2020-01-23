@@ -10,7 +10,7 @@
 %option noyywrap yylineno
 
  /* Start-condition tokens ; note %x is the eXclusive form */
-%x TEXT COMTEXT DIALTEXT
+%x TEXT COMTEXT CFTEXT DIALTEXT
 %x TCTEXT TCTYPE PRDTYPE SETTYPE
 
 %%
@@ -61,19 +61,23 @@
 
  /* verb themes */
 ^\.\.th\ +  { BEGIN(TEXT);    return TH;   }
-^tc\ +         { BEGIN(TCTYPE);  return TC;   }
+^tc\ +           { BEGIN(TCTYPE);  return TC;           }
 <TCTYPE>{
   clas\-mot/\n   { BEGIN(INITIAL);  return TC_CLASMOT  ; }
   clas\-stat/\n  { BEGIN(INITIAL); return TC_CLASSTAT ; }
   conv/\n        { BEGIN(INITIAL); return TC_CONV     ; }
   desc/\n        { BEGIN(INITIAL); return TC_DESC     ; }
   dim/\n         { BEGIN(INITIAL); return TC_DIM      ; }
+  dur/\n         { BEGIN(INITIAL); return TC_DUR      ; }
   ext/\n         { BEGIN(INITIAL); return TC_EXT      ; }
   mot/\n         { BEGIN(INITIAL); return TC_MOT      ; }
   neu/\n         { BEGIN(INITIAL); return TC_NEU      ; }
   ono/\n         { BEGIN(INITIAL); return TC_ONO      ; }
   op/\n          { BEGIN(INITIAL); return TC_OP       ; }
   op\-ono/\n     { BEGIN(INITIAL); return TC_OPONO    ; }
+  op\-rep/\n     { BEGIN(INITIAL); return TC_OPREP    ; }
+  op\-rev/\n     { BEGIN(INITIAL); return TC_OPREV    ; }
+  pos/\n         { BEGIN(INITIAL); return TC_POS      ; }
   stat/\n        { BEGIN(INITIAL); return TC_STAT     ; }
   succ/\n        { BEGIN(INITIAL); return TC_SUCC     ; }
 }
@@ -90,9 +94,12 @@
 ^eng\ +        { BEGIN(TEXT);    return ENG;  }
 
   /* Paradigms sub-entry of theme */
+  /* 2020-01-20: due to discovery of two diff prd types, dropping for now
 ^\.\.\.prds/\n {                  return PRDS; }
 ^prd\ +        { BEGIN(PRDTYPE);  return PRD;  }
-^prdgl\ +      { BEGIN(TEXT);     return PRDGL;}
+^prdgl\ +      { BEGIN(TEXT);     return PRDGL;} */
+^(\.\.\.prds|prd|prdgl) {      BEGIN(INITIAL); }
+
 <PRDTYPE>{
   1s\ +        { BEGIN(TEXT); return PD_1S ; }
   2s\ +        { BEGIN(TEXT); return PD_2S ; }
@@ -192,6 +199,13 @@
 ^\.\.nfaf\ +    { BEGIN(TEXT);    return AF2_NFAF;   }
 ^\.\.vfaf\ +    { BEGIN(TEXT);    return AF2_VFAF;   }
 
+ /* .lw */
+
+^\.lw\ +        { BEGIN(TEXT);    return LW;   }
+
+^src\ +         { BEGIN(TEXT);    return SRC;  }
+
+
   /* Comments - can be anywhere */
 ^(com|rcom)\ + { BEGIN(COMTEXT); }
 <COMTEXT>.+/\n {
@@ -199,13 +213,22 @@
   printf("<com>%s</com>\n",yytext);
   BEGIN(INITIAL);
 } 
+
+  /* CF - can be anywhere TODO give it more structure? */
+^(cf)\ + { BEGIN(CFTEXT); }
+<CFTEXT>.+/\n {
+  /* print out the cf - it can be anywhere in the xml */
+  printf("<cf>%s</cf>\n",yytext);
+  BEGIN(INITIAL);
+ }
+
  /* <COMTEXT>.+ { /\* print out the comment - it can be anywhere in the xml *\/ */
  /*   printf("<com>%s</com>\n",yytext); }  */
  /* <COMTEXT>\n { BEGIN(INITIAL); } */
 
  /* ---------- Ignored ---------- */
 
-^(\.file|\.\.+par|\.dir) { /* ignore for now */
+^(\.file|\.\.+par|\.dir|\.+grp) { /* ignore for now */
   /* Note, not terminated with '\ +' or else, e.g., a '..par\n' is not found */
   /* fprintf(stderr, "  L.%d: Ignored '%s'\n",yylineno,yytext); */
   BEGIN(INITIAL); }

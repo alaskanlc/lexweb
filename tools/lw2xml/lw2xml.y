@@ -41,8 +41,9 @@ void main()
 %token     ST_MOM  ST_MULT ST_NEU  ST_PER  ST_PROG ST_REP  ST_REV
 %token     ST_SEM  ST_TRAN
 %token   TH TC
-%token     TC_CLASMOT TC_CLASSTAT TC_CONV TC_DESC TC_DIM TC_EXT
-%token     TC_MOT TC_NEU TC_ONO TC_OP  TC_OPONO TC_STAT TC_SUCC
+%token     TC_CLASMOT TC_CLASSTAT TC_CONV TC_DESC TC_DIM TC_DUR TC_EXT
+%token     TC_MOT TC_NEU TC_ONO TC_OP  TC_OPONO TC_OPREP TC_OPREV TC_POS
+%token     TC_STAT TC_SUCC
 %token   CNJ GL QUO EX ENG CIT PRDS PRD PRDGL
 %token     PD_1S PD_2S PD_3S PD_1P PD_2P PD_3P PD_1D PD_2D PD_3D 
 %token   GC2_ADJ GC2_ADV GC2_AN  GC2_C   GC2_CNJ GC2_DEM GC2_DIR GC2_ENC
@@ -75,7 +76,7 @@ void main()
 //   x.alt : alternative elements
 //   x.c   : closing tag
 
-// ----------  Level 1 structure: rt | af | lw ----------
+// ----------  Level 1 structure: rt | af | lw | ra ----------
 
 //:<root> (1-to-many) =
 root.1m: level1.alt
@@ -83,7 +84,7 @@ root.1m: level1.alt
   | root.1m error ;
 
 //:    <rt> | <af> | <ra> | <lw>
-level1.alt: rt | af ; // ra | lw ;
+level1.alt: rt | af | lw ; // ra | lw ;
 
 //:<rt> = \n    ".rt"   TEXT : Root word
 rt: RT                  { printf("<rt>\n"); }
@@ -211,6 +212,8 @@ tc.alt:
   | TC_DESC             { printf("<tc>desc</tc>\n");      }
     //:  | "dim"        : Dimentional
   | TC_DIM              { printf("<tc>dim</tc>\n");       }
+    //:  | "dur"        : ??
+  | TC_DUR              { printf("<tc>dur</tc>\n");       }
     //:  | "ext"        : Extension
   | TC_EXT              { printf("<tc>ext</tc>\n");       }
     //:  | "mot"        : Motion
@@ -223,6 +226,12 @@ tc.alt:
   | TC_OP               { printf("<tc>op</tc>\n");        }
     //:  | "op-ono"     : Onomatopoetic operative
   | TC_OPONO            { printf("<tc>op-ono</tc>\n");    }
+    //:  | "op-rep"     : ??
+  | TC_OPREP            { printf("<tc>op-rep</tc>\n");    }
+    //:  | "op-rev"     : ??
+  | TC_OPREV            { printf("<tc>op-rev</tc>\n");    }
+    //:  | "pos"        : ??
+  | TC_POS              { printf("<tc>pos</tc>\n");      }
     //:  | "stat"       : Stative
   | TC_STAT             { printf("<tc>stat</tc>\n");      }
     //:  | "succ"       : Successive
@@ -265,6 +274,8 @@ exeng:
   dial.01
   //:    <eng>   (exactly-1)
   eng.b
+  //:    <lit>   (0-to-1)
+  lit.01
   //:    <quo>   (0-to-1)
   quo.01
   //:    <cit>   (0-to-1)
@@ -676,6 +687,21 @@ th3:                     { printf("<th3>\n");    }
                           { printf("</th3>\n"); }
   ;
 
+// --------------------- .lw --------------------------
+
+//:<lw> = \n    ".lw"   TEXT : Loan word
+lw: LW                  { printf("<lw>\n"); }
+    WORDS               { printf("<word>%s</word>\n", $3); }
+    //:    <src>   (exactly-1)
+    src                 
+    //:    <gc2>   (0-to-many)
+    gc2.0m
+                        { printf("</lw>\n"); } ;
+
+//:<src> =\n    "src"   TEXT : Source language
+src: SRC WORDS            { printf("<source>%s</source>\n", $2); }
+
+
 /*
 // --------------------- .ra --------------------------
 
@@ -705,12 +731,6 @@ ra2av.1m: ra2av | ra2av.1m ra2av ;
 ra2av: gc2 | afv2x ;
 */
 
-/*
-lw:  lw.o lw.b lc.01 src.b lwl2.0m lw.c ;
-lw.o: %empty { printf("<lw>\n"); } ;
-lw.b: LW WORDS { printf("<word>%s</word>\n", $2); };
-lw.c: %empty { printf("</lw>\n"); } ;
-*/
 
 %%
 

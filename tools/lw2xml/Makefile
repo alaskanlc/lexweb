@@ -46,4 +46,5 @@ grammar:
 # gcc  -o lw2xml -DYYDEBUG lw2xml.tab.c lex.yy.c
 
 gw:
-	gawk -v max=1 -f awk/nentries.awk gw.lw | gawk -f awk/xmlencode.awk | gawk -f awk/cleanindexmarks.awk| lw2xml | tidy -xml -indent -m -q
+	head -n 4000 gw.d17ba19.fix.lw | lw2xml 2> gw.error 1> gw.xml
+

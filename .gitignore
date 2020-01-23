@@ -4,6 +4,8 @@ bin/json.so
 bin/xqilla
 grammar/QUESTIONS
 tools/lw2xml/lt*
+tools/lw2xml/gw*
+tools/lw2xml/PLACEHOLDER
 tools/lw2xml/lex.yy.c
 tools/lw2xml/lw2xml.output
 tools/lw2xml/lw2xml.tab.c
