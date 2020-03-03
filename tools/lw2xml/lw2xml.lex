@@ -35,6 +35,7 @@
 ^pd\ +         { BEGIN(TEXT);    return PD;   }
 ^tag\ +        { BEGIN(TEXT);    return TAG;  }
 ^rtyp\ +       { BEGIN(TEXT);    return RTYP; }
+^nav\ +        { BEGIN(TEXT);    return NAV; }
 ^df\ +         { BEGIN(TEXT);    return DF;   }
 
  /* sets */
@@ -79,7 +80,8 @@
   op\-rev/\n     { BEGIN(INITIAL); return TC_OPREV    ; }
   pos/\n         { BEGIN(INITIAL); return TC_POS      ; }
   stat/\n        { BEGIN(INITIAL); return TC_STAT     ; }
-  succ/\n        { BEGIN(INITIAL); return TC_SUCC     ; }
+  suc/\n         { BEGIN(INITIAL); return TC_SUC      ; }
+  u\:[.Øa-z]+/\n { BEGIN(INITIAL); return TC_U        ; }
 }
 
 ^cnj\ +         { BEGIN(TEXT);    return CNJ;   }
@@ -93,12 +95,10 @@
 ^ex\ +         { BEGIN(TEXT);    return EX;   }
 ^eng\ +        { BEGIN(TEXT);    return ENG;  }
 
-  /* Paradigms sub-entry of theme */
-  /* 2020-01-20: due to discovery of two diff prd types, dropping for now
-^\.\.\.prds/\n {                  return PRDS; }
+ /* Paradigms sub-entry of theme */
+^\.\.\.prds\ + { BEGIN(TEXT);     return PRDS; }
 ^prd\ +        { BEGIN(PRDTYPE);  return PRD;  }
-^prdgl\ +      { BEGIN(TEXT);     return PRDGL;} */
-^(\.\.\.prds|prd|prdgl) {      BEGIN(INITIAL); }
+^prdgl\ +      { BEGIN(TEXT);     return PRDGL;}
 
 <PRDTYPE>{
   1s\ +        { BEGIN(TEXT); return PD_1S ; }
@@ -114,6 +114,7 @@
 
  /* Level 2 Sub-entries for .rt */
 ^\.\.adj\ +    { BEGIN(TEXT) ; return GC2_ADJ ;}
+^\.\.ads\ +    { BEGIN(TEXT) ; return GC2_ADS ;}
 ^\.\.adv\ +    { BEGIN(TEXT) ; return GC2_ADV ;}
 ^\.\.an\ +     { BEGIN(TEXT) ; return GC2_AN  ;}
 ^\.\.c\ +      { BEGIN(TEXT) ; return GC2_C   ;}
@@ -124,15 +125,20 @@
 ^\.\.exc\ +    { BEGIN(TEXT) ; return GC2_EXC ;}
 ^\.\.i\ +      { BEGIN(TEXT) ; return GC2_I   ;}
 ^\.\.ic\ +     { BEGIN(TEXT) ; return GC2_IC  ;}
+^\.\.in\ +     { BEGIN(TEXT) ; return GC2_IN  ;}
+^\.\.int\ +    { BEGIN(TEXT) ; return GC2_INT ;}
 ^\.\.n\ +      { BEGIN(TEXT) ; return GC2_N   ;}
 ^\.\.nc\ +     { BEGIN(TEXT) ; return GC2_NC  ;}
 ^\.\.ni\ +     { BEGIN(TEXT) ; return GC2_NI  ;}
-^\.\.pad\ +    { BEGIN(TEXT) ; return GC2_PAD ;}
+^\.\.nic\ +     { BEGIN(TEXT) ; return GC2_NIC  ;}
+^\.\.nenc\ +     { BEGIN(TEXT) ; return GC2_NENC  ;}
+^\.\.padj\ +   { BEGIN(TEXT) ; return GC2_PADJ;}
 ^\.\.pf\ +     { BEGIN(TEXT) ; return GC2_PF  ;}
 ^\.\.pn\ +     { BEGIN(TEXT) ; return GC2_PN  ;}
 ^\.\.psn\ +    { BEGIN(TEXT) ; return GC2_PSN ;}
 ^\.\.pp\ +     { BEGIN(TEXT) ; return GC2_PP  ;}
-^\.\.prt\ +    { BEGIN(TEXT) ; return GC2_PRT ;}
+^\.\.pro\ +    { BEGIN(TEXT) ; return GC2_PRO ;}
+^\.\.scnj\ +   { BEGIN(TEXT) ; return GC2_SCNJ ;}
 ^\.\.ven\ +    { BEGIN(TEXT) ; return GC2_VEN ;}
 ^\.\.voc\ +    { BEGIN(TEXT) ; return GC2_VOC ;}
 
@@ -150,6 +156,7 @@
 
  /* Level 3 Sub-entries for .rt */
 ^\.\.\.adj\ +    { BEGIN(TEXT) ; return GC3_ADJ ;}
+^\.\.\.ads\ +    { BEGIN(TEXT) ; return GC3_ADS ;}
 ^\.\.\.adv\ +    { BEGIN(TEXT) ; return GC3_ADV ;}
 ^\.\.\.an\ +     { BEGIN(TEXT) ; return GC3_AN  ;}
 ^\.\.\.c\ +      { BEGIN(TEXT) ; return GC3_C   ;}
@@ -191,7 +198,6 @@
 ^\.\.\.th\ +   { BEGIN(TEXT);    return TH3;   }
 
 ^\.\.nds\ +    { BEGIN(TEXT);     return AF2_NDS;   }
-^\.\.ads\ +    { BEGIN(TEXT);     return AF2_ADS;   }
 ^\.\.sds\ +    { BEGIN(TEXT);     return AF2_SDS;   }
 
 ^\.\.nfsf\ +    { BEGIN(TEXT);    return AF2_NFSF;   }

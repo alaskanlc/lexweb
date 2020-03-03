@@ -36,28 +36,32 @@ void main()
 // Tokens - in same order as appearance in grammar
 %token RT 
 %token   <str> WORDS
-%token   PD TAG RTYP DF SETS SET
+%token   PD TAG RTYP NAV DF SETS SET
 %token     ST_CONC ST_CNS  ST_CONA ST_CONT ST_CUST ST_DIST ST_DUR
 %token     ST_MOM  ST_MULT ST_NEU  ST_PER  ST_PROG ST_REP  ST_REV
 %token     ST_SEM  ST_TRAN
 %token   TH TC
+// FIXME
+//     XXclas-motXX XXclas-statXX conv desc dim dur ext mot neu
+//     add u: for   
 %token     TC_CLASMOT TC_CLASSTAT TC_CONV TC_DESC TC_DIM TC_DUR TC_EXT
 %token     TC_MOT TC_NEU TC_ONO TC_OP  TC_OPONO TC_OPREP TC_OPREV TC_POS
-%token     TC_STAT TC_SUCC
+%token     TC_STAT TC_SUC TC_U
 %token   CNJ GL QUO EX ENG CIT PRDS PRD PRDGL
 %token     PD_1S PD_2S PD_3S PD_1P PD_2P PD_3P PD_1D PD_2D PD_3D 
-%token   GC2_ADJ GC2_ADV GC2_AN  GC2_C   GC2_CNJ GC2_DEM GC2_DIR GC2_ENC
-%token   GC2_EXC GC2_I   GC2_IC  GC2_N   GC2_NC  GC2_NI  GC2_PAD GC2_PF
-%token   GC2_PN  GC2_PSN GC2_PP  GC2_PRT GC2_VEN GC2_VOC
+%token   GC2_ADJ GC2_ADV GC2_ADS GC2_AN  GC2_C   GC2_CNJ GC2_DEM GC2_DIR GC2_ENC
+%token     GC2_EXC GC2_I   GC2_IC GC2_IN GC2_INT GC2_N   GC2_NC  GC2_NI
+%token     GC2_NIC GC2_NENC GC2_PADJ GC2_PF GC2_SCNJ
+%token     GC2_PN  GC2_PSN GC2_PP  GC2_PRO GC2_VEN GC2_VOC
 %token   DIAL DIALX
 %token   <str> DIALXLANG
 %token   SMF SC LIT
-%token   GC3_ADJ GC3_ADV GC3_AN  GC3_C   GC3_CNJ GC3_DEM GC3_DIR GC3_ENC
+%token   GC3_ADJ GC3_ADV GC3_ADS GC3_AN  GC3_C   GC3_CNJ GC3_DEM GC3_DIR GC3_ENC
 %token   GC3_EXC GC3_I   GC3_IC  GC3_N   GC3_NC  GC3_NI  GC3_PAD GC3_PF
 %token   GC3_PN  GC3_PSN GC3_PP  GC3_PRT GC3_VEN GC3_VOC GC3_COLL
 
 %token AF
-%token   AF2_NSF AF2_SF AF2_VPF AF2_VSF AF2_VSF1 AF2_TFS AF2_NDS AF2_ADS
+%token   AF2_NSF AF2_SF AF2_VPF AF2_VSF AF2_VSF1 AF2_TFS AF2_NDS
 %token   AF2_SDS AF2_NFSF AF2_VFSF AF2_NFAF AF2_VFAF
 %token   AF3_IFS AF3_DRT TH3 ASP
 %token RA
@@ -96,7 +100,8 @@ rt: RT                  { printf("<rt>\n"); }
     //:    <th>    (0-to-many)
     th.0m
     // TODO: add ..grp here
-    //:    <gc2>   (0-to-many)
+    //:    <gc2>  (0-to-many)
+    //: |  <gc2b> (0-to-many)
     gc2.0m
                         { printf("</rt>\n"); } ;
 
@@ -110,6 +115,8 @@ attr1:
   tag.01
   //:    <rtyp>  (0-to-1)
   rtyp.01
+  //:    <nav>   (0-to-1)
+  nav.01
   //:    <df>    (0-to-1)
   df.01
   ;
@@ -125,6 +132,10 @@ tag.01:  %empty
 //:<rtyp> =\n    "rtyp"  TEXT : Root word type, incl root class: rtu , rrt,  drt, ra
 rtyp.01: %empty
   | RTYP WORDS          { printf("<rtyp>%s</rtyp>\n", $2); };
+
+//:<nav> =\n    "nav"  TEXT : Navajo usage
+nav.01: %empty
+  | NAV WORDS          { printf("<nav>%s</nav>\n", $2); };
 
 //:<df> =\n    "df"    TEXT : Derived forms
 df.01:   %empty
@@ -234,10 +245,11 @@ tc.alt:
   | TC_POS              { printf("<tc>pos</tc>\n");      }
     //:  | "stat"       : Stative
   | TC_STAT             { printf("<tc>stat</tc>\n");      }
-    //:  | "succ"       : Successive
-  | TC_SUCC             { printf("<tc>succ</tc>\n");      }
-  // TODO check succ or suc
-  // TODO add u:...
+    //:  | "suc"        : Successive
+  | TC_SUC              { printf("<tc>succ</tc>\n");      }
+    //:  | "u:"         : Uncategorized
+  | TC_U                { printf("<tc>uncat</tc>\n");      }
+  // TODO read the text after u:...
   ;
 
 //:<cnj> =\n    "cnj"   TEXT : Conjugation prefix
@@ -290,8 +302,9 @@ eng.b:
 //:<prds>=
 prds.0m: %empty | prds.0m prds ;
 prds:
-  //:    "...prds"    : Usage paradigm
-  PRDS                    { printf("<paradigms>\n"); }
+  //:    "...prds" TEXT  : Usage paradigm, with column definition
+  PRDS                        { printf("<paradigms>\n"); }
+  WORDS                       { printf("<cols>%s</cols>\n", $3); }
   //:    <prd>   (1-to-many)
   prd.1m
                               { printf("</paradigms>\n"); }
@@ -339,51 +352,62 @@ prdgl.b:
 // ---------- .rt second level ----------
 
 //:<gc2> =
-gc2.0m: %empty | gc2.0m gc2 ;
+// Have to add a fork here to accomodate ..ads
+gc2.0m: %empty | gc2.0m gc2 | gc2.0m gc2b ;
 gc2.alt:
     //:    "..adj" TEXT : Adjective
     GC2_ADJ { printf("<type>adj</type>\n"); }
     //:  | "..adv" TEXT : Adverb
   | GC2_ADV { printf("<type>adv</type>\n"); }
-    //:  | "..an"  TEXT : 
+    //:  | "..an"  TEXT : Areal Noun 
   | GC2_AN  { printf("<type>an</type>\n"); }
-    //:  | "..c"   TEXT : 
+    //:  | "..c"   TEXT : Compounding form
   | GC2_C   { printf("<type>c</type>\n"); }
-    //:  | "..cnj" TEXT : 
+    //:  | "..cnj" TEXT : Conjunction
   | GC2_CNJ { printf("<type>cnj</type>\n"); }
-    //:  | "..dem" TEXT : 
+    //:  | "..dem" TEXT : demonstrative
   | GC2_DEM { printf("<type>dem</type>\n"); }
-    //:  | "..dir" TEXT : 
+    //:  | "..dir" TEXT : directional
   | GC2_DIR { printf("<type>dir</type>\n"); }
-    //:  | "..enc" TEXT : 
+    //:  | "..enc" TEXT : enclitic
   | GC2_ENC { printf("<type>enc</type>\n"); }
-    //:  | "..exc" TEXT : 
+    //:  | "..exc" TEXT : exclamation
   | GC2_EXC { printf("<type>exc</type>\n"); }
-    //:  | "..i"   TEXT : 
+    //:  | "..i"   TEXT : incorporate
   | GC2_I   { printf("<type>i</type>\n"); }
-    //:  | "..ic"  TEXT : 
+    //:  | "..ic"  TEXT : incorporate compound
   | GC2_IC  { printf("<type>ic</type>\n"); }
+    //:  | "..ic"  TEXT : instrumental noun
+  | GC2_IN  { printf("<type>in</type>\n"); }
+    //:  | "..ic"  TEXT : interrogative
+  | GC2_INT { printf("<type>int</type>\n"); }
     //:  | "..n"   TEXT : Noun
   | GC2_N   { printf("<type>n</type>\n"); }
-    //:  | "..nc"  TEXT : 
+    //:  | "..nc"  TEXT : noun, compound
   | GC2_NC  { printf("<type>nc</type>\n"); }
-    //:  | "..ni"  TEXT : 
+    //:  | "..ni"  TEXT : noun, incorporate
   | GC2_NI  { printf("<type>ni</type>\n"); }
-    //:  | "..pad" TEXT : 
-  | GC2_PAD { printf("<type>pad</type>\n"); }
-    //:  | "..pf"  TEXT : 
+    //:  | "..nic"  TEXT : noun, incorporate compund
+  | GC2_NIC  { printf("<type>nic</type>\n"); }
+    //:  | "..nenc"  TEXT : noun enclitic
+  | GC2_NENC  { printf("<type>nenc</type>\n"); }
+    //:  | "..padj" TEXT : predicate adjective
+  | GC2_PADJ { printf("<type>padj</type>\n"); }
+    //:  | "..pf"  TEXT : prefix
   | GC2_PF  { printf("<type>pf</type>\n"); }
-    //:  | "..pn"  TEXT : 
+    //:  | "..pn"  TEXT : place name
   | GC2_PN  { printf("<type>pn</type>\n"); }
-    //:  | "..psn" TEXT : 
+    //:  | "..psn" TEXT : personal name
   | GC2_PSN { printf("<type>psn</type>\n"); }
-    //:  | "..pp"  TEXT : 
+    //:  | "..pp"  TEXT : postposition
   | GC2_PP  { printf("<type>pp</type>\n"); }
-    //:  | "..prt" TEXT : 
-  | GC2_PRT { printf("<type>prt</type>\n"); }
-    //:  | "..ven" TEXT : 
+    //:  | "..pro" TEXT : Pronoun
+  | GC2_PRO { printf("<type>pro</type>\n"); }
+    //:  | "..scnj" TEXT : subordinating conjunction
+  | GC2_SCNJ { printf("<type>scnj</type>\n"); }
+    //:  | "..ven" TEXT : verb enclytic
   | GC2_VEN { printf("<type>ven</type>\n"); }
-    //:  | "..voc" TEXT : 
+    //:  | "..voc" TEXT : vocative
   | GC2_VOC { printf("<type>voc</type>\n"); } ;
 
 gc2:
@@ -451,6 +475,48 @@ sc.b: SC WORDS { printf("<sc>%s</sc>\n", $2); };
 lit.01: %empty | lit.b ;
 lit.b: LIT WORDS { printf("<lit>%s</lit>\n", $2); };
 
+//:<gc2b> =
+// Just ..ads
+gc2b:
+                                  { printf("<gc2>\n"); }
+  //:    "..ads" TEXT : aspectual derivational string
+  GC2_ADS                         { printf("<type>ads</type>\n"); }
+  WORDS                           { printf("<word>%s</word>\n", $4); }
+  //:    <attr2b>
+  attr2b
+  //:    <gc3>   (0-to-many)
+  gc3.0m
+                                  { printf("</gc2>\n"); }
+  ;
+
+//:<attr2b> =
+// level 2 and 3 attributes for ..ads and ..tfs and ...tfs
+attr2b:
+  //:    <dial>  (0-to-1)
+  dial.01
+  //:    <tc>    (0-to-1)
+  tc.01
+  //:    <asp>   (0-to-1)
+  asp.01
+  //:    <cnj>   (0-to-1)
+  cnj.01
+  //:    <gl>    (exactly-1)
+  gl
+  //:    <smf>   (0-to-1)
+  smf.01
+  //:    <sc>    (0-to-1)
+  sc.01
+  //:    <lit>   (0-to-1)
+  lit.01
+  //:    <ex>    (0-to-many)
+  exeng.0m
+  ;
+
+tc.01: %empty | tc.alt ;
+
+//:<asp> =\n  "asp" TEXT : Aspect
+asp.01: %empty | asp ;
+asp: ASP WORDS { printf("<asp>%s</asp>\n", $2); } ;
 
 // ---------- .rt third level ----------
 
@@ -461,6 +527,8 @@ gc3.alt:
     GC3_ADJ { printf("<type>adj</type>\n"); }
     //:  | "...adv" TEXT : Adverb
   | GC3_ADV { printf("<type>adv</type>\n"); }
+    //:  | "...ads" TEXT : 
+  | GC3_ADS { printf("<type>ads</type>\n"); }
     //:  | "...an"  TEXT : 
   | GC3_AN  { printf("<type>an</type>\n"); }
     //:  | "...c"   TEXT : 
@@ -513,7 +581,7 @@ gc3:
   ;
 
 // ---------- .af ----------
-// Grammar as of 22 Nov, meeting with Jim Kari and Jason Harris
+// Grammar as of early Jan 2010, meeting with Jim Kari and Jason Harris
 
 //:\n<af> = 
 //:  ".af" TEXT : Affix
@@ -565,11 +633,7 @@ afv2x:
     afv2a
 //:  | <afv2b>
   | afv2b
-//:  | <afv2c>
-  | afv2c
-//:  | <afv2d>
-  | afv2d
-  ; 
+  ;
 
 //:<afv2a> =
 afv2a.alt:
@@ -583,9 +647,15 @@ afv2a.alt:
   | AF2_VFAF                   { printf("<type>vfaf</type>\n"); }
     //:  | "..vfsf" TEXT : Verb formation suffix
   | AF2_VFSF                   { printf("<type>vfsf</type>\n"); }
+    //:  | "..vpf" TEXT :  Verb prefix
+  | AF2_VPF                   { printf("<type>vpf</type>\n"); }
+    //:    "..ads"  TEXT : Aspectual derivational string
+  | GC2_ADS                  { printf("<type>ads</type>\n"); } 
+    //: |  "..sds"  TEXT : Suffix derivational string
+  | AF2_SDS                   { printf("<type>sds</type>\n"); }
     ;
 afv2a:
-                         { printf("<af2>\n"); } 
+                          { printf("<af2>\n"); } 
   afv2a.alt  WORDS        { printf("<word>%s</word>\n", $3); }
   //:    <attr2>
   attr2
@@ -593,33 +663,13 @@ afv2a:
   prds.0m
   //:    <gc3> (0-to-many)
   gc3.0m
+  //:    <ifs> (0-to-many)
+  ifs.0m 
                          { printf("</af2>\n"); }
   ;
-
-//:<afv2b> =
-afv2b:
-                         { printf("<af2>\n"); }
-  //:    "..vpf"  TEXT : Verb prefix
-                         { printf("<type>vpf</type>\n"); } 
-  AF2_VPF  WORDS         { printf("<word>%s</word>\n", $4); }
-  //:    <attr2>
-  attr2
-  //:    <prds> (0-to-many)
-  prds.0m
-  //:    <afv2b3> (0-to-many)
-  afv2b3.0m
-                         { printf("</af2>\n"); }
-  ;
-
-//:<afv2b3> =
-afv2b3.0m: %empty | afv2b3.0m afv2b3 ;
-afv2b3:
-    //:    <gc3> (0-to-many)
-    gc3
-    //:  | <ifs> (0-to-many)
-  | ifs ;
 
 //:<ifs> =
+ifs.0m: %empty | ifs.0m ifs ;
 ifs:
                                   { printf("<gc3>\n"); }
   //:  "...ifs" TEXT : Inflectional string 
@@ -630,34 +680,15 @@ ifs:
                                   { printf("</gc3>\n"); }
   ;
 
-// Type 'c' ADS or SDS, which may have an ASP band
-//:<afv2c> =
-afv2c.alt:
-    //:    "..ads"  TEXT : Affix derivational string
-    AF2_ADS                  { printf("<type>ads</type>\n"); } 
-    //: |  "..sds"  TEXT : Suffix derivational string
-  | AF2_SDS                   { printf("<type>sds</type>\n"); }
-    ;
-afv2c:
-                          { printf("<af2>\n"); } 
-  afv2c.alt  WORDS        { printf("<word>%s</word>\n", $3); }
-  //:    <asp> (0-to-1)
-  asp.01
-  //:    <attr2>
-  attr2
-  //:    <gc3> (0-to-many)
-  gc3.0m
-                         { printf("</af2>\n"); }
-  ;
-
+/*
 //:<asp> =\n  "asp" TEXT : Aspect
 asp.01: %empty | asp ;
 asp: ASP WORDS { printf("<asp>%s</asp>\n", $2); } ;
+*/
 
-
-// Type 'd': TFS - has a ...th
-//:<afv2d> =
-afv2d:
+// Type 'b': TFS - has a ...th
+//:<afv2b> =
+afv2b:
                          { printf("<af2>\n"); }
   //:    "..tfs"  TEXT : Theme formation string
                          { printf("<type>tfs</type>\n"); } 

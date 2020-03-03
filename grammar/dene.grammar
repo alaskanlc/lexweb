@@ -5,11 +5,13 @@
     <attr1>
     <sets>  (0-to-1)
     <th>    (0-to-many)
-    <gc2>   (0-to-many)
+    <gc2>  (0-to-many)
+ |  <gc2b> (0-to-many)
 <attr1> =
     <pd>    (0-to-1)
     <tag>   (0-to-1)
     <rtyp>  (0-to-1)
+    <nav>   (0-to-1)
     <df>    (0-to-1)
 <pd> =
     "pd"    TEXT : Proto Dene
@@ -17,6 +19,8 @@
     "tag"   TEXT : Tag
 <rtyp> =
     "rtyp"  TEXT : Root word type, incl root class: rtu , rrt,  drt, ra
+<nav> =
+    "nav"  TEXT : Navajo usage
 <df> =
     "df"    TEXT : Derived forms
 <sets> =
@@ -63,9 +67,12 @@
   | "ono"        : Onomatopoetic
   | "op"         : Operative
   | "op-ono"     : Onomatopoetic operative
+  | "op-rep"     : ??
+  | "op-rev"     : ??
   | "pos"        : ??
   | "stat"       : Stative
-  | "succ"       : Successive
+  | "suc"        : Successive
+  | "u:"         : Uncategorized
 <cnj> =
     "cnj"   TEXT : Conjugation prefix
 <gl> =
@@ -86,7 +93,7 @@
 <eng> =
     "eng"   TEXT : English translation
 <prds>=
-    "...prds"    : Usage paradigm
+    "...prds" TEXT  : Usage paradigm, with column definition
     <prd>   (1-to-many)
 <prd> =
     "prd" <prdtype> TEXT : Paradigm example
@@ -106,26 +113,31 @@
 <gc2> =
     "..adj" TEXT : Adjective
   | "..adv" TEXT : Adverb
-  | "..an"  TEXT : 
-  | "..c"   TEXT : 
-  | "..cnj" TEXT : 
-  | "..dem" TEXT : 
-  | "..dir" TEXT : 
-  | "..enc" TEXT : 
-  | "..exc" TEXT : 
-  | "..i"   TEXT : 
-  | "..ic"  TEXT : 
+  | "..an"  TEXT : Areal Noun 
+  | "..c"   TEXT : Compounding form
+  | "..cnj" TEXT : Conjunction
+  | "..dem" TEXT : demonstrative
+  | "..dir" TEXT : directional
+  | "..enc" TEXT : enclitic
+  | "..exc" TEXT : exclamation
+  | "..i"   TEXT : incorporate
+  | "..ic"  TEXT : incorporate compound
+  | "..ic"  TEXT : instrumental noun
+  | "..ic"  TEXT : interrogative
   | "..n"   TEXT : Noun
-  | "..nc"  TEXT : 
-  | "..ni"  TEXT : 
-  | "..pad" TEXT : 
-  | "..pf"  TEXT : 
-  | "..pn"  TEXT : 
-  | "..psn" TEXT : 
-  | "..pp"  TEXT : 
-  | "..prt" TEXT : 
-  | "..ven" TEXT : 
-  | "..voc" TEXT : 
+  | "..nc"  TEXT : noun, compound
+  | "..ni"  TEXT : noun, incorporate
+  | "..nic"  TEXT : noun, incorporate compund
+  | "..nenc"  TEXT : noun enclitic
+  | "..padj" TEXT : predicate adjective
+  | "..pf"  TEXT : prefix
+  | "..pn"  TEXT : place name
+  | "..psn" TEXT : personal name
+  | "..pp"  TEXT : postposition
+  | "..pro" TEXT : Pronoun
+  | "..scnj" TEXT : subordinating conjunction
+  | "..ven" TEXT : verb enclytic
+  | "..voc" TEXT : vocative
     <attr2>
     <gc3>   (0-to-many)
 <attr2> =
@@ -148,9 +160,26 @@
     "sc"    TEXT : Scientific name
 <lit> =
     "lit"   TEXT : Literal translation
+<gc2b> =
+    "..ads" TEXT : aspectual derivational string
+    <attr2b>
+    <gc3>   (0-to-many)
+<attr2b> =
+    <dial>  (0-to-1)
+    <tc>   (0-to-1)
+    <asp>  (0-to-1)
+    <cnj>  (0-to-1)
+    <gl>    (exactly-1)
+    <smf>   (0-to-1)
+    <sc>    (0-to-1)
+    <lit>   (0-to-1)
+    <ex>    (0-to-many)
+<asp> =
+  "asp" TEXT : Aspect
 <gc3> =
     "...adj" TEXT : Adjective
   | "...adv" TEXT : Adverb
+  | "...ads" TEXT : 
   | "...an"  TEXT : 
   | "...c"   TEXT : 
   | "...cnj" TEXT : 
@@ -191,37 +220,25 @@
 <afv2> =
     <afv2a>
   | <afv2b>
-  | <afv2c>
-  | <afv2d>
 <afv2a> =
     "..vsf1" TEXT : Verb suffix 1
   | "..vsf"  TEXT : Verb suffix
   | "..nds"  TEXT : Non-derivational suffix
   | "..vfaf" TEXT : Verb formation affix
   | "..vfsf" TEXT : Verb formation suffix
+  | "..vpf" TEXT :  Verb prefix
+    "..ads"  TEXT : Aspectual derivational string
+ |  "..sds"  TEXT : Suffix derivational string
     <attr2>
     <prds> (0-to-many)
     <gc3> (0-to-many)
-<afv2b> =
-    "..vpf"  TEXT : Verb prefix
-    <attr2>
-    <prds> (0-to-many)
-    <afv2b3> (0-to-many)
-<afv2b3> =
-    <gc3> (0-to-many)
-  | <ifs> (0-to-many)
+    <ifs> (0-to-many)
 <ifs> =
   "...ifs" TEXT : Inflectional string 
     <attr2>
-<afv2c> =
-    "..ads"  TEXT : Affix derivational string
- |  "..sds"  TEXT : Suffix derivational string
-    <asp> (0-to-1)
-    <attr2>
-    <gc3> (0-to-many)
 <asp> =
   "asp" TEXT : Aspect
-<afv2d> =
+<afv2b> =
     "..tfs"  TEXT : Theme formation string
     <attr2>
     <th2> (0-to-many)
