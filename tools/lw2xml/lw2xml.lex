@@ -119,6 +119,7 @@
 ^\.\.an\ +     { BEGIN(TEXT) ; return GC2_AN  ;}
 ^\.\.c\ +      { BEGIN(TEXT) ; return GC2_C   ;}
 ^\.\.cnj\ +    { BEGIN(TEXT) ; return GC2_CNJ ;}
+^\.\.coll\ +    { BEGIN(TEXT) ; return GC2_COLL ;}
 ^\.\.dem\ +    { BEGIN(TEXT) ; return GC2_DEM ;}
 ^\.\.dir\ +    { BEGIN(TEXT) ; return GC2_DIR ;}
 ^\.\.enc\ +    { BEGIN(TEXT) ; return GC2_ENC ;}
@@ -161,22 +162,27 @@
 ^\.\.\.an\ +     { BEGIN(TEXT) ; return GC3_AN  ;}
 ^\.\.\.c\ +      { BEGIN(TEXT) ; return GC3_C   ;}
 ^\.\.\.cnj\ +    { BEGIN(TEXT) ; return GC3_CNJ ;}
-^\.\.\.coll\ +   { BEGIN(TEXT) ; return GC3_COLL ;}
 ^\.\.\.dem\ +    { BEGIN(TEXT) ; return GC3_DEM ;}
 ^\.\.\.dir\ +    { BEGIN(TEXT) ; return GC3_DIR ;}
+^\.\.\.drt\ +    { BEGIN(TEXT) ; return GC3_DRT ;}
 ^\.\.\.enc\ +    { BEGIN(TEXT) ; return GC3_ENC ;}
 ^\.\.\.exc\ +    { BEGIN(TEXT) ; return GC3_EXC ;}
 ^\.\.\.i\ +      { BEGIN(TEXT) ; return GC3_I   ;}
 ^\.\.\.ic\ +     { BEGIN(TEXT) ; return GC3_IC  ;}
+^\.\.\.in\ +     { BEGIN(TEXT) ; return GC3_IN  ;}
+^\.\.\.int\ +    { BEGIN(TEXT) ; return GC3_INT ;}
 ^\.\.\.n\ +      { BEGIN(TEXT) ; return GC3_N   ;}
 ^\.\.\.nc\ +     { BEGIN(TEXT) ; return GC3_NC  ;}
 ^\.\.\.ni\ +     { BEGIN(TEXT) ; return GC3_NI  ;}
-^\.\.\.pad\ +    { BEGIN(TEXT) ; return GC3_PAD ;}
+^\.\.\.nic\ +     { BEGIN(TEXT) ; return GC3_NIC  ;}
+^\.\.\.nenc\ +     { BEGIN(TEXT) ; return GC3_NENC  ;}
+^\.\.\.padj\ +   { BEGIN(TEXT) ; return GC3_PADJ;}
 ^\.\.\.pf\ +     { BEGIN(TEXT) ; return GC3_PF  ;}
 ^\.\.\.pn\ +     { BEGIN(TEXT) ; return GC3_PN  ;}
 ^\.\.\.psn\ +    { BEGIN(TEXT) ; return GC3_PSN ;}
 ^\.\.\.pp\ +     { BEGIN(TEXT) ; return GC3_PP  ;}
-^\.\.\.prt\ +    { BEGIN(TEXT) ; return GC3_PRT ;}
+^\.\.\.pro\ +    { BEGIN(TEXT) ; return GC3_PRO ;}
+^\.\.\.scnj\ +   { BEGIN(TEXT) ; return GC3_SCNJ ;}
 ^\.\.\.ven\ +    { BEGIN(TEXT) ; return GC3_VEN ;}
 ^\.\.\.voc\ +    { BEGIN(TEXT) ; return GC3_VOC ;}
 

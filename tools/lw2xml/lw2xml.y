@@ -52,14 +52,14 @@ void main()
 %token   GC2_ADJ GC2_ADV GC2_ADS GC2_AN  GC2_C   GC2_CNJ GC2_DEM GC2_DIR GC2_ENC
 %token     GC2_EXC GC2_I   GC2_IC GC2_IN GC2_INT GC2_N   GC2_NC  GC2_NI
 %token     GC2_NIC GC2_NENC GC2_PADJ GC2_PF GC2_SCNJ
-%token     GC2_PN  GC2_PSN GC2_PP  GC2_PRO GC2_VEN GC2_VOC
+%token     GC2_PN  GC2_PSN GC2_PP  GC2_PRO GC2_VEN GC2_VOC GC2_COLL
 %token   DIAL DIALX
 %token   <str> DIALXLANG
 %token   SMF SC LIT
 %token   GC3_ADJ GC3_ADV GC3_ADS GC3_AN  GC3_C   GC3_CNJ GC3_DEM GC3_DIR GC3_ENC
-%token   GC3_EXC GC3_I   GC3_IC  GC3_N   GC3_NC  GC3_NI  GC3_PAD GC3_PF
-%token   GC3_PN  GC3_PSN GC3_PP  GC3_PRT GC3_VEN GC3_VOC GC3_COLL
-
+%token     GC3_EXC GC3_I   GC3_IC GC3_IN GC3_INT GC3_N   GC3_NC  GC3_NI GC3_DRT
+%token     GC3_NIC GC3_NENC GC3_PADJ GC3_PF GC3_SCNJ
+%token     GC3_PN  GC3_PSN GC3_PP  GC3_PRO GC3_VEN GC3_VOC GC3_COLL
 %token AF
 %token   AF2_NSF AF2_SF AF2_VPF AF2_VSF AF2_VSF1 AF2_TFS AF2_NDS
 %token   AF2_SDS AF2_NFSF AF2_VFSF AF2_NFAF AF2_VFAF
@@ -101,7 +101,7 @@ rt: RT                  { printf("<rt>\n"); }
     th.0m
     // TODO: add ..grp here
     //:    <gc2>  (0-to-many)
-    //: |  <gc2b> (0-to-many)
+    //:  | <gc2b> (0-to-many)
     gc2.0m
                         { printf("</rt>\n"); } ;
 
@@ -365,6 +365,8 @@ gc2.alt:
   | GC2_C   { printf("<type>c</type>\n"); }
     //:  | "..cnj" TEXT : Conjunction
   | GC2_CNJ { printf("<type>cnj</type>\n"); }
+    //:  | "..coll" TEXT : Collocation
+  | GC2_COLL { printf("<type>coll</type>\n"); }
     //:  | "..dem" TEXT : demonstrative
   | GC2_DEM { printf("<type>dem</type>\n"); }
     //:  | "..dir" TEXT : directional
@@ -377,9 +379,9 @@ gc2.alt:
   | GC2_I   { printf("<type>i</type>\n"); }
     //:  | "..ic"  TEXT : incorporate compound
   | GC2_IC  { printf("<type>ic</type>\n"); }
-    //:  | "..ic"  TEXT : instrumental noun
+    //:  | "..in"  TEXT : instrumental noun
   | GC2_IN  { printf("<type>in</type>\n"); }
-    //:  | "..ic"  TEXT : interrogative
+    //:  | "..int"  TEXT : interrogative
   | GC2_INT { printf("<type>int</type>\n"); }
     //:  | "..n"   TEXT : Noun
   | GC2_N   { printf("<type>n</type>\n"); }
@@ -417,6 +419,7 @@ gc2:
   //:    <attr2>
   attr2
   //:    <gc3>   (0-to-many)
+  //:  | <gc3b> (0-to-many)
   gc3.0m
                                   { printf("</gc2>\n"); }
   ;
@@ -485,12 +488,13 @@ gc2b:
   //:    <attr2b>
   attr2b
   //:    <gc3>   (0-to-many)
+  //:  | <gc3b> (0-to-many)
   gc3.0m
                                   { printf("</gc2>\n"); }
   ;
 
 //:<attr2b> =
-// level 2 and 3 attributes for ..ads and ..tfs and ...tfs
+// level 2 and 3 attributes for ..ads and ..tfs and ...ads
 attr2b:
   //:    <dial>  (0-to-1)
   dial.01
@@ -512,7 +516,7 @@ attr2b:
   exeng.0m
   ;
 
-tc.01: %empty | tc.alt ;
+tc.01: %empty | TC tc.alt ;
 
 //:<asp> =\n  "asp" TEXT : Aspect
 asp.01: %empty | asp ;
@@ -521,55 +525,67 @@ asp: ASP WORDS { printf("<asp>%s</asp>\n", $2); } ;
 // ---------- .rt third level ----------
 
 //:<gc3> =
-gc3.0m: %empty | gc3.0m gc3 ;
+// Have to add a fork here to accomodate ..ads
+gc3.0m: %empty | gc3.0m gc3 | gc3.0m gc3b ;
+
 gc3.alt:
     //:    "...adj" TEXT : Adjective
     GC3_ADJ { printf("<type>adj</type>\n"); }
     //:  | "...adv" TEXT : Adverb
   | GC3_ADV { printf("<type>adv</type>\n"); }
-    //:  | "...ads" TEXT : 
-  | GC3_ADS { printf("<type>ads</type>\n"); }
-    //:  | "...an"  TEXT : 
+    //:  | "...an"  TEXT : Areal Noun 
   | GC3_AN  { printf("<type>an</type>\n"); }
-    //:  | "...c"   TEXT : 
+    //:  | "...c"   TEXT : Compounding form
   | GC3_C   { printf("<type>c</type>\n"); }
-    //:  | "...cnj" TEXT : 
+    //:  | "...cnj" TEXT : Conjunction
   | GC3_CNJ { printf("<type>cnj</type>\n"); }
-    //:  | "...coll" TEXT : 
+    //:  | "...coll" TEXT : Collocation
   | GC3_COLL { printf("<type>coll</type>\n"); }
-    //:  | "...dem" TEXT : 
+    //:  | "...dem" TEXT : demonstrative
   | GC3_DEM { printf("<type>dem</type>\n"); }
-    //:  | "...dir" TEXT : 
+    //:  | "...dir" TEXT : directional
   | GC3_DIR { printf("<type>dir</type>\n"); }
-    //:  | "...enc" TEXT : 
+    //:  | "...drt" TEXT : derived root
+  | GC3_DRT { printf("<type>drt</type>\n"); }
+    //:  | "...enc" TEXT : enclitic
   | GC3_ENC { printf("<type>enc</type>\n"); }
-    //:  | "...exc" TEXT : 
+    //:  | "...exc" TEXT : exclamation
   | GC3_EXC { printf("<type>exc</type>\n"); }
-    //:  | "...i"   TEXT : 
+    //:  | "...i"   TEXT : incorporate
   | GC3_I   { printf("<type>i</type>\n"); }
-    //:  | "...ic"  TEXT : 
+    //:  | "...ic"  TEXT : incorporate compound
   | GC3_IC  { printf("<type>ic</type>\n"); }
+    //:  | "...in"  TEXT : instrumental noun
+  | GC3_IN  { printf("<type>in</type>\n"); }
+    //:  | "...int"  TEXT : interrogative
+  | GC3_INT { printf("<type>int</type>\n"); }
     //:  | "...n"   TEXT : Noun
   | GC3_N   { printf("<type>n</type>\n"); }
-    //:  | "...nc"  TEXT : 
+    //:  | "...nc"  TEXT : noun, compound
   | GC3_NC  { printf("<type>nc</type>\n"); }
-    //:  | "...ni"  TEXT : 
+    //:  | "...ni"  TEXT : noun, incorporate
   | GC3_NI  { printf("<type>ni</type>\n"); }
-    //:  | "...pad" TEXT : 
-  | GC3_PAD { printf("<type>pad</type>\n"); }
-    //:  | "...pf"  TEXT : 
+    //:  | "...nic"  TEXT : noun, incorporate compund
+  | GC3_NIC  { printf("<type>nic</type>\n"); }
+    //:  | "...nenc"  TEXT : noun enclitic
+  | GC3_NENC  { printf("<type>nenc</type>\n"); }
+    //:  | "...padj" TEXT : predicate adjective
+  | GC3_PADJ { printf("<type>padj</type>\n"); }
+    //:  | "...pf"  TEXT : prefix
   | GC3_PF  { printf("<type>pf</type>\n"); }
-    //:  | "...pn"  TEXT : 
+    //:  | "...pn"  TEXT : place name
   | GC3_PN  { printf("<type>pn</type>\n"); }
-    //:  | "...psn" TEXT : 
+    //:  | "...psn" TEXT : personal name
   | GC3_PSN { printf("<type>psn</type>\n"); }
-    //:  | "...pp"  TEXT : 
+    //:  | "...pp"  TEXT : postposition
   | GC3_PP  { printf("<type>pp</type>\n"); }
-    //:  | "...prt" TEXT : 
-  | GC3_PRT { printf("<type>prt</type>\n"); }
-    //:  | "...ven" TEXT : 
+    //:  | "...pro" TEXT : Pronoun
+  | GC3_PRO { printf("<type>pro</type>\n"); }
+    //:  | "...scnj" TEXT : subordinating conjunction
+  | GC3_SCNJ { printf("<type>scnj</type>\n"); }
+    //:  | "...ven" TEXT : verb enclytic
   | GC3_VEN { printf("<type>ven</type>\n"); }
-    //:  | "...voc" TEXT : 
+    //:  | "...voc" TEXT : vocative
   | GC3_VOC { printf("<type>voc</type>\n"); } ;
 gc3:
                                   { printf("<gc3>\n"); }
@@ -577,6 +593,18 @@ gc3:
   WORDS                           { printf("<word>%s</word>\n", $3); }
   //:    <attr2>
   attr2
+                                  { printf("</gc3>\n"); }
+  ;
+
+//:<gc3b> =
+// Just ...ads
+gc3b:
+                                  { printf("<gc3>\n"); }
+  //:    "...ads" TEXT : aspectual derivational string
+  GC3_ADS                         { printf("<type>ads</type>\n"); }
+  WORDS                           { printf("<word>%s</word>\n", $4); }
+  //:    <attr2b>
+  attr2b
                                   { printf("</gc3>\n"); }
   ;
 
@@ -686,6 +714,8 @@ asp.01: %empty | asp ;
 asp: ASP WORDS { printf("<asp>%s</asp>\n", $2); } ;
 */
 
+// TO HERE!!! should ..ads be in afv2b?
+
 // Type 'b': TFS - has a ...th
 //:<afv2b> =
 afv2b:
@@ -693,8 +723,8 @@ afv2b:
   //:    "..tfs"  TEXT : Theme formation string
                          { printf("<type>tfs</type>\n"); } 
   AF2_TFS  WORDS         { printf("<word>%s</word>\n", $4); }
-  //:    <attr2>
-  attr2
+  //:    <attr2b>
+  attr2b
   //:    <th2> (0-to-many)
   th3.0m
   //:    <gc3> (0-to-many)
@@ -711,10 +741,13 @@ th3:                     { printf("<th3>\n");    }
   TH3 WORDS              { printf("<word>%s</word>\n", $3); }
   //:  <tc> (exactly-1)
   TC tc.alt
-  //:  <gl> (exactly-1)
+  //:    <cnj>   (0-to-1)
+  cnj.01
+  //:    <gl>    (exactly-1)
   gl
-  //:  <ex> (0-to-many)
+  //:    <ex>    (0-to-many)
   exeng.0m
+  //:    <prds>  (0-to-many)
                           { printf("</th3>\n"); }
   ;
 
