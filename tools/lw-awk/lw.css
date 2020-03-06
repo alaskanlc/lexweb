@@ -1,6 +1,5 @@
 .main { margin: 50px ;
-        font-family: "Times New Roman", Times, serif;
-      }
+        font-family: "Times New Roman", Times, serif; }
 
 .rt { margin: 30px ; }
 
@@ -14,9 +13,13 @@
 
 .gc2  { margin-left: 40px; margin-bottom: 10px;}
 
-.gc2word, .gc2type  { display: inline; }
+.gc2word, .gc2type, .gc2_gl , .ex, .eng { display: inline; }
 
-.gc2type  { font-style: italic; }
+.gc2type , .ex { font-style: italic; }
+
+.attr2 { margin-bottom: 10px; }
+
+.exeng { margin-left: 20px; margin-bottom: 5px;}
 
 
 

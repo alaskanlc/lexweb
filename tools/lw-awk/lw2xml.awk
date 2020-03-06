@@ -3,154 +3,179 @@ BEGIN{
   VALIDATE = 1
 
   PROCINFO["sorted_in"] = "@ind_str_asc"
-  # alternatives
-  rA  = ".rt .af .ra .lw"
-  gc2A = "..n ..adj ..adv"
 
-  # # create new contexts, needed for variation in 
-  ncA = "..sets ..th ex ...prds " rA " " gc2A  
+  bl2bc()
+  abbrevs()
   
-  # # Obligatory division starts = previous division must end
-  # ds[".rt"] = 1
-  # ds["..sets"] = 1
-  # ds["..th"] = 1
-  # ds["+gc2"] = 1
-  # ds["ex"] = 1  #? no
-
+  # # # create new contexts, needed for variation in 
+  # ncA = "..sets ..th ex ...prds " rA " " gc2A  
+  
   # Allowable following bands
-  # [band]
-  #                 ?   ?   ?    ?  ?    ?    <+   *     *       *
-  fol["0"     ] = "                                   "          rA
-  fol[".rt"   ] = "pd tag rtyp nav df ..sets     ..th " gc2A " " rA
-  fol["pd"    ] = "   tag rtyp nav df ..sets     ..th " gc2A " " rA
-  fol["tag"   ] = "       rtyp nav df ..sets     ..th " gc2A " " rA
-  fol["rtyp"  ] = "            nav df ..sets     ..th " gc2A " " rA
-  fol["nav"   ] = "                df ..sets     ..th " gc2A " " rA
-  fol["df"    ] = "                   ..sets     ..th " gc2A " " rA
-  fol["..sets"] = "                          set      "
-  fol["set"   ] = "                          set ..th " gc2A " " rA
+  # [parent band class in which the new class exists][prior band class]
+  rA  = "rt af ra lw"    # alternatives, as a shortcut
+  
+  #                       ?   ?   ?    ?  ?    ?  <+  *  *     *
+  fol["doc"  ]["0"   ] = "rt                                 "
+  fol["attr1"]["rt"  ] = "pd tag rtyp nav df sets     th gc2 " rA
+  fol["attr1"]["pd"  ] = "   tag rtyp nav df sets     th gc2 " rA
+  fol["attr1"]["tag" ] = "       rtyp nav df sets     th gc2 " rA
+  fol["attr1"]["rtyp"] = "            nav df sets     th gc2 " rA
+  fol["attr1"]["nav" ] = "                df sets     th gc2 " rA
+  fol["attr1"]["df"  ] = "                   sets     th gc2 " rA
+  fol["sets" ]["sets"] = "                        set      "
+  fol["sets" ]["set" ] = "                        set th gc2 " rA
 
-  #                 1   ?  1  *  <1    ?     +   <1
-  fol["..th"  ] = "tc                                 "
-  fol["tc"    ] = "   cnj gl                          "
-  fol["cnj"   ] = "       gl                          "
-  fol["gl^..th"]= "          ex     ...prds           " gc2A " " rA
-  fol["ex"    ] = "             eng                   "
-  fol["eng"   ] = "          ex     ...prds           " gc2A " " rA
-  fol["...prds"]= "                         prd       "
-  fol["prd"   ] = "                         prd prdgl " gc2A " " rA
-  fol["prdgl" ] = "                         prd       " gc2A " " rA
+  #                        1  ?  1  *  <1   ?    +   <1   *     *
+  fol["th"  ]["th"   ] = "tc                                  "
+  fol["th"  ]["tc"   ] = "   cnj gl                           "
+  fol["th"  ]["cnj"  ] = "       gl                           "
+  fol["th"  ]["gl"   ] = "          ex     prds           gc2 " rA
+  fol["ex"  ]["ex"   ] = "             eng                    "
+  fol["ex"  ]["eng"  ] = "          ex     prds           gc2 " rA
+  fol["prds"]["prds" ] = "                      prd           "
+  fol["prds"]["prd"  ] = "                      prd prdgl gc2 " rA
+  fol["prd" ]["prdgl"] = "                      prd       gc2 " rA
 
-  #                           ?    1
-  fol["+gc2"  ] = " dial gl                           "
-  fol["dial"  ] = "      gl                           "
-  fol["gl^gc2"] = "                                   " gc2A " " rA
+  #                        ?   1   *    *
+  fol["attr2" ]["gc2"  ] = "dial gl            "
+  fol["attr2" ]["dial" ] = "     gl            "
+  fol["attr2" ]["gl"   ] = "        ex     gc2 " rA
+  fol["ex"    ]["ex"   ] = "           eng gc2 " rA
 
-  # expand alternatives
-  split(rA, r) ; split(gc2A, gc2)
-  for (i in fol)
-    if (i ~ /\+gc2/)
-      for (k in gc2)
-        fol[gc2[k]] = fol[i]
-
-  # new contexts
-  split(ncA, z)
-  for (i in z)
-    nc[z[i]] = 1
+  # # new contexts
+  # split(ncA, z)
+  # for (i in z)
+  #   nc[z[i]] = 1
 
   # make array
-  for (i in fol) {
-    gsub(/^ +/,"",fol[i])
-    gsub(/ +$/,"",fol[i])
-    split(fol[i], z, / +/)
-    for (k in z)
-      f[i][z[k]] = 1
-  }
-
   for (i in fol)
-    print i ": " gensub(/ +/," ","G",fol[i])
-  exit
+    for (j in fol[i]) {
+      gsub(/^ +/,"",fol[i][j])
+      gsub(/ +$/,"",fol[i][i])
+      split(fol[i][j], z, / +/)
+      for (k in z)
+        f[i][j][z[k]] = 1
+    }
+  # for (i in f)
+  #   for (j in f[i])
+  #     for (k in f[i][j])
+  #       print i, j, k
 
-  # Starting context and prior
-  context = "doc"
-  prior = "0"
+  
+  # for (i in fol)
+  #   print i ": " gensub(/ +/," ","G",fol[i])
+  # exit
+
+  # Starting Context and Priorbc
+  Path = "doc"
+  # Context = "doc"
+  Priorbc = "0"
   head("Dictionary")
 }
 
 ($0) && $0 !~ /^[ #]/  {
 
-  print $0
-  bl = word1($0)
-  # new context?
-  if (nc[bl])
-    context = bl    
-  
-  # validate
-  if (VALIDATE) {
-    # print "                           " context " <" prior " " bl
-    if (!f[prior][bl])
-      printf "%5d: '%s' cannot follow '%s'\n", NR, bl, prior > "/dev/stderr"
-  }
+  # print Path
+  # print $0
+  Bl = word1($0)
+  Bc = Bl2bc[Bl]
+  # print Bc
+  if (VALIDATE)
+    validate()
   
   # convert
-
-  if (bl == ".rt") {
+  if (Bc == "rt") {
+    cdiv("doc")
     divo("rt")
     divo("attr1")
     divoc("rootword", rest1($0))
     # the Path at the end of the operations:
-    Path = "doc/.rt/attr1"
+    Path = "doc/rt/attr1"
   }
-  else if (bl == "pd") {
+  else if (Bc == "pd") {
     divoc("pd", ("/" rest1($0) "/"))
-    Path = "doc/.rt/attr1"
+    Path = "doc/rt/attr1"
   }
-  else if (bl == "tag") {
+  else if (Bc == "tag") {
     divoc("tag", rest1($0))
-    Path = "doc/.rt/attr1"
+    Path = "doc/rt/attr1"
   }
-  else if (bl == "rtyp") {
+  else if (Bc == "rtyp") {
     divoc("rtyp", rest1($0))
-    Path = "doc/.rt/attr1"
+    Path = "doc/rt/attr1"
   }
-  else if (bl == "nav") {
+  else if (Bc == "nav") {
     divoc("nav", rest1($0))
-    Path = "doc/.rt/attr1"
+    Path = "doc/rt/attr1"
   }
-  else if (bl == "df") {
+  else if (Bc == "df") {
     divoc("df", rest1($0))
-    Path = "doc/.rt/attr1"
+    Path = "doc/rt/attr1"
   }
-  else if (bl == "..sets") {
-    closediv("doc/.rt")
+  else if (Bc == "sets") {
+    cdiv("doc/rt")
     divo("sets")
-    Path = "doc/.rt/sets"
+    Path = "doc/rt/sets"
   }
-  else if (bl == "set") {
+  else if (Bc == "set") {
     divoc("set", rest1($0))
-    Path = "doc/.rt/sets"
+    Path = "doc/rt/sets"
   }
-  else if (bl == "..n") {
-    closediv("doc/.rt")
+  else if (Bc == "th") {
+    cdiv("doc/rt")
+    divo("th")
+    divoc("theme", rest1($0))
+    Path = "doc/rt/th"
+  }
+  else if (Bc == "tc") {
+    divoc("tc", rest1($0))
+    Path = "doc/rt/th"
+  }
+  else if (Bc == "cnj") {
+    divoc("cnj", rest1($0))
+    Path = "doc/rt/th"
+  }
+  else if ((Bc == "gl") && (Path == "doc/rt/th")) {
+    divoc("th_gl", rest1($0))
+    Path = "doc/rt/th"
+  }
+  else if (Bc == "gc2") {
+    cdiv("doc/rt")
     divo("gc2")
+    divo("attr2")
     divoc("gc2word", rest1($0))
-    divoc("gc2type", "(n.)")
-    Path = "doc/.rt/gc2"
+    divoc("gc2type", "(" Abbrev[Bl] ")")
+    Path = "doc/rt/gc2/attr2"
+  }
+  else if ((Bc == "gl") && (Path == "doc/rt/gc2")) {
+    divoc("gc2_gl", rest1($0))
+    Path = "doc/rt/gc2"
+  }
+  else if (Bc == "ex") {
+    cdiv("doc/rt/gc2")
+    divo("exeng")
+    divoc("ex", rest1($0))
+    print ": "
+    Path = "doc/rt/gc2/ex"
+  }
+  else if (Bc == "eng") {
+    divoc("eng", rest1($0))
+    Path = "doc/rt/gc2/ex"
   }
 
   
   # could use switch(), but emacs AWK-mode does not indent correctly
-  # if (bl == ".rt") {
+  # if (bl == "rt") {
   # }
   # else if (bl == "tag") {
   # }
   
-  prior = bl
+  Priorbc = Bc
 }
 
 
 END{
-  closediv("doc")
+  cdiv("doc")
   foot()
 }
 
@@ -165,7 +190,7 @@ function divoc (class, text) {
   print "<div class=\"" class "\">" text "</div>"
 }
 
-function closediv(p,     oldlevel, newlevel, z, i) {
+function cdiv(p,     oldlevel, newlevel, z, i) {
   oldlevel = split(Path, z, "/")
   newlevel = split(p, z, "/")
   for (i = 1; i <= (oldlevel - newlevel); i++)
@@ -225,4 +250,36 @@ function head(title) {
 function foot()
 {
   print "</div>\n</body>\n</html>";
+}
+
+function bl2bc(     load, x, y, i) {
+  load = ".rt rt; .af af; .ra ra; .lw lw; tag tag; rtyp rtyp; nav nav; " \
+    "df df; ..sets sets; set set; ..th th; tc tc; cnj cnj; gl gl; "\
+    "ex ex; eng eng; ...prds prds; prd prd; prdgl prdgl; "         \
+    "..n gc2; ..adj gc2; ..adv gc2"
+  split(load, x, ";")
+  for (i in x) {
+    gsub(/^ +/,"",x[i])
+    split(x[i], y)
+    Bl2bc[y[1]] = y[2]
+  }
+}
+
+function abbrevs(     load, x, y, i) {
+  load = "..n n.; ..adj adj.; ..adv adv."
+  split(load, x, ";")
+  for (i in x) {
+    gsub(/^ +/,"",x[i])
+    split(x[i], y)
+    Abbrev[y[1]] = y[2]
+  }
+}
+
+
+function validate(   z, n) {
+  n = split(Path, z, "/")
+  # print "                           " z[n] " <" Priorbc " " Bc
+
+  if (!f[z[n]][Priorbc][Bc])
+    printf "%5d: '%s' cannot follow '%s'\n", NR, Bc, Priorbc > "/dev/stderr"
 }
