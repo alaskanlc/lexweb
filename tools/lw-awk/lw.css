@@ -1,0 +1,22 @@
+.main { margin: 50px ;
+        font-family: "Times New Roman", Times, serif;
+      }
+
+.rt { margin: 30px ; }
+
+.attr1 { margin-bottom: 10px; }
+
+.rootword, .pd, .tag, .rtyp, .nav, .df   { display: inline ; }
+
+.rootword, .gc2word { font-weight: bold; }
+
+.sets { margin-left: 20px; margin-bottom: 10px;}
+
+.gc2  { margin-left: 40px; margin-bottom: 10px;}
+
+.gc2word, .gc2type  { display: inline; }
+
+.gc2type  { font-style: italic; }
+
+
+

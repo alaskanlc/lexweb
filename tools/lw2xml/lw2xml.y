@@ -315,10 +315,10 @@ prd.1m: prd | prd.1m prd ;
   //:    "prd" <prdtype> TEXT : Paradigm example
 prd:
   PRD                          { printf("<paradigm>\n"); }
-  prdtype.alt
+  prdtype.alt  
   WORDS                        { printf("<dene>%s</dene>\n", $4); }
-  //:    <prdgl> (exactly-1)
-  prdgl.b
+  //:    <prdgl> (0-to-1)
+  prdgl.01
   { printf("</paradigm>\n"); }
 ;
 
@@ -345,7 +345,7 @@ prdtype.alt:
   ;
 
 //:<prdgl> =\n    "prdgl" TEXT : Paradigm gloss
-prdgl.b:
+prdgl.01: %empty |
   PRDGL WORDS { printf("<gloss>%s</gloss>\n", $2); };
 
 
@@ -661,6 +661,8 @@ afv2x:
     afv2a
 //:  | <afv2b>
   | afv2b
+//:  | <afv2c>
+  | afv2c
   ;
 
 //:<afv2a> =
@@ -677,8 +679,6 @@ afv2a.alt:
   | AF2_VFSF                   { printf("<type>vfsf</type>\n"); }
     //:  | "..vpf" TEXT :  Verb prefix
   | AF2_VPF                   { printf("<type>vpf</type>\n"); }
-    //:    "..ads"  TEXT : Aspectual derivational string
-  | GC2_ADS                  { printf("<type>ads</type>\n"); } 
     //: |  "..sds"  TEXT : Suffix derivational string
   | AF2_SDS                   { printf("<type>sds</type>\n"); }
     ;
@@ -708,22 +708,30 @@ ifs:
                                   { printf("</gc3>\n"); }
   ;
 
-/*
-//:<asp> =\n  "asp" TEXT : Aspect
-asp.01: %empty | asp ;
-asp: ASP WORDS { printf("<asp>%s</asp>\n", $2); } ;
-*/
-
-// TO HERE!!! should ..ads be in afv2b?
-
-// Type 'b': TFS - has a ...th
+// Type 'b': ADS
 //:<afv2b> =
 afv2b:
+                         { printf("<af2>\n"); }
+  //:    "..ads"  TEXT : Aspectual derivational string
+                         { printf("<type>ads</type>\n"); } 
+  GC2_ADS  WORDS         { printf("<word>%s</word>\n", $4); }
+  //:    <attr2c>
+  attr2b
+  //:    <prds> (0-to-many)
+  prds.0m
+  //:    <gc3> (0-to-many)
+  gc3.0m
+                         { printf("</af2>\n"); }
+  ;
+
+// Type 'c': TFS - has a ...th
+//:<afv2c> =
+afv2c:
                          { printf("<af2>\n"); }
   //:    "..tfs"  TEXT : Theme formation string
                          { printf("<type>tfs</type>\n"); } 
   AF2_TFS  WORDS         { printf("<word>%s</word>\n", $4); }
-  //:    <attr2b>
+  //:    <attr2c>
   attr2b
   //:    <th2> (0-to-many)
   th3.0m
