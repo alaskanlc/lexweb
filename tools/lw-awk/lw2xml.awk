@@ -283,3 +283,24 @@ function validate(   z, n) {
   if (!f[z[n]][Priorbc][Bc])
     printf "%5d: '%s' cannot follow '%s'\n", NR, Bc, Priorbc > "/dev/stderr"
 }
+
+
+# path
+
+function path() {
+
+  structure = "\
+    doc
+    doc/rt
+    doc/rt/tag
+    doc/rt/pd
+    doc/rt/sets
+    doc/rt/sets/set
+    doc/rt/th
+    doc/rt/th/gl
+    doc/rt/th/prds
+    doc/rt/th/prds/prd
+    
+
+
+}
