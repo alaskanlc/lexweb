@@ -1,27 +1,54 @@
+
+# Variable naming convention: Global variables begin with a Capital letter,
+#   local variables with a lowercase letter
+
+# Document structure (xml schema choices made to reflect blocking choice in
+#   html document)
+# 
+#   doc
+#   doc/rt
+#   doc/rt/{tag pd nav...}
+#   doc/rt/sets
+#   doc/rt/sets/set
+#   doc/rt/th
+#   doc/rt/th/{tc cnj gl}
+#   doc/rt/th/ex
+#   doc/rt/th/ex/eng
+#   doc/rt/th/prds
+#   doc/rt/th/prds/prd
+#   doc/rt/th/prds/prd/prdgl
+
 BEGIN{
 
   VALIDATE = 1
+  DEBUG = 0
 
   PROCINFO["sorted_in"] = "@ind_str_asc"
 
+  # Load the band label to band class array
   bl2bc()
+  # Load the abbreviation codes for grammatical categories
   abbrevs()
   
   # # # create new contexts, needed for variation in 
   # ncA = "..sets ..th ex ...prds " rA " " gc2A  
   
-  # Allowable following bands
-  # [parent band class in which the new class exists][prior band class]
-  rA  = "rt af ra lw"    # alternatives, as a shortcut
-  
-  #                       ?   ?   ?    ?  ?    ?  <+  *  *     *
+  rA  = "rt af ra lw"    # root alternatives
+
+  # ** Load the syntax **
+  # fol[A][B] are bands allowed to follow band B, in the context of A
+  #   A is needed, because whether a band can follow A depends on the context
+  #   of B. E.g., nav (as a member of attr1) can be followed by df, sets
+  #   th, gc2, or a new root.
+
+  #   Occurrences:        ?   ?   ?    ?  ?    ?  <+  *  *     *
   fol["doc"  ]["0"   ] = "rt                                 "
-  fol["attr1"]["rt"  ] = "pd tag rtyp nav df sets     th gc2 " rA
-  fol["attr1"]["pd"  ] = "   tag rtyp nav df sets     th gc2 " rA
-  fol["attr1"]["tag" ] = "       rtyp nav df sets     th gc2 " rA
-  fol["attr1"]["rtyp"] = "            nav df sets     th gc2 " rA
-  fol["attr1"]["nav" ] = "                df sets     th gc2 " rA
-  fol["attr1"]["df"  ] = "                   sets     th gc2 " rA
+  fol["rt"   ]["rt"  ] = "pd tag rtyp nav df sets     th gc2 " rA
+  fol["rt"   ]["pd"  ] = "   tag rtyp nav df sets     th gc2 " rA
+  fol["rt"   ]["tag" ] = "       rtyp nav df sets     th gc2 " rA
+  fol["rt"   ]["rtyp"] = "            nav df sets     th gc2 " rA
+  fol["rt"   ]["nav" ] = "                df sets     th gc2 " rA
+  fol["rt"   ]["df"  ] = "                   sets     th gc2 " rA
   fol["sets" ]["sets"] = "                        set      "
   fol["sets" ]["set" ] = "                        set th gc2 " rA
 
@@ -33,21 +60,15 @@ BEGIN{
   fol["ex"  ]["ex"   ] = "             eng                    "
   fol["ex"  ]["eng"  ] = "          ex     prds           gc2 " rA
   fol["prds"]["prds" ] = "                      prd           "
-  fol["prds"]["prd"  ] = "                      prd prdgl gc2 " rA
+  fol["prd" ]["prd"  ] = "                          prdgl     "
   fol["prd" ]["prdgl"] = "                      prd       gc2 " rA
 
-  #                        ?   1   *    *
-  fol["attr2" ]["gc2"  ] = "dial gl            "
-  fol["attr2" ]["dial" ] = "     gl            "
-  fol["attr2" ]["gl"   ] = "        ex     gc2 " rA
-  fol["ex"    ]["ex"   ] = "           eng gc2 " rA
+  #                          ?   1   * <1   *
+  fol["gc2"   ]["gc2"  ] = "dial gl            "
+  fol["gc2"   ]["dial" ] = "     gl            "
+  fol["gc2"   ]["gl"   ] = "        ex     gc2 " rA
 
-  # # new contexts
-  # split(ncA, z)
-  # for (i in z)
-  #   nc[z[i]] = 1
-
-  # make array
+  # make f array from fol
   for (i in fol)
     for (j in fol[i]) {
       gsub(/^ +/,"",fol[i][j])
@@ -56,150 +77,223 @@ BEGIN{
       for (k in z)
         f[i][j][z[k]] = 1
     }
-  # for (i in f)
-  #   for (j in f[i])
-  #     for (k in f[i][j])
-  #       print i, j, k
 
+  if (DEBUG) {
+    for (i in f)
+      for (j in f[i])
+        for (k in f[i][j])
+          print i, j, k
   
-  # for (i in fol)
-  #   print i ": " gensub(/ +/," ","G",fol[i])
-  # exit
+    for (i in fol)
+      print i ": " gensub(/ +/," ","G",fol[i])
+  }
 
-  # Starting Context and Priorbc
+  # Initialize Path and Prevbc (previous band class)
   Path = "doc"
-  # Context = "doc"
-  Priorbc = "0"
+  Prevbc = "0"
+  # start the xhtml output
   head("Dictionary")
+  divo("doc")
 }
 
+# For each non-empty and non-comment line...
 ($0) && $0 !~ /^[ #]/  {
 
-  # print Path
-  # print $0
+  if (DEBUG) {
+    print Path
+    print $0
+  }
+
+  # load the band label
   Bl = word1($0)
+  # Convert to band class
   Bc = Bl2bc[Bl]
-  # print Bc
+
+  # ** Validation **
   if (VALIDATE)
     validate()
   
-  # convert
+  # ** Conversion to xhtml **
   if (Bc == "rt") {
-    cdiv("doc")
+    # 1 reset hierarcy
+    divc("doc")
+    # 2. down one, if needed
     divo("rt")
-    divo("attr1")
+    # 3. down-up, make data
     divoc("rootword", rest1($0))
-    # the Path at the end of the operations:
-    Path = "doc/rt/attr1"
+    # 4. exit Path
+    Path = "doc/rt"
   }
   else if (Bc == "pd") {
+    # 1 reset hierarcy
+    divc("doc/rt")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("pd", ("/" rest1($0) "/"))
-    Path = "doc/rt/attr1"
+    # 4. exit Path
+    Path = "doc/rt"
   }
   else if (Bc == "tag") {
+    # 1 reset hierarcy
+    divc("doc/rt")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("tag", rest1($0))
-    Path = "doc/rt/attr1"
+    # 4. exit Path
+    Path = "doc/rt"
   }
   else if (Bc == "rtyp") {
+    # 1 reset hierarcy
+    divc("doc/rt")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("rtyp", rest1($0))
-    Path = "doc/rt/attr1"
+    # 4. exit Path
+    Path = "doc/rt"
   }
   else if (Bc == "nav") {
+    # 1 reset hierarcy
+    divc("doc/rt")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("nav", rest1($0))
-    Path = "doc/rt/attr1"
+    # 4. exit Path
+    Path = "doc/rt"
   }
   else if (Bc == "df") {
+    # 1 reset hierarcy
+    divc("doc/rt")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("df", rest1($0))
-    Path = "doc/rt/attr1"
+    # 4. exit Path
+    Path = "doc/rt"
   }
   else if (Bc == "sets") {
-    cdiv("doc/rt")
+    # 1 reset hierarcy
+    divc("doc/rt")
+    # 2. down one, if needed
     divo("sets")
+    # 3. down-up, make data
+    # 4. exit Path
+    # divc("doc/rt")
     Path = "doc/rt/sets"
   }
   else if (Bc == "set") {
+    # 1 reset hierarcy
+    divc("doc/rt/sets")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("set", rest1($0))
+    # 4. exit Path
     Path = "doc/rt/sets"
   }
   else if (Bc == "th") {
-    cdiv("doc/rt")
+    # 1 reset hierarcy
+    divc("doc/rt")
+    # 2. down one, if needed
     divo("th")
+    # 3. down-up, make data
     divoc("theme", rest1($0))
+    # 4. exit Path
     Path = "doc/rt/th"
   }
   else if (Bc == "tc") {
+    # 1 reset hierarcy
+    divc("doc/rt/th")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("tc", rest1($0))
+    # 4. exit Path
     Path = "doc/rt/th"
   }
   else if (Bc == "cnj") {
+    # 1 reset hierarcy
+    divc("doc/rt/th")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("cnj", rest1($0))
+    # 4. exit Path
     Path = "doc/rt/th"
   }
   else if ((Bc == "gl") && (Path == "doc/rt/th")) {
+    # 1 reset hierarcy
+    divc("doc/rt/th")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("th_gl", rest1($0))
+    # 4. exit Path
     Path = "doc/rt/th"
   }
   else if (Bc == "gc2") {
-    cdiv("doc/rt")
+    # 1 reset hierarcy
+    divc("doc/rt")
+    # 2. down one, if needed
     divo("gc2")
-    divo("attr2")
+    # 3. down-up, make data
     divoc("gc2word", rest1($0))
     divoc("gc2type", "(" Abbrev[Bl] ")")
-    Path = "doc/rt/gc2/attr2"
+    # 4. exit Path
+    Path = "doc/rt/gc2"
   }
   else if ((Bc == "gl") && (Path == "doc/rt/gc2")) {
+    # 1 reset hierarcy
+    divc("doc/rt/gc2")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("gc2_gl", rest1($0))
+    # 4. exit Path
     Path = "doc/rt/gc2"
   }
   else if (Bc == "ex") {
-    cdiv("doc/rt/gc2")
-    divo("exeng")
-    divoc("ex", rest1($0))
-    print ": "
+    # 1 reset hierarcy
+    divc("doc/rt/gc2")
+    # 2. down one, if needed
+    divo("ex")
+    # 3. down-up, make data
+    divoc("exex", rest1($0))
+    divoc("excolon", ": ")
+    # 4. exit Path
     Path = "doc/rt/gc2/ex"
   }
   else if (Bc == "eng") {
+    # 1 reset hierarcy
+    divc("doc/rt/gc2/ex")
+    # 2. down one, if needed
+    # 3. down-up, make data
     divoc("eng", rest1($0))
+    # 4. exit Path
     Path = "doc/rt/gc2/ex"
   }
 
-  
-  # could use switch(), but emacs AWK-mode does not indent correctly
-  # if (bl == "rt") {
-  # }
-  # else if (bl == "tag") {
-  # }
-  
-  Priorbc = Bc
+  # Move Bc to Prevbc
+  Prevbc = Bc
 }
 
 
 END{
-  cdiv("doc")
+  # close up to doc
+  divc("doc")
+  # close one more to above doc
+  print "</div>"
   foot()
 }
 
-
 function divo (class) {
-  # ckdiv()
   print "<div class=\"" class "\">"
 }
 
 function divoc (class, text) {
-  # ckdiv()
   print "<div class=\"" class "\">" text "</div>"
 }
 
-function cdiv(p,     oldlevel, newlevel, z, i) {
+function divc(p,     oldlevel, newlevel, z, i) {
+  # "close the hierarchy n levels to the new path indicated in p"
   oldlevel = split(Path, z, "/")
   newlevel = split(p, z, "/")
   for (i = 1; i <= (oldlevel - newlevel); i++)
     print "</div>"
 }
-
-# function dive (class, text) {
-#   print "</div>"
-# }
 
 
 function word1(text) {
@@ -247,8 +341,7 @@ function head(title) {
 }
 
 
-function foot()
-{
+function foot() {
   print "</div>\n</body>\n</html>";
 }
 
@@ -275,32 +368,14 @@ function abbrevs(     load, x, y, i) {
   }
 }
 
-
 function validate(   z, n) {
+
+  # find the context from the tail element of Path
   n = split(Path, z, "/")
-  # print "                           " z[n] " <" Priorbc " " Bc
-
-  if (!f[z[n]][Priorbc][Bc])
-    printf "%5d: '%s' cannot follow '%s'\n", NR, Bc, Priorbc > "/dev/stderr"
+  # if the current band class cannot follow the previous band class in the
+  #   current context, write an error
+  if (!f[z[n]][Prevbc][Bc])
+    printf "%5d: '%s' cannot follow '%s'\n", NR, Bc, Prevbc > "/dev/stderr"
 }
 
 
-# path
-
-function path() {
-
-  structure = "\
-    doc
-    doc/rt
-    doc/rt/tag
-    doc/rt/pd
-    doc/rt/sets
-    doc/rt/sets/set
-    doc/rt/th
-    doc/rt/th/gl
-    doc/rt/th/prds
-    doc/rt/th/prds/prd
-    
-
-
-}

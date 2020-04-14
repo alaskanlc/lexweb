@@ -2,6 +2,7 @@ lib/db.awk
 bin/gawk
 bin/json.so
 bin/xqilla
+docs*
 grammar/QUESTIONS
 tools/lw2xml/lt*
 tools/lw2xml/gw*
