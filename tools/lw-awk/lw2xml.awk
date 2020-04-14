@@ -2,21 +2,38 @@
 # Variable naming convention: Global variables begin with a Capital letter,
 #   local variables with a lowercase letter
 
-# Document structure (xml schema choices made to reflect blocking choice in
-#   html document)
+# XHTML Document structure
 # 
+# XML schema choices made to reflect blocking choice in html document:
+#
+# rt  pd  tag  rtyp                   <-- rtattr
+#   set                               <-- sets/set
+#   set ...
+#   th  tc  gl                        <-- thattr
+#     ex eng ; ex eng ; ex eng ...    <-- exengs
+#   th ...
+#   prds
+#     prd
+#     exengs
+#   gc2  gl ex eng ; ex eng ...       <-- gc2attr   gc2exengs
+#     gc3  gl ex eng ;                <-- gc3_attr   gc3_exengs
+#
 #   doc
 #   doc/rt
-#   doc/rt/{tag pd nav...}
+#   doc/rt/rtattr/{rtword tag pd nav...}
 #   doc/rt/sets
 #   doc/rt/sets/set
 #   doc/rt/th
-#   doc/rt/th/{tc cnj gl}
-#   doc/rt/th/ex
-#   doc/rt/th/ex/eng
+#   doc/rt/th/thattr/{thword tc cnj gl}
+#   doc/rt/th/thexengs/exeng/{ex eng}
 #   doc/rt/th/prds
 #   doc/rt/th/prds/prd
 #   doc/rt/th/prds/prd/prdgl
+#   doc/rt/th/prds/prdsexengs
+#
+# If a block may need to be formatted independently, it needs a unique id
+#   e.g., prds_exengs, but if it will always be the same, the id can be
+#   reused in different contexts (e.g., exeng)
 
 BEGIN{
 
@@ -39,34 +56,34 @@ BEGIN{
   # fol[A][B] are bands allowed to follow band B, in the context of A
   #   A is needed, because whether a band can follow A depends on the context
   #   of B. E.g., nav (as a member of attr1) can be followed by df, sets
-  #   th, gc2, or a new root.
+  #   th, gc2, or a new root. A is the exit Path of B.
 
-  #   Occurrences:        ?   ?   ?    ?  ?    ?  <+  *  *     *
-  fol["doc"  ]["0"   ] = "rt                                 "
-  fol["rt"   ]["rt"  ] = "pd tag rtyp nav df sets     th gc2 " rA
-  fol["rt"   ]["pd"  ] = "   tag rtyp nav df sets     th gc2 " rA
-  fol["rt"   ]["tag" ] = "       rtyp nav df sets     th gc2 " rA
-  fol["rt"   ]["rtyp"] = "            nav df sets     th gc2 " rA
-  fol["rt"   ]["nav" ] = "                df sets     th gc2 " rA
-  fol["rt"   ]["df"  ] = "                   sets     th gc2 " rA
-  fol["sets" ]["sets"] = "                        set      "
-  fol["sets" ]["set" ] = "                        set th gc2 " rA
+  #   Occurrences:          ?   ?   ?    ?  ?    ?  <+  *  *     *
+  fol["doc"   ]["0"   ] = "rt                                      "
+  fol["rtattr"]["rt"  ] = "     pd tag rtyp nav df sets     th gc2 " rA
+  fol["rtattr"]["pd"  ] = "        tag rtyp nav df sets     th gc2 " rA
+  fol["rtattr"]["tag" ] = "            rtyp nav df sets     th gc2 " rA
+  fol["rtattr"]["rtyp"] = "                 nav df sets     th gc2 " rA
+  fol["rtattr"]["nav" ] = "                     df sets     th gc2 " rA
+  fol["rtattr"]["df"  ] = "                        sets     th gc2 " rA
+  fol["sets"  ]["sets"] = "                             set        "
+  fol["sets"  ]["set" ] = "                             set th gc2 " rA
 
-  #                        1  ?  1  *  <1   ?    +   <1   *     *
-  fol["th"  ]["th"   ] = "tc                                  "
-  fol["th"  ]["tc"   ] = "   cnj gl                           "
-  fol["th"  ]["cnj"  ] = "       gl                           "
-  fol["th"  ]["gl"   ] = "          ex     prds           gc2 " rA
-  fol["ex"  ]["ex"   ] = "             eng                    "
-  fol["ex"  ]["eng"  ] = "          ex     prds           gc2 " rA
-  fol["prds"]["prds" ] = "                      prd           "
-  fol["prd" ]["prd"  ] = "                          prdgl     "
-  fol["prd" ]["prdgl"] = "                      prd       gc2 " rA
+  #                          1  ?  1  *  <1   ?    +   <1   *     *
+  fol["thattr"]["th"   ] = "tc                                  "
+  fol["thattr"]["tc"   ] = "   cnj gl                           "
+  fol["thattr"]["cnj"  ] = "       gl                           "
+  fol["thattr"]["gl"   ] = "          ex     prds           gc2 " rA
+  fol["exeng" ]["ex"   ] = "             eng                    "
+  fol["exeng" ]["eng"  ] = "          ex     prds           gc2 " rA
+  fol["prds"  ]["prds" ] = "                      prd           "
+  fol["prd"   ]["prd"  ] = "                      prd prdgl     "
+  fol["prd"   ]["prdgl"] = "                 prds prd       gc2 " rA
 
-  #                          ?   1   * <1   *
-  fol["gc2"   ]["gc2"  ] = "dial gl            "
-  fol["gc2"   ]["dial" ] = "     gl            "
-  fol["gc2"   ]["gl"   ] = "        ex     gc2 " rA
+  #                           ?   1   * <1   *
+  fol["gc2attr"]["gc2" ] = "dial gl            "
+  fol["gc2attr"]["dial"] = "     gl            "
+  fol["gc2attr"]["gl"  ] = "        ex     gc2 " rA
 
   # make f array from fol
   for (i in fol)
@@ -115,62 +132,69 @@ BEGIN{
   
   # ** Conversion to xhtml **
   if (Bc == "rt") {
-    # 1 reset hierarcy
+    # 1 reset hierarcy before new info
     divc("doc")
     # 2. down one, if needed
     divo("rt")
+    divo("rtattr")
     # 3. down-up, make data
-    divoc("rootword", rest1($0))
+    divoc("rtword", rest1($0))
     # 4. exit Path
-    Path = "doc/rt"
+    Path = "doc/rt/rtattr"
   }
+  
   else if (Bc == "pd") {
-    # 1 reset hierarcy
-    divc("doc/rt")
+    # 1 reset hierarcy before new info
+    divc("doc/rt/rtattr")
     # 2. down one, if needed
     # 3. down-up, make data
     divoc("pd", ("/" rest1($0) "/"))
     # 4. exit Path
-    Path = "doc/rt"
+    Path = "doc/rt/rtattr"
   }
+  
   else if (Bc == "tag") {
-    # 1 reset hierarcy
-    divc("doc/rt")
+    # 1 reset hierarcy before new info
+    divc("doc/rt/rtattr")
     # 2. down one, if needed
     # 3. down-up, make data
     divoc("tag", rest1($0))
     # 4. exit Path
-    Path = "doc/rt"
+    Path = "doc/rt/rtattr"
   }
+  
   else if (Bc == "rtyp") {
-    # 1 reset hierarcy
-    divc("doc/rt")
+    # 1 reset hierarcy before new info
+    divc("doc/rt/rtattr")
     # 2. down one, if needed
     # 3. down-up, make data
     divoc("rtyp", rest1($0))
     # 4. exit Path
-    Path = "doc/rt"
+    Path = "doc/rt/rtattr"
   }
+  
   else if (Bc == "nav") {
-    # 1 reset hierarcy
-    divc("doc/rt")
+    # 1 reset hierarcy before new info
+    divc("doc/rt/rtattr")
     # 2. down one, if needed
     # 3. down-up, make data
     divoc("nav", rest1($0))
     # 4. exit Path
-    Path = "doc/rt"
+    Path = "doc/rt/rtattr"
   }
+  
   else if (Bc == "df") {
-    # 1 reset hierarcy
-    divc("doc/rt")
+    # 1 reset hierarcy before new info
+    divc("doc/rt/rtattr")
     # 2. down one, if needed
     # 3. down-up, make data
     divoc("df", rest1($0))
     # 4. exit Path
-    Path = "doc/rt"
+    Path = "doc/rt/rtattr"
   }
+  
   else if (Bc == "sets") {
-    # 1 reset hierarcy
+    # 1 reset hierarcy before new info
     divc("doc/rt")
     # 2. down one, if needed
     divo("sets")
@@ -179,8 +203,9 @@ BEGIN{
     # divc("doc/rt")
     Path = "doc/rt/sets"
   }
+  
   else if (Bc == "set") {
-    # 1 reset hierarcy
+    # 1 reset hierarcy before new info
     divc("doc/rt/sets")
     # 2. down one, if needed
     # 3. down-up, make data
@@ -188,82 +213,180 @@ BEGIN{
     # 4. exit Path
     Path = "doc/rt/sets"
   }
+  
   else if (Bc == "th") {
-    # 1 reset hierarcy
+    # 1 reset hierarcy before new info
     divc("doc/rt")
     # 2. down one, if needed
     divo("th")
+    divo("thattr")
     # 3. down-up, make data
-    divoc("theme", rest1($0))
+    divoc("thword", rest1($0))
     # 4. exit Path
-    Path = "doc/rt/th"
+    Path = "doc/rt/th/thattr"
   }
+  
   else if (Bc == "tc") {
-    # 1 reset hierarcy
-    divc("doc/rt/th")
+    # 1 reset hierarcy before new info
+    divc("doc/rt/th/thattr")
     # 2. down one, if needed
     # 3. down-up, make data
     divoc("tc", rest1($0))
     # 4. exit Path
-    Path = "doc/rt/th"
+    Path = "doc/rt/th/thattr"
   }
+  
   else if (Bc == "cnj") {
-    # 1 reset hierarcy
-    divc("doc/rt/th")
+    # 1 reset hierarcy before new info
+    divc("doc/rt/th/thattr")
     # 2. down one, if needed
     # 3. down-up, make data
     divoc("cnj", rest1($0))
     # 4. exit Path
-    Path = "doc/rt/th"
+    Path = "doc/rt/th/thattr"
   }
-  else if ((Bc == "gl") && (Path == "doc/rt/th")) {
-    # 1 reset hierarcy
-    divc("doc/rt/th")
+  
+  else if ((Bc == "gl") && (Path == "doc/rt/th/thattr")) {
+    # 1 reset hierarcy before new info
+    divc("doc/rt/th/thattr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("th_gl", rest1($0))
+    divoc("thgl", rest1($0))
     # 4. exit Path
-    Path = "doc/rt/th"
+    Path = "doc/rt/th/thattr"
   }
+
+  else if ((Bc == "ex") && (Path ~ "doc/rt/th")) {
+    # first one
+    if (Path !~ "exengs") {
+      # 1 reset hierarcy before new info
+      divc("doc/rt/th")
+      # 2. down one, if needed
+      divo("thexengs")
+      divo("exeng")
+      # 3. down-up, make data
+      divoc("ex", rest1($0))
+      divoc("excolon", ": ")
+      # 4. exit Path
+      Path = "doc/rt/th/thexengs/exeng"
+    }
+    else {
+      # 1 reset hierarcy before new info
+      divc("doc/rt/th/thexengs")
+      # 2. down one, if needed
+      divo("exeng")
+      # 3. down-up, make data
+      divoc("ex", rest1($0))
+      divoc("excolon", ": ")
+      # 4. exit Path
+      Path = "doc/rt/th/thexengs/exeng"
+    }
+  }
+  
+  else if ((Bc == "eng") && (Path ~ "doc/rt/th")) {
+    # 1 reset hierarcy before new info
+    divc("doc/rt/th/thexengs/exeng")
+    # 2. down one, if needed
+    # 3. down-up, make data
+    divoc("eng", rest1($0))
+    divoc("exsemicolon", "; ")
+    # 4. exit Path
+    Path = "doc/rt/th/thexengs/exeng"
+  }
+  
+  else if (Bc == "prds") {
+    # 1 reset hierarcy before new info
+    divc("doc/rt/th")
+    # 2. down one, if needed
+    divo("prds")
+    # 3. down-up, make data
+    divoc("prdstype", word2($0))
+    divoc("prdsdef", rest2($0))
+    # 4. exit Path
+    Path = "doc/rt/th/prds"
+  }
+
+  else if (Bc == "prd") {
+    # 1 reset hierarcy before new info
+    divc("doc/rt/th/prds")
+    # 2. down one, if needed
+    divo("prd")
+    # 3. down-up, make data
+    divoc("prdpers", word2($0))
+    divoc("prdwords", rest2($0))
+    # 4. exit Path
+    Path = "doc/rt/th/prds/prd"
+  }
+
+  else if (Bc == "prdgl") {
+    # 1 reset hierarcy before new info
+    divc("doc/rt/th/prds/prd")
+    # 2. down one, if needed
+    # 3. down-up, make data
+    divoc("prdgl", rest1($0))
+    # 4. exit Path
+    Path = "doc/rt/th/prds/prd"
+  }
+  
   else if (Bc == "gc2") {
-    # 1 reset hierarcy
+    # 1 reset hierarcy before new info
     divc("doc/rt")
     # 2. down one, if needed
     divo("gc2")
+    divo("gc2attr")
     # 3. down-up, make data
     divoc("gc2word", rest1($0))
     divoc("gc2type", "(" Abbrev[Bl] ")")
     # 4. exit Path
-    Path = "doc/rt/gc2"
+    Path = "doc/rt/gc2/gc2attr"
   }
-  else if ((Bc == "gl") && (Path == "doc/rt/gc2")) {
-    # 1 reset hierarcy
-    divc("doc/rt/gc2")
+  
+  else if ((Bc == "gl") && (Path == "doc/rt/gc2/gc2attr")) {
+    # 1 reset hierarcy before new info
+    divc("doc/rt/gc2/gc2attr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("gc2_gl", rest1($0))
+    divoc("gc2gl", rest1($0))
     # 4. exit Path
-    Path = "doc/rt/gc2"
+    Path = "doc/rt/gc2/gc2attr"
   }
-  else if (Bc == "ex") {
-    # 1 reset hierarcy
-    divc("doc/rt/gc2")
-    # 2. down one, if needed
-    divo("ex")
-    # 3. down-up, make data
-    divoc("exex", rest1($0))
-    divoc("excolon", ": ")
-    # 4. exit Path
-    Path = "doc/rt/gc2/ex"
+  
+  else if ((Bc == "ex") && (Path ~ "doc/rt/gc2")) {
+    # first one
+    if (Path !~ "exengs") {
+      # 1 reset hierarcy before new info
+      divc("doc/rt/gc2")
+      # 2. down one, if needed
+      divo("gc2exengs")
+      divo("exeng")
+      # 3. down-up, make data
+      divoc("ex", rest1($0))
+      divoc("excolon", ": ")
+      # 4. exit Path
+      Path = "doc/rt/gc2/gc2exengs/exeng"
+    }
+    else {
+      # 1 reset hierarcy before new info
+      divc("doc/rt/gc2/gc2exengs")
+      # 2. down one, if needed
+      divo("exeng")
+      # 3. down-up, make data
+      divoc("ex", rest1($0))
+      divoc("excolon", ": ")
+      # 4. exit Path
+      Path = "doc/rt/gc2/gc2exengs/exeng"
+    }
   }
-  else if (Bc == "eng") {
-    # 1 reset hierarcy
-    divc("doc/rt/gc2/ex")
+  
+  else if ((Bc == "eng") && (Path ~ "doc/rt/gc2")) {
+    # 1 reset hierarcy before new info
+    divc("doc/rt/gc2/gc2exengs/exeng")
     # 2. down one, if needed
     # 3. down-up, make data
     divoc("eng", rest1($0))
+    divoc("exsemicolon", "; ")
     # 4. exit Path
-    Path = "doc/rt/gc2/ex"
+    Path = "doc/rt/gc2/gc2exengs/exeng"
   }
 
   # Move Bc to Prevbc
@@ -272,9 +395,8 @@ BEGIN{
 
 
 END{
-  # close up to doc
   divc("doc")
-  # close one more to above doc
+  # close doc itself
   print "</div>"
   foot()
 }
@@ -292,7 +414,7 @@ function divc(p,     oldlevel, newlevel, z, i) {
   oldlevel = split(Path, z, "/")
   newlevel = split(p, z, "/")
   for (i = 1; i <= (oldlevel - newlevel); i++)
-    print "</div>"
+    print "</div>" # <!-- " i "-->
 }
 
 
@@ -336,13 +458,13 @@ function head(title) {
   # print "<link href=\"../img/akflora.ico\" rel=\"shortcut icon\" \
   #         type=\"image/x-icon\"/>"
 
-  print "</head>\n<body>\n<div class=\"main\">"
+  print "</head>\n<body>"
   
 }
 
 
 function foot() {
-  print "</div>\n</body>\n</html>";
+  print "</body>\n</html>";
 }
 
 function bl2bc(     load, x, y, i) {

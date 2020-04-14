@@ -7,10 +7,24 @@ set conc 'àa >>
 tc conv
 cnj Ø,dh
 gl *butcher O
+ex FOO
+eng ENG
+ex FOO1
+eng ENG1
+...prds  dir.obj 1pO             2pO             3pO
+prd  1s:                denanetl-'anh   ywxnetl-'an     xebnetl-'anh
+prd  3s:                denanił'anh     ywxnił'anh      xebenił'anh
+prd  2p:                denanwł'an         -            xebenwł'an
+prdgl  S sees, is looking at O, Urschel 2006:39 with IC
+...prds Opt.     pos.            neg.
+prd 1s: neghwtl-'anh    nedheghwtl-'aną́
+prd 2s: neghuł'anh      nedheghuł'aną́
+prd 1p:  CHK
+prdgl   S ought to look at O, Urschel 2006:92 with IC
 ..n P+àa
 gl *with P, comitative
 ex shilik hàa hihhaii
-eng I'm taking my dog for a walk
+eng Im taking my dog for a walk
 ex nahtryah zhoh hàa
 eng wolverine and wolf
 

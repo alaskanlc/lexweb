@@ -1,25 +1,70 @@
-.main { margin: 50px ;
+
+/* doc */
+
+.doc { margin: 50px ;
         font-family: "Times New Roman", Times, serif; }
+
+/* rootword */
 
 .rt { margin: 30px ; }
 
-.attr1 { margin-bottom: 10px; }
+.rtattr { margin-bottom: 10px; }
 
-.rootword, .pd, .tag, .rtyp, .nav, .df   { display: inline ; }
+.rtword, .pd, .tag, .rtyp, .nav, .df   { display: inline ; }
 
-.rootword, .gc2word { font-weight: bold; }
+.rtword, .gc2word { font-weight: bold; }
+
+/* sets */
 
 .sets { margin-left: 20px; margin-bottom: 10px;}
 
+/* themes */
+
+.th {margin-left: 20px; margin-bottom: 10px;}
+
+.thattr { margin-bottom: 10px;}
+
+.thword, .tc, .cnj, .thgl { display: inline ; }
+
+.tc {font-style: italic; }
+
+.thexengs { margin-bottom: 10px;} 
+
+.exeng, .ex, .excolon, .eng , .exsemicolon { display: inline; }
+
+/* themes > paradigms */
+
+.prds {margin-bottom: 10px;}
+
+.prdstype { font-style: italic ; display: inline-block; width: 50px;}
+
+.prdsdef { width: 400px;
+            text-align-last: justify;
+            text-justify: inter-word;
+            font-style: italic ;
+            display: inline-block ;}
+
+.prdpers { font-style: italic ;  display: inline-block ; width: 50px;}
+
+.prdwords { width: 400px;
+            text-align-last: justify;
+            text-justify: inter-word;
+            font-weight:bold ;
+            display: inline-block ;}
+
+.prdgl {margin-left: 10px; }
+
+/* grammatical categories */
+
 .gc2  { margin-left: 40px; margin-bottom: 10px;}
 
-.gc2word, .gc2type, .gc2_gl , .ex, .excolon, .eng { display: inline; }
+.gc2word, .gc2type, .gc2gl { display: inline; }
 
 .gc2type , .ex { font-style: italic; }
 
-.attr2 { margin-bottom: 10px; }
+.gc2attr { margin-bottom: 10px; }
 
-.ex { margin-left: 20px; margin-bottom: 5px;}
+.gc2exengs { margin-left: 20px; margin-bottom: 5px;}
 
 
 
