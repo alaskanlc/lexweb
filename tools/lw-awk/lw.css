@@ -18,6 +18,10 @@
 
 .sets { margin-left: 20px; margin-bottom: 10px;}
 
+.setasp { font-style: italic;  display: inline ; }
+
+.setwords { display: inline ; }
+
 /* themes */
 
 .th {margin-left: 20px; margin-bottom: 10px;}
@@ -26,11 +30,15 @@
 
 .thword, .tc, .cnj, .thgl { display: inline ; }
 
+.thword { font-weight: bold; }
+
 .tc {font-style: italic; }
 
 .thexengs { margin-bottom: 10px;} 
 
 .exeng, .ex, .excolon, .eng , .exsemicolon { display: inline; }
+
+.ex { font-weight: bold; }
 
 /* themes > paradigms */
 
@@ -60,7 +68,7 @@
 
 .gc2word, .gc2type, .gc2gl { display: inline; }
 
-.gc2type , .ex { font-style: italic; }
+.gc2type { font-style: italic; }
 
 .gc2attr { margin-bottom: 10px; }
 

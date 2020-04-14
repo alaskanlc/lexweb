@@ -106,10 +106,10 @@ BEGIN{
   }
 
   # Initialize Path and Prevbc (previous band class)
-  Path = "doc"
   Prevbc = "0"
   # start the xhtml output
   head("Dictionary")
+  Path = ""
   divo("doc")
 }
 
@@ -121,10 +121,7 @@ BEGIN{
     print $0
   }
 
-  # load the band label
-  Bl = word1($0)
-  # Convert to band class
-  Bc = Bl2bc[Bl]
+  splitline()
 
   # ** Validation **
   if (VALIDATE)
@@ -138,7 +135,7 @@ BEGIN{
     divo("rt")
     divo("rtattr")
     # 3. down-up, make data
-    divoc("rtword", rest1($0))
+    divoc("rtword", Rest1)
     # 4. exit Path
     Path = "doc/rt/rtattr"
   }
@@ -148,7 +145,7 @@ BEGIN{
     divc("doc/rt/rtattr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("pd", ("/" rest1($0) "/"))
+    divoc("pd", ("/" Rest1 "/"))
     # 4. exit Path
     Path = "doc/rt/rtattr"
   }
@@ -158,7 +155,7 @@ BEGIN{
     divc("doc/rt/rtattr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("tag", rest1($0))
+    divoc("tag", Rest1)
     # 4. exit Path
     Path = "doc/rt/rtattr"
   }
@@ -168,7 +165,7 @@ BEGIN{
     divc("doc/rt/rtattr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("rtyp", rest1($0))
+    divoc("rtyp", Rest1)
     # 4. exit Path
     Path = "doc/rt/rtattr"
   }
@@ -178,7 +175,7 @@ BEGIN{
     divc("doc/rt/rtattr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("nav", rest1($0))
+    divoc("nav", Rest1)
     # 4. exit Path
     Path = "doc/rt/rtattr"
   }
@@ -188,7 +185,7 @@ BEGIN{
     divc("doc/rt/rtattr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("df", rest1($0))
+    divoc("df", Rest1)
     # 4. exit Path
     Path = "doc/rt/rtattr"
   }
@@ -208,8 +205,13 @@ BEGIN{
     # 1 reset hierarcy before new info
     divc("doc/rt/sets")
     # 2. down one, if needed
+    divo("set")
     # 3. down-up, make data
-    divoc("set", rest1($0))
+    if (Word2 !~ /^(conc|cns|cona|cont|cust|dist|dur|mom|mult|neu|per|prog|rep|rev|sem|tran)$/)
+      error(Word2 " not a known aspectual category")
+    divoc("setasp", Word2)
+    divoc("setwords", Rest2)
+    divc("doc/rt/sets")
     # 4. exit Path
     Path = "doc/rt/sets"
   }
@@ -221,7 +223,7 @@ BEGIN{
     divo("th")
     divo("thattr")
     # 3. down-up, make data
-    divoc("thword", rest1($0))
+    divoc("thword", Rest1)
     # 4. exit Path
     Path = "doc/rt/th/thattr"
   }
@@ -231,7 +233,7 @@ BEGIN{
     divc("doc/rt/th/thattr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("tc", rest1($0))
+    divoc("tc", Rest1)
     # 4. exit Path
     Path = "doc/rt/th/thattr"
   }
@@ -241,7 +243,7 @@ BEGIN{
     divc("doc/rt/th/thattr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("cnj", rest1($0))
+    divoc("cnj", Rest1)
     # 4. exit Path
     Path = "doc/rt/th/thattr"
   }
@@ -251,7 +253,7 @@ BEGIN{
     divc("doc/rt/th/thattr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("thgl", rest1($0))
+    divoc("thgl", Rest1)
     # 4. exit Path
     Path = "doc/rt/th/thattr"
   }
@@ -265,7 +267,7 @@ BEGIN{
       divo("thexengs")
       divo("exeng")
       # 3. down-up, make data
-      divoc("ex", rest1($0))
+      divoc("ex", Rest1)
       divoc("excolon", ": ")
       # 4. exit Path
       Path = "doc/rt/th/thexengs/exeng"
@@ -276,7 +278,7 @@ BEGIN{
       # 2. down one, if needed
       divo("exeng")
       # 3. down-up, make data
-      divoc("ex", rest1($0))
+      divoc("ex", Rest1)
       divoc("excolon", ": ")
       # 4. exit Path
       Path = "doc/rt/th/thexengs/exeng"
@@ -288,7 +290,7 @@ BEGIN{
     divc("doc/rt/th/thexengs/exeng")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("eng", rest1($0))
+    divoc("eng", Rest1)
     divoc("exsemicolon", "; ")
     # 4. exit Path
     Path = "doc/rt/th/thexengs/exeng"
@@ -300,8 +302,8 @@ BEGIN{
     # 2. down one, if needed
     divo("prds")
     # 3. down-up, make data
-    divoc("prdstype", word2($0))
-    divoc("prdsdef", rest2($0))
+    divoc("prdstype", Word2)
+    divoc("prdsdef", Rest2)
     # 4. exit Path
     Path = "doc/rt/th/prds"
   }
@@ -312,8 +314,8 @@ BEGIN{
     # 2. down one, if needed
     divo("prd")
     # 3. down-up, make data
-    divoc("prdpers", word2($0))
-    divoc("prdwords", rest2($0))
+    divoc("prdpers", Word2)
+    divoc("prdwords", Rest2)
     # 4. exit Path
     Path = "doc/rt/th/prds/prd"
   }
@@ -323,7 +325,7 @@ BEGIN{
     divc("doc/rt/th/prds/prd")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("prdgl", rest1($0))
+    divoc("prdgl", Rest1)
     # 4. exit Path
     Path = "doc/rt/th/prds/prd"
   }
@@ -335,8 +337,8 @@ BEGIN{
     divo("gc2")
     divo("gc2attr")
     # 3. down-up, make data
-    divoc("gc2word", rest1($0))
-    divoc("gc2type", "(" Abbrev[Bl] ")")
+    divoc("gc2word", Rest1)
+    divoc("gc2type", "(" abbrev(Bl) ")")
     # 4. exit Path
     Path = "doc/rt/gc2/gc2attr"
   }
@@ -346,7 +348,7 @@ BEGIN{
     divc("doc/rt/gc2/gc2attr")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("gc2gl", rest1($0))
+    divoc("gc2gl", Rest1)
     # 4. exit Path
     Path = "doc/rt/gc2/gc2attr"
   }
@@ -360,7 +362,7 @@ BEGIN{
       divo("gc2exengs")
       divo("exeng")
       # 3. down-up, make data
-      divoc("ex", rest1($0))
+      divoc("ex", Rest1)
       divoc("excolon", ": ")
       # 4. exit Path
       Path = "doc/rt/gc2/gc2exengs/exeng"
@@ -371,7 +373,7 @@ BEGIN{
       # 2. down one, if needed
       divo("exeng")
       # 3. down-up, make data
-      divoc("ex", rest1($0))
+      divoc("ex", Rest1)
       divoc("excolon", ": ")
       # 4. exit Path
       Path = "doc/rt/gc2/gc2exengs/exeng"
@@ -383,7 +385,7 @@ BEGIN{
     divc("doc/rt/gc2/gc2exengs/exeng")
     # 2. down one, if needed
     # 3. down-up, make data
-    divoc("eng", rest1($0))
+    divoc("eng", Rest1)
     divoc("exsemicolon", "; ")
     # 4. exit Path
     Path = "doc/rt/gc2/gc2exengs/exeng"
@@ -403,6 +405,9 @@ END{
 
 function divo (class) {
   print "<div class=\"" class "\">"
+  if (Path) 
+    Path = Path "/" class
+  else Path = class
 }
 
 function divoc (class, text) {
@@ -415,34 +420,43 @@ function divc(p,     oldlevel, newlevel, z, i) {
   newlevel = split(p, z, "/")
   for (i = 1; i <= (oldlevel - newlevel); i++)
     print "</div>" # <!-- " i "-->
+  Path = p
 }
 
-
-function word1(text) {
-  return gensub(/^([^ ]+).*$/,"\\1","G",text)
+function splitline (     n, z, i) {
+  Bl = Bc = Word2 = Rest1 = Rest2
+  gsub(/ +$/,"",$0)
+  n = split($0, z)
+  Bl = z[1]
+  Bc = Bl2bc[Bl]
+  Word2 = z[2]
+  Rest1 = z[2]
+  for (i = 3; i <= n; i++) Rest1 = Rest1 " " z[i]
+  Rest2 = z[3]
+  for (i = 4; i <= n; i++) Rest2 = Rest2 " " z[i]
 }
 
-function word2(text,  x) {
-  x = gensub(/^([^ ]+) +([^ ]+).*$/,"\\2","G",text)
-  if (x == text) error("No second word in '" text "'")
-  else return x
-}
+# function word1(text) {
+#   return gensub(/^([^ ]+).*$/,"\\1","G",text)
+# }
 
-function rest1(text,  x) {
-  x = gensub(/^[^ ]+ +(.*)$/,"\\1","G",text)
-  if (x == text) error("No rest of line in '" text "'")
-  else return x
-}
+# function word2(text,  x) {
+#   x = gensub(/^([^ ]+) +([^ ]+).*$/,"\\2","G",text)
+#   if (x == text) error("No second word in '" text "'")
+#   else return x
+# }
 
-function rest2(text,  x) {
-  x = gensub(/^[^ ]+ +[^ ]+ +(.*)$/,"\\1","G",text)
-  if (x == text) error("No rest of line (2) in '" text "'")
-  else return x
-}
+# function rest1(text,  x) {
+#   x = gensub(/^[^ ]+ +(.*)$/,"\\1","G",text)
+#   if (x == text) error("No rest of line in '" text "'")
+#   else return x
+# }
 
-function error(text) {
-  print "  ERROR: " text > "/dev/stderr"
-}
+# function rest2(text,  x) {
+#   x = gensub(/^[^ ]+ +[^ ]+ +(.*)$/,"\\1","G",text)
+#   if (x == text) error("No rest of line (2) in '" text "'")
+#   else return x
+# }
 
 function head(title) {
   
@@ -490,6 +504,15 @@ function abbrevs(     load, x, y, i) {
   }
 }
 
+function abbrev(bl) {
+  if (!Abbrev[bl]) {
+    printf "%5d: '%s' has no abbreviation\n", NR, bl > "/dev/stderr"
+    return bl
+  }
+  else
+    return Abbrev[bl]
+}
+
 function validate(   z, n) {
 
   # find the context from the tail element of Path
@@ -497,7 +520,11 @@ function validate(   z, n) {
   # if the current band class cannot follow the previous band class in the
   #   current context, write an error
   if (!f[z[n]][Prevbc][Bc])
-    printf "%5d: '%s' cannot follow '%s'\n", NR, Bc, Prevbc > "/dev/stderr"
+    error("'" Bc "' cannot follow '" Prevbc"'")
+}
+
+function error(msg) {
+  printf "%5d: %s\n", NR, msg > "/dev/stderr"
 }
 
 
