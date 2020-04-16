@@ -8,6 +8,8 @@
 
 .rt { margin: 30px ; }
 
+.rttype { display: none; }
+
 .rtattr { margin-bottom: 10px; }
 
 .rtword, .pd, .tag, .rtyp, .nav, .df   { display: inline ; }
@@ -18,9 +20,13 @@
 
 .sets { margin-left: 20px; margin-bottom: 10px;}
 
-.setasp { font-style: italic;  display: inline ; }
+.setasp { font-style: italic;  display: inline-block; width: 50px;}
 
-.setwords { display: inline ; }
+.setwords { width: 400px;
+            text-align-last: justify;
+            text-justify: inter-word;
+            font-weight:bold ;
+            display: inline-block ;}
 
 /* themes */
 
@@ -29,6 +35,8 @@
 .thattr { margin-bottom: 10px;}
 
 .thword, .tc, .cnj, .thgl { display: inline ; }
+
+.lit, .quo, .cit { display: none; }
 
 .thword { font-weight: bold; }
 
@@ -66,7 +74,12 @@
 
 .gc2  { margin-left: 40px; margin-bottom: 10px;}
 
-.gc2word, .gc2type, .gc2gl { display: inline; }
+.gc2word, .gc2type, .gc2gl,
+   .dials, .dial, .dialx, .dialcomma, .dialcolon, .dialword { display: inline; }
+
+.dial { font-style: italic; }
+
+.dialword {            font-weight:bold ; }
 
 .gc2type { font-style: italic; }
 

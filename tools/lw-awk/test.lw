@@ -2,13 +2,20 @@
 tag with
 rtyp d√:PP
 ..sets
-set conc 'àa >>
+set mom  'iyh 'anh  'ił  'an'
+set durØ  'anh  'an'  'ił 'an'
+set durD  t'anh t'an' t'ił t'an'
+set neu  'anh 'an' 'ił 'an'
+set cust 'iyh >>
 ..th n#O+ł'àa
 tc conv
 cnj Ø,dh
 gl *butcher O
-ex FOO
+quo jones
+cit big paper
+ex FOO & jones
 eng ENG
+lit Jette and Co. 
 ex FOO1
 eng ENG1
 ...prds  dir.obj 1pO             2pO             3pO
@@ -30,8 +37,14 @@ eng wolverine and wolf
 
 .rt aii
 ..adj aii, ąįį
+dial MN
+dial TC ch'edagwda
 gl that one
 ex aii nąįį
 eng those
 ex aii gwiizhik
 eng during that time
+..cnj aii, ąįį
+dial MN
+dial TC ch'edagwda
+gl that one
