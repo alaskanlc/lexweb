@@ -34,12 +34,10 @@ BEGIN{
       dollar2sup()
 
       splitline()
-
       # skip some classes
-      if (Bc ~ /^(file|par|com|cf|caus)$/)
+      if (Bc ~ /^(file|par|com|cf|caus|xr|xgl)$/)
         continue
       
-
       # ** Validation **
       if (VALIDATE)
         validate()
@@ -49,33 +47,40 @@ BEGIN{
         c("doc")
         o("rt")
         oc("rttype", substr(Bl,2))
+        #> doc/rt/rttype
         o("rtattr")
         oc("rtword", Rest1)
+        #> doc/rt/rtattr/rtword
       }
   
       else if (Bc == "pd") {
         c("doc/rt/rtattr")
         oc("pd", ("/" Rest1 "/"))
+        #> doc/rt/rtattr/pd
       }
   
       else if (Bc == "tag") {
         c("doc/rt/rtattr")
         oc("tag", Rest1)
+        #> doc/rt/rtattr/tag
       }
   
       else if (Bc == "rtyp") {
         c("doc/rt/rtattr")
         oc("rtyp", Rest1)
+        #> doc/rt/rtattr/rtyp
       }
   
       else if (Bc == "nav") {
         c("doc/rt/rtattr")
         oc("nav", Rest1)
+        #> doc/rt/rtattr/nav
       }
   
       else if (Bc == "df") {
         c("doc/rt/rtattr")
         oc("df", Rest1)
+        #> doc/rt/rtattr/df
       }
   
       else if (Bc == "sets") {
@@ -90,49 +95,59 @@ BEGIN{
           if (!Aspcat[Word2])
             error(Word2 " not a known aspectual category")
         oc("setasp", Word2)
+        #> doc/rt/sets/set/setasp
         oc("setwords", Rest2)
+        #> doc/rt/sets/set/setwords
         c("doc/rt/sets")
       }
-  
-      else if (Bc == "th") {
+
+      # THEME (..th)
+      else if ((Bc == "th") && (Path !~ /gc2/)) {
         c("doc/rt")
         o("th")
         o("thattr")
         oc("thword", Rest1)
+        #> doc/rt/th/thattr/thword
       }
   
-      else if (Bc == "tc") {
+      else if ((Bc == "tc") && (Path ~ "doc/rt/th")) {
         c("doc/rt/th/thattr")
         oc("tc", Rest1)
+        #> doc/rt/th/thattr/tc
       }
   
-      else if (Bc == "cnj") {
+      else if ((Bc == "cnj") && (Path ~ "doc/rt/th")) {
         c("doc/rt/th/thattr")
         oc("cnj", Rest1)
+        #> doc/rt/th/thattr/cnj
       }
   
-      else if ((Bc == "gl") && (Path ~ /\/thattr/)) {
+      else if ((Bc == "gl") && (Path ~ "doc/rt/th")) {
         c("doc/rt/th/thattr")
         oc("thgl", Rest1)
+        #> doc/rt/th/thattr/thgl
       }
 
-      else if ((Bc == "quo") && (Path ~ /\/thattr/)) {
+      else if ((Bc == "quo")  && (Path ~ "doc/rt/th")) {
         c("doc/rt/th/thattr")
         oc("quo", Rest1)
+        #> doc/rt/th/thattr/quo        
       }
 
-      else if ((Bc == "cit") && (Path ~ /\/thattr/)) {
+      else if ((Bc == "cit")  && (Path ~ "doc/rt/th")) {
         c("doc/rt/th/thattr")
         oc("cit", Rest1)
+        #> doc/rt/th/thattr/cit
       }
   
-      else if ((Bc == "ex") && (Path ~ /\/th/)) {
+      else if ((Bc == "ex")  && (Path ~ "doc/rt/th")) {
         # first one
         if (Path !~ /exengs/) {
           c("doc/rt/th")
           o("thexengs")
           o("exeng")
           oc("ex", Rest1)
+          #> doc/rt/th/thexengs/exeng/ex
           # oc("excolon", ": ")
         }
         else {
@@ -146,73 +161,108 @@ BEGIN{
       else if ((Bc == "eng") && (Path ~ "doc/rt/th")) {
         c("doc/rt/th/thexengs/exeng")
         oc("eng", Rest1)
+        #> doc/rt/th/thexengs/exeng/eng
         oc("exsemicolon", "; ")
       }
 
-      else if ((Bc == "lit") && (Path ~ /\/thexengs/)) {
+      else if ((Bc == "lit") && (Path ~ "doc/rt/th/thexengs")) {
         c("doc/rt/th/thexengs/exeng")
         oc("lit", Rest1)
+        #> doc/rt/th/thexengs/exeng/lit
       }
-      else if ((Bc == "quo") && (Path ~ /\/thexengs/)) {
+      else if ((Bc == "quo") && (Path ~ "doc/rt/th/thexengs")) {
         c("doc/rt/th/thexengs/exeng")
         oc("quo", Rest1)
+        #> doc/rt/th/thexengs/exeng/quo
       }
-      else if ((Bc == "cit") && (Path ~ /\/thexengs/)) {
+      else if ((Bc == "cit") && (Path ~ "doc/rt/th/thexengs")) {
         c("doc/rt/th/thexengs/exeng")
         oc("cit", Rest1)
+        #> doc/rt/th/thexengs/exeng/cit
       }
 
+      # PARADIGMS
       else if (Bc == "prds") {
         c("doc/rt/th")
         o("prds")
         oc("prdstype", Word2)
+        #> doc/rt/th/prds/prdstype
         oc("prdsdef", Rest2)
+        #> doc/rt/th/prds/prdsdef
       }
 
       else if (Bc == "prd") {
         c("doc/rt/th/prds")
         o("prd")
         oc("prdpers", Word2)
+        #> doc/rt/th/prds/prd/prdpers
         oc("prdwords", Rest2)
+        #> doc/rt/th/prds/prd/prdwords
       }
 
       else if (Bc == "prdgl") {
         c("doc/rt/th/prds/prd")
         oc("prdgl", Rest1)
+        #> doc/rt/th/prds/prd/prdword
       }
-  
+
+      # GC2
       else if (Bc == "gc2") {
         c("doc/rt")
         o("gc2")
         o("gc2attr")
         oc("gc2word", Rest1)
+        #> doc/rt/gc2/gc2attr/gc2word
         oc("gc2type", "(" abbrev(Bl) ")")
+        #> doc/rt/gc2/gc2attr/gc2type
       }
   
-      else if ((Bc == "dial") && (Path !~ /dials/)) {
+      else if ((Bc == "dial") && (Path ~ /gc2attr/) && (Path !~ /dials/)) {
         # first dial
         c("doc/rt/gc2/gc2attr")
         o("dials")
         oc("dial", Word2)
+        #> doc/rt/gc2/gc2attr/dials/dial
         if (VALIDATE)
           if (!Dial[Word2])
             error(Word2 " not a known dialect")
       }
 
-      else if ((Bc == "dial") && (Path ~ /dials/)) {
+      else if ((Bc == "dial") && (Path ~ /gc2attr/) && (Path ~ /dials/)) {
         # not first dial
         c("doc/rt/gc2/gc2attr/dials")
         o("dialx")
         oc("dialcomma", ",")
         oc("dial", Word2)
+        #> doc/rt/gc2/gc2attr/dials/dialx/dial
         oc("dialcolon", ":")
         oc("dialword", Rest2)
+        #> doc/rt/gc2/gc2attr/dials/dialx/dialword
         c("doc/rt/gc2/gc2attr/dials")
       }
 
-      else if ((Bc == "gl") && (Path ~ /gc2/)) {
+      else if ((Bc == "tc") && (Path ~ /gc2attr/)) {
+        c("doc/rt/gc2/gc2attr")
+        oc("tc", Rest1)
+        #> doc/rt/gc2/gc2attr/tc
+      }
+
+      else if ((Bc == "asp") && (Path ~ /gc2attr/)) {
+        c("doc/rt/gc2/gc2attr")
+        oc("asp", Rest1)
+        #> doc/rt/gc2/gc2attr/asp
+      }
+
+      else if ((Bc == "cnj") && (Path ~ /gc2attr/)) {
+        c("doc/rt/gc2/gc2attr")
+        oc("cnj", Rest1)
+        #> doc/rt/gc2/gc2attr/cnj
+      }
+
+      else if ((Bc == "gl") && (Path ~ /gc2attr/)) {
         c("doc/rt/gc2/gc2attr")
         oc("gc2gl", Rest1)
+        #> doc/rt/gc2/gc2attr/gc2gl
       }
   
       else if ((Bc == "ex") && (Path ~ "doc/rt/gc2")) {
@@ -222,6 +272,7 @@ BEGIN{
           o("gc2exengs")
           o("exeng")
           oc("ex", Rest1)
+          #> doc/rt/gc2/gc2exengs/exeng/ex
           # oc("excolon", ": ")
         }
         else {
@@ -235,9 +286,188 @@ BEGIN{
       else if ((Bc == "eng") && (Path ~ "doc/rt/gc2")) {
         c("doc/rt/gc2/gc2exengs/exeng")
         oc("eng", Rest1)
+        #> doc/rt/gc2/gc2exengs/exeng/eng
         oc("exsemicolon", "; ")
       }
 
+      else if ((Bc == "lit") && (Path ~ "doc/rt/gc2")) {
+        c("doc/rt/gc2/gc2exengs/exeng")
+        oc("lit", Rest1)
+        #> doc/rt/gc2/gc2exengs/exeng/lit
+      }
+      else if ((Bc == "quo") && (Path ~ "doc/rt/gc2")) {
+        c("doc/rt/gc2/gc2exengs/exeng")
+        oc("quo", Rest1)
+        #> doc/rt/gc2/gc2exengs/exeng/quo
+      }
+      else if ((Bc == "cit") && (Path ~ "doc/rt/gc2")) {
+        c("doc/rt/gc2/gc2exengs/exeng")
+        oc("cit", Rest1)
+        #> doc/rt/gc2/gc2exengs/exeng/cit
+      }
+
+      # TFS THEME (...th)
+      else if ((Bc == "th3") && (Path ~ "gc2")) {
+        c("doc/rt/gc2")
+        o("th3")
+        o("th3attr")
+        oc("thword", Rest1)
+        #> doc/rt/gc2/th3/th3attr/thword
+      }
+  
+      else if ((Bc == "tc") && (Path ~ "doc/rt/gc2/th3")) {
+        c("doc/rt/gc2/th3/th3attr")
+        oc("tc", Rest1)
+        #> doc/rt/gc2/th3/th3attr/tc
+      }
+  
+      else if ((Bc == "cnj") && (Path ~ "doc/rt/gc2/th3")) {
+        c("doc/rt/gc2/th3/th3attr")
+        oc("cnj", Rest1)
+        #> doc/rt/gc2/th3/th3attr/cnj
+      }
+  
+      else if ((Bc == "gl") && (Path ~ "doc/rt/gc2/th3")) {
+        c("doc/rt/gc2/th3/th3attr")
+        oc("thgl", Rest1)
+        #> doc/rt/gc2/th3/th3attr/thgl
+      }
+
+      else if ((Bc == "quo")  && (Path ~ "doc/rt/gc2/th3")) {
+        c("doc/rt/gc2/th3/th3attr")
+        oc("quo", Rest1)
+        #> doc/rt/gc2/th3/th3attr/quo        
+      }
+
+      else if ((Bc == "cit")  && (Path ~ "doc/rt/gc2/th3")) {
+        c("doc/rt/gc2/th3/th3attr")
+        oc("cit", Rest1)
+        #> doc/rt/gc2/th3/th3attr/cit
+      }
+  
+      else if ((Bc == "ex")  && (Path ~ "doc/rt/gc2/th3")) {
+        # first one
+        if (Path !~ /exengs/) {
+          c("doc/rt/gc2/th3")
+          o("th3exengs")
+          o("exeng")
+          oc("ex", Rest1)
+          #> doc/rt/gc2/th3/th3exengs/exeng/ex
+          # oc("excolon", ": ")
+        }
+        else {
+          c("doc/rt/gc2/th3/th3exengs")
+          o("exeng")
+          oc("ex", Rest1)
+          # oc("excolon", ": ")
+        }
+      }
+  
+      else if ((Bc == "eng") && (Path ~ "doc/rt/gc2/th3")) {
+        c("doc/rt/gc2/th3/th3exengs/exeng")
+        oc("eng", Rest1)
+        #> doc/rt/gc2/th3/th3exengs/exeng/eng
+        oc("exsemicolon", "; ")
+      }
+
+      else if ((Bc == "lit") && (Path ~ "doc/rt/gc2/th3/th3exengs")) {
+        c("doc/rt/gc2/th3/th3exengs/exeng")
+        oc("lit", Rest1)
+        #> doc/rt/gc2/th3/th3exengs/exeng/lit
+      }
+      else if ((Bc == "quo") && (Path ~ "doc/rt/gc2/th3/th3exengs")) {
+        c("doc/rt/gc2/th3/th3exengs/exeng")
+        oc("quo", Rest1)
+        #> doc/rt/gc2/th3/th3exengs/exeng/quo
+      }
+      else if ((Bc == "cit") && (Path ~ "doc/rt/gc2/th3/th3exengs")) {
+        c("doc/rt/gc2/th3/th3exengs/exeng")
+        oc("cit", Rest1)
+        #> doc/rt/gc2/th3/th3exengs/exeng/cit
+      }
+
+      # GC3
+      else if (Bc == "gc3") {
+        c("doc/rt/gc2")
+        o("gc3")
+        o("gc3attr")
+        oc("gc3word", Rest1)
+        #> doc/rt/gc2/gc3/gc3attr/gc3word
+        oc("gc3type", "(" abbrev(Bl) ")")
+        #> doc/rt/gc2/gc3/gc3attr/gc3type
+      }
+  
+      else if ((Bc == "dial") && (Path ~ /gc3attr/) && (Path !~ /dials/)) {
+        # first dial
+        c("doc/rt/gc2/gc3/gc3attr")
+        o("dials")
+        oc("dial", Word2)
+        #> doc/rt/gc2/gc3/gc3attr/dials/dial
+        if (VALIDATE)
+          if (!Dial[Word2])
+            error(Word2 " not a known dialect")
+      }
+
+      else if ((Bc == "dial") && (Path ~ /gc3attr/) && (Path ~ /dials/)) {
+        # not first dial
+        c("doc/rt/gc2/gc3/gc3attr/dials")
+        o("dialx")
+        oc("dialcomma", ",")
+        oc("dial", Word2)
+        #> doc/rt/gc2/gc3/gc3attr/dials/dialx/dial
+        oc("dialcolon", ":")
+        oc("dialword", Rest2)
+        #> doc/rt/gc2/gc3/gc3attr/dials/dialx/dialword
+        c("doc/rt/gc2/gc3/gc3attr/dials")
+      }
+
+      else if ((Bc == "gl") && (Path ~ /gc3attr/)) {
+        c("doc/rt/gc2/gc3/gc3attr")
+        oc("gc2gl", Rest1)
+        #> doc/rt/gc2/gc3/gc3attr/gc2gl
+      }
+  
+      else if ((Bc == "ex") && (Path ~ "doc/rt/gc2/gc3")) {
+        # first one
+        if (Path !~ "exengs") {
+          c("doc/rt/gc2/gc3")
+          o("gc3exengs")
+          o("exeng")
+          oc("ex", Rest1)
+          #> doc/rt/gc2/gc3/gc3exengs/exeng/ex
+          # oc("excolon", ": ")
+        }
+        else {
+          c("doc/rt/gc2/gc3/gc3exengs")
+          o("exeng")
+          oc("ex", Rest1)
+          # oc("excolon", ": ")
+        }
+      }
+  
+      else if ((Bc == "eng") && (Path ~ "doc/rt/gc2/gc3")) {
+        c("doc/rt/gc2/gc3/gc3exengs/exeng")
+        oc("eng", Rest1)
+        #> doc/rt/gc2/gc3/gc3exengs/exeng/eng
+        oc("exsemicolon", "; ")
+      }
+
+      else if ((Bc == "lit") && (Path ~ "doc/rt/gc2/gc3")) {
+        c("doc/rt/gc2/gc3/gc3exengs/exeng")
+        oc("lit", Rest1)
+        #> doc/rt/gc2/gc3/gc3exengs/exeng/lit
+      }
+      else if ((Bc == "quo") && (Path ~ "doc/rt/gc2/gc3")) {
+        c("doc/rt/gc2/gc3/gc3exengs/exeng")
+        oc("quo", Rest1)
+        #> doc/rt/gc2/gc3/gc3exengs/exeng/quo
+      }
+      else if ((Bc == "cit") && (Path ~ "doc/rt/gc2/gc3")) {
+        c("doc/rt/gc2/gc3/gc3exengs/exeng")
+        oc("cit", Rest1)
+        #> doc/rt/gc2/gc3/gc3exengs/exeng/cit
+      }
+      
       # Move Bc to Prevbc
       Prevbc = Bc
 
@@ -281,7 +511,7 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["thattr"]["quo"  ] = "              cit ex                 prds           gc2 rt lw"
   fol["thattr"]["cit"  ] = "                  ex                 prds           gc2 rt lw"
   fol["exeng" ]["ex"   ] = "                     eng                                     "
-  fol["exeng" ]["eng"  ] = "                  ex     lit quo cit prds           gc2 rt lw"
+  fol["exeng" ]["eng"  ] = "                  ex     lit quo cit prds           gc2 th3 gc3 rt lw"
   fol["exeng" ]["lit"  ] = "                  ex         quo cit prds           gc2 rt lw"
   fol["exeng" ]["quo"  ] = "                  ex             cit prds           gc2 rt lw"
   fol["exeng" ]["cit"  ] = "                  ex                 prds           gc2 rt lw"
@@ -289,11 +519,35 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["prd"   ]["prd"  ] = "                                          prd prdgl          "
   fol["prd"   ]["prdgl"] = "                                     prds prd       gc2 rt lw"
 
-  #                           ?   1   * <1   *
-  fol["gc2attr"]["gc2" ] = "dial gl            "
-  fol["dials"  ]["dial"] = "dial gl            "
-  fol["gc2attr"]["gl"  ] = "        ex     gc2 rt lw"
+  #                           ?   ?  ?   ?  1   ?  ?   ?  *   *  *   *   
+  fol["gc2attr"]["gc2" ] = "dial tc asp cnj gl            "
+  fol["dials"  ]["dial"] = "dial tc asp cnj gl            "
+  fol["dialx"  ]["dial"] = "dial tc asp cnj gl            "
+  fol["gc2attr"]["tc"  ] = "        asp cnj gl            "
+  fol["gc2attr"]["asp" ] = "            cnj gl            "
+  fol["gc2attr"]["cnj" ] = "                gl            "
+  fol["gc2attr"]["gl"  ] = "                   smf sc lit ex th3 gc3 gc2 rt lw"
+  fol["gc2attr"]["smf" ] = "                       sc lit ex th3 gc3 gc2 rt lw"
+  fol["gc2attr"]["sc"  ] = "                          lit ex th3 gc3 gc2 rt lw"
+  fol["gc2attr"]["lit" ] = "                              ex th3 gc3 gc2 rt lw"
 
+  #                          1  ?  1  ?    ?  *   *    *   
+  fol["th3attr"]["th3"  ] = "tc                                                           "
+  fol["th3attr"]["tc"   ] = "   cnj gl                                                    "
+  fol["th3attr"]["cnj"  ] = "       gl                                                    "
+  fol["th3attr"]["gl"   ] = "          quo cit ex gc3 gc2 rt lw"
+  fol["th3attr"]["quo"  ] = "              cit ex gc3 gc2 rt lw"
+  fol["th3attr"]["cit"  ] = "                  ex gc3 gc2 rt lw"
+
+  #                           ?   ?  ?   ?  1   ?  ?   ?  *   *  *   *   
+  fol["gc3attr"]["gc3" ] = "dial            gl            "
+  fol["gc3attr"]["gl"  ] = "                   smf sc lit ex th3 gc3 gc2 rt lw"
+  fol["gc3attr"]["smf" ] = "                       sc lit ex th3 gc3 gc2 rt lw"
+  fol["gc2attr"]["sc"  ] = "                          lit ex th3 gc3 gc2 rt lw"
+  fol["gc2attr"]["lit" ] = "                              ex th3 gc3 gc2 rt lw"
+
+  # 
+  
   # make F array from fol
   for (i in fol)
     for (j in fol[i]) {
@@ -310,11 +564,13 @@ function init(     load, x, y, i, j, k, z, fol) {
     ".rt rt; .af rt; .ra rt; .lw lw; "                              \
     "pd pd; tag tag; rtyp rtyp; nav nav; df df; "                          \
     "..sets sets; set set; "                                        \
-    "..th th; tc tc; cnj cnj; gl gl; quo quo; cit cit; caus caus; "     \
+    "..th th; ...th th3; tc tc; cnj cnj; gl gl; quo quo; cit cit; caus caus; "  \
     "ex ex; eng eng; lit lit; cf cf; "                                      \
     "...prds prds; prd prd; prdgl prdgl; "                          \
-    "dial dial; "                                                   \
-                                                                    \
+    "dial dial; asp asp; smf smf; sc sc; "                           \
+    ".xr xr; xgl xgl; "                                              \
+    "src src; "                                                      \
+                                                                        \
     "..adj  gc2  adj.;   "                                              \
     "..ads  gc2  a.d.s.; "                                              \
     "..adv  gc2  adv.;   "                                              \
@@ -496,7 +752,8 @@ function validate(   z, n) {
   # if the current band class cannot follow the previous band class in the
   #   current context, write an error
   if (!F[z[n]][Prevbc][Bc])
-    error("'" Bc "' cannot follow '" Prevbc"'")
+    error(sprintf("%-5s (in context %-9s) cannot follow %-7s", ("'" Bc "'"), \
+                  ("'" z[n] "'"), ("'" Prevbc "'")))
 }
 
 function error(msg) {
@@ -553,34 +810,31 @@ function read_args(    arg) {
 #   local variables with a lowercase letter
 
 # XHTML Document structure
+# ------------------------
 # 
-# XML schema choices made to reflect blocking choice in html document:
-#
-# rt  pd  tag  rtyp                   <-- rtattr
-#   set                               <-- sets/set
-#   set ...
-#   th  tc  gl                        <-- thattr
-#     ex eng ; ex eng ; ex eng ...    <-- exengs
-#   th ...
-#   prds
-#     prd
-#     exengs
-#   gc2  gl ex eng ; ex eng ...       <-- gc2attr   gc2exengs
-#     gc3  gl ex eng ;                <-- gc3_attr   gc3_exengs
-#
-#   doc
-#   doc/rt
-#   doc/rt/rtattr/{rtword tag pd nav...}
-#   doc/rt/sets
-#   doc/rt/sets/set
-#   doc/rt/th
-#   doc/rt/th/thattr/{thword tc cnj gl}
-#   doc/rt/th/thexengs/exeng/{ex eng}
-#   doc/rt/th/prds
-#   doc/rt/th/prds/prd
-#   doc/rt/th/prds/prd/prdgl
-#   doc/rt/th/prds/prdsexengs
-#
-# If a block may need to be formatted independently, it needs a unique id
-#   e.g., prds_exengs, but if it will always be the same, the id can be
+# * XML schema choices made to reflect blocking choice in html document.
+# * If a block may need to be formatted independently, it needs a unique id
+#   e.g., prdsexengs, but if it will always be the same, the id can be
 #   reused in different contexts (e.g., exeng)
+# * Regenerate with: grep -E ' +#>' lw2xml | sed -E 's/^ +#>/# /g'
+#
+#  doc/rt/rttype
+#  doc/rt/rtattr/rtword
+#  doc/rt/rtattr/pd
+#  doc/rt/rtattr/tag
+#  doc/rt/rtattr/rtyp
+#  doc/rt/rtattr/nav
+#  doc/rt/rtattr/df
+#  doc/rt/sets/set/setasp
+#  doc/rt/sets/set/setwords
+#  doc/rt/th/thattr/thword
+#  doc/rt/th/thattr/tc
+#  doc/rt/th/thattr/cnj
+#  doc/rt/th/thattr/thgl
+#  doc/rt/th/thattr/quo        
+#  doc/rt/th/thattr/cit
+#  doc/rt/th/thexengs/exeng/ex
+#  doc/rt/th/thexengs/exeng/eng
+#  doc/rt/th/thexengs/exeng/lit
+#  doc/rt/th/thexengs/exeng/quo
+#  doc/rt/th/thexengs/exeng/cit
