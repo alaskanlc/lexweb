@@ -467,6 +467,23 @@ BEGIN{
         oc("cit", Rest1)
         #> doc/rt/gc2/gc3/gc3exengs/exeng/cit
       }
+
+      # LOANWORDS
+      if (Bc == "lw") {
+        c("doc")
+        o("lw")
+        o("lwattr")
+        oc("lwword", Rest1)
+        #> doc/lw/lwattr/lwword
+      }
+  
+      else if (Bc == "src") {
+        c("doc/lw/lwattr")
+        oc("src", Rest1 )
+        #> doc/lw/lwattr/src
+      }
+      
+      
       
       # Move Bc to Prevbc
       Prevbc = Bc
