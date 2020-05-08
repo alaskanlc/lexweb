@@ -4,17 +4,19 @@
 .doc { margin: 50px ;
         font-family: "Times New Roman", Times, serif; }
 
+
 /* rootword */
 
 .rt { margin: 30px ; }
 
-.rttype { display: none; }
-
 .rtattr { margin-bottom: 10px; }
+
+.rttype { display: none; }
 
 .rtword, .pd, .tag, .rtyp, .nav, .df   { display: inline ; }
 
-.rtword, .gc2word { font-weight: bold; }
+.rtword { font-weight: bold; }
+
 
 /* sets */
 
@@ -28,25 +30,36 @@
             font-weight:bold ;
             display: inline-block ;}
 
+
 /* themes */
 
 .th {margin-left: 20px; margin-bottom: 10px;}
 
 .thattr { margin-bottom: 10px;}
 
-.thword, .tc, .cnj, .thgl { display: inline ; }
-
-.lit, .quo, .cit { display: none; }
+.thword, .tc, .cnj, .gl { display: inline ; }
 
 .thword { font-weight: bold; }
 
 .tc {font-style: italic; }
 
-.thexengs { margin-bottom: 10px;} 
+
+/* multi-context */
+
+.lit, .quo, .cit { display: none; }
+
+.gl { display: inline; }
+
+/* examples */
+
+.exengs { margin-bottom: 10px;} 
 
 .exeng, .ex, .excolon, .eng , .exsemicolon { display: inline; }
 
 .ex { font-weight: bold; }
+
+                 /* .gc2exengs { margin-left: 20px; margin-bottom: 5px;} */
+
 
 /* themes > paradigms */
 
@@ -70,22 +83,57 @@
 
 .prdgl {margin-left: 10px; }
 
-/* grammatical categories */
+
+/* grammatical category 2 */
 
 .gc2  { margin-left: 40px; margin-bottom: 10px;}
 
-.gc2word, .gc2type, .gc2gl,
-   .dials, .dial, .dialx, .dialcomma, .dialcolon, .dialword { display: inline; }
+.gc2word { font-weight: bold; }
 
-.dial { font-style: italic; }
-
-.dialword {            font-weight:bold ; }
+.gc2word, .gc2type, .asp { display: inline; }
 
 .gc2type { font-style: italic; }
 
 .gc2attr { margin-bottom: 10px; }
 
-.gc2exengs { margin-left: 20px; margin-bottom: 5px;}
+
+/* dialects */
+
+.dials, .dial, .dialx, .dialcomma, .dialcolon, .dialword { display: inline; }
+
+.dial { font-style: italic; }
+
+.dialword {            font-weight:bold ; }
+
+
+/* grammatical category 3 */
+
+.gc3  { margin-left: 40px; margin-bottom: 10px;}
+
+.gc3word { font-weight: bold; }
+
+.gc3word, .gc3type { display: inline; }
+
+.gc3type { font-style: italic; }
+
+.gc3attr { margin-bottom: 10px; }
 
 
 
+
+/* loanword */
+
+.lw { margin: 30px ; }
+
+.lwattr { margin-bottom: 10px; }
+
+.lwword, .src { display: inline ; }
+
+.src {  font-style: italic; }
+
+.lwword { font-weight: bold; }
+
+
+/* com */
+
+.com { margin: 10px;  font-style: italic; }

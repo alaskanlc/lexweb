@@ -35,7 +35,7 @@ BEGIN{
 
       splitline()
       # skip some classes
-      if (Bc ~ /^(file|par|com|cf|caus|xr|xgl)$/)
+      if (Bc ~ /^(file|par|cf|caus|xr|xgl|grp|smf|sc)$/)
         continue
       
       # =====================  Validation ==========================
@@ -281,50 +281,57 @@ BEGIN{
         #> gc2:  doc/rt/gc2/gc2attr/gc2type
       }
   
-      else if ((Bc == "dial") && (Path ~ /gc2attr/) && (Path !~ /dials/)) {
-        # first dial
-        c("gc2attr")
-        o("dials")
-        oc("dial", Word2)
-        #> doc/rt/gc2/gc2attr/dials/dial
-        if (VALIDATE)
-          if (!Dial[Word2])
-            error(Word2 " not a known dialect")
-      }
-
-      else if ((Bc == "dial") && (Path ~ /gc2attr/) && (Path ~ /dials/)) {
+      else if (Bc == "dial") {
+        # first one
+        if (Path !~ /dials/) {
+          if (Path ~ /gc2attr/) 
+            c("gc2attr")
+          if (Path ~ /gc3attr/) 
+            c("gc3attr")
+          if (Path ~ /exeng/) 
+            c("exeng")
+          
+          o("dials")
+          oc("dial", Word2)
+          #> dial: doc/rt/gc2/gc2attr/dials/dial               :
+          #> dial: doc/rt/gc2/gc3/gc3attr/dials/dial           :
+          #> dial: ... exeng/dials/dial                        :
+          if (VALIDATE)
+            if (!Dial[Word2])
+              error(Word2 " not a known dialect")
+        }
         # not first dial
-        c("dials")
-        o("dialx")
-        oc("dialcomma", ",")
-        oc("dial", Word2)
-        #> doc/rt/gc2/gc2attr/dials/dialx/dial
-        oc("dialcolon", ":")
-        oc("dialword", Rest2)
-        #> doc/rt/gc2/gc2attr/dials/dialx/dialword
-        c("dials")
+        else if (Path ~ /dials/) {
+          c("dials")
+          o("dialx")
+          oc("dialcomma", ",")
+          oc("dial", Word2)
+          #> dial: doc/rt/gc2/gc2attr/dials/dialx/dial         :
+          #> dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dial     :
+          #> dial: ... exeng/dials/dialx/dial                  :
+          oc("dialcolon", ":")
+          oc("dialword", Rest2)
+          #> dial: doc/rt/gc2/gc2attr/dials/dialx/dialword     :
+          #> dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dialword :
+          #> dial: ... exeng/dials/dialx/dialword              :
+          c("dials")
+        }
       }
 
-
-      else if ((Bc == "asp") && (Path ~ /gc2attr/)) {
+      else if (Bc == "asp") {
         c("gc2attr")
         oc("asp", Rest1)
-        #> doc/rt/gc2/gc2attr/asp
+        #> asp:  doc/rt/gc2/gc2attr/asp
       }
-
-  
-      # TFS THEME (...th)
-      else if ((Bc == "th3") && (Path ~ "gc2")) {
+      
+      else if (Bc == "th3") {
         c("gc2")
         o("th3")
         o("th3attr")
         oc("thword", Rest1)
-        #> doc/rt/gc2/th3/th3attr/thword
+        #> th3:  doc/rt/gc2/th3/th3attr/thword
       }
-  
-  
-
-  
+      
       # GC3
       else if (Bc == "gc3") {
         c("gc2")
@@ -336,33 +343,7 @@ BEGIN{
         #> doc/rt/gc2/gc3/gc3attr/gc3type
       }
   
-      else if ((Bc == "dial") && (Path ~ /gc3attr/) && (Path !~ /dials/)) {
-        # first dial
-        c("gc3attr")
-        o("dials")
-        oc("dial", Word2)
-        #> doc/rt/gc2/gc3/gc3attr/dials/dial
-        if (VALIDATE)
-          if (!Dial[Word2])
-            error(Word2 " not a known dialect")
-      }
-
-      else if ((Bc == "dial") && (Path ~ /gc3attr/) && (Path ~ /dials/)) {
-        # not first dial
-        c("dials")
-        o("dialx")
-        oc("dialcomma", ",")
-        oc("dial", Word2)
-        #> doc/rt/gc2/gc3/gc3attr/dials/dialx/dial
-        oc("dialcolon", ":")
-        oc("dialword", Rest2)
-        #> doc/rt/gc2/gc3/gc3attr/dials/dialx/dialword
-        c("dials")
-      }
-
-  
-      # LOANWORDS
-      if (Bc == "lw") {
+      else if (Bc == "lw") {
         c("doc")
         o("lw")
         o("lwattr")
@@ -373,10 +354,19 @@ BEGIN{
       else if (Bc == "src") {
         c("lwattr")
         oc("src", Rest1 )
-        #> doc/lw/lwattr/src
+        #> src:  doc/lw/lwattr/src
       }
-      
-      
+
+      else if (Bc == "com") {
+        oc("com", Rest1 )
+        #> com:  .../com
+      }
+
+      # errors
+      else if (Bc)
+        error("Band category '" Bc "' not handled")
+      else
+        error("Band label '" Bl "' not known")
       
       # Move Bc to Prevbc
       Prevbc = Bc
@@ -428,7 +418,7 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["exeng" ]["cit"  ] = "                  ex                      th prds           gc2 rt lw"
   fol["prds"  ]["prds" ] = "                                                  prd                "
   fol["prd"   ]["prd"  ] = "                                                  prd prdgl          "
-  fol["prd"   ]["prdgl"] = "                                             prds prd       gc2 rt lw"
+  fol["prd"   ]["prdgl"] = "                                          th prds prd       gc2 rt lw"
 
   #                           ?       ?  ?   ?  1   ?  ?   ?  *   *  *   *   
   fol["gc2attr"]["gc2" ] = "dial     tc asp cnj gl            "
@@ -474,7 +464,7 @@ function init(     load, x, y, i, j, k, z, fol) {
 
   # Band labels to band classes
   load = \
-    ".file file; ..par par; ...par par; com com;"                   \
+    ".file file; ..par par; ...par par; com com; ..grp grp; "               \
     ".rt rt; .af rt; .ra rt; .lw lw; "                              \
     "pd pd; tag tag; rtyp rtyp; nav nav; df df; "                          \
     "..sets sets; set set; "                                        \
@@ -577,7 +567,7 @@ function init(     load, x, y, i, j, k, z, fol) {
   for (i in x)
     Aspcat[x[i]] = 1
 
-  load = "MN|S|C|G|MC|T|Us"
+  load = "MN|S|C|G|MC|T|Us|TG|OC|GG"
   split(load, x, "|")
   for (i in x)
     Dial[x[i]] = 1
@@ -679,7 +669,10 @@ function abbrev(bl) {
 }
 
 function validate(   z, n) {
-
+  # no validation for com
+  if ((Bc == "com") || (Prevbc == "com"))
+    return
+  
   # find the context from the tail element of Path
   n = split(Path, z, "/")
   # if the current band class cannot follow the previous band class in the
