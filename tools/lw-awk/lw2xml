@@ -54,42 +54,42 @@ BEGIN{
       }
   
       else if (Bc == "pd") {
-        c("doc/rt/rtattr")
+        c("rtattr")
         oc("pd", ("/" Rest1 "/"))
         #> doc/rt/rtattr/pd
       }
   
       else if (Bc == "tag") {
-        c("doc/rt/rtattr")
+        c("rtattr")
         oc("tag", Rest1)
         #> doc/rt/rtattr/tag
       }
   
       else if (Bc == "rtyp") {
-        c("doc/rt/rtattr")
+        c("rtattr")
         oc("rtyp", Rest1)
         #> doc/rt/rtattr/rtyp
       }
   
       else if (Bc == "nav") {
-        c("doc/rt/rtattr")
+        c("rtattr")
         oc("nav", Rest1)
         #> doc/rt/rtattr/nav
       }
   
       else if (Bc == "df") {
-        c("doc/rt/rtattr")
+        c("rtattr")
         oc("df", Rest1)
         #> doc/rt/rtattr/df
       }
   
       else if (Bc == "sets") {
-        c("doc/rt")
+        c("rt")
         o("sets")
       }
   
       else if (Bc == "set") {
-        c("doc/rt/sets")
+        c("sets")
         o("set")
         if (VALIDATE)
           if (!Aspcat[Word2])
@@ -98,12 +98,12 @@ BEGIN{
         #> doc/rt/sets/set/setasp
         oc("setwords", Rest2)
         #> doc/rt/sets/set/setwords
-        c("doc/rt/sets")
+        c("sets")
       }
 
       # THEME (..th)
       else if ((Bc == "th") && (Path !~ /gc2/)) {
-        c("doc/rt")
+        c("rt")
         o("th")
         o("thattr")
         oc("thword", Rest1)
@@ -111,31 +111,31 @@ BEGIN{
       }
   
       else if ((Bc == "tc") && (Path ~ "doc/rt/th")) {
-        c("doc/rt/th/thattr")
+        c("thattr")
         oc("tc", Rest1)
         #> doc/rt/th/thattr/tc
       }
   
       else if ((Bc == "cnj") && (Path ~ "doc/rt/th")) {
-        c("doc/rt/th/thattr")
+        c("thattr")
         oc("cnj", Rest1)
         #> doc/rt/th/thattr/cnj
       }
   
       else if ((Bc == "gl") && (Path ~ "doc/rt/th")) {
-        c("doc/rt/th/thattr")
+        c("thattr")
         oc("thgl", Rest1)
         #> doc/rt/th/thattr/thgl
       }
 
       else if ((Bc == "quo")  && (Path ~ "doc/rt/th")) {
-        c("doc/rt/th/thattr")
+        c("thattr")
         oc("quo", Rest1)
         #> doc/rt/th/thattr/quo        
       }
 
       else if ((Bc == "cit")  && (Path ~ "doc/rt/th")) {
-        c("doc/rt/th/thattr")
+        c("thattr")
         oc("cit", Rest1)
         #> doc/rt/th/thattr/cit
       }
@@ -143,7 +143,7 @@ BEGIN{
       else if ((Bc == "ex")  && (Path ~ "doc/rt/th")) {
         # first one
         if (Path !~ /exengs/) {
-          c("doc/rt/th")
+          c("th")
           o("thexengs")
           o("exeng")
           oc("ex", Rest1)
@@ -151,7 +151,7 @@ BEGIN{
           # oc("excolon", ": ")
         }
         else {
-          c("doc/rt/th/thexengs")
+          c("thexengs")
           o("exeng")
           oc("ex", Rest1)
           # oc("excolon", ": ")
@@ -159,31 +159,31 @@ BEGIN{
       }
   
       else if ((Bc == "eng") && (Path ~ "doc/rt/th")) {
-        c("doc/rt/th/thexengs/exeng")
+        c("exeng")
         oc("eng", Rest1)
         #> doc/rt/th/thexengs/exeng/eng
         oc("exsemicolon", "; ")
       }
 
       else if ((Bc == "lit") && (Path ~ "doc/rt/th/thexengs")) {
-        c("doc/rt/th/thexengs/exeng")
+        c("exeng")
         oc("lit", Rest1)
         #> doc/rt/th/thexengs/exeng/lit
       }
       else if ((Bc == "quo") && (Path ~ "doc/rt/th/thexengs")) {
-        c("doc/rt/th/thexengs/exeng")
+        c("exeng")
         oc("quo", Rest1)
         #> doc/rt/th/thexengs/exeng/quo
       }
       else if ((Bc == "cit") && (Path ~ "doc/rt/th/thexengs")) {
-        c("doc/rt/th/thexengs/exeng")
+        c("exeng")
         oc("cit", Rest1)
         #> doc/rt/th/thexengs/exeng/cit
       }
 
       # PARADIGMS
       else if (Bc == "prds") {
-        c("doc/rt/th")
+        c("th")
         o("prds")
         oc("prdstype", Word2)
         #> doc/rt/th/prds/prdstype
@@ -192,7 +192,7 @@ BEGIN{
       }
 
       else if (Bc == "prd") {
-        c("doc/rt/th/prds")
+        c("prds")
         o("prd")
         oc("prdpers", Word2)
         #> doc/rt/th/prds/prd/prdpers
@@ -201,14 +201,17 @@ BEGIN{
       }
 
       else if (Bc == "prdgl") {
-        c("doc/rt/th/prds/prd")
+        c("prd")
         oc("prdgl", Rest1)
         #> doc/rt/th/prds/prd/prdword
       }
 
       # GC2
       else if (Bc == "gc2") {
-        c("doc/rt")
+        if (Path ~ "doc/rt")
+          c("rt")
+        if (Path ~ "doc/lw")
+          c("lw")
         o("gc2")
         o("gc2attr")
         oc("gc2word", Rest1)
@@ -219,7 +222,7 @@ BEGIN{
   
       else if ((Bc == "dial") && (Path ~ /gc2attr/) && (Path !~ /dials/)) {
         # first dial
-        c("doc/rt/gc2/gc2attr")
+        c("gc2attr")
         o("dials")
         oc("dial", Word2)
         #> doc/rt/gc2/gc2attr/dials/dial
@@ -230,7 +233,7 @@ BEGIN{
 
       else if ((Bc == "dial") && (Path ~ /gc2attr/) && (Path ~ /dials/)) {
         # not first dial
-        c("doc/rt/gc2/gc2attr/dials")
+        c("dials")
         o("dialx")
         oc("dialcomma", ",")
         oc("dial", Word2)
@@ -238,29 +241,29 @@ BEGIN{
         oc("dialcolon", ":")
         oc("dialword", Rest2)
         #> doc/rt/gc2/gc2attr/dials/dialx/dialword
-        c("doc/rt/gc2/gc2attr/dials")
+        c("dials")
       }
 
       else if ((Bc == "tc") && (Path ~ /gc2attr/)) {
-        c("doc/rt/gc2/gc2attr")
+        c("gc2attr")
         oc("tc", Rest1)
         #> doc/rt/gc2/gc2attr/tc
       }
 
       else if ((Bc == "asp") && (Path ~ /gc2attr/)) {
-        c("doc/rt/gc2/gc2attr")
+        c("gc2attr")
         oc("asp", Rest1)
         #> doc/rt/gc2/gc2attr/asp
       }
 
       else if ((Bc == "cnj") && (Path ~ /gc2attr/)) {
-        c("doc/rt/gc2/gc2attr")
+        c("gc2attr")
         oc("cnj", Rest1)
         #> doc/rt/gc2/gc2attr/cnj
       }
 
       else if ((Bc == "gl") && (Path ~ /gc2attr/)) {
-        c("doc/rt/gc2/gc2attr")
+        c("gc2attr")
         oc("gc2gl", Rest1)
         #> doc/rt/gc2/gc2attr/gc2gl
       }
@@ -268,7 +271,7 @@ BEGIN{
       else if ((Bc == "ex") && (Path ~ "doc/rt/gc2")) {
         # first one
         if (Path !~ "exengs") {
-          c("doc/rt/gc2")
+          c("gc2")
           o("gc2exengs")
           o("exeng")
           oc("ex", Rest1)
@@ -276,7 +279,7 @@ BEGIN{
           # oc("excolon", ": ")
         }
         else {
-          c("doc/rt/gc2/gc2exengs")
+          c("gc2exengs")
           o("exeng")
           oc("ex", Rest1)
           # oc("excolon", ": ")
@@ -284,31 +287,31 @@ BEGIN{
       }
   
       else if ((Bc == "eng") && (Path ~ "doc/rt/gc2")) {
-        c("doc/rt/gc2/gc2exengs/exeng")
+        c("exeng")
         oc("eng", Rest1)
         #> doc/rt/gc2/gc2exengs/exeng/eng
         oc("exsemicolon", "; ")
       }
 
       else if ((Bc == "lit") && (Path ~ "doc/rt/gc2")) {
-        c("doc/rt/gc2/gc2exengs/exeng")
+        c("exeng")
         oc("lit", Rest1)
         #> doc/rt/gc2/gc2exengs/exeng/lit
       }
       else if ((Bc == "quo") && (Path ~ "doc/rt/gc2")) {
-        c("doc/rt/gc2/gc2exengs/exeng")
+        c("exeng")
         oc("quo", Rest1)
         #> doc/rt/gc2/gc2exengs/exeng/quo
       }
       else if ((Bc == "cit") && (Path ~ "doc/rt/gc2")) {
-        c("doc/rt/gc2/gc2exengs/exeng")
+        c("exeng")
         oc("cit", Rest1)
         #> doc/rt/gc2/gc2exengs/exeng/cit
       }
 
       # TFS THEME (...th)
       else if ((Bc == "th3") && (Path ~ "gc2")) {
-        c("doc/rt/gc2")
+        c("gc2")
         o("th3")
         o("th3attr")
         oc("thword", Rest1)
@@ -316,31 +319,31 @@ BEGIN{
       }
   
       else if ((Bc == "tc") && (Path ~ "doc/rt/gc2/th3")) {
-        c("doc/rt/gc2/th3/th3attr")
+        c("th3attr")
         oc("tc", Rest1)
         #> doc/rt/gc2/th3/th3attr/tc
       }
   
       else if ((Bc == "cnj") && (Path ~ "doc/rt/gc2/th3")) {
-        c("doc/rt/gc2/th3/th3attr")
+        c("th3attr")
         oc("cnj", Rest1)
         #> doc/rt/gc2/th3/th3attr/cnj
       }
   
       else if ((Bc == "gl") && (Path ~ "doc/rt/gc2/th3")) {
-        c("doc/rt/gc2/th3/th3attr")
+        c("th3attr")
         oc("thgl", Rest1)
         #> doc/rt/gc2/th3/th3attr/thgl
       }
 
       else if ((Bc == "quo")  && (Path ~ "doc/rt/gc2/th3")) {
-        c("doc/rt/gc2/th3/th3attr")
+        c("th3attr")
         oc("quo", Rest1)
         #> doc/rt/gc2/th3/th3attr/quo        
       }
 
       else if ((Bc == "cit")  && (Path ~ "doc/rt/gc2/th3")) {
-        c("doc/rt/gc2/th3/th3attr")
+        c("th3attr")
         oc("cit", Rest1)
         #> doc/rt/gc2/th3/th3attr/cit
       }
@@ -348,7 +351,7 @@ BEGIN{
       else if ((Bc == "ex")  && (Path ~ "doc/rt/gc2/th3")) {
         # first one
         if (Path !~ /exengs/) {
-          c("doc/rt/gc2/th3")
+          c("th3")
           o("th3exengs")
           o("exeng")
           oc("ex", Rest1)
@@ -356,7 +359,7 @@ BEGIN{
           # oc("excolon", ": ")
         }
         else {
-          c("doc/rt/gc2/th3/th3exengs")
+          c("th3exengs")
           o("exeng")
           oc("ex", Rest1)
           # oc("excolon", ": ")
@@ -364,31 +367,31 @@ BEGIN{
       }
   
       else if ((Bc == "eng") && (Path ~ "doc/rt/gc2/th3")) {
-        c("doc/rt/gc2/th3/th3exengs/exeng")
+        c("exeng")
         oc("eng", Rest1)
         #> doc/rt/gc2/th3/th3exengs/exeng/eng
         oc("exsemicolon", "; ")
       }
 
       else if ((Bc == "lit") && (Path ~ "doc/rt/gc2/th3/th3exengs")) {
-        c("doc/rt/gc2/th3/th3exengs/exeng")
+        c("exeng")
         oc("lit", Rest1)
         #> doc/rt/gc2/th3/th3exengs/exeng/lit
       }
       else if ((Bc == "quo") && (Path ~ "doc/rt/gc2/th3/th3exengs")) {
-        c("doc/rt/gc2/th3/th3exengs/exeng")
+        c("exeng")
         oc("quo", Rest1)
         #> doc/rt/gc2/th3/th3exengs/exeng/quo
       }
       else if ((Bc == "cit") && (Path ~ "doc/rt/gc2/th3/th3exengs")) {
-        c("doc/rt/gc2/th3/th3exengs/exeng")
+        c("exeng")
         oc("cit", Rest1)
         #> doc/rt/gc2/th3/th3exengs/exeng/cit
       }
 
       # GC3
       else if (Bc == "gc3") {
-        c("doc/rt/gc2")
+        c("gc2")
         o("gc3")
         o("gc3attr")
         oc("gc3word", Rest1)
@@ -399,7 +402,7 @@ BEGIN{
   
       else if ((Bc == "dial") && (Path ~ /gc3attr/) && (Path !~ /dials/)) {
         # first dial
-        c("doc/rt/gc2/gc3/gc3attr")
+        c("gc3attr")
         o("dials")
         oc("dial", Word2)
         #> doc/rt/gc2/gc3/gc3attr/dials/dial
@@ -410,7 +413,7 @@ BEGIN{
 
       else if ((Bc == "dial") && (Path ~ /gc3attr/) && (Path ~ /dials/)) {
         # not first dial
-        c("doc/rt/gc2/gc3/gc3attr/dials")
+        c("dials")
         o("dialx")
         oc("dialcomma", ",")
         oc("dial", Word2)
@@ -418,11 +421,11 @@ BEGIN{
         oc("dialcolon", ":")
         oc("dialword", Rest2)
         #> doc/rt/gc2/gc3/gc3attr/dials/dialx/dialword
-        c("doc/rt/gc2/gc3/gc3attr/dials")
+        c("dials")
       }
 
       else if ((Bc == "gl") && (Path ~ /gc3attr/)) {
-        c("doc/rt/gc2/gc3/gc3attr")
+        c("gc3attr")
         oc("gc2gl", Rest1)
         #> doc/rt/gc2/gc3/gc3attr/gc2gl
       }
@@ -430,7 +433,7 @@ BEGIN{
       else if ((Bc == "ex") && (Path ~ "doc/rt/gc2/gc3")) {
         # first one
         if (Path !~ "exengs") {
-          c("doc/rt/gc2/gc3")
+          c("gc3")
           o("gc3exengs")
           o("exeng")
           oc("ex", Rest1)
@@ -438,7 +441,7 @@ BEGIN{
           # oc("excolon", ": ")
         }
         else {
-          c("doc/rt/gc2/gc3/gc3exengs")
+          c("gc3exengs")
           o("exeng")
           oc("ex", Rest1)
           # oc("excolon", ": ")
@@ -446,24 +449,24 @@ BEGIN{
       }
   
       else if ((Bc == "eng") && (Path ~ "doc/rt/gc2/gc3")) {
-        c("doc/rt/gc2/gc3/gc3exengs/exeng")
+        c("exeng")
         oc("eng", Rest1)
         #> doc/rt/gc2/gc3/gc3exengs/exeng/eng
         oc("exsemicolon", "; ")
       }
 
       else if ((Bc == "lit") && (Path ~ "doc/rt/gc2/gc3")) {
-        c("doc/rt/gc2/gc3/gc3exengs/exeng")
+        c("exeng")
         oc("lit", Rest1)
         #> doc/rt/gc2/gc3/gc3exengs/exeng/lit
       }
       else if ((Bc == "quo") && (Path ~ "doc/rt/gc2/gc3")) {
-        c("doc/rt/gc2/gc3/gc3exengs/exeng")
+        c("exeng")
         oc("quo", Rest1)
         #> doc/rt/gc2/gc3/gc3exengs/exeng/quo
       }
       else if ((Bc == "cit") && (Path ~ "doc/rt/gc2/gc3")) {
-        c("doc/rt/gc2/gc3/gc3exengs/exeng")
+        c("exeng")
         oc("cit", Rest1)
         #> doc/rt/gc2/gc3/gc3exengs/exeng/cit
       }
@@ -478,7 +481,7 @@ BEGIN{
       }
   
       else if (Bc == "src") {
-        c("doc/lw/lwattr")
+        c("lwattr")
         oc("src", Rest1 )
         #> doc/lw/lwattr/src
       }
@@ -563,7 +566,10 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["gc2attr"]["sc"  ] = "                          lit ex th3 gc3 gc2 rt lw"
   fol["gc2attr"]["lit" ] = "                              ex th3 gc3 gc2 rt lw"
 
-  # 
+  #
+  fol["lwattr"]["lw" ] = "src "
+  fol["lwattr"]["src"] = "gc2 rt lw"
+  
   
   # make F array from fol
   for (i in fol)
@@ -694,7 +700,8 @@ function o (class) {
   else Path = class
 }
 
-function wedge (reduce) {
+function wedge (reduce,  p) {
+  # print "[ " reduce " " (2*split(Path,p,"/") - 2*reduce +4) " " Path " ]"
   return sprintf("%*s", (2*split(Path,p,"/") - 2*reduce +4) ,"")
 }
 
@@ -706,10 +713,28 @@ function oc (class, text) {
 function c(p,     oldlevel, newlevel, z, i) {
   # "close the hierarchy n levels to the new path indicated in p"
   oldlevel = split(Path, z, "/")
-  newlevel = split(p, z, "/")
+  Path = ""
+  for (i = 1; i <= oldlevel ; i++) {
+    # Rebuild the path to the new level
+    Path = Path "/" z[i]
+    # stop at the new terminal level
+    #   note: this only works if all the possible path elements are unique
+    if (p == z[i]) {
+      newlevel = i
+      break
+    }
+  }
+  # check
+  if (!newlevel) {
+    error("c(" p ") not found")
+    exit 1
+  }
+  # fix "/doc/..." to "doc/..."
+  gsub(/^\//,"",Path)
+
+  # Close the divs
   for (i = 1; i <= (oldlevel - newlevel); i++)
-    print wedge(i) "</div>" # <!-- " i "-->
-  Path = p
+    print wedge(i-(oldlevel-newlevel)) "</div>" # <!-- " i " -->"
 }
 
 function splitline (     n, z, i) {
