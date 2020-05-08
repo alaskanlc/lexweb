@@ -38,175 +38,236 @@ BEGIN{
       if (Bc ~ /^(file|par|com|cf|caus|xr|xgl)$/)
         continue
       
-      # ** Validation **
+      # =====================  Validation ==========================
       if (VALIDATE)
         validate()
   
-      # ** Conversion to xhtml **
+      # ====================  Conversion to xhtml ==================
       if (Bc == "rt") {
         c("doc")
         o("rt")
-        oc("rttype", substr(Bl,2))
-        #> doc/rt/rttype
+        #> rt:   doc/rt
         o("rtattr")
+        #> rt:   doc/rt/rtattr
+        oc("rttype", substr(Bl,2))
+        #> rt:   doc/rt/rtattr/rttype
         oc("rtword", Rest1)
-        #> doc/rt/rtattr/rtword
+        #> rt:   doc/rt/rtattr/rtword
       }
   
       else if (Bc == "pd") {
         c("rtattr")
         oc("pd", ("/" Rest1 "/"))
-        #> doc/rt/rtattr/pd
+        #> pd:   doc/rt/rtattr/pd
       }
   
       else if (Bc == "tag") {
         c("rtattr")
         oc("tag", Rest1)
-        #> doc/rt/rtattr/tag
+        #> tag:  doc/rt/rtattr/tag
       }
   
       else if (Bc == "rtyp") {
         c("rtattr")
         oc("rtyp", Rest1)
-        #> doc/rt/rtattr/rtyp
+        #> rtyp: doc/rt/rtattr/rtyp
       }
   
       else if (Bc == "nav") {
         c("rtattr")
         oc("nav", Rest1)
-        #> doc/rt/rtattr/nav
+        #> nav:  doc/rt/rtattr/nav
       }
   
       else if (Bc == "df") {
         c("rtattr")
         oc("df", Rest1)
-        #> doc/rt/rtattr/df
+        #> df:   doc/rt/rtattr/df
       }
   
       else if (Bc == "sets") {
         c("rt")
         o("sets")
+        #> sets: doc/rt/sets
       }
   
       else if (Bc == "set") {
         c("sets")
         o("set")
+        #> set:  doc/rt/sets/set
         if (VALIDATE)
           if (!Aspcat[Word2])
             error(Word2 " not a known aspectual category")
         oc("setasp", Word2)
-        #> doc/rt/sets/set/setasp
+        #> set:  doc/rt/sets/set/setasp
         oc("setwords", Rest2)
-        #> doc/rt/sets/set/setwords
+        #> set:  doc/rt/sets/set/setwords
         c("sets")
       }
 
-      # THEME (..th)
-      else if ((Bc == "th") && (Path !~ /gc2/)) {
+      else if (Bc == "th") {
         c("rt")
         o("th")
+        #> th:   doc/rt/th
         o("thattr")
+        #> th:   doc/rt/th/thattr
         oc("thword", Rest1)
-        #> doc/rt/th/thattr/thword
+        #> th:   doc/rt/th/thattr/thword
       }
   
-      else if ((Bc == "tc") && (Path ~ "doc/rt/th")) {
-        c("thattr")
+      else if (Bc == "tc") {
+        if (Path ~ "thattr")
+          c("thattr")
+        else if (Path ~ "gc2attr")
+          c("gc2attr")
+        else if (Path ~ "th3")
+          c("th3attr")
+        
         oc("tc", Rest1)
-        #> doc/rt/th/thattr/tc
+        #> tc:   doc/rt/th/thattr/tc                :
+        #> tc:   doc/rt/gc2/gc2attr/tc              :
+        #> tc:   doc/rt/gc2/th3/th3attr/tc          :
       }
-  
-      else if ((Bc == "cnj") && (Path ~ "doc/rt/th")) {
-        c("thattr")
+
+      else if (Bc == "cnj") {
+        if (Path ~ "thattr")
+          c("thattr")
+        else if (Path ~ "gc2attr")
+          c("gc2attr")
+        else if (Path ~ "th3")
+          c("th3attr")
+
         oc("cnj", Rest1)
-        #> doc/rt/th/thattr/cnj
+        #> cnj:  doc/rt/th/thattr/cnj               :
+        #> cnj:  doc/rt/gc2/gc2attr/cnj             :
+        #> cnj:  doc/rt/gc2/th3/th3attr/cnj         :
       }
-  
-      else if ((Bc == "gl") && (Path ~ "doc/rt/th")) {
-        c("thattr")
-        oc("thgl", Rest1)
-        #> doc/rt/th/thattr/thgl
+      
+      else if (Bc == "gl") {
+        if      (Path ~ "thattr")
+          c("thattr")
+        else if (Path ~ "gc2attr")
+          c("gc2attr")
+        else if (Path ~ "th3")
+          c("th3attr")
+        else if (Path ~ "gc3attr")
+          c("gc3attr")
+        
+        oc("gl", Rest1)
+        #> gl:   doc/rt/th/thattr/gl                :
+        #> gl:   doc/rt/gc2/gc2attr/gl              :
+        #> gl:   doc/rt/gc2/th3/th3attr/gl          :
+        #> gl:   doc/rt/gc2/gc3/gc3attr/gl          :
       }
-
-      else if ((Bc == "quo")  && (Path ~ "doc/rt/th")) {
-        c("thattr")
+      
+      else if (Bc == "quo") {
+        if      (Path ~ "thattr")
+          c("thattr")
+        else if (Path ~ "th3attr")
+          c("th3attr")
+        else if (Path ~ "exengs")
+          c("exeng")
+        
         oc("quo", Rest1)
-        #> doc/rt/th/thattr/quo        
+        #> quo:  doc/rt/th/thattr/quo               :
+        #> quo:  doc/rt/gc2/th3/th3attr/quo         :
+        #> quo:  doc/rt/th/thexengs/exeng/quo       :
+        #> quo:  doc/rt/gc2/gc2exengs/exeng/quo     :
+        #> quo:  doc/rt/gc2/th3/th3exengs/exeng/quo :
+        #> quo:  doc/rt/gc2/gc3/gc3exengs/exeng/quo :
       }
 
-      else if ((Bc == "cit")  && (Path ~ "doc/rt/th")) {
-        c("thattr")
+      else if (Bc == "cit") {
+        if      (Path ~ "thattr")
+          c("thattr")
+        else if (Path ~ "th3attr")
+          c("th3attr")
+        else if (Path ~ "exengs")
+          c("exeng")
+        
         oc("cit", Rest1)
-        #> doc/rt/th/thattr/cit
+        #> cit:  doc/rt/th/thattr/cit               :
+        #> cit:  doc/rt/gc2/th3/th3attr/cit         :
+        #> cit:  doc/rt/th/thexengs/exeng/cit       :
+        #> cit:  doc/rt/gc2/gc2exengs/exeng/cit     :
+        #> cit:  doc/rt/gc2/th3/th3exengs/exeng/cit :
+        #> cit:  doc/rt/gc2/gc3/gc3exengs/exeng/cit :
       }
-  
-      else if ((Bc == "ex")  && (Path ~ "doc/rt/th")) {
+
+      else if (Bc == "ex") {
         # first one
-        if (Path !~ /exengs/) {
-          c("th")
-          o("thexengs")
+        if (Path !~ "exengs") {
+          if      (Path ~ "rt/th")
+            c("th")
+          else if (Path ~ "gc2/th3")
+            c("th3")
+          else if (Path ~ "gc2/gc3")
+            c("gc3")
+          else if (Path ~ "gc2")
+            c("gc2")
+
+          o("exengs")
           o("exeng")
           oc("ex", Rest1)
-          #> doc/rt/th/thexengs/exeng/ex
+          #> ex:   doc/rt/th/exengs/exeng/ex          :
+          #> ex:   doc/rt/gc2/exengs/exeng/ex         :
+          #> ex:   doc/rt/gc2/th3/exengs/exeng/ex     :
+          #> ex:   doc/rt/gc2/gc3/gc3exengs/exeng/ex  :
           # oc("excolon", ": ")
         }
+        # second or later
         else {
-          c("thexengs")
+          c("exengs")
           o("exeng")
           oc("ex", Rest1)
           # oc("excolon", ": ")
         }
       }
-  
-      else if ((Bc == "eng") && (Path ~ "doc/rt/th")) {
+      
+      else if (Bc == "eng") {
         c("exeng")
         oc("eng", Rest1)
-        #> doc/rt/th/thexengs/exeng/eng
+        #> eng:  doc/rt/th/exengs/exeng/eng         :
+        #> eng:  doc/rt/gc2/exengs/exeng/eng        :
+        #> eng:  doc/rt/gc2/th3/exengs/exeng/eng    :
+        #> eng:  doc/rt/gc2/gc3/exengs/exeng/eng    :
         oc("exsemicolon", "; ")
       }
 
-      else if ((Bc == "lit") && (Path ~ "doc/rt/th/thexengs")) {
+      else if (Bc == "lit") {
         c("exeng")
         oc("lit", Rest1)
-        #> doc/rt/th/thexengs/exeng/lit
-      }
-      else if ((Bc == "quo") && (Path ~ "doc/rt/th/thexengs")) {
-        c("exeng")
-        oc("quo", Rest1)
-        #> doc/rt/th/thexengs/exeng/quo
-      }
-      else if ((Bc == "cit") && (Path ~ "doc/rt/th/thexengs")) {
-        c("exeng")
-        oc("cit", Rest1)
-        #> doc/rt/th/thexengs/exeng/cit
+        #> lit:  doc/rt/th/exengs/exeng/lit         :
+        #> lit:  doc/rt/gc2/exengs/exeng/lit        :
+        #> lit:  doc/rt/gc2/th3/exengs/exeng/lit    :
+        #> lit:  doc/rt/gc2/gc3/exengs/exeng/lit    :
+        oc("exsemicolon", "; ")
       }
 
-      # PARADIGMS
       else if (Bc == "prds") {
         c("th")
         o("prds")
         oc("prdstype", Word2)
-        #> doc/rt/th/prds/prdstype
+        #> prds: doc/rt/th/prds/prdstype
         oc("prdsdef", Rest2)
-        #> doc/rt/th/prds/prdsdef
+        #> prds: doc/rt/th/prds/prdsdef
       }
 
       else if (Bc == "prd") {
         c("prds")
         o("prd")
         oc("prdpers", Word2)
-        #> doc/rt/th/prds/prd/prdpers
+        #> prd:  doc/rt/th/prds/prd/prdpers
         oc("prdwords", Rest2)
-        #> doc/rt/th/prds/prd/prdwords
+        #> prd:  doc/rt/th/prds/prd/prdwords
       }
 
       else if (Bc == "prdgl") {
         c("prd")
         oc("prdgl", Rest1)
-        #> doc/rt/th/prds/prd/prdword
+        #> prdgl:doc/rt/th/prds/prd/prdgl
       }
 
-      # GC2
       else if (Bc == "gc2") {
         if (Path ~ "doc/rt")
           c("rt")
@@ -215,9 +276,9 @@ BEGIN{
         o("gc2")
         o("gc2attr")
         oc("gc2word", Rest1)
-        #> doc/rt/gc2/gc2attr/gc2word
+        #> gc2:  doc/rt/gc2/gc2attr/gc2word
         oc("gc2type", "(" abbrev(Bl) ")")
-        #> doc/rt/gc2/gc2attr/gc2type
+        #> gc2:  doc/rt/gc2/gc2attr/gc2type
       }
   
       else if ((Bc == "dial") && (Path ~ /gc2attr/) && (Path !~ /dials/)) {
@@ -244,11 +305,6 @@ BEGIN{
         c("dials")
       }
 
-      else if ((Bc == "tc") && (Path ~ /gc2attr/)) {
-        c("gc2attr")
-        oc("tc", Rest1)
-        #> doc/rt/gc2/gc2attr/tc
-      }
 
       else if ((Bc == "asp") && (Path ~ /gc2attr/)) {
         c("gc2attr")
@@ -256,59 +312,7 @@ BEGIN{
         #> doc/rt/gc2/gc2attr/asp
       }
 
-      else if ((Bc == "cnj") && (Path ~ /gc2attr/)) {
-        c("gc2attr")
-        oc("cnj", Rest1)
-        #> doc/rt/gc2/gc2attr/cnj
-      }
-
-      else if ((Bc == "gl") && (Path ~ /gc2attr/)) {
-        c("gc2attr")
-        oc("gc2gl", Rest1)
-        #> doc/rt/gc2/gc2attr/gc2gl
-      }
   
-      else if ((Bc == "ex") && (Path ~ "doc/rt/gc2")) {
-        # first one
-        if (Path !~ "exengs") {
-          c("gc2")
-          o("gc2exengs")
-          o("exeng")
-          oc("ex", Rest1)
-          #> doc/rt/gc2/gc2exengs/exeng/ex
-          # oc("excolon", ": ")
-        }
-        else {
-          c("gc2exengs")
-          o("exeng")
-          oc("ex", Rest1)
-          # oc("excolon", ": ")
-        }
-      }
-  
-      else if ((Bc == "eng") && (Path ~ "doc/rt/gc2")) {
-        c("exeng")
-        oc("eng", Rest1)
-        #> doc/rt/gc2/gc2exengs/exeng/eng
-        oc("exsemicolon", "; ")
-      }
-
-      else if ((Bc == "lit") && (Path ~ "doc/rt/gc2")) {
-        c("exeng")
-        oc("lit", Rest1)
-        #> doc/rt/gc2/gc2exengs/exeng/lit
-      }
-      else if ((Bc == "quo") && (Path ~ "doc/rt/gc2")) {
-        c("exeng")
-        oc("quo", Rest1)
-        #> doc/rt/gc2/gc2exengs/exeng/quo
-      }
-      else if ((Bc == "cit") && (Path ~ "doc/rt/gc2")) {
-        c("exeng")
-        oc("cit", Rest1)
-        #> doc/rt/gc2/gc2exengs/exeng/cit
-      }
-
       # TFS THEME (...th)
       else if ((Bc == "th3") && (Path ~ "gc2")) {
         c("gc2")
@@ -318,77 +322,9 @@ BEGIN{
         #> doc/rt/gc2/th3/th3attr/thword
       }
   
-      else if ((Bc == "tc") && (Path ~ "doc/rt/gc2/th3")) {
-        c("th3attr")
-        oc("tc", Rest1)
-        #> doc/rt/gc2/th3/th3attr/tc
-      }
   
-      else if ((Bc == "cnj") && (Path ~ "doc/rt/gc2/th3")) {
-        c("th3attr")
-        oc("cnj", Rest1)
-        #> doc/rt/gc2/th3/th3attr/cnj
-      }
+
   
-      else if ((Bc == "gl") && (Path ~ "doc/rt/gc2/th3")) {
-        c("th3attr")
-        oc("thgl", Rest1)
-        #> doc/rt/gc2/th3/th3attr/thgl
-      }
-
-      else if ((Bc == "quo")  && (Path ~ "doc/rt/gc2/th3")) {
-        c("th3attr")
-        oc("quo", Rest1)
-        #> doc/rt/gc2/th3/th3attr/quo        
-      }
-
-      else if ((Bc == "cit")  && (Path ~ "doc/rt/gc2/th3")) {
-        c("th3attr")
-        oc("cit", Rest1)
-        #> doc/rt/gc2/th3/th3attr/cit
-      }
-  
-      else if ((Bc == "ex")  && (Path ~ "doc/rt/gc2/th3")) {
-        # first one
-        if (Path !~ /exengs/) {
-          c("th3")
-          o("th3exengs")
-          o("exeng")
-          oc("ex", Rest1)
-          #> doc/rt/gc2/th3/th3exengs/exeng/ex
-          # oc("excolon", ": ")
-        }
-        else {
-          c("th3exengs")
-          o("exeng")
-          oc("ex", Rest1)
-          # oc("excolon", ": ")
-        }
-      }
-  
-      else if ((Bc == "eng") && (Path ~ "doc/rt/gc2/th3")) {
-        c("exeng")
-        oc("eng", Rest1)
-        #> doc/rt/gc2/th3/th3exengs/exeng/eng
-        oc("exsemicolon", "; ")
-      }
-
-      else if ((Bc == "lit") && (Path ~ "doc/rt/gc2/th3/th3exengs")) {
-        c("exeng")
-        oc("lit", Rest1)
-        #> doc/rt/gc2/th3/th3exengs/exeng/lit
-      }
-      else if ((Bc == "quo") && (Path ~ "doc/rt/gc2/th3/th3exengs")) {
-        c("exeng")
-        oc("quo", Rest1)
-        #> doc/rt/gc2/th3/th3exengs/exeng/quo
-      }
-      else if ((Bc == "cit") && (Path ~ "doc/rt/gc2/th3/th3exengs")) {
-        c("exeng")
-        oc("cit", Rest1)
-        #> doc/rt/gc2/th3/th3exengs/exeng/cit
-      }
-
       # GC3
       else if (Bc == "gc3") {
         c("gc2")
@@ -424,53 +360,7 @@ BEGIN{
         c("dials")
       }
 
-      else if ((Bc == "gl") && (Path ~ /gc3attr/)) {
-        c("gc3attr")
-        oc("gc2gl", Rest1)
-        #> doc/rt/gc2/gc3/gc3attr/gc2gl
-      }
   
-      else if ((Bc == "ex") && (Path ~ "doc/rt/gc2/gc3")) {
-        # first one
-        if (Path !~ "exengs") {
-          c("gc3")
-          o("gc3exengs")
-          o("exeng")
-          oc("ex", Rest1)
-          #> doc/rt/gc2/gc3/gc3exengs/exeng/ex
-          # oc("excolon", ": ")
-        }
-        else {
-          c("gc3exengs")
-          o("exeng")
-          oc("ex", Rest1)
-          # oc("excolon", ": ")
-        }
-      }
-  
-      else if ((Bc == "eng") && (Path ~ "doc/rt/gc2/gc3")) {
-        c("exeng")
-        oc("eng", Rest1)
-        #> doc/rt/gc2/gc3/gc3exengs/exeng/eng
-        oc("exsemicolon", "; ")
-      }
-
-      else if ((Bc == "lit") && (Path ~ "doc/rt/gc2/gc3")) {
-        c("exeng")
-        oc("lit", Rest1)
-        #> doc/rt/gc2/gc3/gc3exengs/exeng/lit
-      }
-      else if ((Bc == "quo") && (Path ~ "doc/rt/gc2/gc3")) {
-        c("exeng")
-        oc("quo", Rest1)
-        #> doc/rt/gc2/gc3/gc3exengs/exeng/quo
-      }
-      else if ((Bc == "cit") && (Path ~ "doc/rt/gc2/gc3")) {
-        c("exeng")
-        oc("cit", Rest1)
-        #> doc/rt/gc2/gc3/gc3exengs/exeng/cit
-      }
-
       # LOANWORDS
       if (Bc == "lw") {
         c("doc")
@@ -523,33 +413,34 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["sets"  ]["sets"] = "                           set             "
   fol["sets"  ]["set" ] = "                           set th gc2 rt lw"
 
-  #                          1  ?  1  ?    ?  *   <1  ?   ?   ?   ?    <1  ?    *   *
+  #                          1  ?  1  ?    ?  *   <1  ?   ?   ?   ?           <1  ?    *   *
   fol["thattr"]["th"   ] = "tc                                                           "
   fol["thattr"]["tc"   ] = "   cnj gl                                                    "
   fol["thattr"]["cnj"  ] = "       gl                                                    "
-  fol["thattr"]["gl"   ] = "          quo cit ex                 prds           gc2 rt lw"
-  fol["thattr"]["quo"  ] = "              cit ex                 prds           gc2 rt lw"
-  fol["thattr"]["cit"  ] = "                  ex                 prds           gc2 rt lw"
-  fol["exeng" ]["ex"   ] = "                     eng                                     "
-  fol["exeng" ]["eng"  ] = "                  ex     lit quo cit prds           gc2 th3 gc3 rt lw"
-  fol["exeng" ]["lit"  ] = "                  ex         quo cit prds           gc2 rt lw"
-  fol["exeng" ]["quo"  ] = "                  ex             cit prds           gc2 rt lw"
-  fol["exeng" ]["cit"  ] = "                  ex                 prds           gc2 rt lw"
-  fol["prds"  ]["prds" ] = "                                          prd                "
-  fol["prd"   ]["prd"  ] = "                                          prd prdgl          "
-  fol["prd"   ]["prdgl"] = "                                     prds prd       gc2 rt lw"
+  fol["thattr"]["gl"   ] = "          quo cit ex                         prds           gc2 rt lw"
+  fol["thattr"]["quo"  ] = "              cit ex                         prds           gc2 rt lw"
+  fol["thattr"]["cit"  ] = "                  ex                         prds           gc2 rt lw"
+  fol["exeng" ]["ex"   ] = "                     dial eng                                     "
+  fol["exeng" ]["dial" ] = "                          eng                                     "
+  fol["exeng" ]["eng"  ] = "                  ex          lit quo cit th prds           gc2 th3 gc3 rt lw"
+  fol["exeng" ]["lit"  ] = "                  ex              quo cit th prds           gc2 rt lw"
+  fol["exeng" ]["quo"  ] = "                  ex                  cit th prds           gc2 rt lw"
+  fol["exeng" ]["cit"  ] = "                  ex                      th prds           gc2 rt lw"
+  fol["prds"  ]["prds" ] = "                                                  prd                "
+  fol["prd"   ]["prd"  ] = "                                                  prd prdgl          "
+  fol["prd"   ]["prdgl"] = "                                             prds prd       gc2 rt lw"
 
-  #                           ?   ?  ?   ?  1   ?  ?   ?  *   *  *   *   
-  fol["gc2attr"]["gc2" ] = "dial tc asp cnj gl            "
-  fol["dials"  ]["dial"] = "dial tc asp cnj gl            "
-  fol["dialx"  ]["dial"] = "dial tc asp cnj gl            "
-  fol["gc2attr"]["tc"  ] = "        asp cnj gl            "
-  fol["gc2attr"]["asp" ] = "            cnj gl            "
-  fol["gc2attr"]["cnj" ] = "                gl            "
-  fol["gc2attr"]["gl"  ] = "                   smf sc lit ex th3 gc3 gc2 rt lw"
-  fol["gc2attr"]["smf" ] = "                       sc lit ex th3 gc3 gc2 rt lw"
-  fol["gc2attr"]["sc"  ] = "                          lit ex th3 gc3 gc2 rt lw"
-  fol["gc2attr"]["lit" ] = "                              ex th3 gc3 gc2 rt lw"
+  #                           ?       ?  ?   ?  1   ?  ?   ?  *   *  *   *   
+  fol["gc2attr"]["gc2" ] = "dial     tc asp cnj gl            "
+  fol["dials"  ]["dial"] = "dial eng tc asp cnj gl            "
+  fol["dialx"  ]["dial"] = "dial     tc asp cnj gl            "
+  fol["gc2attr"]["tc"  ] = "            asp cnj gl            "
+  fol["gc2attr"]["asp" ] = "                cnj gl            "
+  fol["gc2attr"]["cnj" ] = "                    gl            "
+  fol["gc2attr"]["gl"  ] = "                       smf sc lit ex th3 gc3 gc2 rt lw"
+  fol["gc2attr"]["smf" ] = "                           sc lit ex th3 gc3 gc2 rt lw"
+  fol["gc2attr"]["sc"  ] = "                              lit ex th3 gc3 gc2 rt lw"
+  fol["gc2attr"]["lit" ] = "                                  ex th3 gc3 gc2 rt lw"
 
   #                          1  ?  1  ?    ?  *   *    *   
   fol["th3attr"]["th3"  ] = "tc                                                           "
