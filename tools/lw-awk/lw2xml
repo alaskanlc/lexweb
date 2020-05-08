@@ -35,7 +35,7 @@ BEGIN{
 
       splitline()
       # skip some classes
-      if (Bc ~ /^(file|par|cf|caus|xr|xgl|grp|smf|sc)$/)
+      if (Bc ~ /^(par|cf|caus|xr|xgl|grp|smf|sc)$/)
         continue
       
       # =====================  Validation ==========================
@@ -362,6 +362,12 @@ BEGIN{
         #> com:  .../com
       }
 
+      else if (Bc == "file") {
+        c("doc")
+        oc("file", Rest1 )
+        #> file: doc/file
+      }
+      
       # errors
       else if (Bc)
         error("Band category '" Bc "' not handled")
@@ -393,32 +399,33 @@ function init(     load, x, y, i, j, k, z, fol) {
   #   th, gc2, or a new root. A is the exit Path of B.
 
   #   Occurrences:            ?   ?   ?    ?  ?   ?   <+  *  * 
-  fol["doc"   ]["0"   ] = "rt                                       lw"
-  fol["rtattr"]["rt"  ] = "   pd tag rtyp nav df sets     th gc2 rt lw"
-  fol["rtattr"]["pd"  ] = "      tag rtyp nav df sets     th gc2 rt lw"
-  fol["rtattr"]["tag" ] = "          rtyp nav df sets     th gc2 rt lw"
-  fol["rtattr"]["rtyp"] = "               nav df sets     th gc2 rt lw"
-  fol["rtattr"]["nav" ] = "                   df sets     th gc2 rt lw"
-  fol["rtattr"]["df"  ] = "                      sets     th gc2 rt lw"
+  fol["doc"   ]["0"   ] = "rt                                       lw file"
+  fol["doc"   ]["file"] = "rt                                       lw file"
+  fol["rtattr"]["rt"  ] = "   pd tag rtyp nav df sets     th gc2 rt lw file"
+  fol["rtattr"]["pd"  ] = "      tag rtyp nav df sets     th gc2 rt lw file"
+  fol["rtattr"]["tag" ] = "          rtyp nav df sets     th gc2 rt lw file"
+  fol["rtattr"]["rtyp"] = "               nav df sets     th gc2 rt lw file"
+  fol["rtattr"]["nav" ] = "                   df sets     th gc2 rt lw file"
+  fol["rtattr"]["df"  ] = "                      sets     th gc2 rt lw file"
   fol["sets"  ]["sets"] = "                           set             "
-  fol["sets"  ]["set" ] = "                           set th gc2 rt lw"
+  fol["sets"  ]["set" ] = "                           set th gc2 rt lw file"
 
   #                          1  ?  1  ?    ?  *   <1  ?   ?   ?   ?           <1  ?    *   *
   fol["thattr"]["th"   ] = "tc                                                           "
   fol["thattr"]["tc"   ] = "   cnj gl                                                    "
   fol["thattr"]["cnj"  ] = "       gl                                                    "
-  fol["thattr"]["gl"   ] = "          quo cit ex                         prds           gc2 rt lw"
-  fol["thattr"]["quo"  ] = "              cit ex                         prds           gc2 rt lw"
-  fol["thattr"]["cit"  ] = "                  ex                         prds           gc2 rt lw"
+  fol["thattr"]["gl"   ] = "          quo cit ex                      th prds           gc2 rt lw file"
+  fol["thattr"]["quo"  ] = "              cit ex                      th prds           gc2 rt lw file"
+  fol["thattr"]["cit"  ] = "                  ex                      th prds           gc2 rt lw file"
   fol["exeng" ]["ex"   ] = "                     dial eng                                     "
   fol["exeng" ]["dial" ] = "                          eng                                     "
-  fol["exeng" ]["eng"  ] = "                  ex          lit quo cit th prds           gc2 th3 gc3 rt lw"
-  fol["exeng" ]["lit"  ] = "                  ex              quo cit th prds           gc2 rt lw"
-  fol["exeng" ]["quo"  ] = "                  ex                  cit th prds           gc2 rt lw"
-  fol["exeng" ]["cit"  ] = "                  ex                      th prds           gc2 rt lw"
+  fol["exeng" ]["eng"  ] = "                  ex          lit quo cit th prds           gc2 th3 gc3 rt lw file"
+  fol["exeng" ]["lit"  ] = "                  ex              quo cit th prds           gc2 rt lw file"
+  fol["exeng" ]["quo"  ] = "                  ex                  cit th prds           gc2 rt lw file"
+  fol["exeng" ]["cit"  ] = "                  ex                      th prds           gc2 rt lw file"
   fol["prds"  ]["prds" ] = "                                                  prd                "
   fol["prd"   ]["prd"  ] = "                                                  prd prdgl          "
-  fol["prd"   ]["prdgl"] = "                                          th prds prd       gc2 rt lw"
+  fol["prd"   ]["prdgl"] = "                                          th prds prd       gc2 rt lw file"
 
   #                           ?       ?  ?   ?  1   ?  ?   ?  *   *  *   *   
   fol["gc2attr"]["gc2" ] = "dial     tc asp cnj gl            "
@@ -427,29 +434,31 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["gc2attr"]["tc"  ] = "            asp cnj gl            "
   fol["gc2attr"]["asp" ] = "                cnj gl            "
   fol["gc2attr"]["cnj" ] = "                    gl            "
-  fol["gc2attr"]["gl"  ] = "                       smf sc lit ex th3 gc3 gc2 rt lw"
-  fol["gc2attr"]["smf" ] = "                           sc lit ex th3 gc3 gc2 rt lw"
-  fol["gc2attr"]["sc"  ] = "                              lit ex th3 gc3 gc2 rt lw"
-  fol["gc2attr"]["lit" ] = "                                  ex th3 gc3 gc2 rt lw"
+  fol["gc2attr"]["gl"  ] = "                       quo cit smf sc lit ex th3 gc3 gc2 rt lw file"
+  fol["gc2attr"]["quo" ] = "                           cit smf sc lit ex th3 gc3 gc2 rt lw file"
+  fol["gc2attr"]["cit" ] = "                               smf sc lit ex th3 gc3 gc2 rt lw file"
+  fol["gc2attr"]["smf" ] = "                                   sc lit ex th3 gc3 gc2 rt lw file"
+  fol["gc2attr"]["sc"  ] = "                                      lit ex th3 gc3 gc2 rt lw file"
+  fol["gc2attr"]["lit" ] = "                                          ex th3 gc3 gc2 rt lw file"
 
   #                          1  ?  1  ?    ?  *   *    *   
   fol["th3attr"]["th3"  ] = "tc                                                           "
   fol["th3attr"]["tc"   ] = "   cnj gl                                                    "
   fol["th3attr"]["cnj"  ] = "       gl                                                    "
-  fol["th3attr"]["gl"   ] = "          quo cit ex gc3 gc2 rt lw"
-  fol["th3attr"]["quo"  ] = "              cit ex gc3 gc2 rt lw"
-  fol["th3attr"]["cit"  ] = "                  ex gc3 gc2 rt lw"
+  fol["th3attr"]["gl"   ] = "          quo cit ex gc3 gc2 rt lw file"
+  fol["th3attr"]["quo"  ] = "              cit ex gc3 gc2 rt lw file"
+  fol["th3attr"]["cit"  ] = "                  ex gc3 gc2 rt lw file"
 
   #                           ?   ?  ?   ?  1   ?  ?   ?  *   *  *   *   
   fol["gc3attr"]["gc3" ] = "dial            gl            "
-  fol["gc3attr"]["gl"  ] = "                   smf sc lit ex th3 gc3 gc2 rt lw"
-  fol["gc3attr"]["smf" ] = "                       sc lit ex th3 gc3 gc2 rt lw"
-  fol["gc2attr"]["sc"  ] = "                          lit ex th3 gc3 gc2 rt lw"
-  fol["gc2attr"]["lit" ] = "                              ex th3 gc3 gc2 rt lw"
+  fol["gc3attr"]["gl"  ] = "                   smf sc lit ex th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["smf" ] = "                       sc lit ex th3 gc3 gc2 rt lw file"
+  fol["gc2attr"]["sc"  ] = "                          lit ex th3 gc3 gc2 rt lw file"
+  fol["gc2attr"]["lit" ] = "                              ex th3 gc3 gc2 rt lw file"
 
   #
   fol["lwattr"]["lw" ] = "src "
-  fol["lwattr"]["src"] = "gc2 rt lw"
+  fol["lwattr"]["src"] = "gc2 rt lw file"
   
   
   # make F array from fol
@@ -567,7 +576,7 @@ function init(     load, x, y, i, j, k, z, fol) {
   for (i in x)
     Aspcat[x[i]] = 1
 
-  load = "MN|S|C|G|MC|T|Us|TG|OC|GG"
+  load = "MN|S|C|G|MC|T|Us|TG|OC|GG|all"
   split(load, x, "|")
   for (i in x)
     Dial[x[i]] = 1
