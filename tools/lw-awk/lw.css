@@ -46,7 +46,7 @@
 
 /* multi-context */
 
-.lit, .quo, .cit { display: none; }
+.lit, .quo, .cit { display: inline; font-style: italic; }
 
 .gl { display: inline; }
 

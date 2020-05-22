@@ -158,6 +158,7 @@ BEGIN{
         #> gl:   doc/rt/gc2/gc2attr/gl              :
         #> gl:   doc/rt/gc2/th3/th3attr/gl          :
         #> gl:   doc/rt/gc2/gc3/gc3attr/gl          :
+        #> gl:   doc/rt/th/gc3/gc3attr/gl           :
       }
       
       else if (Bc == "quo") {
@@ -175,6 +176,7 @@ BEGIN{
         #> quo:  doc/rt/gc2/gc2exengs/exeng/quo     :
         #> quo:  doc/rt/gc2/th3/th3exengs/exeng/quo :
         #> quo:  doc/rt/gc2/gc3/gc3exengs/exeng/quo :
+        #> quo:  doc/rt/th/gc3/gc3exengs/exeng/quo  :
       }
 
       else if (Bc == "cit") {
@@ -192,6 +194,7 @@ BEGIN{
         #> cit:  doc/rt/gc2/gc2exengs/exeng/cit     :
         #> cit:  doc/rt/gc2/th3/th3exengs/exeng/cit :
         #> cit:  doc/rt/gc2/gc3/gc3exengs/exeng/cit :
+        #> cit:  doc/rt/th/gc3/gc3exengs/exeng/cit  :
       }
 
       else if (Bc == "ex") {
@@ -213,6 +216,7 @@ BEGIN{
           #> ex:   doc/rt/gc2/exengs/exeng/ex         :
           #> ex:   doc/rt/gc2/th3/exengs/exeng/ex     :
           #> ex:   doc/rt/gc2/gc3/gc3exengs/exeng/ex  :
+          #> ex:   doc/rt/th/gc3/gc3exengs/exeng/ex   :
           # oc("excolon", ": ")
         }
         # second or later
@@ -231,6 +235,7 @@ BEGIN{
         #> eng:  doc/rt/gc2/exengs/exeng/eng        :
         #> eng:  doc/rt/gc2/th3/exengs/exeng/eng    :
         #> eng:  doc/rt/gc2/gc3/exengs/exeng/eng    :
+        #> eng:  doc/rt/th/gc3/exengs/exeng/eng     :
         oc("exsemicolon", "; ")
       }
 
@@ -242,13 +247,15 @@ BEGIN{
         else if (Path ~ "gc2attr")
           c("gc2attr")
 
-        oc("lit", Rest1)
+        oc("lit", "lit. " Rest1)
         #> lit:  doc/rt/th/exengs/exeng/lit         :
         #> lit:  doc/rt/gc2/exengs/exeng/lit        :
         #> lit:  doc/rt/gc2/th3/exengs/exeng/lit    :
         #> lit:  doc/rt/gc2/gc3/exengs/exeng/lit    :
+        #> lit:  doc/rt/th/gc3/exengs/exeng/lit     :
         #> lit:  doc/rt/gc2/gc2attr/lit             :
         #> lit:  doc/rt/gc2/gc3/gc3attr/lit         :
+        #> lit:  doc/rt/th/gc3/gc3attr/lit          :
         oc("exsemicolon", "; ")
       }
 
@@ -303,6 +310,7 @@ BEGIN{
           oc("dial", Word2)
           #> dial: doc/rt/gc2/gc2attr/dials/dial               :
           #> dial: doc/rt/gc2/gc3/gc3attr/dials/dial           :
+          #> dial: doc/rt/th/gc3/gc3attr/dials/dial            :
           #> dial: ... exeng/dials/dial                        :
           if (VALIDATE)
             if (!Dial[Word2])
@@ -316,11 +324,13 @@ BEGIN{
           oc("dial", Word2)
           #> dial: doc/rt/gc2/gc2attr/dials/dialx/dial         :
           #> dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dial     :
+          #> dial: doc/rt/th/gc3/gc3attr/dials/dialx/dial      :
           #> dial: ... exeng/dials/dialx/dial                  :
           oc("dialcolon", ":")
           oc("dialword", Rest2)
           #> dial: doc/rt/gc2/gc2attr/dials/dialx/dialword     :
           #> dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dialword :
+          #> dial: doc/rt/th/gc3/gc3attr/dials/dialx/dialword  :
           #> dial: ... exeng/dials/dialx/dialword              :
           c("dials")
         }
@@ -332,8 +342,9 @@ BEGIN{
         else if (Path ~ "gc3")
           c("gc3attr")
         oc("asp", Rest1)
-        #> asp:  doc/rt/gc2/gc2attr/asp
-        #> asp:  doc/rt/gc2/g3/gc3attr/asp
+        #> asp:  doc/rt/gc2/gc2attr/asp         :
+        #> asp:  doc/rt/gc2/gc3/gc3attr/asp     :
+        #> asp:  doc/rt/th/gc3/gc3attr/asp      :
       }
       
       else if (Bc == "th3") {
@@ -346,13 +357,22 @@ BEGIN{
       
       # GC3
       else if (Bc == "gc3") {
-        c("gc2")
+        if (Path !~ "/th/") 
+          c("gc2")
+        if (Path ~ "/th/") { 
+          c("th")
+          if (VALIDATE)
+            if (Bl !~ /^\.\.\.(mpn|in|pn|n)$/)
+              error("Under ..th, the only gc3 allowed are n, in, pn, mpn")
+        }
         o("gc3")
         o("gc3attr")
         oc("gc3word", Rest1)
-        #> doc/rt/gc2/gc3/gc3attr/gc3word
+        #> doc/rt/gc2/gc3/gc3attr/gc3word  :
+        #> doc/rt/th/gc3/gc3attr/gc3word   :
         oc("gc3type", "(" abbrev(Bl) ")")
         #> doc/rt/gc2/gc3/gc3attr/gc3type
+        #> doc/rt/th/gc3/gc3attr/gc3type
       }
   
       else if (Bc == "lw") {
@@ -436,18 +456,18 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["thattr"]["th"   ] = "dial tc                                                           "
   fol["thattr"]["tc"   ] = "        cnj gl                                                    "
   fol["thattr"]["cnj"  ] = "            gl                                                    "
-  fol["thattr"]["gl"   ] = "               quo cit ex                      th prds           gc2 rt lw file"
-  fol["thattr"]["quo"  ] = "                   cit ex                      th prds           gc2 rt lw file"
-  fol["thattr"]["cit"  ] = "                       ex                      th prds           gc2 rt lw file"
+  fol["thattr"]["gl"   ] = "               quo cit ex                      gc3 th prds           gc2 rt lw file"
+  fol["thattr"]["quo"  ] = "                   cit ex                      gc3 th prds           gc2 rt lw file"
+  fol["thattr"]["cit"  ] = "                       ex                      gc3 th prds           gc2 rt lw file"
   fol["exeng" ]["ex"   ] = "                          dial eng                                     "
   fol["exeng" ]["dial" ] = "                               eng                                     "
-  fol["exeng" ]["eng"  ] = "                       ex          lit quo cit th prds           gc2 th3 gc3 rt lw file"
-  fol["exeng" ]["lit"  ] = "                       ex              quo cit th prds           gc2 th3 gc3 rt lw file"
-  fol["exeng" ]["quo"  ] = "                       ex                  cit th prds           gc2 th3 gc3 rt lw file"
-  fol["exeng" ]["cit"  ] = "                       ex                      th prds           gc2 th3 gc3 rt lw file"
-  fol["prds"  ]["prds" ] = "                                                       prd                "
-  fol["prd"   ]["prd"  ] = "                                                       prd prdgl          "
-  fol["prd"   ]["prdgl"] = "                                               th prds prd       gc2 rt lw file"
+  fol["exeng" ]["eng"  ] = "                       ex          lit quo cit gc3 th prds           gc2 th3 gc3 rt lw file"
+  fol["exeng" ]["lit"  ] = "                       ex              quo cit gc3 th prds           gc2 th3 gc3 rt lw file"
+  fol["exeng" ]["quo"  ] = "                       ex                  cit gc3 th prds           gc2 th3 gc3 rt lw file"
+  fol["exeng" ]["cit"  ] = "                       ex                      gc3 th prds           gc2 th3 gc3 rt lw file"
+  fol["prds"  ]["prds" ] = "                                                           prd                "
+  fol["prd"   ]["prd"  ] = "                                                           prd prdgl          "
+  fol["prd"   ]["prdgl"] = "                                               gc3 th prds prd       gc2 rt lw file"
 
   #                           ?       ?  ?   ?  1   ?  ?   ?  *   *  *   *   
   fol["gc2attr"]["gc2" ] = "dial     tc asp cnj gl            "
@@ -476,12 +496,12 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["gc3attr"]["tc"  ] = "        asp cnj gl            "
   fol["gc3attr"]["asp" ] = "            cnj gl            "
   fol["gc3attr"]["cnj" ] = "                gl            "
-  fol["gc3attr"]["gl"  ] = "                   quo cit smf sc lit ex th3 gc3 gc2 rt lw file"
-  fol["gc3attr"]["quo" ] = "                       cit smf sc lit ex th3 gc3 gc2 rt lw file"
-  fol["gc3attr"]["cit" ] = "                           smf sc lit ex th3 gc3 gc2 rt lw file"
-  fol["gc3attr"]["smf" ] = "                               sc lit ex th3 gc3 gc2 rt lw file"
-  fol["gc3attr"]["sc"  ] = "                                  lit ex th3 gc3 gc2 rt lw file"
-  fol["gc3attr"]["lit" ] = "                                      ex th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["gl"  ] = "                   quo cit smf sc lit ex th th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["quo" ] = "                       cit smf sc lit ex th th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["cit" ] = "                           smf sc lit ex th th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["smf" ] = "                               sc lit ex th th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["sc"  ] = "                                  lit ex th th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["lit" ] = "                                      ex th th3 gc3 gc2 rt lw file"
 
   #
   fol["lwattr"]["lw" ] = "src "
