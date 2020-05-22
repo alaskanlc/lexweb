@@ -52,7 +52,7 @@
 
 /* examples */
 
-.exengs { margin-bottom: 10px;} 
+.exengs { margin-left: 20px; margin-bottom: 10px;} 
 
 .exeng, .ex, .excolon, .eng , .exsemicolon { display: inline; }
 
@@ -134,11 +134,14 @@
 .lwword { font-weight: bold; }
 
 
-/* com */
+/* file, par, com */
+
+.file { margin: 30px;  font-weight: bold; font-size: larger; font-family: 'Arial', sans-serif; }
+
+.par { margin-left: 30px; margin-bottom: 10px;  margin-top: 5px; font-weight: bold; font-family: 'Arial', sans-serif; }
+
+.par3 { margin-left: 30px; margin-bottom: 10px; margin-top: 5px; font-family: 'Arial', sans-serif; }
 
 .com { margin-left: 30px; margin-bottom: 10px; font-style: italic; }
 
-/* file */
-
-.file { margin: 30px;  font-weight: bold; font-size: larger; font-family: sans-serif; }
 

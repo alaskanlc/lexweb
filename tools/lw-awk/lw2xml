@@ -35,7 +35,7 @@ BEGIN{
 
       splitline()
       # skip some classes
-      if (Bc ~ /^(par|cf|caus|xr|xgl|grp|smf|sc)$/)
+      if (Bc ~ /^(cf|caus|xr|xgl|grp|smf|sc)$/)
         continue
       
       # =====================  Validation ==========================
@@ -235,12 +235,20 @@ BEGIN{
       }
 
       else if (Bc == "lit") {
-        c("exeng")
+        if      (Path ~ "exengs")
+          c("exeng")
+        else if (Path ~ "gc3attr")
+          c("gc3attr")
+        else if (Path ~ "gc2attr")
+          c("gc2attr")
+
         oc("lit", Rest1)
         #> lit:  doc/rt/th/exengs/exeng/lit         :
         #> lit:  doc/rt/gc2/exengs/exeng/lit        :
         #> lit:  doc/rt/gc2/th3/exengs/exeng/lit    :
         #> lit:  doc/rt/gc2/gc3/exengs/exeng/lit    :
+        #> lit:  doc/rt/gc2/gc2attr/lit             :
+        #> lit:  doc/rt/gc2/gc3/gc3attr/lit         :
         oc("exsemicolon", "; ")
       }
 
@@ -319,9 +327,13 @@ BEGIN{
       }
 
       else if (Bc == "asp") {
-        c("gc2attr")
+        if (Path !~ "gc3")
+          c("gc2attr")
+        else if (Path ~ "gc3")
+          c("gc3attr")
         oc("asp", Rest1)
         #> asp:  doc/rt/gc2/gc2attr/asp
+        #> asp:  doc/rt/gc2/g3/gc3attr/asp
       }
       
       else if (Bc == "th3") {
@@ -360,6 +372,16 @@ BEGIN{
       else if (Bc == "com") {
         oc("com", Rest1 )
         #> com:  .../com
+      }
+
+      else if (Bc == "par") {
+        oc("par", Rest1 )
+        #> par:  .../par
+      }
+
+      else if (Bc == "par3") {
+        oc("par3", Rest1 )
+        #> par3:  .../par3
       }
 
       else if (Bc == "file") {
@@ -410,22 +432,22 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["sets"  ]["sets"] = "                           set             "
   fol["sets"  ]["set" ] = "                           set th gc2 rt lw file"
 
-  #                          1  ?  1  ?    ?  *   <1  ?   ?   ?   ?           <1  ?    *   *
-  fol["thattr"]["th"   ] = "tc                                                           "
-  fol["thattr"]["tc"   ] = "   cnj gl                                                    "
-  fol["thattr"]["cnj"  ] = "       gl                                                    "
-  fol["thattr"]["gl"   ] = "          quo cit ex                      th prds           gc2 rt lw file"
-  fol["thattr"]["quo"  ] = "              cit ex                      th prds           gc2 rt lw file"
-  fol["thattr"]["cit"  ] = "                  ex                      th prds           gc2 rt lw file"
-  fol["exeng" ]["ex"   ] = "                     dial eng                                     "
-  fol["exeng" ]["dial" ] = "                          eng                                     "
-  fol["exeng" ]["eng"  ] = "                  ex          lit quo cit th prds           gc2 th3 gc3 rt lw file"
-  fol["exeng" ]["lit"  ] = "                  ex              quo cit th prds           gc2 rt lw file"
-  fol["exeng" ]["quo"  ] = "                  ex                  cit th prds           gc2 rt lw file"
-  fol["exeng" ]["cit"  ] = "                  ex                      th prds           gc2 rt lw file"
-  fol["prds"  ]["prds" ] = "                                                  prd                "
-  fol["prd"   ]["prd"  ] = "                                                  prd prdgl          "
-  fol["prd"   ]["prdgl"] = "                                          th prds prd       gc2 rt lw file"
+  #                              1  ?  1  ?    ?  *   <1  ?   ?   ?   ?           <1  ?    *   *
+  fol["thattr"]["th"   ] = "dial tc                                                           "
+  fol["thattr"]["tc"   ] = "        cnj gl                                                    "
+  fol["thattr"]["cnj"  ] = "            gl                                                    "
+  fol["thattr"]["gl"   ] = "               quo cit ex                      th prds           gc2 rt lw file"
+  fol["thattr"]["quo"  ] = "                   cit ex                      th prds           gc2 rt lw file"
+  fol["thattr"]["cit"  ] = "                       ex                      th prds           gc2 rt lw file"
+  fol["exeng" ]["ex"   ] = "                          dial eng                                     "
+  fol["exeng" ]["dial" ] = "                               eng                                     "
+  fol["exeng" ]["eng"  ] = "                       ex          lit quo cit th prds           gc2 th3 gc3 rt lw file"
+  fol["exeng" ]["lit"  ] = "                       ex              quo cit th prds           gc2 th3 gc3 rt lw file"
+  fol["exeng" ]["quo"  ] = "                       ex                  cit th prds           gc2 th3 gc3 rt lw file"
+  fol["exeng" ]["cit"  ] = "                       ex                      th prds           gc2 th3 gc3 rt lw file"
+  fol["prds"  ]["prds" ] = "                                                       prd                "
+  fol["prd"   ]["prd"  ] = "                                                       prd prdgl          "
+  fol["prd"   ]["prdgl"] = "                                               th prds prd       gc2 rt lw file"
 
   #                           ?       ?  ?   ?  1   ?  ?   ?  *   *  *   *   
   fol["gc2attr"]["gc2" ] = "dial     tc asp cnj gl            "
@@ -450,11 +472,16 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["th3attr"]["cit"  ] = "                  ex gc3 gc2 rt lw file"
 
   #                           ?   ?  ?   ?  1   ?  ?   ?  *   *  *   *   
-  fol["gc3attr"]["gc3" ] = "dial            gl            "
-  fol["gc3attr"]["gl"  ] = "                   smf sc lit ex th3 gc3 gc2 rt lw file"
-  fol["gc3attr"]["smf" ] = "                       sc lit ex th3 gc3 gc2 rt lw file"
-  fol["gc2attr"]["sc"  ] = "                          lit ex th3 gc3 gc2 rt lw file"
-  fol["gc2attr"]["lit" ] = "                              ex th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["gc3" ] = "dial tc asp cnj gl            "
+  fol["gc3attr"]["tc"  ] = "        asp cnj gl            "
+  fol["gc3attr"]["asp" ] = "            cnj gl            "
+  fol["gc3attr"]["cnj" ] = "                gl            "
+  fol["gc3attr"]["gl"  ] = "                   quo cit smf sc lit ex th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["quo" ] = "                       cit smf sc lit ex th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["cit" ] = "                           smf sc lit ex th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["smf" ] = "                               sc lit ex th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["sc"  ] = "                                  lit ex th3 gc3 gc2 rt lw file"
+  fol["gc3attr"]["lit" ] = "                                      ex th3 gc3 gc2 rt lw file"
 
   #
   fol["lwattr"]["lw" ] = "src "
@@ -473,7 +500,7 @@ function init(     load, x, y, i, j, k, z, fol) {
 
   # Band labels to band classes
   load = \
-    ".file file; ..par par; ...par par; com com; ..grp grp; "               \
+    ".file file; ..par par; ...par par3; com com; ..grp grp; "               \
     ".rt rt; .af rt; .ra rt; .lw lw; "                              \
     "pd pd; tag tag; rtyp rtyp; nav nav; df df; "                          \
     "..sets sets; set set; "                                        \
@@ -570,13 +597,14 @@ function init(     load, x, y, i, j, k, z, fol) {
   }
 
   # Allowed aspectual cats
-  load = "conc|cns|cona|cont|cust|dist|dur|durØ|durD|mom|mult|neu|per|"\
-    "prog|rep|rev|sem|tran"
+  load = "bisec|conc|cns|cona|cont|cust|dist|dur|durØ|durD|mom|mult|neu|per|"\
+    "pers|prog|rep|rev|sem|tran"
   split(load, x, "|")
   for (i in x)
     Aspcat[x[i]] = 1
 
-  load = "MN|S|C|G|MC|T|Us|TG|OC|GG|all"
+  # Minto-Nenana|Chena|M-N&Chena|Toklat|UpperS|Salcha|Goodpaster||Gwichin
+  load = "MN|C|MC|T|Us|S|G|TG|OC|GG|all"
   split(load, x, "|")
   for (i in x)
     Dial[x[i]] = 1
@@ -679,7 +707,9 @@ function abbrev(bl) {
 
 function validate(   z, n) {
   # no validation for com
-  if ((Bc == "com") || (Prevbc == "com"))
+  if ((Bc == "com")  || (Prevbc == "com") ||   \
+      (Bc == "par")  || (Prevbc == "par") ||   \
+      (Bc == "par3") || (Prevbc == "par3"))
     return
   
   # find the context from the tail element of Path
