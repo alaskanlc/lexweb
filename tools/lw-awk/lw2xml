@@ -29,7 +29,7 @@ BEGIN{
         (Line <= FINISHLINE)) {
 
       # pre-process the line
-      cleanindexmarks()
+      indexmarks()
       xmlencode()
       dollar2sup()
 
@@ -51,6 +51,8 @@ BEGIN{
         #> rt:   doc/rt/rtattr
         oc("rttype", substr(Bl,2))
         #> rt:   doc/rt/rtattr/rttype
+        print wedge(0) "<a name=\"rt" ++Rootn "\"></a>"
+        Rootlabel[Rootn] = Rest1
         oc("rtword", Rest1)
         #> rt:   doc/rt/rtattr/rtword
       }
@@ -423,6 +425,10 @@ BEGIN{
   }
 
   c("doc")
+
+  if (MAKEINDEX)
+    makeindex()
+  
   # close doc itself
   print "    </div>"
   foot()
@@ -756,7 +762,26 @@ function xmlencode() {
   gsub(/>/,"\\&gt;", $0)
 }
 
-function   cleanindexmarks() {
+function   indexmarks(     i, j, ind) {
+  if ($0 ~ /\*/) {
+    # (can't use a single regex, so char by char)
+    ind = 0; j = ""
+    for (i = 1; i <= length($0); i++) {
+      if (ind) {
+        if ((substr($0, i, 1) !~ /[[:alpha:]]/) || \
+            (i == length($0))) {
+          if (i == length($0))
+            j = j substr($0, i, 1)
+          Index[j][Rootn]++
+          ind = 0
+          j = ""
+        }
+        else j = j substr($0, i, 1)
+      }
+      else if (substr($0, i, 1) == "*")
+        ind = 1
+    }
+  }
   gsub(/\*/,"",$0)
   gsub(/\]/,"", $0)
 }
@@ -764,6 +789,24 @@ function   cleanindexmarks() {
 function dollar2sup() {
   $0 = gensub(/\$(.)/,"<sup>\\1</sup>","G",$0)
 }
+
+function makeindex() {
+  o("index")
+  oc("indexlabel", "Index")
+  o("indexitems")
+  for (i in Index) {
+    o("indexitem")
+    oc("indexword", (i ":"))
+    o("indexrefs")
+    for (j in Index[i])
+      oc("indexref", ("<a href=\"#rt" j "\">" Rootlabel[j] "</a>,"))
+    c("indexitems")
+  }
+  c("doc")
+      
+  # print "    <!-- " i " " j " " Rootlabel[j]" -->"
+}
+
 
 function read_args(    arg) {
   # Defaults
@@ -777,13 +820,14 @@ function read_args(    arg) {
     else if (ARGV[arg] == "--f")    FINISHLINE = ARGV[arg+1]
     else if (ARGV[arg] == "--d")    DEBUG      = 1
     else if (ARGV[arg] == "--x")    VALIDATE   = 0
+    else if (ARGV[arg] == "--index")    MAKEINDEX  = 1
   }
   LEX = ARGV[ARGC-1]
   
   ("test -f " LEX " ; echo $?") | getline exitcode
   
   if (exitcode) {
-    print "Usage: lw2xml [ --d --x --s <start Line> --f <finish Line> ]"\
+    print "Usage: lw2xml [ --d --x --index --s <start Line> --f <finish Line> ]"\
       " <lexware file>"
     exit 1
   }

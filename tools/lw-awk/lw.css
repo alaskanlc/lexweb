@@ -144,4 +144,15 @@
 
 .com { margin-left: 30px; margin-bottom: 10px; font-style: italic; }
 
+/* index */
+
+.index { margin-left: 30px; margin-top: 60px; }
+
+.indexlabel { font-weight: bold; font-family: 'Arial', sans-serif; font-size: larger; margin-bottom: 30px; }
+
+.indexitem { margin-bottom: 10px; }
+
+.indexword, .indexrefs, .indexref { display: inline ; }
+
+.indexword { font-weight: bold; }
 
