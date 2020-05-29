@@ -150,6 +150,8 @@
 
 .indexlabel { font-weight: bold; font-family: 'Arial', sans-serif; font-size: larger; margin-bottom: 30px; }
 
+.indexitems { column-count: 6; }
+
 .indexitem { margin-bottom: 10px; }
 
 .indexword, .indexrefs, .indexref { display: inline ; }

@@ -790,21 +790,41 @@ function dollar2sup() {
   $0 = gensub(/\$(.)/,"<sup>\\1</sup>","G",$0)
 }
 
-function makeindex() {
+function case_fold_compare(i1, v1, i2, v2,    l, r) {
+    l = tolower(i1)
+    r = tolower(i2)
+
+    if (l < r)
+      return -1
+    else if (l == r)
+      return 0
+    else
+      return 1
+}
+
+
+
+function makeindex(    si) {
+  PROCINFO["sorted_in"] = "@ind_num_asc"
+  IGNORECASE = 1
+  # note IGNORECASE does not affect array subscripting, so asorti() needed
+  asorti(Index, si)
+  
   o("index")
   oc("indexlabel", "Index")
   o("indexitems")
-  for (i in Index) {
+  for (i in si) {
     o("indexitem")
-    oc("indexword", (i ":"))
+    oc("indexword", (si[i] ":"))
     o("indexrefs")
-    for (j in Index[i])
-      oc("indexref", ("<a href=\"#rt" j "\">" Rootlabel[j] "</a>,"))
+    # numerical index. Ordered the same as the occurence of the entry in
+    # the lexware file. Not necessarily in alphabetical order
+    for (j in Index[si[i]])
+      oc("indexref", ("<a href=\"#rt" j "\">" Rootlabel[j] "</a>, "))
     c("indexitems")
   }
   c("doc")
-      
-  # print "    <!-- " i " " j " " Rootlabel[j]" -->"
+
 }
 
 
