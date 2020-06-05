@@ -1,8 +1,11 @@
 function validate() {
-  htmlHeader("Validate")
+  htmlHeader("Validation results")
   "mktemp -d | tr -d '\n' " | getline DIR;
+  close("mktemp -d | tr -d '\n' ")
   print f["lex"] > ( DIR "/in.lw" )
-  system("bash -c 'cd ../tools/lw2xml ; cat " DIR "/in.lw | ./cleanprolog | ./cleanindexmarks | ./xmlencode | ./lw2xml 2> " DIR "/out.error 1> " DIR "/out.xml'")
+  system("bash -c 'cd ../tools/lw2xhtml ; ./lw2xhtml --index " DIR "/in.lw 2> " DIR "/out.error 1> " DIR "/out.html'")
+  print "<h1>Validation Results</h1>"
+  print "<p>(If the following lines are blank, there were no errors)</p>"
   print "<pre>"
   system("cat " DIR "/out.error")
   print "</pre>"
@@ -10,21 +13,13 @@ function validate() {
   system("rm -rf " DIR) # but seems to be autodelete by apache
 }
 
-function makexml() {
-  print "Content-type: text/xml\n"
-  "mktemp -d | tr -d '\n' " | getline DIR;
-  # print DIR
-  print f["lex"] > ( DIR "/in.lw" )
-  system("bash -c 'cd ../tools/lw2xml ; cat " DIR "/in.lw | ./cleanprolog | ./cleanindexmarks | ./xmlencode | ./lw2xml 2> " DIR "/out.error 1> " DIR "/out.xml'")
-  system("cat " DIR "/out.xml")
-  system("rm -rf " DIR) 
-}
-
 function makehtml() {
   print "Content-type: text/html\n"
   "mktemp -d | tr -d '\n' " | getline DIR;
+  close("mktemp -d | tr -d '\n' ")
   print f["lex"] > ( DIR "/in.lw" )
-  system("bash -c 'cd ../tools/lw2xml ; cat " DIR "/in.lw | ./cleanprolog | ./cleanindexmarks | ./xmlencode | ./lw2xml 2> " DIR "/out.error 1> " DIR "/out.xml'")
-  system("../bin/xqilla -i " DIR "/out.xml ../tools/xml2html/lw2html.xq")
+  system("bash -c 'cd ../tools/lw2xhtml ; ./lw2xhtml --index " DIR "/in.lw 2> " DIR "/out.error 1> " DIR "/out.html'")
+  system("sed -i 's|lw.css|css/lw.css|g' " DIR "/out.html")
+  system("cat " DIR "/out.html")
   system("rm -rf " DIR) 
 }

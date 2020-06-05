@@ -6,7 +6,7 @@
 
 Paste your Lexware-formatted text here*
  
-<textarea cols="60" rows="5" name="lex"></textarea>
+<textarea name="lex" style="height: 100px; width: 600px;"></textarea>
 
 <input type="radio" name="method" value="validate"/> Validate <br/>
 <input type="radio" name="method" value="html"/> Convert to HTML
