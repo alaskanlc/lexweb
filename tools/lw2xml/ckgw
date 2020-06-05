@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ $1 = 'f' ]
+then
+    head -n $2 gw.lw | gawk -f awk/cleanindexmarks.awk | gawk -f awk/xmlencode.awk | lw2xml 2> gw.error 1> gw.xml
+    tidy -xml -indent -m -q gw.xml
+elif [ $1 = 'l' ]
+then
+    head -n $2 gw.lw | gawk -f awk/cleanindexmarks.awk | gawk -f awk/xmlencode.awk | lw2xml 2>&1 | less
+    # search for first non-'<':  ^[^<]
+    # to get errors mixed in to output: lw2xml 2>&1 | less
+elif [ $1 = 'e' ]
+then
+     head -n $2 gw.lw | gawk -f awk/cleanindexmarks.awk | gawk -f awk/xmlencode.awk | lw2xml 1> gw.xml
+    # tidy -xml -indent -m -q gw.xml
+fi

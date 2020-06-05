@@ -194,8 +194,7 @@ variation in subject, _mode_, negation. Coded as a table.
  * [prdgl]{.bl} [TEXT]{.txt} _(0-to-1, following a_ [prd]{.bl}_)_ :
    Paradigm gloss
 
-Word categories {#h.wc}
----------------------------
+### Word categories {#h.wc}
 
  * [\<gc2\>]{.bl} [TEXT]{.txt} _(exactly-1)_ : Word category, where
    [\<gc2\>]{.bl} is either: **A stem**: one of: [..adj]{.bl}

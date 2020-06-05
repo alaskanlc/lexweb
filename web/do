@@ -1,6 +1,6 @@
 #!../bin/gawk -f
 
-@load "../bin/json.so" 
+# @load "../bin/json.so" 
 
 # Include function libraries
 # @include "../lib/db.awk" ;
@@ -29,7 +29,6 @@ BEGIN{
 
   # DETERMINE AND EXECUTE METHOD
   if            (f["method"] == "validate")  validate();
-  else if       (f["method"] == "xml")       makexml();
   else if       (f["method"] == "html")      makehtml();
 
   # other/no arguments
