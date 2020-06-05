@@ -16,4 +16,4 @@ Paste your Lexware-formatted text here*
 
 </form>
 
-<span style="font-size: 1.2rem">(* = Note: no copy is kept of your data; maximum size: 2M characters )</span>
+<span style="font-size: 1.2rem">* = Note: no copy is kept of your data; maximum size: 2M characters<br/>For sample of lexware, see [here](sample.html)</span>
