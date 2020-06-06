@@ -1,0 +1,160 @@
+
+/* doc */
+
+.doc { /* margin: 50px ; */
+        font-family: "Times New Roman", Times, serif; }
+
+
+/* rootword */
+
+.rt { margin: 30px ; }
+
+.rtattr { margin-bottom: 10px; }
+
+.rttype { display: none; }
+
+.rtword, .pd, .tag, .rtyp, .nav, .df   { display: inline ; }
+
+.rtword { font-weight: bold; }
+
+
+/* sets */
+
+.sets { margin-left: 20px; margin-bottom: 10px;}
+
+.setasp { font-style: italic;  display: inline-block; width: 50px;}
+
+.setwords { width: 400px;
+            text-align-last: justify;
+            text-justify: inter-word;
+            font-weight:bold ;
+            display: inline-block ;}
+
+
+/* themes */
+
+.th {margin-left: 20px; margin-bottom: 10px;}
+
+.thattr { margin-bottom: 10px;}
+
+.thword, .tc, .cnj, .gl { display: inline ; }
+
+.thword { font-weight: bold; }
+
+.tc {font-style: italic; }
+
+
+/* multi-context */
+
+.lit, .quo, .cit { display: inline; font-style: italic; }
+
+.gl { display: inline; }
+
+/* examples */
+
+.exengs { margin-left: 20px; margin-bottom: 10px;} 
+
+.exeng, .ex, .excolon, .eng , .exsemicolon { display: inline; }
+
+.ex { font-weight: bold; }
+
+                 /* .gc2exengs { margin-left: 20px; margin-bottom: 5px;} */
+
+
+/* themes > paradigms */
+
+.prds {margin-bottom: 10px;}
+
+.prdstype { font-style: italic ; display: inline-block; width: 50px;}
+
+.prdsdef { width: 400px;
+            text-align-last: justify;
+            text-justify: inter-word;
+            font-style: italic ;
+            display: inline-block ;}
+
+.prdpers { font-style: italic ;  display: inline-block ; width: 50px;}
+
+.prdwords { width: 400px;
+            text-align-last: justify;
+            text-justify: inter-word;
+            font-weight:bold ;
+            display: inline-block ;}
+
+.prdgl {margin-left: 10px; }
+
+
+/* grammatical category 2 */
+
+.gc2  { margin-left: 40px; margin-bottom: 10px;}
+
+.gc2word { font-weight: bold; }
+
+.gc2word, .gc2type, .asp { display: inline; }
+
+.gc2type { font-style: italic; }
+
+.gc2attr { margin-bottom: 10px; }
+
+
+/* dialects */
+
+.dials, .dial, .dialx, .dialcomma, .dialcolon, .dialword { display: inline; }
+
+.dial { font-style: italic; }
+
+.dialword {            font-weight:bold ; }
+
+
+/* grammatical category 3 */
+
+.gc3  { margin-left: 40px; margin-bottom: 10px;}
+
+.gc3word { font-weight: bold; }
+
+.gc3word, .gc3type { display: inline; }
+
+.gc3type { font-style: italic; }
+
+.gc3attr { margin-bottom: 10px; }
+
+
+
+
+/* loanword */
+
+.lw { margin: 30px ; }
+
+.lwattr { margin-bottom: 10px; }
+
+.lwword, .src { display: inline ; }
+
+.src {  font-style: italic; }
+
+.lwword { font-weight: bold; }
+
+
+/* file, par, com */
+
+.file { margin: 30px;  font-weight: bold; font-size: larger; font-family: 'Arial', sans-serif; }
+
+.par { margin-left: 30px; margin-bottom: 10px;  margin-top: 5px; font-weight: bold; font-family: 'Arial', sans-serif; }
+
+.par3 { margin-left: 30px; margin-bottom: 10px; margin-top: 5px; font-family: 'Arial', sans-serif; }
+
+.com { margin-left: 30px; margin-bottom: 10px; font-style: italic; }
+
+/* index */
+
+.index { margin-left: 30px; margin-top: 60px; }
+
+.indexlabel { font-weight: bold; font-family: 'Arial', sans-serif; font-size: larger; margin-bottom: 30px; }
+
+.indexitems { column-count: 6; }
+
+.indexitem { margin-bottom: 10px; }
+
+.indexword, .indexrefs, .indexref { display: inline ; }
+
+.indexword { font-weight: bold; }
+

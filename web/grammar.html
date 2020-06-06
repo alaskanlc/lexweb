@@ -18,136 +18,140 @@
   <div class="container">
     <div class="row">
       <div class="nine columns" style="margin-top: 5%">
-        <h1 id="dene-lexware-grammar">Dene Lexware Grammar</h1>
-        <p>This document is the normative definition of allowable structure for Dene Lexware files, based on Jim Kari’s usage (for Lower Tanana), and with input from Jason Harris (for Gwich’in).</p>
-        <p><strong>Conventions</strong> in this document: Band labels are in <span class="bl">this</span> font. Options after band labels are in <span class="w2">this</span> font. Text that must follow a band is indicated <span class="txt">TEXT</span> (it may contain one or more words, separated by space(s)). Sections in this document define classes of related bands, with each bullet being a necessary or optional band, in the order given. An ‘OR’ means that only one of several options is allowed. Hyperlinks can be followed to the relevant section.</p>
-        <p>Brief linguistic background information is included for some of the elements in order to facilitate the work of those who are not familiar with Dene Athabascan lexicography.</p>
-        <h2 id="h.doc">Document</h2>
-        <ul>
-        <li>Each document may have <em>(1-to-many)</em> <a href="#h.re">Root elements</a></li>
-        </ul>
-        <h3 id="h.re">Root element</h3>
-        <p>Each root element can be either a:</p>
-        <ul>
-        <li><a href="#h.root">Root</a> OR</li>
-        <li><a href="#h.lw">Loan word</a></li>
-        </ul>
-        <h2 id="h.root">Root</h2>
-        <ul>
-        <li><span class="bl">&lt;r&gt;</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> where <span class="bl">&lt;r&gt;</span> is one of <span class="bl">.rt</span> (root word), <span class="bl">.af</span> (affix), <span class="bl">.ra</span> (root/affix) (see <a href="#h.a1">note</a>).</li>
-        <li><a href="#h.rwa">Root word attributes</a> <em>(0-to-1)</em></li>
-        <li><a href="#h.ss">Stem sets</a> <em>(0-to-1)</em></li>
-        <li><a href="#h.th">Themes</a> <em>(0-to-many)</em></li>
-        <li><a href="#h.wc">Word Categories</a> <em>(0-to-many)</em></li>
-        </ul>
-        <h3 id="h.rwa">Root word attributes</h3>
-        <ul>
-        <li><span class="bl">pd</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Proto Dene</li>
-        <li><span class="bl">tag</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Tag</li>
-        <li><span class="bl">rtyp</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Root word type (now includes codes for previous root elements: <span class="bl">.rtu</span>, <span class="bl">.rrt</span>, <span class="bl">.drt</span>)</li>
-        <li><span class="bl">nav</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Navajo cognate</li>
-        <li><span class="bl">df</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Derived forms</li>
-        </ul>
-        <h3 id="h.ss">Stem sets</h3>
-        <p>“Athabascan [verb] stems undergo transformations to express different <em>states</em> of time and completion, called mode, and different <em>ways</em> of completing an action or being in a state, called aspect” (Urschel 2006). The <span class="bl">..set</span> data construction records that stem variation in mode and aspect for verb roots. Each <span class="bl">set</span> line gives mode variation (in standard order: imperfective, perfective, future, optative), for for a single aspect (e.g., conclusive, durative). Note that aspect is also indicated by verb prefixes (see <a href="#h.th">Themes</a>).</p>
-        <ul>
-        <li><span class="bl">..sets</span> <em>(exactly-1)</em></li>
-        <li><span class="bl">set</span> <span class="w2">&lt;asptype&gt;</span> <span class="txt">TEXT</span> <em>(1-to-many)</em> : Aspectual category, where <span class="w2">&lt;asptype&gt;</span> is one of: <span class="w2">bisec</span> (bisective), <span class="w2">conc</span> (conclusive), <span class="w2">cns</span> (consecutive), <span class="w2">cona</span> (conative), <span class="w2">cont</span> (continuative), <span class="w2">cust</span> (customary), <span class="w2">dist</span> (distributive), <span class="w2">dur</span> (durative), <span class="w2">mom</span> (momentaneous), <span class="w2">mult</span> (multiple), <span class="w2">neu</span> (neuter), <span class="w2">per</span> (perambulative), <span class="w2">pers</span> (persistive), <span class="w2">prog</span> (progressive), <span class="w2">rep</span> (repetitive), <span class="w2">rev</span> (reversative), <span class="w2">sem</span> (semelfactive), <span class="w2">tran</span> (transitional).</li>
-        </ul>
-        <h3 id="h.th">Themes</h3>
-        <p>A <em>verb theme</em> denotes an abstract or skeleton verb form which does not include reference to subject and time (Urschel 2006). It is a “shorthand grammatical formula that indicates the basic structure for the verb-word” (Kari 2012). Many different themes can be built from the same stem (root word) with very different meanings.</p>
-        <p>In general, a specific theme for a stem will convey a particular <em>way</em> of doing something, indicated in the <span class="bl">tc</span> band; “the verb theme categories are groups of themes that have similar meaning and grammatical structure especially in their most basic forms” (Kari 2012). The theme categories are <em>aspectual</em> in nature, relating to the temporal contour of the theme.</p>
-        <p><a href="#h.ex">Examples</a> present a selection of many possible <em>derivatives</em> of the theme.</p>
-        <p>The <em>paradigms</em> for the theme record the actual forms that the theme takes under different <em>modes</em>, <em>subjects</em> (I, you, we…), and with <em>negation</em>.</p>
-        <ul>
-        <li><span class="bl">..th</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : The formula for the theme, consisting minimally of stem and classifier (the morpheme preceding the stem, sometimes just “remnants of ancient grammar rules [without] direct meaning” (<a href="http://qenaga.org/verbs_and_sentences/classifiers.html">ref.</a>), sometimes indicating voice/transitivity (Rice 2015), and indicate whether the verb takes an object (O), postpositional object (P), or gender prefix (G). Symbol ‘+’ separates morphemes (meaningful component sounds), and ‘#’ indicates the boundary between disjunct and conjunct morphemes. (Note: band label <span class="bl">...th</span> is used under <span class="bl">..tfs</span>.)</li>
-        <li><a href="#h.dial">Dialects</a> <em>(0-to-1)</em></li>
-        <li><span class="bl">tc</span> <span class="w2">&lt;tctype&gt;</span> <em>(exactly-1)</em> : Theme category, where <span class="w2">&lt;tctype&gt;</span> is one of: <span class="w2">clas-mot</span> (classificatory motion), <span class="w2">clas-stat</span> (classificatory stative), <span class="w2">conv</span> (conversive), <span class="w2">con-rev</span> (conversive-reversative), <span class="w2">desc</span> (descriptive), <span class="w2">dim</span> (dimensional), <span class="w2">dur</span> (durative), <span class="w2">ext</span> (extension), <span class="w2">mot</span> (motion), <span class="w2">neu</span> (neuter), <span class="w2">ono</span> (onomatopoetic), <span class="w2">op</span> (operative), <span class="w2">op-ono</span> (onomatopoetic operative), <span class="w2">op-rep</span> (operative repetitive), <span class="w2">op-rev</span> (operative reversative), <span class="w2">pos</span> (positional), <span class="w2">pot</span> (potentialitive), <span class="w2">stat</span> (stative), <span class="w2">suc</span> (successive), <span class="w2">u:xxx</span> (uncategorized xxx), <span class="w2">a-neu</span> (a-neuter), <span class="w2">desc-neg</span> (descriptive-negative), <span class="w2">sev</span> (several, used occasionally). Also <span class="w2">stat/mot</span>, <span class="w2">ext/mot</span>, <span class="w2">stat/op</span> for dual <span class="bl">tc</span>.</li>
-        <li><span class="bl">cnj</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Conjugation prefix. <strong>CHECK</strong> Jim and Jason’s decision on which band label to use for this. <span class="bl">cnjg1</span> was also a suggestion.</li>
-        <li><a href="#h.gl">Gloss</a> <em>(exactly-1)</em></li>
-        <li><a href="#h.ex">Example</a> <em>(0-to-many)</em></li>
-        <li><a href="#h.prd">Paradigms</a> <em>(0-to-many)</em></li>
-        <li>( <a href="#h.wc2">Word sub-categories</a> (0-to-many) : <span class="bl">...n</span> only, nominalized verbs making use of the theme )</li>
-        </ul>
-        <h3 id="h.gl">Gloss</h3>
-        <ul>
-        <li><span class="bl">gl</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : English gloss</li>
-        <li><span class="bl">quo</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Quotations from consultant (or comment)</li>
-        <li><span class="bl">cit</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Citation (e.g., Notebook source)</li>
-        </ul>
-        <h3 id="h.ex">Example</h3>
-        <ul>
-        <li><span class="bl">ex</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : Example</li>
-        <li><a href="#h.dial">Dialects</a> <em>(0-to-1)</em></li>
-        <li><span class="bl">eng</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : English translation</li>
-        <li><span class="bl">lit</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Literal translation</li>
-        <li><span class="bl">quo</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Quotations from consultant (or comment)</li>
-        <li><span class="bl">cit</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Citation (e.g., Notebook source)</li>
-        </ul>
-        <h3 id="h.dial">Dialects</h3>
-        <p>Note the different usage of <span class="bl">dial</span> depending on whether it is the first, or subsequent</p>
-        <ul>
-        <li><span class="bl">dial</span> <span class="w2">&lt;lang&gt;</span> <em>(exactly-1)</em> : Dialect of the preceding <span class="bl">ex</span>. <span class="w2">&lt;lang&gt;</span> is a controlled vocabulary.
-        <ul>
-        <li><span class="bl">dial</span> <span class="w2">&lt;lang&gt;</span> <span class="txt">TEXT</span> <em>(0-to-many)</em> : Additional forms of the word in different dialects</li>
-        </ul></li>
-        </ul>
-        <h3 id="h.prd">Paradigms</h3>
-        <p>Verb theme usage paradigms: the specific forms of this theme recording variation in subject, <em>mode</em>, negation. Coded as a table.</p>
-        <ul>
-        <li><span class="bl">…prds</span> <span class="w2">&lt;def&gt;</span> <em>(exactly-1)</em> : Column definition codes for subsequent <span class="bl">prd</span> bands. <span class="w2">&lt;def&gt;</span> is a string of single or double characters separated by space(s). The character order defines the column order. Allowable characters indicate <em>modes</em>: <span class="w2">i</span> (imperfective - incomplete action), <span class="w2">p</span> (perfective; completed action), <span class="w2">f</span> (future), <span class="w2">o</span> (optative; desire/intention), which may be combined with a <span class="w2">+</span> (positive, <em>default</em>), or <span class="w2">-</span> (negative). Note that <em>tense</em> (when an action was performed) in Athabascan is not indicated independently from <em>mode</em>, as it is in English. Perfective conveys past completion, imperfective conveys ongoing in present, and future conveys actions in the future (<a href="http://qenaga.org/verbs_and_sentences/aspects.html">ref</a>).</li>
-        <li><span class="bl">prd</span> <span class="w2">&lt;person&gt;</span> <span class="txt">TEXT</span> <em>(1-to-many)</em> : Paradigm example, one line for each person, where <span class="w2">&lt;person&gt;</span> is one of: <span class="w2">1s</span> (first person singular), <span class="w2">2s</span> (second person singular), <span class="w2">3s</span> (third person singular), <span class="w2">1p</span> (first person plural), <span class="w2">2p</span> (second person plural), <span class="w2">3p</span> (third person plural), <span class="w2">1d</span> (first person dual), <span class="w2">2d</span> (second person dual), <span class="w2">3d</span> (third person dual), ind (indefinite). <span class="txt">TEXT</span> is the row of words, in same order as the column definition in <span class="bl">…prds</span>. If an entry (cell) should be two words, use an underscore (‘_’) in place of a space between words; in this way, spaces are reserved for column (field) delimiters. A missing element in the matrix is indicated with a dash (‘-’).</li>
-        <li><span class="bl">prdgl</span> <span class="txt">TEXT</span> <em>(0-to-1, following a</em> <span class="bl">prd</span><em>)</em> : Paradigm gloss</li>
-        </ul>
-        <h2 id="h.wc">Word categories</h2>
-        <ul>
-        <li><span class="bl">&lt;gc2&gt;</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : Word category, where <span class="bl">&lt;gc2&gt;</span> is either: <strong>A stem</strong>: one of: <span class="bl">..adj</span> (adjective, <em>adj.</em>), <span class="bl">..ads</span> (aspectual derivational string, <em>a.d.s.</em>), <span class="bl">..adv</span> (adverb, <em>adv.</em>), <span class="bl">..an</span> (areal noun, <em>a.n.</em>), <span class="bl">..c</span> (compounding form, <em>c.</em>), <span class="bl">..cnj</span> (conjunction, <em>cnj.</em>), <span class="bl">..coll</span> (collocation, <em>coll.</em>), <span class="bl">..dem</span> (demonstrative, <em>dem.</em>), <span class="bl">..dir</span> (directional, <em>dir.</em>), <span class="bl">..enc</span> (enclitic, <em>enc.</em>), <span class="bl">..exc</span> (exclamation, <em>exc.</em>), <span class="bl">..i</span> (incorporate, <em>i.</em>), <span class="bl">..ic</span> (incorporate compound, <em>ic.</em>), <span class="bl">..in</span> (instrumental noun, <em>ins.n.</em>), <span class="bl">..int</span> (interrogative, <em>int.</em>), <span class="bl">..mpn</span> (major place name, <em>m.p.n.</em>), <span class="bl">..n</span> (noun, <em>n.</em>), <span class="bl">..nc</span> (noun, compound, <em>n.c.</em>), <span class="bl">..ni</span> (noun, incorporate, <em>n.i.</em>), <span class="bl">..nic</span> (noun, incorporate compound, <em>n.i.c.</em>), <span class="bl">..nenc</span> (noun enclitic, <em>n.enc.</em>), <span class="bl">..padj</span> (predicate adjective, <em>p.adj.</em>), <span class="bl">..pf</span> (prefix, <em>pf.</em>), <span class="bl">..pn</span> (place name, <em>p.n.</em>), <span class="bl">..psn</span> (personal name, <em>ps.n.</em>), <span class="bl">..pp</span> (postposition, <em>pp.</em>), <span class="bl">..pro</span> (pronoun, <em>pro.</em>), <span class="bl">..scnj</span> (subordinating conjunction, <em>s.cnj.</em>), <span class="bl">..venc</span> (verb enclitic, <em>v.enc.</em>), <span class="bl">..voc</span> (vocative, <em>voc.</em>); a <strong>noun affix</strong>: <span class="bl">..nsf</span> (Noun suffix), <span class="bl">..sf</span> (Suffix), <span class="bl">..nfaf</span> (Noun formation affix), <span class="bl">..nfsf</span> (Noun formation suffix); a <strong>verb affix</strong>: <span class="bl">..vsf1</span> (Verb suffix 1, <em>v.sf1.</em>), <span class="bl">..vsf</span>(Verb suffix, <em>v.sf.</em>), <span class="bl">..nds</span> (Non-derivational string, <em>n.d.s.</em>), <span class="bl">..vfaf</span> (Verb formation affix), <span class="bl">..vfsf</span> (Verb formation suffix), <span class="bl">..vpf</span> (Verb prefix, <em>v.pf.</em>), <span class="bl">..ads</span> (aspectual derivational string, <em>a.d.s.</em>); or a <strong>theme formation string</strong>: <span class="bl">..tfs</span>.</li>
-        <li><a href="#h.wca">Word category attributes</a> <em>(exactly-1)</em></li>
-        <li><a href="#h.ex">Examples</a> <em>(0-to-many)</em></li>
-        <li><a href="#h.wc2">Word sub-categories</a> <em>(0-to-many)</em></li>
-        <li>( <a href="#h.th">Subthemes</a> <em>(0-to-many)</em>, only for <span class="bl">..tfs</span> )</li>
-        </ul>
-        <h3 id="h.wca">Word category attributes</h3>
-        <ul>
-        <li><a href="#h.dial">Dialect</a> <em>(0-to-1)</em></li>
-        <li>( <span class="bl">tc</span> <span class="w2">&lt;tctype&gt;</span> <em>(0-to-1)</em> : Theme category, see <a href="#h.th">Themes</a>, for <span class="bl">..ads</span>, <span class="bl">...ads</span>, and <span class="bl">..tfs</span> only )</li>
-        <li>( <span class="bl">asp</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Aspect, for <span class="bl">..ads</span>, <span class="bl">...ads</span>, and <span class="bl">..tfs</span> only )</li>
-        <li>( <span class="bl">cnj</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Conjugation prefix, for <span class="bl">..ads</span>, <span class="bl">...ads</span>, and <span class="bl">..tfs</span> only )</li>
-        <li><a href="#h.gl">Gloss</a> <em>(exactly-1)</em> : English gloss</li>
-        <li><span class="bl">smf</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Semantic field</li>
-        <li><span class="bl">sc</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Scientific name</li>
-        <li><span class="bl">lit</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Literal translation</li>
-        </ul>
-        <h3 id="h.wc2">Word sub-categories</h3>
-        <ul>
-        <li><span class="bl">&lt;gc3&gt;</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : Word category, where <span class="bl">&lt;gc3&gt;</span> is one of: <span class="bl">...adj</span> (adjective, <em>adj.</em>), <span class="bl">...ads</span> (aspectual derivational string, <em>a.d.s.</em>), <span class="bl">...adv</span> (adverb, <em>adv.</em>), <span class="bl">...an</span> (areal noun, <em>a.n.</em>), <span class="bl">...c</span> (compounding form, <em>c.</em>), <span class="bl">...cnj</span> (conjunction, <em>cnj.</em>), <span class="bl">...coll</span> (collocation, <em>coll.</em>), <span class="bl">...dem</span> (demonstrative, <em>dem.</em>), <span class="bl">...dir</span> (directional, <em>dir.</em>), <span class="bl">...drt</span> (derived root, <em>der.rt.</em>; only at sub-entry level), <span class="bl">...enc</span> (enclitic, <em>enc.</em>), <span class="bl">...exc</span> (exclamation, <em>exc.</em>), <span class="bl">...i</span> (incorporate, <em>i.</em>), <span class="bl">...ic</span> (incorporate compound, <em>ic.</em>), <span class="bl">...in</span> (instrumental noun, <em>ins.n.</em>), <span class="bl">...int</span> (interrogative, <em>int.</em>), <span class="bl">...n</span> (noun, <em>n.</em>), <span class="bl">...nc</span> (noun, compound, <em>n.c.</em>), <span class="bl">...ni</span> (noun, incorporate, <em>n.i.</em>), <span class="bl">...nic</span> (noun, incorporate compound, <em>n.i.c.</em>), <span class="bl">...nenc</span> (noun enclitic, <em>n.enc.</em>), <span class="bl">...mpn</span> (major place name, <em>m.p.n.</em>), <span class="bl">...padj</span> (predicate adjective, <em>p.adj.</em>), <span class="bl">...pf</span> (prefix, <em>pf.</em>), <span class="bl">...pn</span> (place name, <em>p.n.</em>), <span class="bl">...psn</span> (personal name, <em>ps.n.</em>), <span class="bl">...pp</span> (postposition, <em>pp.</em>), <span class="bl">...pro</span> (pronoun, <em>pro.</em>), <span class="bl">...sf</span> (suffix, <em>sf.</em>), <span class="bl">...scnj</span> (subordinating conjunction, <em>s.cnj.</em>), <span class="bl">...venc</span> (verb enclitic, <em>v.enc.</em>), <span class="bl">...voc</span> (vocative, <em>voc.</em>). An Inflectional String, <span class="bl">...ifs</span>, may occur under some <em>verb affix</em> word categories.</li>
-        <li><a href="#h.wca">Word category attributes</a> <em>(exactly-1)</em></li>
-        </ul>
-        <h2 id="h.lw">Loan word</h2>
-        <ul>
-        <li><span class="bl">.lw</span> <span class="txt">TEXT</span> (exactly-1) : Loan word</li>
-        <li><span class="bl">src</span> <span class="txt">TEXT</span> (exactly-1) : Source language</li>
-        <li><a href="#h.wc">Word categories</a> <em>(0-to-many)</em></li>
-        </ul>
-        <h2 id="references">References</h2>
-        <p>Kari, J. 2012. Guide to Using the Koyukon Athabaskan Dictionary. <em>In</em>: Koyukon Athabaskan Dictionary, J. Jette. &amp; E. Jones.</p>
-        <p>Rice, K.D. 2015. The start of a glossary of Athabaskan vocabulary. Linguistic Institute.</p>
-        <p>Urschel, J.M. 2006. Lower Tanana Athabascan Verb Paradigms. MSc. Thesis, University of Alaska, Fairbanks.</p>
-        <h2 id="h.a1">Appendix 1: A note concerning different rootword classes</h2>
-        <p>There are three band labels Jim uses for different kinds of rootword: root (<span class="bl">.rt</span>), affix (<span class="bl">.af</span>), and root/affix (<span class="bl">.ra</span>). Initially, Cam had been trying to deduce differing rules for the syntax of each of these (e.g., an affix may only be a noun or verb affix, and that would determine the kinds of sub-entries that were allowed). However, on analyzing Jim’s usage for Lower Tanana, he found:</p>
-        <ul>
-        <li>There are affix word categories in <span class="bl">.rt</span> (e.g. <span class="bl">.nsf</span>, <span class="bl">..tfs</span>)</li>
-        <li>There are lots of <span class="bl">.rt</span> word categories (<span class="bl">..n</span>, <span class="bl">..adv</span>, etc) in <span class="c17 c0">.af</span></li>
-        <li>There are a few cases of both noun affix categories and verb affix categories under the same <span class="c17 c0">.af</span></li>
-        <li>Likewise for <span class="c0 c17">.ra</span></li>
-        </ul>
-        <p>This recognition lead to a new, less specifi strategy for validation: to treat <span class="bl">.rt</span>, <span class="bl">.af</span>, <span class="bl">.ra</span> with the <em>same</em> rule set: let any double-dot word category be under any single-dot band. This document was rewritten (2020-04-15) to reflect this change.</p>
+<h1 id="dene-lexware-grammar">Dene Lexware Grammar</h1>
+<p>This document is the normative definition of allowable structure for Dene Lexware files, based on Jim Kari’s usage (for Lower Tanana), and with input from Jason Harris (for Gwich’in).</p>
+<p><strong>Conventions</strong> in this document: Band labels are in <span class="bl">this</span> font. Options after band labels are in <span class="w2">this</span> font. Text that must follow a band is indicated <span class="txt">TEXT</span> (it may contain one or more words, separated by space(s)). Sections in this document define classes of related bands, with each bullet being a necessary or optional band, in the order given. An ‘OR’ means that only one of several options is allowed. Hyperlinks can be followed to the relevant section.</p>
+<p>Brief linguistic background information is included for some of the elements in order to facilitate the work of those who are not familiar with Dene Athabascan lexicography.</p>
+<h2 id="h.doc">Document</h2>
+<ul>
+<li>Each document may have <em>(1-to-many)</em> <a href="#h.re">Root elements</a></li>
+</ul>
+<h3 id="h.re">Root element</h3>
+<p>Each root element can be either a:</p>
+<ul>
+<li><a href="#h.root">Root</a> OR</li>
+<li><a href="#h.lw">Loan word</a></li>
+</ul>
+<h2 id="h.root">Root</h2>
+<ul>
+<li><span class="bl">&lt;r&gt;</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> where <span class="bl">&lt;r&gt;</span> is one of <span class="bl">.rt</span> (root word), <span class="bl">.af</span> (affix), <span class="bl">.ra</span> (root/affix) (see <a href="#h.a1">note</a>).</li>
+<li><a href="#h.rwa">Root word attributes</a> <em>(0-to-1)</em></li>
+<li><a href="#h.ss">Stem sets</a> <em>(0-to-1)</em></li>
+<li><a href="#h.th">Themes</a> <em>(0-to-many)</em></li>
+<li><a href="#h.wc">Word Categories</a> <em>(0-to-many)</em></li>
+</ul>
+<h3 id="h.rwa">Root word attributes</h3>
+<ul>
+<li><span class="bl">pd</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Proto Dene</li>
+<li><span class="bl">tag</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Tag</li>
+<li><span class="bl">rtyp</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Root word type (now includes codes for previous root elements: <span class="bl">.rtu</span>, <span class="bl">.rrt</span>, <span class="bl">.drt</span>)</li>
+<li><span class="bl">nav</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Navajo cognate</li>
+<li><span class="bl">df</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Derived forms</li>
+</ul>
+<h3 id="h.ss">Stem sets</h3>
+<p>“Athabascan [verb] stems undergo transformations to express different <em>states</em> of time and completion, called mode, and different <em>ways</em> of completing an action or being in a state, called aspect” (Urschel 2006). The <span class="bl">..set</span> data construction records that stem variation in mode and aspect for verb roots. Each <span class="bl">set</span> line gives mode variation (in standard order: imperfective, perfective, future, optative), for for a single aspect (e.g., conclusive, durative). Note that aspect is also indicated by verb prefixes (see <a href="#h.th">Themes</a>).</p>
+<ul>
+<li><span class="bl">..sets</span> <em>(exactly-1)</em></li>
+<li><span class="bl">set</span> <span class="w2">&lt;asptype&gt;</span> <span class="txt">TEXT</span> <em>(1-to-many)</em> : Aspectual category, where <span class="w2">&lt;asptype&gt;</span> is one of: <span class="w2">bisec</span> (bisective), <span class="w2">conc</span> (conclusive), <span class="w2">cns</span> (consecutive), <span class="w2">cona</span> (conative), <span class="w2">cont</span> (continuative), <span class="w2">cust</span> (customary), <span class="w2">dist</span> (distributive), <span class="w2">dur</span> (durative), <span class="w2">mom</span> (momentaneous), <span class="w2">mult</span> (multiple), <span class="w2">neu</span> (neuter), <span class="w2">per</span> (perambulative), <span class="w2">pers</span> (persistive), <span class="w2">prog</span> (progressive), <span class="w2">rep</span> (repetitive), <span class="w2">rev</span> (reversative), <span class="w2">sem</span> (semelfactive), <span class="w2">tran</span> (transitional).</li>
+</ul>
+<h3 id="h.th">Themes</h3>
+<p>A <em>verb theme</em> denotes an abstract or skeleton verb form which does not include reference to subject and time (Urschel 2006). It is a “shorthand grammatical formula that indicates the basic structure for the verb-word” (Kari 2012). Many different themes can be built from the same stem (root word) with very different meanings.</p>
+<p>In general, a specific theme for a stem will convey a particular <em>way</em> of doing something, indicated in the <span class="bl">tc</span> band; “the verb theme categories are groups of themes that have similar meaning and grammatical structure especially in their most basic forms” (Kari 2012). The theme categories are <em>aspectual</em> in nature, relating to the temporal contour of the theme.</p>
+<p><a href="#h.ex">Examples</a> present a selection of many possible <em>derivatives</em> of the theme.</p>
+<p>The <em>paradigms</em> for the theme record the actual forms that the theme takes under different <em>modes</em>, <em>subjects</em> (I, you, we…), and with <em>negation</em>.</p>
+<ul>
+<li><span class="bl">..th</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : The formula for the theme, consisting minimally of stem and classifier (the morpheme preceding the stem, sometimes just “remnants of ancient grammar rules [without] direct meaning” (<a href="http://qenaga.org/verbs_and_sentences/classifiers.html">ref.</a>), sometimes indicating voice/transitivity (Rice 2015), and indicate whether the verb takes an object (O), postpositional object (P), or gender prefix (G). Symbol ‘+’ separates morphemes (meaningful component sounds), and ‘#’ indicates the boundary between disjunct and conjunct morphemes. (Note: band label <span class="bl">...th</span> is used under <span class="bl">..tfs</span>.)</li>
+<li><a href="#h.dial">Dialects</a> <em>(0-to-1)</em></li>
+<li><span class="bl">tc</span> <span class="w2">&lt;tctype&gt;</span> <em>(exactly-1)</em> : Theme category, where <span class="w2">&lt;tctype&gt;</span> is one of: <span class="w2">clas-mot</span> (classificatory motion), <span class="w2">clas-stat</span> (classificatory stative), <span class="w2">conv</span> (conversive), <span class="w2">con-rev</span> (conversive-reversative), <span class="w2">desc</span> (descriptive), <span class="w2">dim</span> (dimensional), <span class="w2">dur</span> (durative), <span class="w2">ext</span> (extension), <span class="w2">mot</span> (motion), <span class="w2">neu</span> (neuter), <span class="w2">ono</span> (onomatopoetic), <span class="w2">op</span> (operative), <span class="w2">op-ono</span> (onomatopoetic operative), <span class="w2">op-rep</span> (operative repetitive), <span class="w2">op-rev</span> (operative reversative), <span class="w2">pos</span> (positional), <span class="w2">pot</span> (potentialitive), <span class="w2">stat</span> (stative), <span class="w2">suc</span> (successive), <span class="w2">u:xxx</span> (uncategorized xxx), <span class="w2">a-neu</span> (a-neuter), <span class="w2">desc-neg</span> (descriptive-negative), <span class="w2">sev</span> (several, used occasionally). Also <span class="w2">stat/mot</span>, <span class="w2">ext/mot</span>, <span class="w2">stat/op</span> for dual <span class="bl">tc</span>.</li>
+<li><span class="bl">cnj</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Conjugation prefix. <strong>CHECK</strong> Jim and Jason’s decision on which band label to use for this. <span class="bl">cnjg1</span> was also a suggestion.</li>
+<li><a href="#h.gl">Gloss</a> <em>(exactly-1)</em></li>
+<li><a href="#h.ex">Example</a> <em>(0-to-many)</em></li>
+<li><a href="#h.prd">Paradigms</a> <em>(0-to-many)</em></li>
+<li>( <a href="#h.wc2">Word sub-categories</a> (0-to-many) : <span class="bl">...n</span> only, nominalized verbs making use of the theme )</li>
+</ul>
+<h3 id="h.gl">Gloss</h3>
+<ul>
+<li><span class="bl">gl</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : English gloss</li>
+<li><span class="bl">quo</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Quotations from consultant (or comment)</li>
+<li><span class="bl">cit</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Citation (e.g., Notebook source)</li>
+</ul>
+<h3 id="h.ex">Example</h3>
+<ul>
+<li><span class="bl">ex</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : Example</li>
+<li><a href="#h.dial">Dialects</a> <em>(0-to-1)</em></li>
+<li><span class="bl">eng</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : English translation</li>
+<li><span class="bl">lit</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Literal translation</li>
+<li><span class="bl">quo</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Quotations from consultant (or comment)</li>
+<li><span class="bl">cit</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Citation (e.g., Notebook source)</li>
+</ul>
+<h3 id="h.dial">Dialects</h3>
+<p>Note the different usage of <span class="bl">dial</span> depending on whether it is the first, or subsequent</p>
+<ul>
+<li><span class="bl">dial</span> <span class="w2">&lt;lang&gt;</span> <em>(exactly-1)</em> : Dialect of the preceding <span class="bl">ex</span>. <span class="w2">&lt;lang&gt;</span> is a controlled vocabulary.
+<ul>
+<li><span class="bl">dial</span> <span class="w2">&lt;lang&gt;</span> <span class="txt">TEXT</span> <em>(0-to-many)</em> : Additional forms of the word in different dialects</li>
+</ul></li>
+</ul>
+<h3 id="h.prd">Paradigms</h3>
+<p>Verb theme usage paradigms: the specific forms of this theme recording variation in subject, <em>mode</em>, negation. Coded as a table.</p>
+<ul>
+<li><span class="bl">…prds</span> <span class="w2">&lt;def&gt;</span> <em>(exactly-1)</em> : Column definition codes for subsequent <span class="bl">prd</span> bands. <span class="w2">&lt;def&gt;</span> is a string of single or double characters separated by space(s). The character order defines the column order. Allowable characters indicate <em>modes</em>: <span class="w2">i</span> (imperfective - incomplete action), <span class="w2">p</span> (perfective; completed action), <span class="w2">f</span> (future), <span class="w2">o</span> (optative; desire/intention), which may be combined with a <span class="w2">+</span> (positive, <em>default</em>), or <span class="w2">-</span> (negative). Note that <em>tense</em> (when an action was performed) in Athabascan is not indicated independently from <em>mode</em>, as it is in English. Perfective conveys past completion, imperfective conveys ongoing in present, and future conveys actions in the future (<a href="http://qenaga.org/verbs_and_sentences/aspects.html">ref</a>).</li>
+<li><span class="bl">prd</span> <span class="w2">&lt;person&gt;</span> <span class="txt">TEXT</span> <em>(1-to-many)</em> : Paradigm example, one line for each person, where <span class="w2">&lt;person&gt;</span> is one of: <span class="w2">1s</span> (first person singular), <span class="w2">2s</span> (second person singular), <span class="w2">3s</span> (third person singular), <span class="w2">1p</span> (first person plural), <span class="w2">2p</span> (second person plural), <span class="w2">3p</span> (third person plural), <span class="w2">1d</span> (first person dual), <span class="w2">2d</span> (second person dual), <span class="w2">3d</span> (third person dual), ind (indefinite). <span class="txt">TEXT</span> is the row of words, in same order as the column definition in <span class="bl">…prds</span>. If an entry (cell) should be two words, use an underscore (‘_’) in place of a space between words; in this way, spaces are reserved for column (field) delimiters. A missing element in the matrix is indicated with a dash (‘-’).</li>
+<li><span class="bl">prdgl</span> <span class="txt">TEXT</span> <em>(0-to-1, following a</em> <span class="bl">prd</span><em>)</em> : Paradigm gloss</li>
+</ul>
+<h3 id="h.wc">Word categories</h3>
+<ul>
+<li><span class="bl">&lt;gc2&gt;</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : Word category, where <span class="bl">&lt;gc2&gt;</span> is either: <strong>A stem</strong>: one of: <span class="bl">..adj</span> (adjective, <em>adj.</em>), <span class="bl">..ads</span> (aspectual derivational string, <em>a.d.s.</em>), <span class="bl">..adv</span> (adverb, <em>adv.</em>), <span class="bl">..an</span> (areal noun, <em>a.n.</em>), <span class="bl">..c</span> (compounding form, <em>c.</em>), <span class="bl">..cnj</span> (conjunction, <em>cnj.</em>), <span class="bl">..coll</span> (collocation, <em>coll.</em>), <span class="bl">..dem</span> (demonstrative, <em>dem.</em>), <span class="bl">..dir</span> (directional, <em>dir.</em>), <span class="bl">..enc</span> (enclitic, <em>enc.</em>), <span class="bl">..exc</span> (exclamation, <em>exc.</em>), <span class="bl">..i</span> (incorporate, <em>i.</em>), <span class="bl">..ic</span> (incorporate compound, <em>ic.</em>), <span class="bl">..in</span> (instrumental noun, <em>ins.n.</em>), <span class="bl">..int</span> (interrogative, <em>int.</em>), <span class="bl">..mpn</span> (major place name, <em>m.p.n.</em>), <span class="bl">..n</span> (noun, <em>n.</em>), <span class="bl">..nc</span> (noun, compound, <em>n.c.</em>), <span class="bl">..ni</span> (noun, incorporate, <em>n.i.</em>), <span class="bl">..nic</span> (noun, incorporate compound, <em>n.i.c.</em>), <span class="bl">..nenc</span> (noun enclitic, <em>n.enc.</em>), <span class="bl">..padj</span> (predicate adjective, <em>p.adj.</em>), <span class="bl">..pf</span> (prefix, <em>pf.</em>), <span class="bl">..pn</span> (place name, <em>p.n.</em>), <span class="bl">..psn</span> (personal name, <em>ps.n.</em>), <span class="bl">..pp</span> (postposition, <em>pp.</em>), <span class="bl">..pro</span> (pronoun, <em>pro.</em>), <span class="bl">..scnj</span> (subordinating conjunction, <em>s.cnj.</em>), <span class="bl">..venc</span> (verb enclitic, <em>v.enc.</em>), <span class="bl">..voc</span> (vocative, <em>voc.</em>); a <strong>noun affix</strong>: <span class="bl">..nsf</span> (Noun suffix), <span class="bl">..sf</span> (Suffix), <span class="bl">..nfaf</span> (Noun formation affix), <span class="bl">..nfsf</span> (Noun formation suffix); a <strong>verb affix</strong>: <span class="bl">..vsf1</span> (Verb suffix 1, <em>v.sf1.</em>), <span class="bl">..vsf</span>(Verb suffix, <em>v.sf.</em>), <span class="bl">..nds</span> (Non-derivational string, <em>n.d.s.</em>), <span class="bl">..vfaf</span> (Verb formation affix), <span class="bl">..vfsf</span> (Verb formation suffix), <span class="bl">..vpf</span> (Verb prefix, <em>v.pf.</em>), <span class="bl">..ads</span> (aspectual derivational string, <em>a.d.s.</em>); or a <strong>theme formation string</strong>: <span class="bl">..tfs</span>.</li>
+<li><a href="#h.wca">Word category attributes</a> <em>(exactly-1)</em></li>
+<li><a href="#h.ex">Examples</a> <em>(0-to-many)</em></li>
+<li><a href="#h.wc2">Word sub-categories</a> <em>(0-to-many)</em></li>
+<li>( <a href="#h.th">Subthemes</a> <em>(0-to-many)</em>, only for <span class="bl">..tfs</span> )</li>
+</ul>
+<h3 id="h.wca">Word category attributes</h3>
+<ul>
+<li><a href="#h.dial">Dialect</a> <em>(0-to-1)</em></li>
+<li>( <span class="bl">tc</span> <span class="w2">&lt;tctype&gt;</span> <em>(0-to-1)</em> : Theme category, see <a href="#h.th">Themes</a>, for <span class="bl">..ads</span>, <span class="bl">...ads</span>, and <span class="bl">..tfs</span> only )</li>
+<li>( <span class="bl">asp</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Aspect, for <span class="bl">..ads</span>, <span class="bl">...ads</span>, and <span class="bl">..tfs</span> only )</li>
+<li>( <span class="bl">cnj</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Conjugation prefix, for <span class="bl">..ads</span>, <span class="bl">...ads</span>, and <span class="bl">..tfs</span> only )</li>
+<li><a href="#h.gl">Gloss</a> <em>(exactly-1)</em> : English gloss</li>
+<li><span class="bl">smf</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Semantic field</li>
+<li><span class="bl">sc</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Scientific name</li>
+<li><span class="bl">lit</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Literal translation</li>
+</ul>
+<h3 id="h.wc2">Word sub-categories</h3>
+<ul>
+<li><span class="bl">&lt;gc3&gt;</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : Word category, where <span class="bl">&lt;gc3&gt;</span> is one of: <span class="bl">...adj</span> (adjective, <em>adj.</em>), <span class="bl">...ads</span> (aspectual derivational string, <em>a.d.s.</em>), <span class="bl">...adv</span> (adverb, <em>adv.</em>), <span class="bl">...an</span> (areal noun, <em>a.n.</em>), <span class="bl">...c</span> (compounding form, <em>c.</em>), <span class="bl">...cnj</span> (conjunction, <em>cnj.</em>), <span class="bl">...coll</span> (collocation, <em>coll.</em>), <span class="bl">...dem</span> (demonstrative, <em>dem.</em>), <span class="bl">...dir</span> (directional, <em>dir.</em>), <span class="bl">...drt</span> (derived root, <em>der.rt.</em>; only at sub-entry level), <span class="bl">...enc</span> (enclitic, <em>enc.</em>), <span class="bl">...exc</span> (exclamation, <em>exc.</em>), <span class="bl">...i</span> (incorporate, <em>i.</em>), <span class="bl">...ic</span> (incorporate compound, <em>ic.</em>), <span class="bl">...in</span> (instrumental noun, <em>ins.n.</em>), <span class="bl">...int</span> (interrogative, <em>int.</em>), <span class="bl">...n</span> (noun, <em>n.</em>), <span class="bl">...nc</span> (noun, compound, <em>n.c.</em>), <span class="bl">...ni</span> (noun, incorporate, <em>n.i.</em>), <span class="bl">...nic</span> (noun, incorporate compound, <em>n.i.c.</em>), <span class="bl">...nenc</span> (noun enclitic, <em>n.enc.</em>), <span class="bl">...mpn</span> (major place name, <em>m.p.n.</em>), <span class="bl">...padj</span> (predicate adjective, <em>p.adj.</em>), <span class="bl">...pf</span> (prefix, <em>pf.</em>), <span class="bl">...pn</span> (place name, <em>p.n.</em>), <span class="bl">...psn</span> (personal name, <em>ps.n.</em>), <span class="bl">...pp</span> (postposition, <em>pp.</em>), <span class="bl">...pro</span> (pronoun, <em>pro.</em>), <span class="bl">...sf</span> (suffix, <em>sf.</em>), <span class="bl">...scnj</span> (subordinating conjunction, <em>s.cnj.</em>), <span class="bl">...venc</span> (verb enclitic, <em>v.enc.</em>), <span class="bl">...voc</span> (vocative, <em>voc.</em>). An Inflectional String, <span class="bl">...ifs</span>, may occur under some <em>verb affix</em> word categories.</li>
+<li><a href="#h.wca">Word category attributes</a> <em>(exactly-1)</em></li>
+</ul>
+<h2 id="h.lw">Loan word</h2>
+<ul>
+<li><span class="bl">.lw</span> <span class="txt">TEXT</span> (exactly-1) : Loan word</li>
+<li><span class="bl">src</span> <span class="txt">TEXT</span> (exactly-1) : Source language</li>
+<li><a href="#h.wc">Word categories</a> <em>(0-to-many)</em></li>
+</ul>
+<h2 id="references">References</h2>
+<p>Kari, J. 2012. Guide to Using the Koyukon Athabaskan Dictionary. <em>In</em>: Koyukon Athabaskan Dictionary, J. Jette. &amp; E. Jones.</p>
+<p>Rice, K.D. 2015. The start of a glossary of Athabaskan vocabulary. Linguistic Institute.</p>
+<p>Urschel, J.M. 2006. Lower Tanana Athabascan Verb Paradigms. MSc. Thesis, University of Alaska, Fairbanks.</p>
+<h2 id="h.a1">Appendix 1: A note concerning different rootword classes</h2>
+<p>There are three band labels Jim uses for different kinds of rootword: root (<span class="bl">.rt</span>), affix (<span class="bl">.af</span>), and root/affix (<span class="bl">.ra</span>). Initially, Cam had been trying to deduce differing rules for the syntax of each of these (e.g., an affix may only be a noun or verb affix, and that would determine the kinds of sub-entries that were allowed). However, on analyzing Jim’s usage for Lower Tanana, he found:</p>
+<ul>
+<li>There are affix word categories in <span class="bl">.rt</span> (e.g. <span class="bl">.nsf</span>, <span class="bl">..tfs</span>)</li>
+<li>There are lots of <span class="bl">.rt</span> word categories (<span class="bl">..n</span>, <span class="bl">..adv</span>, etc) in <span class="c17 c0">.af</span></li>
+<li>There are a few cases of both noun affix categories and verb affix categories under the same <span class="c17 c0">.af</span></li>
+<li>Likewise for <span class="c0 c17">.ra</span></li>
+</ul>
+<p>This recognition lead to a new, less specifi strategy for validation: to treat <span class="bl">.rt</span>, <span class="bl">.af</span>, <span class="bl">.ra</span> with the <em>same</em> rule set: let any double-dot word category be under any single-dot band. This document was rewritten (2020-04-15) to reflect this change.</p>
       </div>
       <div class="three columns" style="margin-top: 5%">
         <a class="button" style="width:100%"
+           href="grammar.html">Grammar</a><br/>
+        <a class="button" style="width:100%"
            href="tools.html">Tools</a><br/>
         <a class="button" style="width:100%"
-           href="grammar.html">Grammar</a><br/>
+           href="resources.html">Resources</a><br/>
+        <a class="button" style="width:100%"
+           href="https://github.com/alaskanlc/">Github</a><br/>
         <a class="button" style="width:100%"
            href="index.html">Home</a>
       </div>
