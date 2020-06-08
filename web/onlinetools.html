@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-  <title>$pagetitle$</title>
+  <title>Tools</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="description" content="Lexware lexicography info and tools"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -18,7 +18,14 @@
   <div class="container">
     <div class="row">
       <div class="nine columns" style="margin-top: 5%">
-$body$
+<h1 id="tools">Tools</h1>
+<form method="post" action="do">
+<p>Paste your Lexware-formatted text here*</p>
+<textarea name="lex" style="height: 100px; width: 600px;"></textarea>
+<p><input type="radio" name="method" value="validate"/> Validate <br/> <input type="radio" name="method" value="html"/> Convert to HTML</p>
+<p><input type="reset" value="Reset"/> <input type="submit" value="Send"/></p>
+</form>
+<p><span style="font-size: 1.2rem">* = Note: no copy is kept of your data; maximum size: 2M characters<br/>For sample of lexware, see <a href="sample.html">here</a></span></p>
       </div>
       <div class="three columns" style="margin-top: 5%">
         <a class="button" style="width:100%"

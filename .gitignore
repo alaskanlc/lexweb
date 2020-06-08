@@ -13,6 +13,7 @@ tools/lw2xml/lw2xml.tab.c
 tools/lw2xml/lw2xml.tab.h
 tools/lw2xml/lw2xml
 tools/lw2xml/xml2html/lt.html
-tools/lw2xhtml/Gwichin.lex
-tools/lw2xhtml/lt.lw
-tools/lw2xhtml/test.html
+lw2xhtml/Gwichin.lex
+lw2xhtml/lt.lw
+lw2xhtml/test.html
+web/files/*

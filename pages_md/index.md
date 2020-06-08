@@ -28,3 +28,4 @@ this work. The outputs of this project are:
 **This work was funded by the UAF
 [Alaska Native Language Center](https://www.uaf.edu/anlc/) and the
 [College of Rural and Community Development](https://www.uaf.edu/rural/).**
+
