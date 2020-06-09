@@ -19,28 +19,35 @@ Brief linguistic background information is included for some of the
 elements in order to facilitate the work of those who are not familiar
 with Dene Athabascan lexicography.
 
+Other formating conventions (italics, index marks, etc) in the Lexware
+file are given in the [Markup](#h.markup) section, below.
+
+
 ## Document {#h.doc}
 
  * Each document may have _(1-to-many)_ [Root elements](#h.re)
+
 
 ### Root element {#h.re}
 
 Each root element can be either a:
 
- * [Root](#h.root) OR 
+ * [Root](#h.rt) OR 
  * [Loan word](#h.lw)
 
-## Root {#h.root}
 
- * [\<r\>]{.bl} [TEXT]{.txt} _(exactly-1)_ where [\<r\>]{.bl} is one
+## Root {#h.rt}
+
+ * [\<rt\>]{.bl} [TEXT]{.txt} _(exactly-1)_ where [\<rt\>]{.bl} is one
     of [.rt]{.bl} (root word), [.af]{.bl} (affix), [.ra]{.bl}
     (root/affix) (see [note](#h.a1)).
- * [Root word attributes](#h.rwa) _(0-to-1)_
- * [Stem sets](#h.ss) _(0-to-1)_
+ * [Root word attributes](#h.rtattr) _(0-to-1)_
+ * [Stem sets](#h.sets) _(0-to-1)_
  * [Themes](#h.th) _(0-to-many)_
  * [Word Categories](#h.wc) _(0-to-many)_
 
-### Root word attributes {#h.rwa}
+
+### Root word attributes {#h.rtattr}
 
  * [pd]{.bl} [TEXT]{.txt} _(0-to-1)_ : Proto Dene
  * [tag]{.bl} [TEXT]{.txt} _(0-to-1)_ : Tag
@@ -50,7 +57,8 @@ Each root element can be either a:
  * [nav]{.bl} [TEXT]{.txt} _(0-to-1)_ : Navajo cognate
  * [df]{.bl} [TEXT]{.txt} _(0-to-1)_ : Derived forms
 
-### Stem sets {#h.ss}
+
+### Stem sets {#h.sets}
 
 “Athabascan \[verb\] stems undergo transformations to express
 different _states_ of time and completion, called mode, and different
@@ -73,6 +81,7 @@ durative). Note that aspect is also indicated by verb prefixes (see
     (persistive), [prog]{.w2} (progressive), [rep]{.w2} (repetitive),
     [rev]{.w2} (reversative), [sem]{.w2} (semelfactive), [tran]{.w2}
     (transitional).
+
 
 ### Themes {#h.th}
 
@@ -131,6 +140,7 @@ _negation_.
  * ( [Word sub-categories](#h.wc2) (0-to-many) : [\...n]{.bl} only,
    nominalized verbs making use of the theme )
 
+
 ### Gloss {#h.gl}
 
  * [gl]{.bl} [TEXT]{.txt} _(exactly-1)_ : English gloss
@@ -138,6 +148,7 @@ _negation_.
    (or comment)
  * [cit]{.bl} [TEXT]{.txt} _(0-to-1)_ : Citation (e.g., Notebook
    source)
+
 
 ### Example {#h.ex}
 
@@ -150,6 +161,7 @@ _negation_.
  * [cit]{.bl} [TEXT]{.txt} _(0-to-1)_ : Citation (e.g., Notebook
    source)
 
+
 ### Dialects {#h.dial}
 
 Note the different usage of [dial]{.bl} depending on whether it is the
@@ -159,6 +171,7 @@ first, or subsequent
    preceding [ex]{.bl}. [\<lang\>]{.w2} is a controlled vocabulary.
     * [dial]{.bl} [\<lang\>]{.w2} [TEXT]{.txt} _(0-to-many)_ :
       Additional forms of the word in different dialects
+
 
 ### Paradigms {#h.prd}
 
@@ -193,6 +206,7 @@ variation in subject, _mode_, negation. Coded as a table.
    dash (‘-’).
  * [prdgl]{.bl} [TEXT]{.txt} _(0-to-1, following a_ [prd]{.bl}_)_ :
    Paradigm gloss
+
 
 ### Word categories {#h.wc}
 
@@ -277,6 +291,8 @@ variation in subject, _mode_, negation. Coded as a table.
  * [.lw]{.bl} [TEXT]{.txt} (exactly-1) : Loan word
  * [src]{.bl} [TEXT]{.txt} (exactly-1) : Source language
  * [Word categories](#h.wc) _(0-to-many)_
+
+## Markup {#h.markup}
 
 ## References
 

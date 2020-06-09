@@ -1,0 +1,5 @@
+#!/bin/sh
+
+gawk '/^-->/ {on=0} (on==1) {print $0} /^<!-- g/ {on=1}' grammar.md > ../dene1.grammar
+
+
