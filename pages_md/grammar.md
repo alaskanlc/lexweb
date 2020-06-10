@@ -169,8 +169,8 @@ first, or subsequent
 
  * [dial]{.bl} [\<lang\>]{.w2} _(exactly-1)_ : Dialect of the
    preceding [ex]{.bl}. [\<lang\>]{.w2} is a controlled vocabulary.
-    * [dial]{.bl} [\<lang\>]{.w2} [TEXT]{.txt} _(0-to-many)_ :
-      Additional forms of the word in different dialects
+ * [dial]{.bl} [\<lang\>]{.w2} [TEXT]{.txt} _(0-to-many)_ :
+   Additional forms of the word in different dialects
 
 
 ### Paradigms {#h.prd}

@@ -1,8 +1,13 @@
 % Tools
 
+<div style="float: right; width: 300px; padding-left: 30px;">
+  <img src="img/flow.jpg" width="100%"/>
+</div>
+
 # Tools
 
 **Go to: [ONLINE LEXWARE PROCESSING TOOLS](onlinetools.html)**
+
 
 ## Text editing {#te}
 
@@ -27,12 +32,21 @@ for EditPad Pro, and a Dene package for the key mapping software
 
 ## Lexware file grammar
 
-No validation is available in the text editor itself, and the user writer must  
+No Lexware syntax validation is available in the text editor itself,
+and the writer must carefully avoid band label typos, and adhere to
+the band order defined in the the [grammar](grammar.html). Elements of
+a Lexware file that are out of order are not ‘wrong’ per se, but will
+not generate standardized dictionary entries and will not be available
+for analysis.
  
 ## Validation
 
 
+
 ## Conversion to formatted dictionary
+
+
+## Indexing
 
 
 ## Analytical tools
