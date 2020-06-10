@@ -7,7 +7,7 @@ See <https://camwebb.info/lexweb/> for web documentation and online tools.
 In this repository:
 
 ```
-├── lw2xhtml         : Validator and dictionary formater
+├── lw2xhtml         : Validator and dictionary formatter
 ├── analysis         : Xquery extraction from xhtml
 ├── pages_md         : Raw markdown pages for website
 ├── bin              : Tools for building website

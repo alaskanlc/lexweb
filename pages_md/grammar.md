@@ -36,7 +36,7 @@ Each root element can be either a:
  * [Loan word](#h.lw)
 
 
-## Root {#h.rt}
+### Root {#h.rt}
 
  * [\<rt\>]{.bl} [TEXT]{.txt} _(exactly-1)_ where [\<rt\>]{.bl} is one
     of [.rt]{.bl} (root word), [.af]{.bl} (affix), [.ra]{.bl}
@@ -220,7 +220,8 @@ variation in subject, _mode_, negation. Coded as a table.
    _dir._), [..enc]{.bl} (enclitic, _enc._), [..exc]{.bl}
    (exclamation, _exc._), [..i]{.bl} (incorporate, _i._), [..ic]{.bl}
    (incorporate compound, _ic._), [..in]{.bl} (instrumental noun,
-   _ins.n._), [..int]{.bl} (interrogative, _int._), [..mpn]{.bl}
+   _ins.n._), [..i-n]{.bl} (instrumental noun,
+   _ins.n._; for Jim Kari), [..int]{.bl} (interrogative, _int._), [..mpn]{.bl}
    (major place name, _m.p.n._), [..n]{.bl} (noun, _n._), [..nc]{.bl}
    (noun, compound, _n.c._), [..ni]{.bl} (noun, incorporate, _n.i._),
    [..nic]{.bl} (noun, incorporate compound, _n.i.c._), [..nenc]{.bl}
@@ -292,7 +293,24 @@ variation in subject, _mode_, negation. Coded as a table.
  * [src]{.bl} [TEXT]{.txt} (exactly-1) : Source language
  * [Word categories](#h.wc) _(0-to-many)_
 
+## Comments and document sections
+
 ## Markup {#h.markup}
+
+### Typography
+
+Changes in font can be controlled with various symbols: ampersand
+(`&`) switches to bold; percent sign (`%`) switches to italics, and
+equals sign (`=`) switches to normal (non-bold, non-italic) font.
+
+### Indexing marks
+
+An asterisk (`*`) before a word indicates that that word should be
+added to the index. If the intended index word is not exactly the same
+as the word in the instance to be indexed, the instance word can be
+‘cut’ using a closing bracket (`]`). E.g., `*cause]s` would be indexed
+under `cause`.
+
 
 ## References
 

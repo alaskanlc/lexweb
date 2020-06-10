@@ -1,14 +1,20 @@
-% Tools
+% Online tools
 
-# Tools
+# Online tools
+
+This web app processes Lexware-formatted text through the
+[lw2xhtml](lw2xhtml.html) program and returns the results to your
+browser. No copy is kept of your data. Maximum size that can be
+processed: 2M characters. For a sample of Lexware, see
+[here](sample.html).
 
 <form method="post" action="do">
 
-Paste your Lexware-formatted text here*
+Paste your Lexware-formatted text here:
  
 <textarea name="lex" style="height: 100px; width: 600px;"></textarea>
 
-<input type="radio" name="method" value="validate"/> Validate <br/>
+Select: &#160;&#160;&#160;&#160;<input type="radio" name="method" value="validate"/> Validate &#160;&#160;&#160;&#160; _OR_ &#160;&#160;&#160;&#160;
 <input type="radio" name="method" value="html"/> Convert to HTML
 
 <input type="reset" value="Reset"/>
@@ -16,4 +22,3 @@ Paste your Lexware-formatted text here*
 
 </form>
 
-<span style="font-size: 1.2rem">* = Note: no copy is kept of your data; maximum size: 2M characters<br/>For sample of lexware, see [here](sample.html)</span>

@@ -22,6 +22,7 @@
 <p>This document is the normative definition of allowable structure for Dene Lexware files, based on Jim Kari’s usage (for Lower Tanana), and with input from Jason Harris (for Gwich’in).</p>
 <p><strong>Conventions</strong> in this document: Band labels are in <span class="bl">this</span> font. Options after band labels are in <span class="w2">this</span> font. Text that must follow a band is indicated <span class="txt">TEXT</span> (it may contain one or more words, separated by space(s)). Sections in this document define classes of related bands, with each bullet being a necessary or optional band, in the order given. An ‘OR’ means that only one of several options is allowed. Hyperlinks can be followed to the relevant section.</p>
 <p>Brief linguistic background information is included for some of the elements in order to facilitate the work of those who are not familiar with Dene Athabascan lexicography.</p>
+<p>Other formating conventions (italics, index marks, etc) in the Lexware file are given in the <a href="#h.markup">Markup</a> section, below.</p>
 <h2 id="h.doc">Document</h2>
 <ul>
 <li>Each document may have <em>(1-to-many)</em> <a href="#h.re">Root elements</a></li>
@@ -29,18 +30,18 @@
 <h3 id="h.re">Root element</h3>
 <p>Each root element can be either a:</p>
 <ul>
-<li><a href="#h.root">Root</a> OR</li>
+<li><a href="#h.rt">Root</a> OR</li>
 <li><a href="#h.lw">Loan word</a></li>
 </ul>
-<h2 id="h.root">Root</h2>
+<h2 id="h.rt">Root</h2>
 <ul>
-<li><span class="bl">&lt;r&gt;</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> where <span class="bl">&lt;r&gt;</span> is one of <span class="bl">.rt</span> (root word), <span class="bl">.af</span> (affix), <span class="bl">.ra</span> (root/affix) (see <a href="#h.a1">note</a>).</li>
-<li><a href="#h.rwa">Root word attributes</a> <em>(0-to-1)</em></li>
-<li><a href="#h.ss">Stem sets</a> <em>(0-to-1)</em></li>
+<li><span class="bl">&lt;rt&gt;</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> where <span class="bl">&lt;rt&gt;</span> is one of <span class="bl">.rt</span> (root word), <span class="bl">.af</span> (affix), <span class="bl">.ra</span> (root/affix) (see <a href="#h.a1">note</a>).</li>
+<li><a href="#h.rtattr">Root word attributes</a> <em>(0-to-1)</em></li>
+<li><a href="#h.sets">Stem sets</a> <em>(0-to-1)</em></li>
 <li><a href="#h.th">Themes</a> <em>(0-to-many)</em></li>
 <li><a href="#h.wc">Word Categories</a> <em>(0-to-many)</em></li>
 </ul>
-<h3 id="h.rwa">Root word attributes</h3>
+<h3 id="h.rtattr">Root word attributes</h3>
 <ul>
 <li><span class="bl">pd</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Proto Dene</li>
 <li><span class="bl">tag</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Tag</li>
@@ -48,7 +49,7 @@
 <li><span class="bl">nav</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Navajo cognate</li>
 <li><span class="bl">df</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Derived forms</li>
 </ul>
-<h3 id="h.ss">Stem sets</h3>
+<h3 id="h.sets">Stem sets</h3>
 <p>“Athabascan [verb] stems undergo transformations to express different <em>states</em> of time and completion, called mode, and different <em>ways</em> of completing an action or being in a state, called aspect” (Urschel 2006). The <span class="bl">..set</span> data construction records that stem variation in mode and aspect for verb roots. Each <span class="bl">set</span> line gives mode variation (in standard order: imperfective, perfective, future, optative), for for a single aspect (e.g., conclusive, durative). Note that aspect is also indicated by verb prefixes (see <a href="#h.th">Themes</a>).</p>
 <ul>
 <li><span class="bl">..sets</span> <em>(exactly-1)</em></li>
@@ -129,6 +130,7 @@
 <li><span class="bl">src</span> <span class="txt">TEXT</span> (exactly-1) : Source language</li>
 <li><a href="#h.wc">Word categories</a> <em>(0-to-many)</em></li>
 </ul>
+<h2 id="h.markup">Markup</h2>
 <h2 id="references">References</h2>
 <p>Kari, J. 2012. Guide to Using the Koyukon Athabaskan Dictionary. <em>In</em>: Koyukon Athabaskan Dictionary, J. Jette. &amp; E. Jones.</p>
 <p>Rice, K.D. 2015. The start of a glossary of Athabaskan vocabulary. Linguistic Institute.</p>
@@ -154,6 +156,7 @@
            href="contact.html">Contact</a><br/>
         <a class="button" style="width:100%"
            href="index.html">Home</a>
+        <a href="https://www.uaf.edu/anlc/"><img src="img/anlc.png" alt="Alaska Native Language Center" style="width:60%;margin-left: auto; margin-right: auto; display:block; padding-top:5rem;"/></a>
       </div>
     </div>
   </div>

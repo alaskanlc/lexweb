@@ -35,11 +35,16 @@ function htmlFooter()
   print "</div> \
       <div class=\"three columns\" style=\"margin-top: 5%\"> \
         <a class=\"button\" style=\"width:100%\" \
-           href=\"tools.html\">Tools</a><br/> \
-        <a class=\"button\" style=\"width:100%\" \
            href=\"grammar.html\">Grammar</a><br/> \
         <a class=\"button\" style=\"width:100%\" \
+           href=\"tools.html\">Tools</a><br/> \
+        <a class=\"button\" style=\"width:100%\" \
+           href=\"resources.html\">Resources</a><br/> \
+        <a class=\"button\" style=\"width:100%\" \
+           href=\"contact.html\">Contact</a><br/> \
+        <a class=\"button\" style=\"width:100%\" \
            href=\"index.html\">Home</a> \
+        <a href=\"https://www.uaf.edu/anlc/\"><img src=\"img/anlc.png\" alt=\"Alaska Native Language Center\" style=\"width:60%;margin-left: auto; margin-right: auto; display:block; padding-top:5rem;\"/></a> \
       </div> \
     </div> \
   </div> \

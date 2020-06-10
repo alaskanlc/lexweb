@@ -2,7 +2,9 @@
 
 # Tools
 
-## Text editing
+**Go to: [ONLINE LEXWARE PROCESSING TOOLS](onlinetools.html)**
+
+## Text editing {#te}
 
 A generic [Text Editor](https://en.wikipedia.org/wiki/Text_editor) is
 used to create and modify a Lexware file.
