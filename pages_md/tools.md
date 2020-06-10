@@ -8,6 +8,7 @@
 
 **Go to: [ONLINE LEXWARE PROCESSING TOOLS](onlinetools.html)**
 
+**Go to section: [Text editing](#te) | [Concurrent editing](#ce) | [Lexware file grammar](#g)**
 
 ## Text editing {#te}
 
@@ -30,7 +31,29 @@ Install tab, and search for “Lexware”. Click the Install button on
 for EditPad Pro, and a Dene package for the key mapping software
 [Keyman](https://keyman.com/); please contact Tim for these packages.
 
-## Lexware file grammar
+## Concurrent editing {#ce}
+
+If at any point there might be more than one person working on a
+Lexware file, including an assistant who may help with validation and
+formatting, it may be expediant to use a concurrent versioning
+system. Most academics are now familiar with the concurrent editing in
+Google Docs, but this resources was preceeded by decades of tools
+available for software code writers to collaborate on projects. The
+most popular code sharing site today is [Github](https://github.com),
+which uses the [Git](https://git-scm.com/) versioning system.  Because
+a Lexware file is ‘line-oriented’, it is very similar to software
+code, using Github to manage Lexware editing is a good choice. Github
+“repos” can be either public or private, and you may choose to keep
+your working copy of a lexware file private. There are many guides to
+using Github, and the Atom editor has built-in Github capabilities.
+
+However, if collaborators would prefer to use GoogleDocs, it is
+possible to adapt GoogleDocs to facilitiate Lexware editing. Please
+see [here]() for a guide to adding syntax coloration to your Lexware
+file. At this time it is not possible to customize keystokes in Google
+Docs, so some other approach must be found for adding Dene diacritics.
+
+## Lexware file grammar {#g}
 
 No Lexware syntax validation is available in the text editor itself,
 and the writer must carefully avoid band label typos, and adhere to
