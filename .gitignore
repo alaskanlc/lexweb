@@ -15,4 +15,5 @@ tools/xml2html/lt.html
 lw2xhtml/Gwichin.lex
 lw2xhtml/lt.lw
 lw2xhtml/test.html
+lw2xhtml/lw.rng
 web/files/*

@@ -1,0 +1,115 @@
+default namespace = ""
+
+start =
+   element doc {
+      (  rt
+       | lw
+      )+
+   }
+
+rt =
+   element rt {
+      element rtattr {
+         element rttype { text },
+         element rtword { text },
+         element pd { text }?,
+         element tag { text }?,
+         element rtyp { text }?,
+         element df { text }?
+      },
+      element sets {
+         element set {
+            element setasp { text },
+            element setwords { text }
+         }+
+      }?,
+      element th {
+         element thattr {
+            element thword { text },
+            dials?,
+            element tc { text },
+            element gl { text }
+         },
+         exengs?,
+         prds?,
+         # rare, only ...n for nominalized verbs:
+         gc3*
+      }*,
+      gc2*
+   }
+
+prds = 
+   element prds {
+      element prdstype { text },
+      element prdsdef { text },
+      element prd {
+         element prdpers { text },
+         element prdwords { text },
+         element prdgl { text }?
+      }+
+   }
+
+exengs =
+   element exengs {
+      element exeng {
+         element ex { text },
+         dials?,
+         element eng { text },
+         element lit { text }?,
+         element quo { text }?,
+         element cit { text }?
+      }+
+   }
+
+dials =
+   element dials {
+      element dial { text },
+      element dialx {
+         element dial { text },
+         element dialword { text }
+      }?
+   }
+
+gc2 =
+   element gc2 {
+      element gc2attr {
+         element gc2word { text },
+         element gc2type { text },
+         dials?,
+         element tc { text }?,
+         element asp { text }?,
+         element cnj { text }?,
+         element gl { text },
+         element smf { text }?,
+         element sc { text }?,
+         element lit { text }?
+      },
+      exengs?,
+      gc3*
+   }
+
+gc3 =
+   element gc3 {
+      element gc3attr {
+         element gc3word { text },
+         element gc3type { text },
+         dials?,
+         element tc { text }?,
+         element asp { text }?,
+         element cnj { text }?,
+         element gl { text },
+         element smf { text }?,
+         element sc { text }?,
+         element lit { text }?
+      },
+      exengs?
+   }
+
+lw =
+   element lw {
+      element lwattr {
+         element lwword { text },
+         element src { text }
+      },
+      gc2+
+   }

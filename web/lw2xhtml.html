@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+  <title>Lw2html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="description" content="Lexware lexicography info and tools"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="//fonts.googleapis.com/css?family=Lato:400,300,600" rel="stylesheet" type="text/css"/> <!-- originally Raleway -->
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/skeleton.css"/>
+  <link rel="stylesheet" href="css/override.css"/>
+  <link rel="icon" type="image/png" href="img/icon.png"/>
+
+</head>
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="nine columns" style="margin-top: 5%">
+<h1 id="the-lw2xhtml-program">The lw2xhtml program</h1>
+<p>The core of the Lexware processing pipeline is a single program called <code>lw2xhtml</code>. This is a command-line program that can be run on Mac, Linux or Windows, and is also available as an online CGI program <a href="onlinetools.html">here</a>.</p>
+<p><code>lw2xhtml</code> is a single <a href="https://www.gnu.org/software/gawk/">Gawk</a> script with no dependencies other that Gawk, which is installed on all Linux machines, and can easily be installed on Mac and Windows.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="linux">Linux</h3>
+<p>Either clone the Lexweb repo:</p>
+<pre><code>$ git clone https://github.com/alaskanlc/lexweb.git</code></pre>
+<p>or just copy the <a href="https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xhtml/lw2xhtml">lw2xhtml file</a>. (If the browser saves it as <code>lw2xhtml.txt</code> rename it to <code>lw2xhtml</code>). Make sure the file is executable:</p>
+<pre><code>$ chmod u+x lw2xhtml</code></pre>
+<p>Now, typing <code>lw2xhtml</code> (or <code>./lw2xhtml</code> if $PATH is not set) should execute the program. If you do not have a <code>gawk</code> at <code>/usr/bin/gawk</code>, you can also run it with:</p>
+<pre><code>$ gawk -f lw2xhtml</code></pre>
+<h3 id="mac">Mac</h3>
+<p>Because the code in <code>lw2xhtml</code> uses some non-POSIX Awk features it will not run on the <code>awk</code> that comes pre-installed with Macs. You will need <code>gawk</code>. The easiest way to get <code>gawk</code> is via the Homebrew project. Just go to the <a href="https://brew.sh/">Homebrew</a> page, and follow the one-line install instructions. For this, and for running <code>lw2xhtml</code> you will need to open <code>Terminal</code>, an app in Utilities. (Type <code>cd Desktop</code> when you start Terminal, so that you are working with files on the Desktop.)</p>
+<p>Once Homebrew is installed, just type:</p>
+<pre><code>$ brew install gawk</code></pre>
+<p>Then, either clone the Lexweb repo:</p>
+<pre><code>$ git clone https://github.com/alaskanlc/lexweb.git</code></pre>
+<p>Or just copy the <a href="https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xhtml/lw2xhtml">lw2xhtml file</a> to your Desktop. (If the browser saves it as <code>lw2xhtml.txt</code> rename it to <code>lw2xhtml</code>.)</p>
+<p>Execute the program with:</p>
+<pre><code>$ gawk -f lw2xhtml</code></pre>
+<h3 id="windows">Windows</h3>
+<p><code>lw2xhtml</code> can be easily run using Gawk cross-compiled for Windows, and the <code>CMD.EXE</code> command prompt:</p>
+<ul>
+<li><p>Download Gawk from <a href="https://sourceforge.net/projects/ezwinports/files/">Ezwinports</a> and unzip on the Desktop.</p></li>
+<li><p>Copy the <a href="https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xhtml/lw2xhtml">lw2xhtml file</a> to your Desktop. (If the browser saves it as <code>lw2xhtml.txt</code> rename it to <code>lw2xhtml</code>.)</p></li>
+<li><p>In the menubar search box, type <code>CMD.EXE</code> and open it. This is the old DOS commandline. (You can also use Windows Powershell)</p></li>
+<li><p>Type these commands (altering the version numbers if different. The latest <code>CMD.EXE</code> has command line TAB-completion which speeds things up. Basic commands: <code>dir</code> = view directory files, <code>cd</code> = change directory, <code>copy</code>, <code>more</code> = see file contents. (Substitute your Lexware file for <code>MyLexwareFile.lw</code>.)</p>
+<p>cd Desktop dir gawk-5.1.0-w32-bin.exe -f lw2xhtml gawk-5.1.0-w32-bin.exe -f lw2xhtml MyLexwareFile.lw gawk-5.1.0-w32-bin.exe -f lw2xhtml MyLexwareFile.lw &gt; out.html dir</p></li>
+</ul>
+<h3 id="usage">Usage</h3>
+<p>With no arguments, the program prints its usage and exits. General usage:</p>
+<pre><code>lw2xhtml [ --index --s &lt;start Line&gt; --f &lt;finish Line&gt; ] &lt;lexware file&gt;</code></pre>
+<p>Arguments:</p>
+<ul>
+<li><code>--index</code> if present, make the index</li>
+<li><code>--s X</code> begin processing the Lexware file at line X</li>
+<li><code>--f Y</code> stop processing the Lexware file at line Y</li>
+</ul>
+<p>The program outputs the validation results to <code>/dev/stderr</code> and the processed output to <code>/dev/stdout</code>. To capture the output in a file:</p>
+<pre><code>lw2xhtml in.lw &gt; out.html</code></pre>
+<p>To capture the validation results (in the Bash shell):</p>
+<pre><code>lw2xhtml in.lw 2&gt; validation.txt 1&gt; out.html</code></pre>
+<p>(On Windows the validation results must be copied from the CMD.EXE window.)</p>
+<h2 id="xhtml-output-structure">XHTML output structure</h2>
+<p>In designing an XML schema, there is no single correct structure: information may be coded in element names, or in attributes, data can be ‘flattened’ (minimal hierarchy, or ‘normalized’ (modeling with additional hierarchical levels). For the Lexware output as XHTML, all the structure information had to be stored as <code>&lt;div class="..."&gt;</code> attributes. Choices about hierarchical structure were made to facilitate the display of the data in a traditional dictionary format. For example, the root word is nested within a block of root attributes (<code>rtattr</code>), rather than immediately below the <code>rt</code> div.</p>
+<p>The <code>lw2xhtml</code> code is written so that the possible XML hierarchies can be extracted with this command:</p>
+<pre><code>grep -E &#39; +#&gt;&#39; lw2xhtml | sed -E &#39;s/^ +#&gt;/    /g&#39; | sort</code></pre>
+<p>This give a list of band classes and the hierarchy of XML div attributes in which the information is stored. This is not an XML schema but should help understand the XHTML structure. (To create an XML schema in XSD or RNC would be possible, but a great deal of work.) The best way to become familiar with the structure of the XHTML is to view a formatted dictionary file, and compare it with the XHTML source.</p>
+<p>The current output is:</p>
+<pre><code> asp:  doc/rt/gc2/gc2attr/asp
+ asp:  doc/rt/gc2/gc3/gc3attr/asp
+ asp:  doc/rt/th/gc3/gc3attr/asp
+ cit:  doc/rt/gc2/gc2exengs/exeng/cit
+ cit:  doc/rt/gc2/gc3/gc3exengs/exeng/cit
+ cit:  doc/rt/gc2/th3/th3attr/cit
+ cit:  doc/rt/gc2/th3/th3exengs/exeng/cit
+ cit:  doc/rt/th/gc3/gc3exengs/exeng/cit
+ cit:  doc/rt/th/thattr/cit
+ cit:  doc/rt/th/thexengs/exeng/cit
+ cnj:  doc/rt/gc2/gc2attr/cnj
+ cnj:  doc/rt/gc2/th3/th3attr/cnj
+ cnj:  doc/rt/th/thattr/cnj
+ com:  .../com
+ df:   doc/rt/rtattr/df
+ dial: doc/rt/gc2/gc2attr/dials/dial
+ dial: doc/rt/gc2/gc2attr/dials/dialx/dial
+ dial: doc/rt/gc2/gc2attr/dials/dialx/dialword
+ dial: doc/rt/gc2/gc3/gc3attr/dials/dial
+ dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dial
+ dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dialword
+ dial: doc/rt/th/gc3/gc3attr/dials/dial
+ dial: doc/rt/th/gc3/gc3attr/dials/dialx/dial
+ dial: doc/rt/th/gc3/gc3attr/dials/dialx/dialword
+ dial: ... exeng/dials/dial
+ dial: ... exeng/dials/dialx/dial
+ dial: ... exeng/dials/dialx/dialword
+ eng:  doc/rt/gc2/exengs/exeng/eng
+ eng:  doc/rt/gc2/gc3/exengs/exeng/eng
+ eng:  doc/rt/gc2/th3/exengs/exeng/eng
+ eng:  doc/rt/th/exengs/exeng/eng
+ eng:  doc/rt/th/gc3/exengs/exeng/eng
+ ex:   doc/rt/gc2/exengs/exeng/ex
+ ex:   doc/rt/gc2/gc3/gc3exengs/exeng/ex
+ ex:   doc/rt/gc2/th3/exengs/exeng/ex
+ ex:   doc/rt/th/exengs/exeng/ex
+ ex:   doc/rt/th/gc3/gc3exengs/exeng/ex
+ file: doc/file
+ gc2:  doc/rt/gc2/gc2attr/gc2type
+ gc2:  doc/rt/gc2/gc2attr/gc2word
+ gc3:  doc/rt/gc2/gc3/gc3attr/gc3type
+ gc3:  doc/rt/gc2/gc3/gc3attr/gc3word
+ gc3:  doc/rt/th/gc3/gc3attr/gc3type
+ gc3:  doc/rt/th/gc3/gc3attr/gc3word
+ gl:   doc/rt/gc2/gc2attr/gl
+ gl:   doc/rt/gc2/gc3/gc3attr/gl
+ gl:   doc/rt/gc2/th3/th3attr/gl
+ gl:   doc/rt/th/gc3/gc3attr/gl
+ gl:   doc/rt/th/thattr/gl
+ lit:  doc/rt/gc2/exengs/exeng/lit
+ lit:  doc/rt/gc2/gc2attr/lit
+ lit:  doc/rt/gc2/gc3/exengs/exeng/lit
+ lit:  doc/rt/gc2/gc3/gc3attr/lit
+ lit:  doc/rt/gc2/th3/exengs/exeng/lit
+ lit:  doc/rt/th/exengs/exeng/lit
+ lit:  doc/rt/th/gc3/exengs/exeng/lit
+ lit:  doc/rt/th/gc3/gc3attr/lit
+ lw:   doc/lw/lwattr/lwword
+ nav:  doc/rt/rtattr/nav
+ par3:  .../par3
+ par:  .../par
+ pd:   doc/rt/rtattr/pd
+ prd:  doc/rt/th/prds/prd/prdpers
+ prd:  doc/rt/th/prds/prd/prdwords
+ prdgl:doc/rt/th/prds/prd/prdgl
+ prds: doc/rt/th/prds/prdsdef
+ prds: doc/rt/th/prds/prdstype
+ quo:  doc/rt/gc2/gc2exengs/exeng/quo
+ quo:  doc/rt/gc2/gc3/gc3exengs/exeng/quo
+ quo:  doc/rt/gc2/th3/th3attr/quo
+ quo:  doc/rt/gc2/th3/th3exengs/exeng/quo
+ quo:  doc/rt/th/gc3/gc3exengs/exeng/quo
+ quo:  doc/rt/th/thattr/quo
+ quo:  doc/rt/th/thexengs/exeng/quo
+ rt:   doc/rt
+ rt:   doc/rt/rtattr
+ rt:   doc/rt/rtattr/rttype
+ rt:   doc/rt/rtattr/rtword
+ rtyp: doc/rt/rtattr/rtyp
+ set:  doc/rt/sets/set
+ set:  doc/rt/sets/set/setasp
+ set:  doc/rt/sets/set/setwords
+ sets: doc/rt/sets
+ src:  doc/lw/lwattr/src
+ tag:  doc/rt/rtattr/tag
+ tc:   doc/rt/gc2/gc2attr/tc
+ tc:   doc/rt/gc2/th3/th3attr/tc
+ tc:   doc/rt/th/thattr/tc
+ th3:  doc/rt/gc2/th3/th3attr/thword
+ th:   doc/rt/th
+ th:   doc/rt/th/thattr
+ th:   doc/rt/th/thattr/thword</code></pre>
+<h2 id="programming-notes">Programming notes</h2>
+<h3 id="section"></h3>
+      </div>
+      <div class="three columns" style="margin-top: 5%">
+        <a class="button" style="width:100%"
+           href="grammar.html">Grammar</a><br/>
+        <a class="button" style="width:100%"
+           href="tools.html">Tools</a><br/>
+        <a class="button" style="width:100%"
+           href="resources.html">Resources</a><br/>
+        <a class="button" style="width:100%"
+           href="contact.html">Contact</a><br/>
+        <a class="button" style="width:100%"
+           href="index.html">Home</a>
+        <a href="https://www.uaf.edu/anlc/"><img src="img/anlc.png" alt="Alaska Native Language Center" style="width:60%;margin-left: auto; margin-right: auto; display:block; padding-top:5rem;"/></a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
