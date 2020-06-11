@@ -61,6 +61,8 @@ BEGIN{
         o("rt")
         # These comments (#> ) following an o() or oc() can be extracted from
         #   the program to form a comprehensive outline of the XML structure
+        #   with:  grep -E ' +#>' lw2xhtml | sed -E 's/^ +#>//g' | sort > \
+        #            lw_xml_elements
         #> rt:   doc/rt
         o("rtattr")
         #> rt:   doc/rt/rtattr

@@ -97,6 +97,9 @@ their line number.  The user can then either fix the error, or
 The validator may be run [online](onlinetools.html) or on a user’s
 computer. More details [here](lw2xhtml.html).
 
+Validation can can also be performed by output the (non-HTML) XML
+version, and using an [XML validator](lw2xhtml.html#v).
+
 ## Conversion to formatted dictionary {#c}
 
 Conversion to a formatted dictionary is also done by the
@@ -119,7 +122,7 @@ collected. The `lw2xhtml` program collects these and creates and index
 after the dictionary entries. The index is hyperlinked back to the
 entries.
 
-## Analytical tools {#a}
+## Analytical tools and XML output {#a}
 
 A lexware file is essentially a database. However, much of the
 information is stored implicitly and is dependent on the context of
@@ -131,4 +134,8 @@ queried using XQuery to extract any choice of elements for further
 analysis. See
 [here](https://github.com/alaskanlc/lexweb/tree/master/analysis) for
 an example.
+
+Using the `--xml` switch, `lw2xhtml` will output a non-XHTML XML
+version, with structure using element names not div class
+attribites. This XML version can analysed via XQuery.
 
