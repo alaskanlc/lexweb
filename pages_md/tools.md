@@ -9,6 +9,8 @@
 
 **Go to: [ONLINE LEXWARE PROCESSING TOOLS](onlinetools.html)**
 
+**Go to: [Github repo](https://github.com/alaskanlc/lexweb)**
+
 <!-- **Go to section: [Text editing](#te) | [Concurrent editing](#ce) | [Lexware file grammar](#g) | [Validation](#v) | [Conversion to formatted dictionary](#c) | [Indexing](#i) | [Analytical tools](#a)** -->
 
 

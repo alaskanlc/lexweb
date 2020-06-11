@@ -511,7 +511,7 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["exeng" ]["quo"  ] = "                       ex                  cit gc3 th prds           gc2 th3 rt lw file"
   fol["exeng" ]["cit"  ] = "                       ex                      gc3 th prds           gc2 th3 rt lw file"
   fol["prds"  ]["prds" ] = "                                                           prd                         "
-  fol["prd"   ]["prd"  ] = "                                                           prd prdgl                   "
+  fol["prd"   ]["prd"  ] = "                                               gc3 th prds prd prdgl gc2 th3 rt lw file"
   fol["prd"   ]["prdgl"] = "                                               gc3 th prds prd       gc2 th3 rt lw file"
 
   #                           ?       ?  ?   ?  1   ?  ?   ?  *   *  *   *   

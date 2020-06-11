@@ -1,4 +1,4 @@
-% Lw2html
+% lw2html
 
 # The lw2xhtml program
 
@@ -90,13 +90,14 @@ and the `CMD.EXE` command prompt:
     
 With no arguments, the program prints its usage and exits. General usage:
 
-    lw2xhtml [ --index --s <start Line> --f <finish Line> ] <lexware file>
+    lw2xhtml [ --index --s <start Line> --f <finish Line> --xml ] <lexware file>
 
 Arguments:
 
  * `--index` if present, make the index
  * `--s X` begin processing the Lexware file at line X
  * `--f Y` stop processing the Lexware file at line Y
+ * `--xml` output a (non-HTML) XML file
  
 The program outputs the validation results to `/dev/stderr` and the
 processed output to `/dev/stdout`.  To capture the output in a file:
@@ -122,116 +123,90 @@ the display of the data in a traditional dictionary format. For
 example, the root word is nested within a block of root attributes
 (`rtattr`), rather than immediately below the `rt` div.
 
+### Band to XML element list
+
 The `lw2xhtml` code is written so that the possible XML hierarchies
-can be extracted with this command:
+annotated in comments in the code can be extracted with this command:
 
-    grep -E ' +#>' lw2xhtml | sed -E 's/^ +#>/    /g' | sort
+    grep -E ' +#>' lw2xhtml | sed -E 's/^ +#>//g' | sort
 
-This give a list of band classes and the hierarchy of XML div
-attributes in which the information is stored. This is not an XML
-schema but should help understand the XHTML structure. (To create an
-XML schema in XSD or RNC would be possible, but a great deal of work.)
-The best way to become familiar with the structure of the XHTML is to
-view a formatted dictionary file, and compare it with the XHTML
-source.  
+This give a
+[list](https://github.com/alaskanlc/lexweb/blob/master/lw2xhtml/lw_xml_elements)
+of band classes and the hierarchy of XML div attributes in which the
+information is stored. This is not an XML schema but can help
+understand the XHTML structure. Another way to become familiar with
+the structure of the XHTML is to view a formatted dictionary file, and
+compare it with the XHTML source.
 
-The current output is:
+### Simple XML version and XML schema
 
-     asp:  doc/rt/gc2/gc2attr/asp
-     asp:  doc/rt/gc2/gc3/gc3attr/asp
-     asp:  doc/rt/th/gc3/gc3attr/asp
-     cit:  doc/rt/gc2/gc2exengs/exeng/cit
-     cit:  doc/rt/gc2/gc3/gc3exengs/exeng/cit
-     cit:  doc/rt/gc2/th3/th3attr/cit
-     cit:  doc/rt/gc2/th3/th3exengs/exeng/cit
-     cit:  doc/rt/th/gc3/gc3exengs/exeng/cit
-     cit:  doc/rt/th/thattr/cit
-     cit:  doc/rt/th/thexengs/exeng/cit
-     cnj:  doc/rt/gc2/gc2attr/cnj
-     cnj:  doc/rt/gc2/th3/th3attr/cnj
-     cnj:  doc/rt/th/thattr/cnj
-     com:  .../com
-     df:   doc/rt/rtattr/df
-     dial: doc/rt/gc2/gc2attr/dials/dial
-     dial: doc/rt/gc2/gc2attr/dials/dialx/dial
-     dial: doc/rt/gc2/gc2attr/dials/dialx/dialword
-     dial: doc/rt/gc2/gc3/gc3attr/dials/dial
-     dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dial
-     dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dialword
-     dial: doc/rt/th/gc3/gc3attr/dials/dial
-     dial: doc/rt/th/gc3/gc3attr/dials/dialx/dial
-     dial: doc/rt/th/gc3/gc3attr/dials/dialx/dialword
-     dial: ... exeng/dials/dial
-     dial: ... exeng/dials/dialx/dial
-     dial: ... exeng/dials/dialx/dialword
-     eng:  doc/rt/gc2/exengs/exeng/eng
-     eng:  doc/rt/gc2/gc3/exengs/exeng/eng
-     eng:  doc/rt/gc2/th3/exengs/exeng/eng
-     eng:  doc/rt/th/exengs/exeng/eng
-     eng:  doc/rt/th/gc3/exengs/exeng/eng
-     ex:   doc/rt/gc2/exengs/exeng/ex
-     ex:   doc/rt/gc2/gc3/gc3exengs/exeng/ex
-     ex:   doc/rt/gc2/th3/exengs/exeng/ex
-     ex:   doc/rt/th/exengs/exeng/ex
-     ex:   doc/rt/th/gc3/gc3exengs/exeng/ex
-     file: doc/file
-     gc2:  doc/rt/gc2/gc2attr/gc2type
-     gc2:  doc/rt/gc2/gc2attr/gc2word
-     gc3:  doc/rt/gc2/gc3/gc3attr/gc3type
-     gc3:  doc/rt/gc2/gc3/gc3attr/gc3word
-     gc3:  doc/rt/th/gc3/gc3attr/gc3type
-     gc3:  doc/rt/th/gc3/gc3attr/gc3word
-     gl:   doc/rt/gc2/gc2attr/gl
-     gl:   doc/rt/gc2/gc3/gc3attr/gl
-     gl:   doc/rt/gc2/th3/th3attr/gl
-     gl:   doc/rt/th/gc3/gc3attr/gl
-     gl:   doc/rt/th/thattr/gl
-     lit:  doc/rt/gc2/exengs/exeng/lit
-     lit:  doc/rt/gc2/gc2attr/lit
-     lit:  doc/rt/gc2/gc3/exengs/exeng/lit
-     lit:  doc/rt/gc2/gc3/gc3attr/lit
-     lit:  doc/rt/gc2/th3/exengs/exeng/lit
-     lit:  doc/rt/th/exengs/exeng/lit
-     lit:  doc/rt/th/gc3/exengs/exeng/lit
-     lit:  doc/rt/th/gc3/gc3attr/lit
-     lw:   doc/lw/lwattr/lwword
-     nav:  doc/rt/rtattr/nav
-     par3:  .../par3
-     par:  .../par
-     pd:   doc/rt/rtattr/pd
-     prd:  doc/rt/th/prds/prd/prdpers
-     prd:  doc/rt/th/prds/prd/prdwords
-     prdgl:doc/rt/th/prds/prd/prdgl
-     prds: doc/rt/th/prds/prdsdef
-     prds: doc/rt/th/prds/prdstype
-     quo:  doc/rt/gc2/gc2exengs/exeng/quo
-     quo:  doc/rt/gc2/gc3/gc3exengs/exeng/quo
-     quo:  doc/rt/gc2/th3/th3attr/quo
-     quo:  doc/rt/gc2/th3/th3exengs/exeng/quo
-     quo:  doc/rt/th/gc3/gc3exengs/exeng/quo
-     quo:  doc/rt/th/thattr/quo
-     quo:  doc/rt/th/thexengs/exeng/quo
-     rt:   doc/rt
-     rt:   doc/rt/rtattr
-     rt:   doc/rt/rtattr/rttype
-     rt:   doc/rt/rtattr/rtword
-     rtyp: doc/rt/rtattr/rtyp
-     set:  doc/rt/sets/set
-     set:  doc/rt/sets/set/setasp
-     set:  doc/rt/sets/set/setwords
-     sets: doc/rt/sets
-     src:  doc/lw/lwattr/src
-     tag:  doc/rt/rtattr/tag
-     tc:   doc/rt/gc2/gc2attr/tc
-     tc:   doc/rt/gc2/th3/th3attr/tc
-     tc:   doc/rt/th/thattr/tc
-     th3:  doc/rt/gc2/th3/th3attr/thword
-     th:   doc/rt/th
-     th:   doc/rt/th/thattr
-     th:   doc/rt/th/thattr/thword
+Using the `--xml` switch, a simpler, non-HTML XML output is created
+(without [.file]{.bl}, [..par]{.bl} and [com]{.bl} comments). This
+version can be more easily analyzed with XQuery. It can also be
+validated against an XML schema. The file
+[lw.rnc](https://github.com/alaskanlc/lexweb/blob/master/lw2xhtml/lw.rnc)
+contains the current valid XML schema, which should always be kept in
+sync with the Lexware [grammar](grammar.html). The simple XML file can
+be validate using [trang and jing](https://github.com/relaxng/jing-trang). First
+generate the RELAX NG schema:
 
-    
+    $ java -jar /path/to/trang.jar -I rnc -O rng lw.rnc lw.rng
+
+Then validate:
+
+    $ java -jar /path/to/jing.jar lw.rng myLexwareFile.xml 
+
+Alternatively, and easier on the eyes, open the XML file in Emacs. The
+[nXML mode](https://www.gnu.org/software/emacs/manual/html_node/nxml-mode/index.html)
+should launch automatically. `C-c C-s C-f` can be used to locate the
+RELAX NC schema (or navigate via menus, starting with `M-\``). Invalid parts of the XML file are highlighted in red.
 
 ## Programming notes
 
-### 
+### In-program comments
+
+An attempt has been made make comprehensively comments inside the Awk
+script. This should assist with maintenance and modification.
+
+### Implementation choice
+
+After initial attempts to write a parser in Awk (my language of
+greatest familiarity), I started working on a `flex` and `bison`
+parser and XML converter for Lexware files. This worked well, but with
+every change in allowable syntax, it required a lot of work to
+rewrite. It also introduced the need for a second XQuery converter
+from XML to HTML.
+
+After 5 March, 2020, I started again from scratch with a simpler,
+single Awk script. I could develop it (and modify it) much more
+rapidly. The validation component is not a true parser, and simply
+catches non-allowed band label order, given the band label’s context,
+but works fine.  The XHTML output allows data extraction and analysis
+via XQuery. And most recently (2020-06-11), an option to output as
+simpler XML has introduced the ability to validate the original
+Lexware file via a XML schema validation of the XML output (see
+above).
+
+## Concerning different root word classes {#h.a1}
+
+There are three band labels Jim uses for different kinds of root word:
+root ([.rt]{.bl}), affix ([.af]{.bl}), and root/affix ([.ra]{.bl}).
+Initially, Cam had been trying to deduce differing rules for the
+syntax of each of these (e.g., an affix may only be a noun or verb
+affix, and that would determine the kinds of sub-entries that were
+allowed).  However, on analyzing Jim's usage for Lower Tanana, he
+found:
+
+ * There are affix word categories in [.rt]{.bl} (e.g. [.nsf]{.bl},
+    [..tfs]{.bl})
+ * There are lots of [.rt]{.bl} word categories ([..n]{.bl},
+    [..adv]{.bl}, etc) in [.af]{.c17 .c0}
+ * There are a few cases of both noun affix categories and verb affix
+    categories under the same [.af]{.c17 .c0}
+ * Likewise for [.ra]{.c0 .c17}
+
+This recognition lead to a new, less specific strategy for validation:
+to treat [.rt]{.bl}, [.af]{.bl}, [.ra]{.bl} with the _same_ rule set:
+let any double-dot word category be under any single-dot band. The
+grammar was rewritten (2020-04-15) to reflect this change.
+

@@ -22,6 +22,9 @@ with Dene Athabascan lexicography.
 Other formating conventions (italics, index marks, etc) in the Lexware
 file are given in the [Markup](#h.markup) section, below.
 
+(This file should be kept in sync with the [XML schema file](https://github.com/alaskanlc/lexweb/blob/master/lw2xhtml/lw.rnc) that
+defines allowable XML output.)
+
 
 ## Document {#h.doc}
 
@@ -344,25 +347,3 @@ Linguistic Institute.
 Urschel, J.M. 2006. Lower Tanana Athabascan Verb Paradigms. MSc.
 Thesis, University of Alaska, Fairbanks.
 
-## Appendix 1: A note concerning different rootword classes {#h.a1}
-
-There are three band labels Jim uses for different kinds of rootword:
-root ([.rt]{.bl}), affix ([.af]{.bl}), and root/affix ([.ra]{.bl}).
-Initially, Cam had been trying to deduce differing rules for the
-syntax of each of these (e.g., an affix may only be a noun or verb
-affix, and that would determine the kinds of sub-entries that were
-allowed).  However, on analyzing Jim's usage for Lower Tanana, he
-found:
-
- * There are affix word categories in [.rt]{.bl} (e.g. [.nsf]{.bl},
-    [..tfs]{.bl})
- * There are lots of [.rt]{.bl} word categories ([..n]{.bl},
-    [..adv]{.bl}, etc) in [.af]{.c17 .c0}
- * There are a few cases of both noun affix categories and verb affix
-    categories under the same [.af]{.c17 .c0}
- * Likewise for [.ra]{.c0 .c17}
-
-This recognition lead to a new, less specifi strategy for validation: to
-treat [.rt]{.bl}, [.af]{.bl}, [.ra]{.bl} with the _same_ rule set:
-let any double-dot word category be under any single-dot band. This
-document was rewritten (2020-04-15) to reflect this change. 

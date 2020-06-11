@@ -12,8 +12,8 @@ tools/lw2xml/lw2xml.tab.c
 tools/lw2xml/lw2xml.tab.h
 tools/lw2xml/lw2xml
 tools/xml2html/lt.html
-lw2xhtml/Gwichin.lex
-lw2xhtml/lt.lw
+lw2xhtml/Gwichin*
+lw2xhtml/lt*
 lw2xhtml/test.html
 lw2xhtml/lw.rng
 web/files/*

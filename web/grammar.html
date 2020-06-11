@@ -23,6 +23,7 @@
 <p><strong>Conventions</strong> in this document: Band labels are in <span class="bl">this</span> font. Options after band labels are in <span class="w2">this</span> font. Text that must follow a band is indicated <span class="txt">TEXT</span> (it may contain one or more words, separated by space(s)). Sections in this document define classes of related bands, with each bullet being a necessary or optional band, in the order given. An ‘OR’ means that only one of several options is allowed. Hyperlinks can be followed to the relevant section.</p>
 <p>Brief linguistic background information is included for some of the elements in order to facilitate the work of those who are not familiar with Dene Athabascan lexicography.</p>
 <p>Other formating conventions (italics, index marks, etc) in the Lexware file are given in the <a href="#h.markup">Markup</a> section, below.</p>
+<p>(This file should be kept in sync with the <a href="https://github.com/alaskanlc/lexweb/blob/master/lw2xhtml/lw.rnc">XML schema file</a> that defines allowable XML output.)</p>
 <h2 id="h.doc">Document</h2>
 <ul>
 <li>Each document may have <em>(1-to-many)</em> <a href="#h.re">Root elements</a></li>
@@ -146,21 +147,14 @@
 <p>Kari, J. 2012. Guide to Using the Koyukon Athabaskan Dictionary. <em>In</em>: Koyukon Athabaskan Dictionary, J. Jette. &amp; E. Jones.</p>
 <p>Rice, K.D. 2015. The start of a glossary of Athabaskan vocabulary. Linguistic Institute.</p>
 <p>Urschel, J.M. 2006. Lower Tanana Athabascan Verb Paradigms. MSc. Thesis, University of Alaska, Fairbanks.</p>
-<h2 id="h.a1">Appendix 1: A note concerning different rootword classes</h2>
-<p>There are three band labels Jim uses for different kinds of rootword: root (<span class="bl">.rt</span>), affix (<span class="bl">.af</span>), and root/affix (<span class="bl">.ra</span>). Initially, Cam had been trying to deduce differing rules for the syntax of each of these (e.g., an affix may only be a noun or verb affix, and that would determine the kinds of sub-entries that were allowed). However, on analyzing Jim's usage for Lower Tanana, he found:</p>
-<ul>
-<li>There are affix word categories in <span class="bl">.rt</span> (e.g. <span class="bl">.nsf</span>, <span class="bl">..tfs</span>)</li>
-<li>There are lots of <span class="bl">.rt</span> word categories (<span class="bl">..n</span>, <span class="bl">..adv</span>, etc) in <span class="c17 c0">.af</span></li>
-<li>There are a few cases of both noun affix categories and verb affix categories under the same <span class="c17 c0">.af</span></li>
-<li>Likewise for <span class="c0 c17">.ra</span></li>
-</ul>
-<p>This recognition lead to a new, less specifi strategy for validation: to treat <span class="bl">.rt</span>, <span class="bl">.af</span>, <span class="bl">.ra</span> with the <em>same</em> rule set: let any double-dot word category be under any single-dot band. This document was rewritten (2020-04-15) to reflect this change.</p>
       </div>
       <div class="three columns" style="margin-top: 5%">
         <a class="button" style="width:100%"
            href="grammar.html">Grammar</a><br/>
         <a class="button" style="width:100%"
            href="tools.html">Tools</a><br/>
+        <a class="button" style="width:100%"
+           href="lw2xhtml.html">lw2xhtml</a><br/>
         <a class="button" style="width:100%"
            href="resources.html">Resources</a><br/>
         <a class="button" style="width:100%"
