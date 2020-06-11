@@ -1,9 +1,6 @@
-#!../bin/gawk -f
-
-# @load "../bin/json.so" 
+#!/usr/bin/gawk -f
 
 # Include function libraries
-# @include "../lib/db.awk" ;
 @include "../lib/html.awk" ;
 @include "../lib/utils.awk" ;
 @include "../lib/lw.awk" ;
