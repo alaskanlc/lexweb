@@ -295,6 +295,16 @@ variation in subject, _mode_, negation. Coded as a table.
 
 ## Comments and document sections
 
+These bands may occur anywhere in the file, and are indented to be be
+printed in the final dictionary.
+
+ * [.file]{.bl} [TEXT]{.txt} _(0-to-many)_ : Heading,
+   indicate a section of the file.
+ * [..par]{.bl} [TEXT]{.txt} _(0-to-many)_ : A standalone paragraph of text.
+ * [com]{.bl} [TEXT]{.txt} _(0-to-many)_ : A standalone paragraph of
+   text, acting as a comment on a preceding band.
+
+
 ## Markup {#h.markup}
 
 ### Typography
@@ -310,6 +320,17 @@ added to the index. If the intended index word is not exactly the same
 as the word in the instance to be indexed, the instance word can be
 ‘cut’ using a closing bracket (`]`). E.g., `*cause]s` would be indexed
 under `cause`.
+
+### File comments
+
+A hash (`#`) at the beginning of a line indicates that the rest of the
+line is either a comment or a section of the file temporarily
+excluded, and in either case is ignored by the processor. “Commenting
+out” sections of code is a standard programmer procedure during
+development and permits the code (i.e., bands) to remain in the file
+and not be deleted.  Note that this kind of comment is different from
+the [com]{.bl} band label which indicates a comment to be included in
+the output.
 
 
 ## References

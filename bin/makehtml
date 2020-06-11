@@ -6,7 +6,7 @@ cd $DIR/../pages_md
 if [ $# -eq 1 ]
 then
     echo "  "${1/md/html}
-    pandoc -s --template=template.html \
+    pandoc -s --template=template.html -f markdown-smart \
            -o ../web/${1/md/html} $1
     # check
     tidy -e ../web/${1/md/html} 2>&1 >/dev/null | grep errors
@@ -16,7 +16,8 @@ else
     for i in [A-Za-z0-9]*.md
     do
         echo "  "${i/md/html}
-        pandoc -s --template=template.html -o ../web/${i/md/html} $i
+        pandoc -s --template=template.html -f markdown-smart \
+               -o ../web/${i/md/html} $i
     done
 fi
 

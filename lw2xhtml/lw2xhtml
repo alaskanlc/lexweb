@@ -1,6 +1,6 @@
 #!/usr/bin/gawk -f
 
-# lw2xml: Conversion of Lexware band label format to xhtml
+# lw2xhtml: Conversion of Lexware band label format to xhtml
 # (c) Campbell Webb <cw@camwebb.info> 2020
 # License: GPLv3
 # (See tail of file for documentation)
@@ -32,8 +32,8 @@ BEGIN{
       indexmarks()
       xmlencode()
       dollar2sup()
-
-      splitline()
+      splitline()  # sets Bl, Bc, Word2, Rest1, Rest2
+      
       # skip some classes
       if (Bc ~ /^(cf|caus|xr|xgl|grp|smf|sc)$/)
         continue
@@ -435,18 +435,21 @@ BEGIN{
 }
 
 function init(     load, x, y, i, j, k, z, fol) {
-
-  PROCINFO["sorted_in"] = "@ind_str_asc"
-
   # Initialize
+
+  # Set default sort order
+  PROCINFO["sorted_in"] = "@ind_str_asc"
   
-  # ** Load the syntax **
+  # ** Load the syntax for validation **
   # fol[A][B] are bands allowed to follow band B, in the context of A
   #   A is needed, because whether a band can follow A depends on the context
   #   of B. E.g., nav (as a member of attr1) can be followed by df, sets
   #   th, gc2, or a new root. A is the exit Path of B.
 
-  #   Occurrences:            ?   ?   ?    ?  ?   ?   <+  *  * 
+  #   (To view the following sections, unwrap lines.
+  #      M-x toggle-truncate-lines in Emacs)
+  
+  #   Occurrences:            ?   ?   ?    ?  ?   ?   <+  *   *  *  *  *
   fol["doc"   ]["0"   ] = "rt                                       lw file"
   fol["doc"   ]["file"] = "rt                                       lw file"
   fol["rtattr"]["rt"  ] = "   pd tag rtyp nav df sets     th gc2 rt lw file"
@@ -455,25 +458,25 @@ function init(     load, x, y, i, j, k, z, fol) {
   fol["rtattr"]["rtyp"] = "               nav df sets     th gc2 rt lw file"
   fol["rtattr"]["nav" ] = "                   df sets     th gc2 rt lw file"
   fol["rtattr"]["df"  ] = "                      sets     th gc2 rt lw file"
-  fol["sets"  ]["sets"] = "                           set             "
+  fol["sets"  ]["sets"] = "                           set                  "
   fol["sets"  ]["set" ] = "                           set th gc2 rt lw file"
 
-  #                              1  ?  1  ?    ?  *   <1  ?   ?   ?   ?           <1  ?    *   *
+  #                              1   ?  1  ?    ?  *   *   <1   ?   ?   ?   *  *  *    <1  ?    *   *
   fol["thattr"]["th"   ] = "dial tc                                                           "
   fol["thattr"]["tc"   ] = "        cnj gl                                                    "
   fol["thattr"]["cnj"  ] = "            gl                                                    "
-  fol["thattr"]["gl"   ] = "               quo cit ex                      gc3 th prds           gc2 rt lw file"
-  fol["thattr"]["quo"  ] = "                   cit ex                      gc3 th prds           gc2 rt lw file"
-  fol["thattr"]["cit"  ] = "                       ex                      gc3 th prds           gc2 rt lw file"
-  fol["exeng" ]["ex"   ] = "                          dial eng                                     "
-  fol["exeng" ]["dial" ] = "                               eng                                     "
-  fol["exeng" ]["eng"  ] = "                       ex          lit quo cit gc3 th prds           gc2 th3 gc3 rt lw file"
-  fol["exeng" ]["lit"  ] = "                       ex              quo cit gc3 th prds           gc2 th3 gc3 rt lw file"
-  fol["exeng" ]["quo"  ] = "                       ex                  cit gc3 th prds           gc2 th3 gc3 rt lw file"
-  fol["exeng" ]["cit"  ] = "                       ex                      gc3 th prds           gc2 th3 gc3 rt lw file"
-  fol["prds"  ]["prds" ] = "                                                           prd                "
-  fol["prd"   ]["prd"  ] = "                                                           prd prdgl          "
-  fol["prd"   ]["prdgl"] = "                                               gc3 th prds prd       gc2 rt lw file"
+  fol["thattr"]["gl"   ] = "               quo cit ex                      gc3 th prds           gc2 th3 rt lw file"
+  fol["thattr"]["quo"  ] = "                   cit ex                      gc3 th prds           gc2 th3 rt lw file"
+  fol["thattr"]["cit"  ] = "                       ex                      gc3 th prds           gc2 th3 rt lw file"
+  fol["exeng" ]["ex"   ] = "                          dial eng                                                     "
+  fol["exeng" ]["dial" ] = "                               eng                                                     "
+  fol["exeng" ]["eng"  ] = "                       ex          lit quo cit gc3 th prds           gc2 th3 rt lw file"
+  fol["exeng" ]["lit"  ] = "                       ex              quo cit gc3 th prds           gc2 th3 rt lw file"
+  fol["exeng" ]["quo"  ] = "                       ex                  cit gc3 th prds           gc2 th3 rt lw file"
+  fol["exeng" ]["cit"  ] = "                       ex                      gc3 th prds           gc2 th3 rt lw file"
+  fol["prds"  ]["prds" ] = "                                                           prd                         "
+  fol["prd"   ]["prd"  ] = "                                                           prd prdgl                   "
+  fol["prd"   ]["prdgl"] = "                                               gc3 th prds prd       gc2 th3 rt lw file"
 
   #                           ?       ?  ?   ?  1   ?  ?   ?  *   *  *   *   
   fol["gc2attr"]["gc2" ] = "dial     tc asp cnj gl            "
@@ -694,12 +697,6 @@ function splitline (     n, z, i) {
   for (i = 4; i <= n; i++) Rest2 = Rest2 " " z[i]
 }
 
-# function word2(text,  x) {
-#   x = gensub(/^([^ ]+) +([^ ]+).*$/,"\\2","G",text)
-#   if (x == text) error("No second word in '" text "'")
-#   else return x
-# }
-
 function head(title) {
   
   # Use html5
@@ -843,12 +840,13 @@ function read_args(    arg) {
     else if (ARGV[arg] == "--index")    MAKEINDEX  = 1
   }
   LEX = ARGV[ARGC-1]
-  
-  ("test -f " LEX " ; echo $?") | getline exitcode
-  
-  if (exitcode) {
-    print "Usage: lw2xml [ --d --x --index --s <start Line> --f <finish Line> ]"\
-      " <lexware file>"
+
+  # removed to make it portable to Windows
+  # ("test -f " LEX " ; echo $?") | getline exitcode
+  # if (exitcode) {
+  if (ARGC == 1) {
+    print "Usage: lw2xhtml [ --index --s <start line> --f <finish line> ] " \
+      "<lexware file>"
     exit 1
   }
 }
@@ -865,7 +863,7 @@ function read_args(    arg) {
 # * If a block may need to be formatted independently, it needs a unique id
 #   e.g., prdsexengs, but if it will always be the same, the id can be
 #   reused in different contexts (e.g., exeng)
-# * Regenerate with: grep -E ' +#>' lw2xml | sed -E 's/^ +#>/# /g'
+# * Regenerate with: grep -E ' +#>' lw2xhtml | sed -E 's/^ +#>/# /g'
 #
 #  doc/rt/rttype
 #  doc/rt/rtattr/rtword

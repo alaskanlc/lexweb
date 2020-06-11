@@ -18,22 +18,34 @@
   <div class="container">
     <div class="row">
       <div class="nine columns" style="margin-top: 5%">
-<div style="float: right; width: 300px; padding-left: 30px;">
-<p><img src="img/flow.jpg" width="100%"/></p>
+<div style="float: right; width: 300px; padding-left: 30px; font-size: smaller;">
+<p><img src="img/flow.jpg" width="100%"/><br/> <b>Fig 1.</b> Elements of generating a dictionary from a Lexware file</p>
 </div>
 <h1 id="tools">Tools</h1>
 <p><strong>Go to: <a href="onlinetools.html">ONLINE LEXWARE PROCESSING TOOLS</a></strong></p>
-<p><strong>Got to section: <a href="#te">Text editing</a> | <a href="#ce">Concurrent editing</a> | <a href="#g">Lexware file grammar</a></strong></p>
+<!-- **Go to section: [Text editing](#te) | [Concurrent editing](#ce) | [Lexware file grammar](#g) | [Validation](#v) | [Conversion to formatted dictionary](#c) | [Indexing](#i) | [Analytical tools](#a)** -->
 <h2 id="te">Text editing</h2>
 <p>A generic <a href="https://en.wikipedia.org/wiki/Text_editor">Text Editor</a> is used to create and modify a Lexware file. <a href="https://www.uaf.edu/anlc/emeritus.php#kari">Jim Kari</a> and <a href="http://www.montler.net/">Tim Montler</a> use <a href="https://www.editpadpro.com/">EditPad Pro</a>, for Windows. For the current project we wanted to develop and promote a solution that was free and open source, and which could be used for Windows, Mac, and Linux. We recommend <a href="https://atom.io/">Atom</a>.</p>
 <p>We have developed a <a href="https://github.com/alaskanlc/language-lexware">Lexware language</a> package for Atom that provides i) syntax coloring, and ii) keyboard shortcuts for common Dene non-Latin characters. The package can be easily installed from within Atom: just open Preferences, click the Install tab, and search for “Lexware”. Click the Install button on <code>language-lexware</code>. Tim Montler has developed a syntax coloring mode for EditPad Pro, and a Dene package for the key mapping software <a href="https://keyman.com/">Keyman</a>; please contact Tim for these packages.</p>
 <h2 id="ce">Concurrent editing</h2>
+<h3 id="github">Github</h3>
+<p>If at any point there might be more than one person working on a Lexware file, including an assistant who may help with validation and formatting, it may be expedient to use a concurrent versioning system. Most academics are now familiar with the concurrent editing in Google Docs, but this resources was preceded by decades of tools available for software code writers to collaborate on projects. The most popular code sharing site today is <a href="https://github.com">Github</a>, which uses the <a href="https://git-scm.com/">Git</a> versioning system. Because a Lexware file is ‘line-oriented’, it is very similar to software code, using Github to manage Lexware editing is a good choice. Github “repos” can be either public or private, and you may choose to keep your working copy of a lexware file private. There are many guides to using Github, and the Atom editor has built-in Github capabilities.</p>
+<h3 id="google-docs">Google Docs</h3>
+<p>However, if collaborators would prefer to use Google Docs, it is possible to adapt a Google Doc to facilitate Lexware editing. Please see <a href="https://github.com/alaskanlc/lexweb/blob/master/tools/GAS/README.md">here</a> for a guide to adding syntax coloration to your Lexware file. At this time it is not possible to customize keystokes in Google Docs, so some other approach must be found for adding Dene diacritics (they can always be added laboriously using menu ‘Insert -&gt; Special characters’). The GoogleDoc file will need to be downloaded as <strong>Plain text</strong> for use with the <a href="lw2xhtml.html">Lexware scripts</a>, although the GoogleDoc text can be copied and pasted <em>directly</em> into the <a href="onlinetools.html">online</a> converter.</p>
+<p>Note that line numbering (needed for working with the validator) is not a standard function in Google Docs. However, an <a href="https://linenumbers.app/">extension</a> for the Chrome browser can be installed.</p>
 <h2 id="g">Lexware file grammar</h2>
 <p>No Lexware syntax validation is available in the text editor itself, and the writer must carefully avoid band label typos, and adhere to the band order defined in the the <a href="grammar.html">grammar</a>. Elements of a Lexware file that are out of order are not ‘wrong’ per se, but will not generate standardized dictionary entries and will not be available for analysis.</p>
-<h2 id="validation">Validation</h2>
-<h2 id="conversion-to-formatted-dictionary">Conversion to formatted dictionary</h2>
-<h2 id="indexing">Indexing</h2>
-<h2 id="analytical-tools">Analytical tools</h2>
+<h2 id="v">Validation</h2>
+<p>To detect typos and band order that does not conform to the Lexware Dene grammar, an additional layer of software is needed. In the current implementation, both validation and conversion to a structured data object are performed by the <a href="lw2xhtml.html">lw2xhtml</a> program. The program contains a set of rules about which band may follow which other bands in which context. This rule set must be updated on every change to the grammar.</p>
+<p>Running the validator returns a brief description of any errors, with their line number. The user can then either fix the error, or “<a href="grammar.html#h.markup">comment out</a>” the section.</p>
+<p>The validator may be run <a href="onlinetools.html">online</a> or on a user’s computer. More details <a href="lw2xhtml.html">here</a>.</p>
+<h2 id="c">Conversion to formatted dictionary</h2>
+<p>Conversion to a formatted dictionary is also done by the <a href="lw2xhtml.html">lw2xhtml</a> program, which contains the logic to markup each data element with its position within a hierarchical dictionary entry. The output is HTML which can be viewed in any web browser. The precise formatting (text styles, indentation, etc.) is not stored in he HTML file, but is determined by an accompanying CSS file. Changes to this styling can be made easily by editing the CSS file, and without the need to generate a new HTML version of the dictionary.</p>
+<p>To obtain a final PDF file, the HTML can be directly ‘printed to file’ from the browser, or can be saved as HTML and opened with a Word Processor where final edits can be made.</p>
+<h2 id="i">Indexing</h2>
+<p>Markup with the Lexware file indicates index terms to be collected. The <code>lw2xhtml</code> program collects these and creates and index after the dictionary entries. The index is hyperlinked back to the entries.</p>
+<h2 id="a">Analytical tools</h2>
+<p>A lexware file is essentially a database. However, much of the information is stored implicitly and is dependent on the context of the bands preceding it. This implicit information is hard to extract without first validating and restructuring the document. The HTML output of <code>lw2xhtml</code> is the valid XML dialect of HTML, with meaningful hierarchy and standardized terms for each class. It can thus be queried using XQuery to extract any choice of elements for further analysis. See <a href="https://github.com/alaskanlc/lexweb/tree/master/analysis">here</a> for an example.</p>
       </div>
       <div class="three columns" style="margin-top: 5%">
         <a class="button" style="width:100%"
