@@ -12,29 +12,35 @@
 
 BEGIN{
 
+  # =====================  Initialization ==========================
+
   read_args()
   init()
 
   # Initialize Path and Prevbc (previous band class)
   Path = ""
   Prevbc = "0"
-  # start the xhtml output
-  head("Dictionary")
+  # Start the xhtml output
+  if (!XML)
+    head("Dictionary")
   o("doc")
 
+  # =====================  Line-by-line cycle ==========================
+  # Read each line from the input file, until there are no more
   while ((getline < LEX) > 0) {
     Line++
+    # Ignore comments, and read from start line to finish line (if given)
     if (($0) && ($0 !~ /^[ #]/) &&              \
         (Line >= STARTLINE) &&                  \
         (Line <= FINISHLINE)) {
 
-      # pre-process the line
+      # Pre-process the line. See functions below
       indexmarks()
       xmlencode()
       dollar2sup()
       splitline()  # sets Bl, Bc, Word2, Rest1, Rest2
       
-      # skip some classes
+      # Skip some classes
       if (Bc ~ /^(cf|caus|xr|xgl|grp|smf|sc)$/)
         continue
       
@@ -42,16 +48,22 @@ BEGIN{
       if (VALIDATE)
         validate()
   
-      # ====================  Conversion to xhtml ==================
+      # ====================  Conversion to XHTML ==================
+      # For each line, check the band label
       if (Bc == "rt") {
+        # Close any open <div>s back up to the </div> inside <div class="doc">
         c("doc")
+        # Open a new <div class="rt">
         o("rt")
+        # These comments (#> ) following an o() or oc() can be extracted from
+        #   the program to form a comprehensive outline of the XML structure
         #> rt:   doc/rt
         o("rtattr")
         #> rt:   doc/rt/rtattr
         oc("rttype", substr(Bl,2))
         #> rt:   doc/rt/rtattr/rttype
         print wedge(0) "<a name=\"rt" ++Rootn "\"></a>"
+        # Needed for the indexing:
         Rootlabel[Rootn] = Rest1
         oc("rtword", Rest1)
         #> rt:   doc/rt/rtattr/rtword
@@ -118,6 +130,8 @@ BEGIN{
       }
   
       else if (Bc == "tc") {
+        # tc may occur in several places. The following logic is needed to
+        #   correctly balance the divs:
         if (Path ~ "thattr")
           c("thattr")
         else if (Path ~ "gc2attr")
@@ -126,9 +140,10 @@ BEGIN{
           c("th3attr")
         
         oc("tc", Rest1)
-        #> tc:   doc/rt/th/thattr/tc                :
-        #> tc:   doc/rt/gc2/gc2attr/tc              :
-        #> tc:   doc/rt/gc2/th3/th3attr/tc          :
+        # These are the three places that tc can occur in the XML
+        #> tc:   doc/rt/th/thattr/tc
+        #> tc:   doc/rt/gc2/gc2attr/tc
+        #> tc:   doc/rt/gc2/th3/th3attr/tc
       }
 
       else if (Bc == "cnj") {
@@ -140,9 +155,9 @@ BEGIN{
           c("th3attr")
 
         oc("cnj", Rest1)
-        #> cnj:  doc/rt/th/thattr/cnj               :
-        #> cnj:  doc/rt/gc2/gc2attr/cnj             :
-        #> cnj:  doc/rt/gc2/th3/th3attr/cnj         :
+        #> cnj:  doc/rt/th/thattr/cnj
+        #> cnj:  doc/rt/gc2/gc2attr/cnj
+        #> cnj:  doc/rt/gc2/th3/th3attr/cnj
       }
       
       else if (Bc == "gl") {
@@ -156,11 +171,11 @@ BEGIN{
           c("gc3attr")
         
         oc("gl", Rest1)
-        #> gl:   doc/rt/th/thattr/gl                :
-        #> gl:   doc/rt/gc2/gc2attr/gl              :
-        #> gl:   doc/rt/gc2/th3/th3attr/gl          :
-        #> gl:   doc/rt/gc2/gc3/gc3attr/gl          :
-        #> gl:   doc/rt/th/gc3/gc3attr/gl           :
+        #> gl:   doc/rt/th/thattr/gl
+        #> gl:   doc/rt/gc2/gc2attr/gl
+        #> gl:   doc/rt/gc2/th3/th3attr/gl
+        #> gl:   doc/rt/gc2/gc3/gc3attr/gl
+        #> gl:   doc/rt/th/gc3/gc3attr/gl
       }
       
       else if (Bc == "quo") {
@@ -172,13 +187,13 @@ BEGIN{
           c("exeng")
         
         oc("quo", Rest1)
-        #> quo:  doc/rt/th/thattr/quo               :
-        #> quo:  doc/rt/gc2/th3/th3attr/quo         :
-        #> quo:  doc/rt/th/thexengs/exeng/quo       :
-        #> quo:  doc/rt/gc2/gc2exengs/exeng/quo     :
-        #> quo:  doc/rt/gc2/th3/th3exengs/exeng/quo :
-        #> quo:  doc/rt/gc2/gc3/gc3exengs/exeng/quo :
-        #> quo:  doc/rt/th/gc3/gc3exengs/exeng/quo  :
+        #> quo:  doc/rt/th/thattr/quo
+        #> quo:  doc/rt/gc2/th3/th3attr/quo
+        #> quo:  doc/rt/th/thexengs/exeng/quo
+        #> quo:  doc/rt/gc2/gc2exengs/exeng/quo
+        #> quo:  doc/rt/gc2/th3/th3exengs/exeng/quo
+        #> quo:  doc/rt/gc2/gc3/gc3exengs/exeng/quo
+        #> quo:  doc/rt/th/gc3/gc3exengs/exeng/quo
       }
 
       else if (Bc == "cit") {
@@ -190,13 +205,13 @@ BEGIN{
           c("exeng")
         
         oc("cit", Rest1)
-        #> cit:  doc/rt/th/thattr/cit               :
-        #> cit:  doc/rt/gc2/th3/th3attr/cit         :
-        #> cit:  doc/rt/th/thexengs/exeng/cit       :
-        #> cit:  doc/rt/gc2/gc2exengs/exeng/cit     :
-        #> cit:  doc/rt/gc2/th3/th3exengs/exeng/cit :
-        #> cit:  doc/rt/gc2/gc3/gc3exengs/exeng/cit :
-        #> cit:  doc/rt/th/gc3/gc3exengs/exeng/cit  :
+        #> cit:  doc/rt/th/thattr/cit
+        #> cit:  doc/rt/gc2/th3/th3attr/cit
+        #> cit:  doc/rt/th/thexengs/exeng/cit
+        #> cit:  doc/rt/gc2/gc2exengs/exeng/cit
+        #> cit:  doc/rt/gc2/th3/th3exengs/exeng/cit
+        #> cit:  doc/rt/gc2/gc3/gc3exengs/exeng/cit
+        #> cit:  doc/rt/th/gc3/gc3exengs/exeng/cit
       }
 
       else if (Bc == "ex") {
@@ -214,11 +229,11 @@ BEGIN{
           o("exengs")
           o("exeng")
           oc("ex", Rest1)
-          #> ex:   doc/rt/th/exengs/exeng/ex          :
-          #> ex:   doc/rt/gc2/exengs/exeng/ex         :
-          #> ex:   doc/rt/gc2/th3/exengs/exeng/ex     :
-          #> ex:   doc/rt/gc2/gc3/gc3exengs/exeng/ex  :
-          #> ex:   doc/rt/th/gc3/gc3exengs/exeng/ex   :
+          #> ex:   doc/rt/th/exengs/exeng/ex
+          #> ex:   doc/rt/gc2/exengs/exeng/ex
+          #> ex:   doc/rt/gc2/th3/exengs/exeng/ex
+          #> ex:   doc/rt/gc2/gc3/gc3exengs/exeng/ex
+          #> ex:   doc/rt/th/gc3/gc3exengs/exeng/ex
           # oc("excolon", ": ")
         }
         # second or later
@@ -233,11 +248,11 @@ BEGIN{
       else if (Bc == "eng") {
         c("exeng")
         oc("eng", Rest1)
-        #> eng:  doc/rt/th/exengs/exeng/eng         :
-        #> eng:  doc/rt/gc2/exengs/exeng/eng        :
-        #> eng:  doc/rt/gc2/th3/exengs/exeng/eng    :
-        #> eng:  doc/rt/gc2/gc3/exengs/exeng/eng    :
-        #> eng:  doc/rt/th/gc3/exengs/exeng/eng     :
+        #> eng:  doc/rt/th/exengs/exeng/eng
+        #> eng:  doc/rt/gc2/exengs/exeng/eng
+        #> eng:  doc/rt/gc2/th3/exengs/exeng/eng
+        #> eng:  doc/rt/gc2/gc3/exengs/exeng/eng
+        #> eng:  doc/rt/th/gc3/exengs/exeng/eng
         oc("exsemicolon", "; ")
       }
 
@@ -250,14 +265,14 @@ BEGIN{
           c("gc2attr")
 
         oc("lit", "lit. " Rest1)
-        #> lit:  doc/rt/th/exengs/exeng/lit         :
-        #> lit:  doc/rt/gc2/exengs/exeng/lit        :
-        #> lit:  doc/rt/gc2/th3/exengs/exeng/lit    :
-        #> lit:  doc/rt/gc2/gc3/exengs/exeng/lit    :
-        #> lit:  doc/rt/th/gc3/exengs/exeng/lit     :
-        #> lit:  doc/rt/gc2/gc2attr/lit             :
-        #> lit:  doc/rt/gc2/gc3/gc3attr/lit         :
-        #> lit:  doc/rt/th/gc3/gc3attr/lit          :
+        #> lit:  doc/rt/th/exengs/exeng/lit
+        #> lit:  doc/rt/gc2/exengs/exeng/lit
+        #> lit:  doc/rt/gc2/th3/exengs/exeng/lit
+        #> lit:  doc/rt/gc2/gc3/exengs/exeng/lit
+        #> lit:  doc/rt/th/gc3/exengs/exeng/lit
+        #> lit:  doc/rt/gc2/gc2attr/lit
+        #> lit:  doc/rt/gc2/gc3/gc3attr/lit
+        #> lit:  doc/rt/th/gc3/gc3attr/lit
         oc("exsemicolon", "; ")
       }
 
@@ -310,10 +325,10 @@ BEGIN{
           
           o("dials")
           oc("dial", Word2)
-          #> dial: doc/rt/gc2/gc2attr/dials/dial               :
-          #> dial: doc/rt/gc2/gc3/gc3attr/dials/dial           :
-          #> dial: doc/rt/th/gc3/gc3attr/dials/dial            :
-          #> dial: ... exeng/dials/dial                        :
+          #> dial: doc/rt/gc2/gc2attr/dials/dial
+          #> dial: doc/rt/gc2/gc3/gc3attr/dials/dial
+          #> dial: doc/rt/th/gc3/gc3attr/dials/dial
+          #> dial: ... exeng/dials/dial
           if (VALIDATE)
             if (!Dial[Word2])
               error(Word2 " not a known dialect")
@@ -324,16 +339,16 @@ BEGIN{
           o("dialx")
           oc("dialcomma", ",")
           oc("dial", Word2)
-          #> dial: doc/rt/gc2/gc2attr/dials/dialx/dial         :
-          #> dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dial     :
-          #> dial: doc/rt/th/gc3/gc3attr/dials/dialx/dial      :
-          #> dial: ... exeng/dials/dialx/dial                  :
+          #> dial: doc/rt/gc2/gc2attr/dials/dialx/dial
+          #> dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dial
+          #> dial: doc/rt/th/gc3/gc3attr/dials/dialx/dial
+          #> dial: ... exeng/dials/dialx/dial
           oc("dialcolon", ":")
           oc("dialword", Rest2)
-          #> dial: doc/rt/gc2/gc2attr/dials/dialx/dialword     :
-          #> dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dialword :
-          #> dial: doc/rt/th/gc3/gc3attr/dials/dialx/dialword  :
-          #> dial: ... exeng/dials/dialx/dialword              :
+          #> dial: doc/rt/gc2/gc2attr/dials/dialx/dialword
+          #> dial: doc/rt/gc2/gc3/gc3attr/dials/dialx/dialword
+          #> dial: doc/rt/th/gc3/gc3attr/dials/dialx/dialword
+          #> dial: ... exeng/dials/dialx/dialword
           c("dials")
         }
       }
@@ -344,9 +359,9 @@ BEGIN{
         else if (Path ~ "gc3")
           c("gc3attr")
         oc("asp", Rest1)
-        #> asp:  doc/rt/gc2/gc2attr/asp         :
-        #> asp:  doc/rt/gc2/gc3/gc3attr/asp     :
-        #> asp:  doc/rt/th/gc3/gc3attr/asp      :
+        #> asp:  doc/rt/gc2/gc2attr/asp
+        #> asp:  doc/rt/gc2/gc3/gc3attr/asp
+        #> asp:  doc/rt/th/gc3/gc3attr/asp
       }
       
       else if (Bc == "th3") {
@@ -370,11 +385,11 @@ BEGIN{
         o("gc3")
         o("gc3attr")
         oc("gc3word", Rest1)
-        #> doc/rt/gc2/gc3/gc3attr/gc3word  :
-        #> doc/rt/th/gc3/gc3attr/gc3word   :
+        #> gc3:  doc/rt/gc2/gc3/gc3attr/gc3word
+        #> gc3:  doc/rt/th/gc3/gc3attr/gc3word
         oc("gc3type", "(" abbrev(Bl) ")")
-        #> doc/rt/gc2/gc3/gc3attr/gc3type
-        #> doc/rt/th/gc3/gc3attr/gc3type
+        #> gc3:  doc/rt/gc2/gc3/gc3attr/gc3type
+        #> gc3:  doc/rt/th/gc3/gc3attr/gc3type
       }
   
       else if (Bc == "lw") {
@@ -382,7 +397,7 @@ BEGIN{
         o("lw")
         o("lwattr")
         oc("lwword", Rest1)
-        #> doc/lw/lwattr/lwword
+        #> lw:   doc/lw/lwattr/lwword
       }
   
       else if (Bc == "src") {
@@ -412,7 +427,7 @@ BEGIN{
         #> file: doc/file
       }
       
-      # errors
+      # Band categories and labels not known
       else if (Bc)
         error("Band category '" Bc "' not handled")
       else
@@ -426,13 +441,19 @@ BEGIN{
 
   c("doc")
 
+  # Make the index
   if (MAKEINDEX)
     makeindex()
   
-  # close doc itself
+  # Close doc itself
   print "    </div>"
+  # XHTML footer
   foot()
+
+  # Successful program termination (exit status 0)
 }
+
+
 
 function init(     load, x, y, i, j, k, z, fol) {
   # Initialize
