@@ -57,24 +57,24 @@ dir</code></pre>
 <pre><code>lw2xml [ --index --s &lt;start Line&gt; --f &lt;finish Line&gt; --xml ] &lt;lexware file&gt;</code></pre>
 <p>Arguments:</p>
 <ul>
-<li><code>--index</code> if present, make the index</li>
-<li><code>--s X</code> begin processing the Lexware file at line X</li>
-<li><code>--f Y</code> stop processing the Lexware file at line Y</li>
-<li><code>--xml</code> output a (non-HTML) XML file</li>
+<li><code>--index</code> if present, make the index (optional)</li>
+<li><code>--s X</code> begin processing the Lexware file at line X (optional)</li>
+<li><code>--f Y</code> stop processing the Lexware file at line Y (optional)</li>
+<li><code>--xml</code> output a (non-HTML) XML file (optional)</li>
 </ul>
-<p>The program outputs the validation results to <code>/dev/stderr</code> and the processed output to <code>/dev/stdout</code>. To capture the output in a file:</p>
+<p>The program outputs the validation results to Standard Error and the processed output to Standard Out. To capture the output in a file:</p>
 <pre><code>lw2xml in.lw &gt; out.html</code></pre>
 <p>To capture the validation results (in the Bash shell):</p>
 <pre><code>lw2xml in.lw 2&gt; validation.txt 1&gt; out.html</code></pre>
 <p>(On Windows the validation results must be copied from the CMD.EXE window.)</p>
 <h2 id="xhtml-output-structure">XHTML output structure</h2>
-<p>In designing an XML schema, there is no single correct structure: information may be coded in element names, or in attributes, data can be ‘flattened’ (minimal hierarchy, or ‘normalized’ (modeling with additional hierarchical levels). For the Lexware output as XHTML, all the structure information had to be stored as <code>&lt;div class="..."&gt;</code> attributes. Choices about hierarchical structure were made to facilitate the display of the data in a traditional dictionary format. For example, the root word is nested within a block of root attributes (<code>rtattr</code>), rather than immediately below the <code>rt</code> div.</p>
+<p>In designing an XML schema, there is no single correct structure: information may be coded in element names, or in attributes, data can be ‘flattened’ (minimal hierarchy), or ‘normalized’ (modeling with additional hierarchical levels). For the Lexware output as XHTML, all the structure information had to be stored as <code>&lt;div class="..."&gt;</code> attributes. Choices about hierarchical structure were made to facilitate the display of the data in a traditional dictionary format. For example, the root word is nested within a block of root attributes (<code>rtattr</code>), rather than immediately below the <code>rt</code> div.</p>
 <h3 id="band-to-xml-element-list">Band to XML element list</h3>
 <p>The <code>lw2xml</code> code is written so that the possible XML hierarchies annotated in comments in the code can be extracted with this command:</p>
 <pre><code>grep -E &#39; +#&gt;&#39; lw2xml | sed -E &#39;s/^ +#&gt;//g&#39; | sort</code></pre>
-<p>This give a <a href="https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw_xml_elements">list</a> of band classes and the hierarchy of XML div attributes in which the information is stored. This is not an XML schema but can help understand the XHTML structure. Another way to become familiar with the structure of the XHTML is to view a formatted dictionary file, and compare it with the XHTML source.</p>
+<p>This gives a <a href="https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw_xml_elements">list</a> of band classes and the hierarchy of XML div attributes in which the information is stored. This is not an XML schema but can help understand the XHTML structure. Another way to become familiar with the structure of the XHTML is to view a formatted dictionary file, and compare it with the XHTML source.</p>
 <h3 id="v">Simple XML version and XML schema</h3>
-<p>Using the <code>--xml</code> switch, a simpler, non-HTML XML output is created (without <span class="bl">.file</span>, <span class="bl">..par</span> and <span class="bl">com</span> comments). This version can be more easily analyzed with XQuery. It can also be validated against an XML schema. The file <a href="https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw.rnc">lw.rnc</a> contains the current valid XML schema, which should always be kept in sync with the Lexware <a href="grammar.html">grammar</a>. The simple XML file can be validate using <a href="https://github.com/relaxng/jing-trang">trang and jing</a>. First generate the RELAX NG schema:</p>
+<p>Using the <code>--xml</code> switch, a simpler, non-HTML XML output is created (without <span class="bl">.file</span>, <span class="bl">..par</span> and <span class="bl">com</span> comments). This version can be more easily analyzed with XQuery. It can also be validated against an <a href="https://en.wikipedia.org/wiki/XML_schema">XML schema</a>. The file <a href="https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw.rnc">lw.rnc</a> contains the current valid XML schema, which should always be kept in sync with the Lexware <a href="grammar.html">grammar</a>. The simple XML file can be validate using <a href="https://github.com/relaxng/jing-trang">trang and jing</a>. First generate the RELAX NG schema:</p>
 <pre><code>$ java -jar /path/to/trang.jar -I rnc -O rng lw.rnc lw.rng</code></pre>
 <p>Then validate:</p>
 <pre><code>$ java -jar /path/to/jing.jar lw.rng myLexwareFile.xml </code></pre>
@@ -89,9 +89,9 @@ dir</code></pre>
 <p>There are three band labels Jim uses for different kinds of root word: root (<span class="bl">.rt</span>), affix (<span class="bl">.af</span>), and root/affix (<span class="bl">.ra</span>). Initially, Cam had been trying to deduce differing rules for the syntax of each of these (e.g., an affix may only be a noun or verb affix, and that would determine the kinds of sub-entries that were allowed). However, on analyzing Jim's usage for Lower Tanana, he found:</p>
 <ul>
 <li>There are affix word categories in <span class="bl">.rt</span> (e.g. <span class="bl">.nsf</span>, <span class="bl">..tfs</span>)</li>
-<li>There are lots of <span class="bl">.rt</span> word categories (<span class="bl">..n</span>, <span class="bl">..adv</span>, etc) in <span class="c17 c0">.af</span></li>
-<li>There are a few cases of both noun affix categories and verb affix categories under the same <span class="c17 c0">.af</span></li>
-<li>Likewise for <span class="c0 c17">.ra</span></li>
+<li>There are lots of <span class="bl">.rt</span> word categories (<span class="bl">..n</span>, <span class="bl">..adv</span>, etc) in <span class="bl">.af</span></li>
+<li>There are a few cases of both noun affix categories and verb affix categories under the same <span class="bl">.af</span></li>
+<li>Likewise for <span class="bl">.ra</span></li>
 </ul>
 <p>This recognition lead to a new, less specific strategy for validation: to treat <span class="bl">.rt</span>, <span class="bl">.af</span>, <span class="bl">.ra</span> with the <em>same</em> rule set: let any double-dot word category be under any single-dot band. The grammar was rewritten (2020-04-15) to reflect this change.</p>
       </div>
