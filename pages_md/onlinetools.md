@@ -3,7 +3,7 @@
 # Online tools
 
 This web app processes Lexware-formatted text through the
-[lw2xhtml](lw2xhtml.html) program and returns the results to your
+[lw2xml](lw2xml.html) program and returns the results to your
 browser. No copy is kept of your data. Maximum size that can be
 processed: 2M characters. For a sample of Lexware, see
 [here](sample.html).

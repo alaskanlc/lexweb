@@ -1,6 +1,6 @@
 #!/usr/bin/gawk -f
 
-# lw2xhtml: Conversion of Lexware band label format to xhtml
+# lw2xml: Conversion of Lexware band label format to xhtml
 # (c) Campbell Webb <cw@camwebb.info> 2020
 # License: GPLv3
 # (See tail of file for documentation)
@@ -61,7 +61,7 @@ BEGIN{
         o("rt")
         # These comments (#> ) following an o() or oc() can be extracted from
         #   the program to form a comprehensive outline of the XML structure
-        #   with:  grep -E ' +#>' lw2xhtml | sed -E 's/^ +#>//g' | sort > \
+        #   with:  grep -E ' +#>' lw2xml | sed -E 's/^ +#>//g' | sort > \
         #            lw_xml_elements
         #> rt:   doc/rt
         o("rtattr")
@@ -883,7 +883,7 @@ function read_args(    arg) {
   # ("test -f " LEX " ; echo $?") | getline exitcode
   # if (exitcode) {
   if (ARGC == 1) {
-    print "Usage: lw2xhtml [ --index --s <start line> --f <finish line> ] " \
+    print "Usage: lw2xml [ --index --s <start line> --f <finish line> ] " \
       "<lexware file>"
     exit 1
   }
@@ -901,5 +901,5 @@ function read_args(    arg) {
 # * If a block may need to be formatted independently, it needs a unique id
 #   e.g., prdsexengs, but if it will always be the same, the id can be
 #   reused in different contexts (e.g., exeng)
-# * Regenerate with: grep -E ' +#>' lw2xhtml | sed -E 's/^ +#>/# /g'
+# * Regenerate with: grep -E ' +#>' lw2xml | sed -E 's/^ +#>/# /g'
 #

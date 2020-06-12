@@ -20,10 +20,10 @@
       <div class="nine columns" style="margin-top: 5%">
 <h1 id="dene-lexware-grammar">Dene Lexware Grammar</h1>
 <p>This document is the normative definition of allowable structure for Dene Lexware files, based on Jim Kari’s usage (for Lower Tanana), and with input from Jason Harris (for Gwich’in).</p>
-<p><strong>Conventions</strong> in this document: Band labels are in <span class="bl">this</span> font. Options after band labels are in <span class="w2">this</span> font. Text that must follow a band is indicated <span class="txt">TEXT</span> (it may contain one or more words, separated by space(s)). Sections in this document define classes of related bands, with each bullet being a necessary or optional band, in the order given. An ‘OR’ means that only one of several options is allowed. Hyperlinks can be followed to the relevant section.</p>
+<p><strong>Conventions</strong> in this document: Band labels are in <span class="bl">this</span> font. Options after band labels are in <span class="w2">this</span> font. Text that must follow a band is indicated <span class="txt">TEXT</span>: it may contain one or more words, separated by space(s). Sections in this document define classes of related bands, with each bullet being a necessary or optional band, in the order given. An ‘OR’ means that only one of several options is allowed. Hyperlinks can be followed to the relevant section.</p>
 <p>Brief linguistic background information is included for some of the elements in order to facilitate the work of those who are not familiar with Dene Athabascan lexicography.</p>
 <p>Other formating conventions (italics, index marks, etc) in the Lexware file are given in the <a href="#h.markup">Markup</a> section, below.</p>
-<p>(This file should be kept in sync with the <a href="https://github.com/alaskanlc/lexweb/blob/master/lw2xhtml/lw.rnc">XML schema file</a> that defines allowable XML output.)</p>
+<p>(This file should be kept in sync with the <a href="https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw.rnc">XML schema file</a> that defines allowable XML output.)</p>
 <h2 id="h.doc">Document</h2>
 <ul>
 <li>Each document may have <em>(1-to-many)</em> <a href="#h.re">Root elements</a></li>
@@ -36,7 +36,7 @@
 </ul>
 <h3 id="h.rt">Root</h3>
 <ul>
-<li><span class="bl">&lt;rt&gt;</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> where <span class="bl">&lt;rt&gt;</span> is one of <span class="bl">.rt</span> (root word), <span class="bl">.af</span> (affix), <span class="bl">.ra</span> (root/affix) (see <a href="#h.a1">note</a>).</li>
+<li><span class="bl">&lt;rt&gt;</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> where <span class="bl">&lt;rt&gt;</span> is one of <span class="bl">.rt</span> (root word), <span class="bl">.af</span> (affix), <span class="bl">.ra</span> (root/affix) (see <a href="lw2xml.html#h.a1">note</a>).</li>
 <li><a href="#h.rtattr">Root word attributes</a> <em>(0-to-1)</em></li>
 <li><a href="#h.sets">Stem sets</a> <em>(0-to-1)</em></li>
 <li><a href="#h.th">Themes</a> <em>(0-to-many)</em></li>
@@ -65,7 +65,7 @@
 <li><span class="bl">..th</span> <span class="txt">TEXT</span> <em>(exactly-1)</em> : The formula for the theme, consisting minimally of stem and classifier (the morpheme preceding the stem, sometimes just “remnants of ancient grammar rules [without] direct meaning” (<a href="http://qenaga.org/verbs_and_sentences/classifiers.html">ref.</a>), sometimes indicating voice/transitivity (Rice 2015), and indicate whether the verb takes an object (O), postpositional object (P), or gender prefix (G). Symbol ‘+’ separates morphemes (meaningful component sounds), and ‘#’ indicates the boundary between disjunct and conjunct morphemes. (Note: band label <span class="bl">...th</span> is used under <span class="bl">..tfs</span>.)</li>
 <li><a href="#h.dial">Dialects</a> <em>(0-to-1)</em></li>
 <li><span class="bl">tc</span> <span class="w2">&lt;tctype&gt;</span> <em>(exactly-1)</em> : Theme category, where <span class="w2">&lt;tctype&gt;</span> is one of: <span class="w2">clas-mot</span> (classificatory motion), <span class="w2">clas-stat</span> (classificatory stative), <span class="w2">conv</span> (conversive), <span class="w2">con-rev</span> (conversive-reversative), <span class="w2">desc</span> (descriptive), <span class="w2">dim</span> (dimensional), <span class="w2">dur</span> (durative), <span class="w2">ext</span> (extension), <span class="w2">mot</span> (motion), <span class="w2">neu</span> (neuter), <span class="w2">ono</span> (onomatopoetic), <span class="w2">op</span> (operative), <span class="w2">op-ono</span> (onomatopoetic operative), <span class="w2">op-rep</span> (operative repetitive), <span class="w2">op-rev</span> (operative reversative), <span class="w2">pos</span> (positional), <span class="w2">pot</span> (potentialitive), <span class="w2">stat</span> (stative), <span class="w2">suc</span> (successive), <span class="w2">u:xxx</span> (uncategorized xxx), <span class="w2">a-neu</span> (a-neuter), <span class="w2">desc-neg</span> (descriptive-negative), <span class="w2">sev</span> (several, used occasionally). Also <span class="w2">stat/mot</span>, <span class="w2">ext/mot</span>, <span class="w2">stat/op</span> for dual <span class="bl">tc</span>.</li>
-<li><span class="bl">cnj</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Conjugation prefix. <strong>CHECK</strong> Jim and Jason’s decision on which band label to use for this. <span class="bl">cnjg1</span> was also a suggestion.</li>
+<li><span class="bl">cnj</span> <span class="txt">TEXT</span> <em>(0-to-1)</em> : Conjugation prefix.</li>
 <li><a href="#h.gl">Gloss</a> <em>(exactly-1)</em></li>
 <li><a href="#h.ex">Example</a> <em>(0-to-many)</em></li>
 <li><a href="#h.prd">Paradigms</a> <em>(0-to-many)</em></li>
@@ -154,7 +154,7 @@
         <a class="button" style="width:100%"
            href="tools.html">Tools</a><br/>
         <a class="button" style="width:100%"
-           href="lw2xhtml.html">lw2xhtml</a><br/>
+           href="lw2xml.html">lw2xml</a><br/>
         <a class="button" style="width:100%"
            href="resources.html">Resources</a><br/>
         <a class="button" style="width:100%"

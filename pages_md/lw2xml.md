@@ -1,13 +1,13 @@
-% lw2html
+% lw2xml
 
-# The lw2xhtml program
+# The lw2xml program
 
 The core of the Lexware processing pipeline is a single program called
-`lw2xhtml`. This is a command-line program that can be run on Mac,
+`lw2xml`. This is a command-line program that can be run on Mac,
 Linux or Windows, and is also available as an online CGI program
 [here](onlinetools.html).
 
-`lw2xhtml` is a single [Gawk](https://www.gnu.org/software/gawk/)
+`lw2xml` is a single [Gawk](https://www.gnu.org/software/gawk/)
 script with no dependencies other that Gawk, which is installed on all
 Linux machines, and can easily be installed on Mac and Windows.
 
@@ -20,26 +20,26 @@ Either clone the Lexweb repo:
     $ git clone https://github.com/alaskanlc/lexweb.git
 
 or just copy the
-[lw2xhtml file](https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xhtml/lw2xhtml). (If
-the browser saves it as `lw2xhtml.txt` rename it to `lw2xhtml`). Make
+[lw2xml file](https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xml/lw2xml). (If
+the browser saves it as `lw2xml.txt` rename it to `lw2xml`). Make
 sure the file is executable:
 
-    $ chmod u+x lw2xhtml
+    $ chmod u+x lw2xml
     
-Now, typing `lw2xhtml` (or `./lw2xhtml` if $PATH is not set) should
+Now, typing `lw2xml` (or `./lw2xml` if $PATH is not set) should
 execute the program. If you do not have a `gawk` at `/usr/bin/gawk`,
 you can also run it with:
 
-    $ gawk -f lw2xhtml
+    $ gawk -f lw2xml
 
 ### Mac
 
-Because the code in `lw2xhtml` uses some non-POSIX Awk features it
+Because the code in `lw2xml` uses some non-POSIX Awk features it
 will not run on the `awk` that comes pre-installed with Macs.  You
 will need `gawk`. The easiest way to get `gawk` is via the Homebrew
 project. Just go to the [Homebrew](https://brew.sh/) page, and follow
 the one-line install instructions. For this, and for running
-`lw2xhtml` you will need to open `Terminal`, an app in Utilities. (Type
+`lw2xml` you will need to open `Terminal`, an app in Utilities. (Type
 `cd Desktop` when you start Terminal, so that you are working with
 files on the Desktop.)
 
@@ -52,25 +52,25 @@ Then, either clone the Lexweb repo:
     $ git clone https://github.com/alaskanlc/lexweb.git
 
 Or just copy the
-[lw2xhtml file](https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xhtml/lw2xhtml) to your Desktop. (If
-the browser saves it as `lw2xhtml.txt` rename it to `lw2xhtml`.)
+[lw2xml file](https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xml/lw2xml) to your Desktop. (If
+the browser saves it as `lw2xml.txt` rename it to `lw2xml`.)
 
 Execute the program with:
 
-    $ gawk -f lw2xhtml
+    $ gawk -f lw2xml
 
     
 ### Windows
 
-`lw2xhtml` can be easily run using Gawk cross-compiled for Windows,
+`lw2xml` can be easily run using Gawk cross-compiled for Windows,
 and the `CMD.EXE` command prompt:
 
  * Download Gawk from
    [Ezwinports](https://sourceforge.net/projects/ezwinports/files/) and unzip
    on the Desktop.
- * Copy the [lw2xhtml file](https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xhtml/lw2xhtml)
-   to your Desktop. (If the browser saves it as `lw2xhtml.txt` rename it
-   to `lw2xhtml`.)
+ * Copy the [lw2xml file](https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xml/lw2xml)
+   to your Desktop. (If the browser saves it as `lw2xml.txt` rename it
+   to `lw2xml`.)
  * In the menubar search box, type `CMD.EXE` and open it. This is the old
    DOS commandline. (You can also use Windows Powershell)
  * Type these commands (altering the version numbers if different. The
@@ -81,16 +81,16 @@ and the `CMD.EXE` command prompt:
 
     cd Desktop
     dir
-    gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xhtml
-    gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xhtml MyLexwareFile.lw
-    gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xhtml MyLexwareFile.lw > out.html
+    gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml
+    gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml MyLexwareFile.lw
+    gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml MyLexwareFile.lw > out.html
     dir
 
 ### Usage    
     
 With no arguments, the program prints its usage and exits. General usage:
 
-    lw2xhtml [ --index --s <start Line> --f <finish Line> --xml ] <lexware file>
+    lw2xml [ --index --s <start Line> --f <finish Line> --xml ] <lexware file>
 
 Arguments:
 
@@ -102,11 +102,11 @@ Arguments:
 The program outputs the validation results to `/dev/stderr` and the
 processed output to `/dev/stdout`.  To capture the output in a file:
 
-    lw2xhtml in.lw > out.html
+    lw2xml in.lw > out.html
 
 To capture the validation results (in the Bash shell):
 
-    lw2xhtml in.lw 2> validation.txt 1> out.html
+    lw2xml in.lw 2> validation.txt 1> out.html
 
 (On Windows the validation results must be copied from the CMD.EXE window.)
 
@@ -125,13 +125,13 @@ example, the root word is nested within a block of root attributes
 
 ### Band to XML element list
 
-The `lw2xhtml` code is written so that the possible XML hierarchies
+The `lw2xml` code is written so that the possible XML hierarchies
 annotated in comments in the code can be extracted with this command:
 
-    grep -E ' +#>' lw2xhtml | sed -E 's/^ +#>//g' | sort
+    grep -E ' +#>' lw2xml | sed -E 's/^ +#>//g' | sort
 
 This give a
-[list](https://github.com/alaskanlc/lexweb/blob/master/lw2xhtml/lw_xml_elements)
+[list](https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw_xml_elements)
 of band classes and the hierarchy of XML div attributes in which the
 information is stored. This is not an XML schema but can help
 understand the XHTML structure. Another way to become familiar with
@@ -144,7 +144,7 @@ Using the `--xml` switch, a simpler, non-HTML XML output is created
 (without [.file]{.bl}, [..par]{.bl} and [com]{.bl} comments). This
 version can be more easily analyzed with XQuery. It can also be
 validated against an XML schema. The file
-[lw.rnc](https://github.com/alaskanlc/lexweb/blob/master/lw2xhtml/lw.rnc)
+[lw.rnc](https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw.rnc)
 contains the current valid XML schema, which should always be kept in
 sync with the Lexware [grammar](grammar.html). The simple XML file can
 be validate using [trang and jing](https://github.com/relaxng/jing-trang). First

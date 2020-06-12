@@ -64,7 +64,7 @@ time it is not possible to customize keystokes in Google Docs, so some
 other approach must be found for adding Dene diacritics (they can
 always be added laboriously using menu ‘Insert -> Special
 characters’).  The GoogleDoc file will need to be downloaded as
-**Plain text** for use with the [Lexware scripts](lw2xhtml.html),
+**Plain text** for use with the [Lexware scripts](lw2xml.html),
 although the GoogleDoc text can be copied and pasted _directly_ into
 the [online](onlinetools.html) converter.
 
@@ -87,7 +87,7 @@ for analysis.
 To detect typos and band order that does not conform to the Lexware
 Dene grammar, an additional layer of software is needed. In the
 current implementation, both validation and conversion to a structured
-data object are performed by the [lw2xhtml](lw2xhtml.html) program.
+data object are performed by the [lw2xml](lw2xml.html) program.
 The program contains a set of rules about which band may follow which
 other bands in which context. This rule set must be updated on every
 change to the grammar.
@@ -97,15 +97,15 @@ their line number.  The user can then either fix the error, or
 “[comment out](grammar.html#h.markup)” the section.
 
 The validator may be run [online](onlinetools.html) or on a user’s
-computer. More details [here](lw2xhtml.html).
+computer. More details [here](lw2xml.html).
 
 Validation can can also be performed by output the (non-HTML) XML
-version, and using an [XML validator](lw2xhtml.html#v).
+version, and using an [XML validator](lw2xml.html#v).
 
 ## Conversion to formatted dictionary {#c}
 
 Conversion to a formatted dictionary is also done by the
-[lw2xhtml](lw2xhtml.html) program, which contains the logic to markup
+[lw2xml](lw2xml.html) program, which contains the logic to markup
 each data element with its position within a hierarchical dictionary
 entry. The output is HTML which can be viewed in any web browser. The
 precise formatting (text styles, indentation, etc.) is not stored in he
@@ -120,7 +120,7 @@ Processor where final edits can be made.
 ## Indexing {#i}
 
 Markup within the Lexware file indicates index terms to be
-collected. The `lw2xhtml` program collects these and creates and index
+collected. The `lw2xml` program collects these and creates and index
 after the dictionary entries. The index is hyperlinked back to the
 entries.
 
@@ -130,14 +130,14 @@ A lexware file is essentially a database. However, much of the
 information is stored implicitly and is dependent on the context of
 the bands preceding it. This implicit information is hard to extract
 without first validating and restructuring the document. The HTML
-output of `lw2xhtml` is the valid XML dialect of HTML, with meaningful
+output of `lw2xml` is the valid XML dialect of HTML, with meaningful
 hierarchy and standardized terms for each class.  It can thus be
 queried using XQuery to extract any choice of elements for further
 analysis. See
 [here](https://github.com/alaskanlc/lexweb/tree/master/analysis) for
 an example.
 
-Using the `--xml` switch, `lw2xhtml` will output a non-XHTML XML
+Using the `--xml` switch, `lw2xml` will output a non-XHTML XML
 version, with structure using element names not div class
 attribites. This XML version can analysed via XQuery.
 

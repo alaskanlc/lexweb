@@ -8,8 +8,8 @@ with input from Jason Harris (for Gwich’in).
 
 **Conventions** in this document: Band labels are in [this]{.bl}
 font. Options after band labels are in [this]{.w2} font.  Text that
-must follow a band is indicated [TEXT]{.txt} (it may contain one or
-more words, separated by space(s)). Sections in this document define
+must follow a band is indicated [TEXT]{.txt}: it may contain one or
+more words, separated by space(s). Sections in this document define
 classes of related bands, with each bullet being a necessary or
 optional band, in the order given. An ‘OR’ means that only one of
 several options is allowed. Hyperlinks can be followed to the relevant
@@ -22,7 +22,7 @@ with Dene Athabascan lexicography.
 Other formating conventions (italics, index marks, etc) in the Lexware
 file are given in the [Markup](#h.markup) section, below.
 
-(This file should be kept in sync with the [XML schema file](https://github.com/alaskanlc/lexweb/blob/master/lw2xhtml/lw.rnc) that
+(This file should be kept in sync with the [XML schema file](https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw.rnc) that
 defines allowable XML output.)
 
 
@@ -43,7 +43,7 @@ Each root element can be either a:
 
  * [\<rt\>]{.bl} [TEXT]{.txt} _(exactly-1)_ where [\<rt\>]{.bl} is one
     of [.rt]{.bl} (root word), [.af]{.bl} (affix), [.ra]{.bl}
-    (root/affix) (see [note](#h.a1)).
+    (root/affix) (see [note](lw2xml.html#h.a1)).
  * [Root word attributes](#h.rtattr) _(0-to-1)_
  * [Stem sets](#h.sets) _(0-to-1)_
  * [Themes](#h.th) _(0-to-many)_
@@ -134,9 +134,7 @@ _negation_.
    (a-neuter), [desc-neg]{.w2} (descriptive-negative), [sev]{.w2}
    (several, used occasionally). Also [stat/mot]{.w2}, [ext/mot]{.w2},
    [stat/op]{.w2} for dual [tc]{.bl}.
- * [cnj]{.bl} [TEXT]{.txt} _(0-to-1)_ : Conjugation prefix.  **CHECK**
-   Jim and Jason’s decision on which band label to use for
-   this. [cnjg1]{.bl} was also a suggestion.
+ * [cnj]{.bl} [TEXT]{.txt} _(0-to-1)_ : Conjugation prefix.
  * [Gloss](#h.gl) _(exactly-1)_
  * [Example](#h.ex) _(0-to-many)_
  * [Paradigms](#h.prd) _(0-to-many)_
