@@ -5,10 +5,7 @@
 # License: GPLv3
 # (See tail of file for documentation)
 
-# TODO:
-#  * check usage of cf. Jim does not use it
-#  * deal with special case of tfs.
-#  * check caus band. Jim does not use it
+# TODO: see <https://github.com/alaskanlc/lexweb/issues>
 
 BEGIN{
 

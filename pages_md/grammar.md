@@ -285,7 +285,7 @@ variation in subject, _mode_, negation. Coded as a table.
    [\...scnj]{.bl} (subordinating conjunction, _s.cnj._),
    [\...venc]{.bl} (verb enclitic, _v.enc._), [\...voc]{.bl}
    (vocative, _voc._). An Inflectional String, [\...ifs]{.bl}, may
-   occur under some _verb affix_ word categories.
+   occur under some _verb affix_ word categories, not under [\..tfs]{.bl}.
  * [Word category attributes](#h.wca) _(exactly-1)_
 
 ## Loan word {#h.lw}
