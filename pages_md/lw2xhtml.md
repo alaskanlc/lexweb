@@ -187,7 +187,7 @@ simpler XML has introduced the ability to validate the original
 Lexware file via a XML schema validation of the XML output (see
 above).
 
-## Concerning different root word classes {#h.a1}
+### Concerning different root word classes {#h.a1}
 
 There are three band labels Jim uses for different kinds of root word:
 root ([.rt]{.bl}), affix ([.af]{.bl}), and root/affix ([.ra]{.bl}).

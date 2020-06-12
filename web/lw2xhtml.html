@@ -80,7 +80,7 @@
 <h3 id="implementation-choice">Implementation choice</h3>
 <p>After initial attempts to write a parser in Awk (my language of greatest familiarity), I started working on a <code>flex</code> and <code>bison</code> parser and XML converter for Lexware files. This worked well, but with every change in allowable syntax, it required a lot of work to rewrite. It also introduced the need for a second XQuery converter from XML to HTML.</p>
 <p>After 5 March, 2020, I started again from scratch with a simpler, single Awk script. I could develop it (and modify it) much more rapidly. The validation component is not a true parser, and simply catches non-allowed band label order, given the band label’s context, but works fine. The XHTML output allows data extraction and analysis via XQuery. And most recently (2020-06-11), an option to output as simpler XML has introduced the ability to validate the original Lexware file via a XML schema validation of the XML output (see above).</p>
-<h2 id="h.a1">Concerning different root word classes</h2>
+<h3 id="h.a1">Concerning different root word classes</h3>
 <p>There are three band labels Jim uses for different kinds of root word: root (<span class="bl">.rt</span>), affix (<span class="bl">.af</span>), and root/affix (<span class="bl">.ra</span>). Initially, Cam had been trying to deduce differing rules for the syntax of each of these (e.g., an affix may only be a noun or verb affix, and that would determine the kinds of sub-entries that were allowed). However, on analyzing Jim's usage for Lower Tanana, he found:</p>
 <ul>
 <li>There are affix word categories in <span class="bl">.rt</span> (e.g. <span class="bl">.nsf</span>, <span class="bl">..tfs</span>)</li>
