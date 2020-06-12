@@ -119,7 +119,7 @@ Processor where final edits can be made.
 
 ## Indexing {#i}
 
-Markup with the Lexware file indicates index terms to be
+Markup within the Lexware file indicates index terms to be
 collected. The `lw2xhtml` program collects these and creates and index
 after the dictionary entries. The index is hyperlinked back to the
 entries.

@@ -138,7 +138,7 @@ understand the XHTML structure. Another way to become familiar with
 the structure of the XHTML is to view a formatted dictionary file, and
 compare it with the XHTML source.
 
-### Simple XML version and XML schema
+### Simple XML version and XML schema {#v}
 
 Using the `--xml` switch, a simpler, non-HTML XML output is created
 (without [.file]{.bl}, [..par]{.bl} and [com]{.bl} comments). This
