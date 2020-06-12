@@ -109,7 +109,7 @@ Conversion to a formatted dictionary is also done by the
 each data element with its position within a hierarchical dictionary
 entry. The output is HTML which can be viewed in any web browser. The
 precise formatting (text styles, indentation, etc.) is not stored in he
-HTML file, but is determined by an accompanying CSS file.  Changes to
+HTML file, but is determined by an accompanying [CSS file](https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw.css).  Changes to
 this styling can be made easily by editing the CSS file, and without
 the need to generate a new HTML version of the dictionary.
 

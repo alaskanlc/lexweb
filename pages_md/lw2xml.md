@@ -73,18 +73,21 @@ and the `CMD.EXE` command prompt:
    to `lw2xml`.)
  * In the menubar search box, type `CMD.EXE` and open it. This is the old
    DOS commandline. (You can also use Windows Powershell)
- * Type these commands (altering the version numbers if different. The
-   latest `CMD.EXE` has command line TAB-completion which speeds
-   things up. Basic commands: `dir` = view directory files, `cd` =
-   change directory, `copy`, `more` = see file contents. (Substitute
-   your Lexware file for `MyLexwareFile.lw`.)
+ * Type these commands (altering the version numbers if
+   different). The latest `CMD.EXE` has command line TAB-completion,
+   and history (with the UP arrow) which speeds things up. Basic
+   commands: `dir` = view directory files, `cd` = change directory,
+   `copy`, `more` = see file contents. (Substitute your Lexware file
+   for `MyLexwareFile.lw`.)
 
-    cd Desktop
-    dir
-    gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml
-    gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml MyLexwareFile.lw
-    gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml MyLexwareFile.lw > out.html
-    dir
+```
+cd Desktop
+dir
+gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml
+gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml MyLexwareFile.lw
+gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml MyLexwareFile.lw > out.html
+dir
+```
 
 ### Usage    
     
@@ -94,13 +97,13 @@ With no arguments, the program prints its usage and exits. General usage:
 
 Arguments:
 
- * `--index` if present, make the index
- * `--s X` begin processing the Lexware file at line X
- * `--f Y` stop processing the Lexware file at line Y
- * `--xml` output a (non-HTML) XML file
+ * `--index` if present, make the index (optional)
+ * `--s X` begin processing the Lexware file at line X (optional)
+ * `--f Y` stop processing the Lexware file at line Y (optional)
+ * `--xml` output a (non-HTML) XML file (optional)
  
-The program outputs the validation results to `/dev/stderr` and the
-processed output to `/dev/stdout`.  To capture the output in a file:
+The program outputs the validation results to Standard Error and the
+processed output to Standard Out.  To capture the output in a file:
 
     lw2xml in.lw > out.html
 
@@ -115,7 +118,7 @@ To capture the validation results (in the Bash shell):
 
 In designing an XML schema, there is no single correct structure:
 information may be coded in element names, or in attributes, data can
-be ‘flattened’ (minimal hierarchy, or ‘normalized’ (modeling with
+be ‘flattened’ (minimal hierarchy), or ‘normalized’ (modeling with
 additional hierarchical levels). For the Lexware output as XHTML, all
 the structure information had to be stored as `<div class="...">`
 attributes. Choices about hierarchical structure were made to facilitate
@@ -130,7 +133,7 @@ annotated in comments in the code can be extracted with this command:
 
     grep -E ' +#>' lw2xml | sed -E 's/^ +#>//g' | sort
 
-This give a
+This gives a
 [list](https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw_xml_elements)
 of band classes and the hierarchy of XML div attributes in which the
 information is stored. This is not an XML schema but can help
@@ -143,7 +146,7 @@ compare it with the XHTML source.
 Using the `--xml` switch, a simpler, non-HTML XML output is created
 (without [.file]{.bl}, [..par]{.bl} and [com]{.bl} comments). This
 version can be more easily analyzed with XQuery. It can also be
-validated against an XML schema. The file
+validated against an [XML schema](https://en.wikipedia.org/wiki/XML_schema). The file
 [lw.rnc](https://github.com/alaskanlc/lexweb/blob/master/lw2xml/lw.rnc)
 contains the current valid XML schema, which should always be kept in
 sync with the Lexware [grammar](grammar.html). The simple XML file can
@@ -200,10 +203,10 @@ found:
  * There are affix word categories in [.rt]{.bl} (e.g. [.nsf]{.bl},
     [..tfs]{.bl})
  * There are lots of [.rt]{.bl} word categories ([..n]{.bl},
-    [..adv]{.bl}, etc) in [.af]{.c17 .c0}
+    [..adv]{.bl}, etc) in [.af]{.bl}
  * There are a few cases of both noun affix categories and verb affix
-    categories under the same [.af]{.c17 .c0}
- * Likewise for [.ra]{.c0 .c17}
+    categories under the same [.af]{.bl}
+ * Likewise for [.ra]{.bl}
 
 This recognition lead to a new, less specific strategy for validation:
 to treat [.rt]{.bl}, [.af]{.bl}, [.ra]{.bl} with the _same_ rule set:

@@ -41,12 +41,17 @@
 <h3 id="windows">Windows</h3>
 <p><code>lw2xml</code> can be easily run using Gawk cross-compiled for Windows, and the <code>CMD.EXE</code> command prompt:</p>
 <ul>
-<li><p>Download Gawk from <a href="https://sourceforge.net/projects/ezwinports/files/">Ezwinports</a> and unzip on the Desktop.</p></li>
-<li><p>Copy the <a href="https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xml/lw2xml">lw2xml file</a> to your Desktop. (If the browser saves it as <code>lw2xml.txt</code> rename it to <code>lw2xml</code>.)</p></li>
-<li><p>In the menubar search box, type <code>CMD.EXE</code> and open it. This is the old DOS commandline. (You can also use Windows Powershell)</p></li>
-<li><p>Type these commands (altering the version numbers if different. The latest <code>CMD.EXE</code> has command line TAB-completion which speeds things up. Basic commands: <code>dir</code> = view directory files, <code>cd</code> = change directory, <code>copy</code>, <code>more</code> = see file contents. (Substitute your Lexware file for <code>MyLexwareFile.lw</code>.)</p>
-<p>cd Desktop dir gawk-5.1.0-w32-bin.exe -f lw2xml gawk-5.1.0-w32-bin.exe -f lw2xml MyLexwareFile.lw gawk-5.1.0-w32-bin.exe -f lw2xml MyLexwareFile.lw &gt; out.html dir</p></li>
+<li>Download Gawk from <a href="https://sourceforge.net/projects/ezwinports/files/">Ezwinports</a> and unzip on the Desktop.</li>
+<li>Copy the <a href="https://raw.githubusercontent.com/alaskanlc/lexweb/master/lw2xml/lw2xml">lw2xml file</a> to your Desktop. (If the browser saves it as <code>lw2xml.txt</code> rename it to <code>lw2xml</code>.)</li>
+<li>In the menubar search box, type <code>CMD.EXE</code> and open it. This is the old DOS commandline. (You can also use Windows Powershell)</li>
+<li>Type these commands (altering the version numbers if different). The latest <code>CMD.EXE</code> has command line TAB-completion, and history (with the UP arrow) which speeds things up. Basic commands: <code>dir</code> = view directory files, <code>cd</code> = change directory, <code>copy</code>, <code>more</code> = see file contents. (Substitute your Lexware file for <code>MyLexwareFile.lw</code>.)</li>
 </ul>
+<pre><code>cd Desktop
+dir
+gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml
+gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml MyLexwareFile.lw
+gawk-5.1.0-w32-bin\bin\gawk.exe -f lw2xml MyLexwareFile.lw &gt; out.html
+dir</code></pre>
 <h3 id="usage">Usage</h3>
 <p>With no arguments, the program prints its usage and exits. General usage:</p>
 <pre><code>lw2xml [ --index --s &lt;start Line&gt; --f &lt;finish Line&gt; --xml ] &lt;lexware file&gt;</code></pre>

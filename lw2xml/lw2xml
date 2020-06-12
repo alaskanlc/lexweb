@@ -878,6 +878,8 @@ function read_args(    arg) {
     else if (ARGV[arg] == "--index") MAKEINDEX  = 1
   }
   LEX = ARGV[ARGC-1]
+  if (XML)
+    MAKEINDEX = 0
 
   # removed to make it portable to Windows
   # ("test -f " LEX " ; echo $?") | getline exitcode
