@@ -1,23 +1,32 @@
-# Keyboard layout for Gwich’in for Mac
+% Mac keyboard layout for Gwich’in
 
+# Mac keyboard layout for Gwich’in
+
+This page offers a keyboard layout file to assist with Gwich’in
+diacritics, plus installation and usage instructions.
 
 ## Installation
 
-First you need to get the `Gwichin.keylayout` file to the `Keyboard
+First download this XML file called
+[Gwichin.keylayout](../files/Gwichin.keylayout) (Hold down the Control
+key, and then click on the link and ‘Save As...’).
+
+Next you need to get the `Gwichin.keylayout` file to the `Keyboard
 Layouts` folder in the `Library` folder. Mac hides the `Library`
-folder from you usually, but you can see it this way. In the Finder:
+folder from you usually, but you can see it this way: In the Finder:
 
  1. Find the `Gwichin.keylayout` file you just downloaded. It will not
     be called `Gwichin.keylayout`, but just `Gwichin` because Mac
-    hides the suffix from you.  
+    hides the suffix from you. Copy the file (Command-C).
  2. Hold down the Option (aka Alt) key, and click on the Go menu item;
-    you should see Library listed - click on it.
- 3. Find the `Keyboard Layouts` folder and pas the file inside that folder.
+    you should see ‘Library’ listed - click on it.
+ 3. Find the `Keyboard Layouts` folder and paste the file inside that
+    folder (Command-V).
  
-Next, go the System Preferences, and click on Keyboard.  Make sure the
-‘Show Input menu in menu bar’ box is checked. In the ‘Input Sources’
-tab, click on ‘+’ to add a new source. Scroll down and click on
-‘Others’. You should see ‘Gwich’in’ listed. Click on it.
+Finally, go the System Preferences, and click on Keyboard.  Make sure
+the ‘Show Input menu in menu bar’ box is checked. In the ‘Input
+Sources’ tab, click on ‘+’ to add a new source. Scroll down and click
+on ‘Others’. You should see ‘Gwich’in’ listed. Click on it.
 
 ## Usage
 

@@ -11,7 +11,7 @@
 
 **Go to: [Github repo](https://github.com/alaskanlc/lexweb)**
 
-<!-- **Go to section: [Text editing](#te) | [Concurrent editing](#ce) | [Lexware file grammar](#g) | [Validation](#v) | [Conversion to formatted dictionary](#c) | [Indexing](#i) | [Analytical tools](#a)** -->
+<!-- **Go to section: [Text editing](#te) | [Concurrent editing](#ce) | [Lexware file grammar](#g) | [Validation](#v) | [Conversion to formatted dictionary](#c) | [Indexing](#i) | [Analytical tools](#a) | [Keyboard layout](#kl)** -->
 
 
 ## Text editing {#te}
@@ -140,4 +140,9 @@ an example.
 Using the `--xml` switch, `lw2xml` will output a non-XHTML XML
 version, with structure using element names not div class
 attribites. This XML version can analysed via XQuery.
+
+## Mac keyboard layout for Gwich’in {#kl}
+
+See [this page](mac_keyboard.html).
+
 
