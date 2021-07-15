@@ -7,26 +7,58 @@ diacritics, plus installation and usage instructions.
 
 ## Installation
 
-First download this XML file called
-[Gwichin.keylayout](../files/Gwichin.keylayout) (Hold down the Control
-key, and then click on the link and ‘Save As...’).
+### 1. Download keyboard file
+
+First download this ZIP file called
+[Gwichin_keylayout.zip](../files/Gwichin_keylayout.zip) (Hold down the
+Control key, and then click on the link and ‘Save
+As...’). Double-click on the downloaded file to unzip it.
+
+### 2. Copy to Library
 
 Next you need to get the `Gwichin.keylayout` file to the `Keyboard
-Layouts` folder in the `Library` folder. Mac hides the `Library`
-folder from you usually, but you can see it this way: In the Finder:
+Layouts` folder in the `Library` folder.
 
- 1. Find the `Gwichin.keylayout` file you just downloaded. It will not
-    be called `Gwichin.keylayout`, but just `Gwichin` because Mac
-    hides the suffix from you. Copy the file (Command-C).
+**Method 1: Using the Finder**
+
+Mac hides the `Library` folder from you usually, but you can see it
+this way: In the Finder:
+
+ 1. Find the `Gwichin.keylayout` file you just downloaded. It may not
+    be called `Gwichin.keylayout`, but just `Gwichin` because Mac may
+    hide the suffix from you. Copy the file (Command-C).
  2. Hold down the Option (aka Alt) key, and click on the Go menu item;
     you should see ‘Library’ listed - click on it.
  3. Find the `Keyboard Layouts` folder and paste the file inside that
     folder (Command-V).
- 
-Finally, go the System Preferences, and click on Keyboard.  Make sure
-the ‘Show Input menu in menu bar’ box is checked. In the ‘Input
-Sources’ tab, click on ‘+’ to add a new source. Scroll down and click
-on ‘Others’. You should see ‘Gwich’in’ listed. Click on it.
+
+**Method 2: Using Ukelele**
+
+Ukelele is a SIL program for editing keyboard layouts. It was used to
+create this Gwich’in layout file. It is not needed for the
+installation of the file, but provides an alternative method if the
+above method does not work.
+
+ 1. Download the
+    [latest version](https://software.sil.org/ukelele/#downloads) of
+    Ukelele and install as directed.
+ 2. Open the `Gwichin.keylayout` file, with ‘Open’ in the File menu. A
+    keyboard should appear, with ‘Gwich’in’ in its window’s title
+    bar. You can click on the Modifier keys (see below) to see how the
+    main keys are affected.
+ 3. In the file menu, select ‘Install...’ -> ‘Show organizer’
+ 4. Drag ‘Gwichin’ from the first pane to the third pane.
+
+### Activate the keyboard layout
+
+Finally, restart your Mac. This is not necessarily needed, but should
+ensure that the new keylayout file is found.
+
+Then go the System Preferences, and click on Keyboard.  Make sure the
+‘Show Input menu in menu bar’ box is checked. In the ‘Input Sources’
+tab, click on ‘+’ to add a new source. Scroll down and click on
+‘Others’. You should see ‘Gwich’in’ listed. Click on it.  It will now
+appear in the Keyboard Layout menu (the flag) in the top menubar.
 
 ## Usage
 
