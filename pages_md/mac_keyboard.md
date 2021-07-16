@@ -110,11 +110,11 @@ Gwich’in diacritics to certain keys:
 
 ## Use with Microsoft Word
 
-Some of the current default key bindings in Microsoft Word duplicated
+Some of the current default key bindings in Microsoft Word duplicate
 standard Command key usages (e.g. CMD + i = italicize) with the
 Control key (CTL + i = italicize), probably because Windows users have
 learned the Control key bindings.  This use of the Control key clashes
-with the above key bindings, for CTL + a, i, and u. To use the
+with the above key bindings for CTL + a, i, and u. To use the
 Gwich’in bindings in Word you must deactivate the CTL combinations:
 
 1. Select the ‘Tool’ drop down menu. Select ‘Customize
