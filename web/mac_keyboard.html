@@ -20,6 +20,8 @@
       <div class="nine columns" style="margin-top: 5%">
 <h1 id="mac-keyboard-layout-for-gwichin">Mac keyboard layout for Gwich’in</h1>
 <p>This page offers a keyboard layout file to assist with Gwich’in diacritics, plus installation and usage instructions.</p>
+<h2 id="background">Background</h2>
+<p>Current convention for Gwich’in transcription uses several unusual diacritics added Latin characters (graphemes) to represent low and nasal vowel tones. While single Unicode characters exist for low tones (grave accented vowels) and nasals (vowels with ogneks), no single Unicode characters exist for the combination of both (e.g., ą̀), and Unicode combining characters must be used. See the table below for the characters codes used. These combining Unicode characters should display correctly in most situations, but please not that some fonts and applications may displace the combining character to the left or right.</p>
 <h2 id="installation">Installation</h2>
 <h3 id="download-keyboard-file">1. Download keyboard file</h3>
 <p>First download this ZIP file called <a href="../files/Gwichin_keylayout.zip">Gwichin_keylayout.zip</a> (Hold down the Control key, and then click on the link and ‘Save As...’). Double-click on the downloaded file to unzip it.</p>
@@ -45,28 +47,28 @@
 <p>Then go the System Preferences, and click on Keyboard. Make sure the ‘Show Input menu in menu bar’ box is checked. In the ‘Input Sources’ tab, click on ‘+’ to add a new source. Scroll down and click on ‘Others’. You should see ‘Gwich’in’ listed. Click on it. It will now appear in the Keyboard Layout menu (the flag) in the top menubar.</p>
 <h2 id="usage">Usage</h2>
 <p>When you want to input Gwich’in diacritic characters, click on the flag in the top-right of the menu bar, and select ‘Gwich’in’. Go to the document you are editing. All normal (small) characters, and Shift (capital) characters are still available as usual, and the usual Command characters (e.g. Command-Tab for switch window) still work. But certain combinations of Control and Option will give Gwich’in diacritics to certain keys:</p>
-<pre><code> OPT       + a -&gt; ą
-       CTL + a -&gt; à
- OPT + CTL + a -&gt; ą̀
+<pre><code> OPT       + a -&gt; ą   U+0105
+       CTL + a -&gt; à   U+00E0
+ OPT + CTL + a -&gt; ą̀   U+0105 U+0300 (combining grave)
 
- OPT       + e -&gt; ę
-       CTL + e -&gt; è
- OPT + CTL + e -&gt; ę̀
+ OPT       + e -&gt; ę   U+0119
+       CTL + e -&gt; è   U+00E8
+ OPT + CTL + e -&gt; ę̀   U+0119 U+0300 (combining grave)
 
- OPT       + i -&gt; į
-       CTL + i -&gt; ì
- OPT + CTL + i -&gt; ̀į
+ OPT       + i -&gt; į   U+012F
+       CTL + i -&gt; ì   U+00EC
+ OPT + CTL + i -&gt; į̀   U+00EC U+0328 (combining ognek)
 
- OPT       + o -&gt; ǫ
-       CTL + o -&gt; ò
- OPT + CTL + o -&gt; ̀ǫ
+ OPT       + o -&gt; ǫ   U+01EB
+       CTL + o -&gt; ò   U+00F2
+ OPT + CTL + o -&gt; ̀ǫ   U+01EB U+0300 (combining grave)
 
- OPT       + u -&gt; ų
-       CTL + u -&gt; ù
- OPT + CTL + u -&gt; ų̀
+ OPT       + u -&gt; ų   U+0173
+       CTL + u -&gt; ù   U+00F9
+ OPT + CTL + u -&gt; ų̀   U+0173 U+0300 (combining grave)
 
- OPT        + l -&gt; ł
- OPT + SHFT + l -&gt; Ł</code></pre>
+ OPT        + l -&gt; ł  U+0142
+ OPT + SHFT + l -&gt; Ł  U+0141 </code></pre>
 <h2 id="use-with-microsoft-word">Use with Microsoft Word</h2>
 <p>Some of the current default key bindings in Microsoft Word duplicated standard Command key usages (e.g. CMD + i = italicize) with the Control key (CTL + i = italicize), probably because Windows users have learned the Control key bindings. This use of the Control key clashes with the above key bindings, for CTL + a, i, and u. To use the Gwich’in bindings in Word you must deactivate the CTL combinations:</p>
 <ol type="1">

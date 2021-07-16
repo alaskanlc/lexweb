@@ -5,6 +5,19 @@
 This page offers a keyboard layout file to assist with Gwich’in
 diacritics, plus installation and usage instructions.
 
+## Background
+
+Current convention for Gwich’in transcription uses several unusual
+diacritics added Latin characters (graphemes) to represent low and
+nasal vowel tones.  While single Unicode characters exist for low
+tones (grave accented vowels) and nasals (vowels with ogneks), no
+single Unicode characters exist for the combination of both (e.g., ą̀),
+and Unicode combining characters must be used. See the table below for
+the characters codes used.  These combining Unicode characters should
+display correctly in most situations, but please not that some fonts
+and applications may displace the combining character to the left or
+right.
+
 ## Installation
 
 ### 1. Download keyboard file
@@ -71,28 +84,28 @@ work. But certain combinations of Control and Option will give
 Gwich’in diacritics to certain keys:
 
 ```
- OPT       + a -> ą
-       CTL + a -> à
- OPT + CTL + a -> ą̀
+ OPT       + a -> ą   U+0105
+       CTL + a -> à   U+00E0
+ OPT + CTL + a -> ą̀   U+0105 U+0300 (combining grave)
 
- OPT       + e -> ę
-       CTL + e -> è
- OPT + CTL + e -> ę̀
+ OPT       + e -> ę   U+0119
+       CTL + e -> è   U+00E8
+ OPT + CTL + e -> ę̀   U+0119 U+0300 (combining grave)
 
- OPT       + i -> į
-       CTL + i -> ì
- OPT + CTL + i -> ̀į
+ OPT       + i -> į   U+012F
+       CTL + i -> ì   U+00EC
+ OPT + CTL + i -> į̀   U+00EC U+0328 (combining ognek)
 
- OPT       + o -> ǫ
-       CTL + o -> ò
- OPT + CTL + o -> ̀ǫ
+ OPT       + o -> ǫ   U+01EB
+       CTL + o -> ò   U+00F2
+ OPT + CTL + o -> ̀ǫ   U+01EB U+0300 (combining grave)
 
- OPT       + u -> ų
-       CTL + u -> ù
- OPT + CTL + u -> ų̀
+ OPT       + u -> ų   U+0173
+       CTL + u -> ù   U+00F9
+ OPT + CTL + u -> ų̀   U+0173 U+0300 (combining grave)
 
- OPT        + l -> ł
- OPT + SHFT + l -> Ł
+ OPT        + l -> ł  U+0142
+ OPT + SHFT + l -> Ł  U+0141 
 ```
 
 ## Use with Microsoft Word
