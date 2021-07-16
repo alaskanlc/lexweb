@@ -49,7 +49,7 @@ above method does not work.
  3. In the file menu, select ‘Install...’ -> ‘Show organizer’
  4. Drag ‘Gwichin’ from the first pane to the third pane.
 
-### Activate the keyboard layout
+### 3. Activate the keyboard layout
 
 Finally, restart your Mac. This is not necessarily needed, but should
 ensure that the new keylayout file is found.

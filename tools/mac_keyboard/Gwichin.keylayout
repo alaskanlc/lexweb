@@ -1,6 +1,7 @@
 <?xml version="1.1" encoding="UTF-8"?>
 <!DOCTYPE keyboard SYSTEM "file://localhost/System/Library/DTDs/KeyboardLayout.dtd">
 <!-- Created using Ukelele version 343 on 2021-07-14, Cam Webb -->
+<!-- Last edited by Ukelele version 343 on 2021-07-15 at 15:57 (AKDT) -->
 <keyboard group="126" id="-2947" name="Gwich'in" maxout="2">
     <layouts>
         <layout first="0" last="17" mapSet="ANSI" modifiers="Modifiers"/>
@@ -907,7 +908,7 @@
             <key code="11" output=""/>
             <key code="12" output=""/>
             <key code="13" output=""/>
-            <key code="14" output="̀ę"/>
+            <key code="14" output="ę̀"/>
             <key code="15" output=""/>
             <key code="16" output=""/>
             <key code="17" output=""/>
@@ -924,10 +925,10 @@
             <key code="28" output=""/>
             <key code="29" output=""/>
             <key code="30" output=""/>
-            <key code="31" output="̀ǫ"/>
-            <key code="32" output="̀ų"/>
+            <key code="31" output="ǫ̀"/>
+            <key code="32" output="ų̀"/>
             <key code="33" output=""/>
-            <key code="34" output="̀į"/>
+            <key code="34" output="į̀"/>
             <key code="35" output=""/>
             <key code="36" output="&#x000D;"/>
             <key code="37" output=""/>
