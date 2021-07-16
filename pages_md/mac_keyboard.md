@@ -94,3 +94,24 @@ Gwich’in diacritics to certain keys:
  OPT        + l -> ł
  OPT + SHFT + l -> Ł
 ```
+
+## Use with Microsoft Word
+
+Some of the current default key bindings in Microsoft Word duplicated
+standard Command key usages (e.g. CMD + i = italicize) with the
+Control key (CTL + i = italicize), probably because Windows users have
+learned the Control key bindings.  This use of the Control key clashes
+with the above key bindings, for CTL + a, i, and u. To use the
+Gwich’in bindings in Word you must deactivate the CTL combinations:
+
+1. Select the ‘Tool’ drop down menu. Select ‘Customize
+   Keyboard’. Select ‘All Commands’ in the menu on the left in the
+   pop-up window.  
+2. In search, type in ‘Italicize’. In the list of
+   commands select ‘Control + i’ and hit the 'remove’ button.
+3. In search type in ‘underline’. In the list of commands select 
+   ‘Control + u’ and hit ‘remove’ button.
+4. In search type in ‘Select all’. In the list of commands select 
+   ‘Control + a’ and hit ‘remove’ button.
+
+(Thanks to Evon Peter for discovering and finding the fix for this.) 
