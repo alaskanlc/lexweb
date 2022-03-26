@@ -666,7 +666,7 @@ function init(     load, x, y, i, j, k, z, fol) {
     Aspcat[x[i]] = 1
 
   # Minto-Nenana|Chena|M-N&Chena|Toklat|UpperS|Salcha|Goodpaster||Gwichin
-  load = "MN|C|MC|T|Us|S|G|TG|OC|GG|all"
+  load = "MN|C|MC|T|Us|S|G|TG|OC|GG|all|all+Sl|E|ETy|I|IIl|IIlO|IIlSl|IIlU-O|I-IO|IL|Il|Il-I|IlI|IlI-OU|IlN|IlO|IlO-UI|IlOU-NL|IlT|IlU|Il-UIO|IlU-O|IO|I-O|I-OU|IO-U|IOU|IOUSl|ISl|IT|I-U|IU|IUIl|IUO|I-UO|IU-O|L|L-ki|ki|LN|L-N|L-NO|L-NOU|L-NUO|LO|L-O|L-OIl|L-ONU|LOU|L-OUI|L-UO|L-UOIl|L-UON|N|NIl|NIlO|NL|NL-IlOU|NLU|NL-UO|NLU-O|NO|NOIl|N-OU|N-OULIl|O|OE|OEIl|OETy|OI|O-I|OII|OIIl|OIIl-U|OIL|OIl|O-IlI|OIlSl|OIl-U|OIlU|OIU|O-IU|OI-U|OIUSl|OL|O-N|ON|ONIl|ON-L|ONL|O-NU|OSl|OSlIl|OSl-IU|OU|O-U|OU-I|O-UI|OUI|OUIl|OUIlN|OUL|OUN|O-UN|OUNIl-L|O-UO|S|Sl|Sl-IlN|SlO|SlOTyIl|SlTy|Su|T|T-UIO|Ty|U|UE|UI|U-I|UIIl|UIIl-O|UIl|UIl-IO|U-IO|UI-O|UIO|U-L|UL|UN|UNIl|UNL|UO|U-O|U-OI|UO-I|U-OIl|UOIl|UONIl-L|USl|UU"
   split(load, x, "|")
   for (i in x)
     Dial[x[i]] = 1
